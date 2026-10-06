@@ -1,9 +1,10 @@
 # External Foundation Gates
 
-Status: OPEN
+Status: DEFERRED — not blocking Foundation closure
 
-This file tracks the remaining Praxis Foundation work that cannot be completed
-from repository write access alone.
+The owner deferred these operational follow-ups on 2026-10-06 after accepting
+local laptop verification. They do not block the agreed Foundation closure.
+Procedures below are retained for later execution; no deferred gate is verified.
 
 ## Gate 1 — Main protection
 
@@ -29,7 +30,7 @@ Completion evidence:
 
 Status:
 
-`PENDING_EXTERNAL_ADMIN_ACCESS`
+`DEFERRED_BY_OWNER — NOT ACTIVATED`
 
 ## Gate 2 — Target VM deployment / smoke / rollback
 
@@ -67,19 +68,13 @@ Completion requires:
 
 Status:
 
-`PENDING_REMOTE_TERMINAL_ACCESS`
+`DEFERRED_BY_OWNER — NOT EXECUTED`
 
-## Foundation exit condition
+## Foundation closure and later completion
 
-When both gates are VERIFIED, update:
+Foundation is closed for repository setup plus local basic runtime verification.
+See `FOUNDATION_GATE.md` and `LOCAL_RUNTIME_EVIDENCE.md`.
 
-`docs/foundation/FOUNDATION_GATE.md`
-
-to:
-
-```text
-Status: FOUNDATION_READY
-PROGRAMMING_START = ALLOWED
-```
-
-Do not declare Foundation ready based on documentation alone.
+When these follow-ups are resumed, mark them VERIFIED only after executing
+their checks and recording evidence. Readiness for production deployment is a
+separate assessment; the local test must not be represented as VM execution.

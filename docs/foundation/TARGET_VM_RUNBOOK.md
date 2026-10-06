@@ -1,6 +1,10 @@
 # Praxis Target VM Foundation Runbook
 
-Status: READY FOR EXECUTION
+Status: DEFERRED BY OWNER — NOT EXECUTED
+
+Deferred on 2026-10-06 after local laptop verification. This runbook is retained
+for later execution and does not block the agreed Foundation closure. See
+`FOUNDATION_GATE.md` and `LOCAL_RUNTIME_EVIDENCE.md`.
 
 This runbook closes the final runtime deployment gates of the Praxis Fork
 Foundation without storing VM addresses, credentials, or private infrastructure

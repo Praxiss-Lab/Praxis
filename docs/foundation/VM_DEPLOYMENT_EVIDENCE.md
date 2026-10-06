@@ -1,6 +1,10 @@
 # Target VM Deployment Evidence
 
-Status: NOT EXECUTED
+Status: DEFERRED — NOT EXECUTED
+
+Owner decision, 2026-10-06: use local laptop smoke and restart persistence for
+Foundation closure. See `LOCAL_RUNTIME_EVIDENCE.md`. This VM template contains
+no executed VM evidence and is retained for future use.
 
 Fill this record only from observed execution on the target VM.
 
@@ -77,10 +81,10 @@ Record any issue encountered without including secrets.
 ## Final classification
 
 - Deploy Praxis build to target VM:
-  `PENDING`
+  `DEFERRED — NOT EXECUTED`
 - Runtime smoke test on target VM:
-  `PENDING`
+  `DEFERRED — NOT EXECUTED`
 - Rollback test:
-  `PENDING`
+  `DEFERRED — NOT EXECUTED`
 
 Do not change these to `VERIFIED` without executed evidence.
