@@ -32,7 +32,7 @@ product development.
 | Rollback test | PENDING | requires target VM execution |
 | Praxis release automation | VERIFIED | explicit `praxis-release.yml` plus static contract test validated by PR #3 Praxis CI |
 | Main protection / required checks | PENDING | repository rules must be configured after final CI check names are stable |
-| Initial development roadmap | PENDING | define after Foundation infrastructure is stable |
+| Initial development roadmap | VERIFIED / INITIAL ORDER ACCEPTED | `INITIAL_DEVELOPMENT_ROADMAP.md`; relevant AC items are re-evaluated only when each roadmap area begins |
 
 ## Bootstrap merge completed
 
