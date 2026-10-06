@@ -110,3 +110,31 @@ These upstream failures remain visible technical debt and may be addressed
 later through targeted product work or by integrating upstream fixes.
 
 They must not be silently converted into `VERIFIED`.
+
+
+### Praxis browser rerun result
+
+Praxis run: `37453687970`, attempt 2
+
+Result: **FAILURE**, 6 failing scenarios.
+
+The rerun reproduced six of the upstream baseline failures:
+
+1. preset automation slash-command conversation;
+2. conversation step 3 / mock-LLM execution;
+3. image upload;
+4. onboarding response;
+5. same-model profile identity;
+6. project skill trigger.
+
+The first-attempt Praxis-only cross-connect timeout did **not** reproduce.
+The files/git failure seen in the upstream baseline and in Praxis attempt 1 also
+did **not** reproduce.
+
+Classification:
+
+`NO PERSISTENT NEW BROWSER E2E REGRESSION DETECTED RELATIVE TO BASELINE`
+
+This does not mean the inherited E2E suite is healthy. It means the fork has
+not demonstrated a new persistent regression beyond the selected upstream
+baseline in this verification cycle.
