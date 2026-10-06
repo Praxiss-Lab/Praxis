@@ -33,6 +33,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Generate i18n declarations
+        run: npm run make-i18n
+
       - name: Typecheck
         run: npm run typecheck
 
