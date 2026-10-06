@@ -10,7 +10,7 @@
   },
   "images": {
     "agentServer": "ghcr.io/openhands/agent-server",
-    "agentCanvas": "ghcr.io/openhands/agent-canvas"
+    "agentCanvas": "ghcr.io/emilio-01-t/praxis"
   },
   "ports": {
     "agentServer": 18000,
