@@ -17,7 +17,7 @@
   loop corrupts the stored message). Use `git commit -F <file>` with a
   written temp file instead of `-m` for any non-trivial message.
 
-- Primary verification commands are `npm run lint`, `npm test`, `npm run build`, and `npm run build:lib`.
+- Primary verification commands are `npm run typecheck`, `npm run lint`, `npm test`, `npm run build`, and `npm run build:lib`.
 - Direct dependencies and dev dependencies are exact-pinned. Use the committed `package-lock.json` with `npm ci`, and update `package.json` and `package-lock.json` together through npm.
 - Public skills come from `@openhands/extensions`; project-specific contributor guidance lives under `.agents/skills/`.
 - Default working-directory behavior must reuse `DEFAULT_WORKING_DIR` from `src/api/agent-server-config.ts` rather than hardcoding `/workspace/project`.
