@@ -30,7 +30,7 @@ product development.
 | Deploy Praxis build to target VM | PENDING | requires target VM execution |
 | Runtime smoke test on target VM | PENDING | requires target VM execution |
 | Rollback test | PENDING | requires target VM execution |
-| Praxis release automation | PENDING | independent release automation still to be implemented |
+| Praxis release automation | VERIFIED | explicit `praxis-release.yml` plus static contract test validated by PR #3 Praxis CI |
 | Main protection / required checks | PENDING | repository rules must be configured after final CI check names are stable |
 | Initial development roadmap | PENDING | define after Foundation infrastructure is stable |
 
