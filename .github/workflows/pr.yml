@@ -1,21 +1,15 @@
-name: pr
+name: PR metadata automation
 
-# Lints PR titles (Conventional Commits) and applies `type:` labels that drive
-# release notes + the version release-please derives (OpenHands/release-actions).
-#
-# pull_request_target (not pull_request) so it also runs on fork PRs, where the
-# label step needs a writable token. Safe ONLY because the reusable workflow
-# never checks out PR code (reads the title from the payload) and this caller
-# does NOT pass `secrets: inherit` (so the App token stays out of scope). Don't
-# add a checkout step or `secrets: inherit`.
+# Disabled during the Praxis Fork Foundation.
+# The inherited OpenHands release-actions integration is not authoritative for Praxis.
+
 on:
-  pull_request_target:
-    # synchronize: re-run on each push so the check stays green on release-please's
-    # force-pushed release PR.
-    types: [opened, edited, reopened, synchronize]
+  workflow_dispatch:
+
+permissions: {}
 
 jobs:
-  pr-title:
-    permissions:
-      pull-requests: write
-    uses: OpenHands/release-actions/.github/workflows/pr-title.yml@main
+  disabled:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Disabled in Praxis Foundation; see docs/foundation/WORKFLOW_AUDIT.md."
