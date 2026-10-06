@@ -1,3 +1,27 @@
+# Praxis
+
+**AI-Driven Development**
+
+Praxis is an independent MIT-licensed fork of [OpenHands](https://github.com/OpenHands/OpenHands).
+The fork is being established as a stable, selectively-updated development platform:
+upstream changes are reviewed and integrated deliberately rather than flowing automatically
+into Praxis `main`.
+
+The current codebase intentionally retains many OpenHands-compatible internal package names,
+paths, environment variables, and protocols while the Praxis foundation is established.
+
+- Fork foundation: [docs/praxis/FOUNDATION.md](docs/praxis/FOUNDATION.md)
+- Upstream baseline: [docs/upstream/BASELINE.md](docs/upstream/BASELINE.md)
+- Upstream integration policy: [docs/governance/UPSTREAM_INTEGRATION_POLICY.md](docs/governance/UPSTREAM_INTEGRATION_POLICY.md)
+- Attribution: [NOTICE](NOTICE)
+
+---
+
+## Upstream Agent Canvas documentation
+
+The documentation below is retained from the OpenHands upstream baseline during the
+foundation phase and will be adapted progressively as Praxis diverges.
+
 <a name="readme-top"></a>
 
 <div align="center">
