@@ -122,7 +122,7 @@ agent-canvas --backend-only   # agent server + automation backend + ingress only
 **macOS / Linux:**
 
 ```sh
-export PRAXIS_IMAGE="ghcr.io/emilio-01-t/praxis:0.1.0" # choose an existing Praxis release
+export PRAXIS_IMAGE="ghcr.io/emilio-01-t/praxis:0.1.0-dev" # choose an existing Praxis release
 export PROJECTS_PATH="$HOME/projects"  # directory containing your project folders
 mkdir -p "$PROJECTS_PATH" "$HOME/.openhands"
 

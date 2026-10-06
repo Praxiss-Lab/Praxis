@@ -26,7 +26,8 @@ const config = JSON.parse(read("config/defaults.json")) as {
   versions: { agentServer: string; agentCanvas: string };
 };
 const agentServerVersion = config.versions.agentServer;
-const dockerImage = `${config.images.agentCanvas}:${config.versions.agentCanvas}`;
+// Product image tags are independent from the upstream Canvas dependency pin.
+const dockerImage = `${config.images.agentCanvas}:${read("PRAXIS_VERSION").trim()}`;
 
 describe("docs/example references stay in sync with config/defaults.json", () => {
   it("the local-stack skill documents the current default version", () => {
@@ -41,7 +42,7 @@ describe("docs/example references stay in sync with config/defaults.json", () =>
     );
   });
 
-  it("every README Docker image reference uses the pinned tag", () => {
+  it("every README Docker image reference uses the Praxis product version", () => {
     const imageRefPattern =
       /ghcr\.io\/(?:openhands\/agent-canvas|emilio-01-t\/praxis):[^\s`"]+/g;
 
