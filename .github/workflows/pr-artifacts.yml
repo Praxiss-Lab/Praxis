@@ -1,7 +1,8 @@
-name: PR artifacts automation
+name: PR Artifacts
 
 # Disabled during the Praxis Fork Foundation.
-# The inherited workflow can write to PR branches and depends on OpenHands bot credentials.
+# Inherited write-capable OpenHands PR artifact automation disabled during Praxis Foundation.
+# The original upstream implementation remains available in Git history.
 
 on:
   workflow_dispatch:
@@ -12,4 +13,6 @@ jobs:
   disabled:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Disabled in Praxis Foundation; see docs/foundation/WORKFLOW_AUDIT.md."
+      - run: |
+          echo "This inherited OpenHands workflow is intentionally disabled in Praxis."
+          echo "See docs/foundation/WORKFLOW_AUDIT.md."
