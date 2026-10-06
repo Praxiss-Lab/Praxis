@@ -73,6 +73,13 @@ Agent Canvas runs the open source OpenHands agent out-of-the-box, but can use an
 
 If you have questions or feedback, please open a GitHub issue or join the [#proj-agent-canvas channel in Slack](https://openhands.dev/joinslack).
 
+## Praxis distribution
+
+See [Praxis distribution and launch modes](docs/distribution/README.md) for native
+installation from this fork, release images, split Docker containers, and separate
+frontend/backend machines. The upstream npm install command below installs
+OpenHands; Praxis release archives are attached to this repository’s releases.
+
 ## Quickstart
 
 You can install OpenHands to run agents on any machine: on your laptop, on a dedicated computer like a Mac Mini,
@@ -115,6 +122,7 @@ agent-canvas --backend-only   # agent server + automation backend + ingress only
 **macOS / Linux:**
 
 ```sh
+export PRAXIS_IMAGE="ghcr.io/emilio-01-t/praxis:0.1.0" # choose an existing Praxis release
 export PROJECTS_PATH="$HOME/projects"  # directory containing your project folders
 mkdir -p "$PROJECTS_PATH" "$HOME/.openhands"
 
@@ -123,7 +131,7 @@ docker run -it --rm \
   -e AGENT_CANVAS_ALLOW_LAN_SESSION_KEY=true \
   -v "$HOME/.openhands:/home/openhands/.openhands" \
   -v "${PROJECTS_PATH}:/projects" \
-  ghcr.io/emilio-01-t/praxis:1.25.0 # x-release-please-version
+  "$PRAXIS_IMAGE"
 ```
 
 **Windows (PowerShell / Windows Terminal):** See [README.windows.md](./README.windows.md) for the equivalent commands.

@@ -1,0 +1,67 @@
+name: Docker Check
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "docker/**"
+      - "scripts/**"
+      - "config/**"
+      - "src/**"
+      - "public/**"
+      - "tools/**"
+      - "package*.json"
+      - "*config*"
+      - ".github/workflows/docker*.yml"
+      - ".github/workflows/praxis-release.yml"
+      - "__tests__/scripts/docker-*.test.ts"
+  push:
+    branches: [main]
+    paths:
+      - "docker/**"
+      - "scripts/**"
+      - "config/**"
+      - "src/**"
+      - "public/**"
+      - "tools/**"
+      - "package*.json"
+      - "*config*"
+      - ".github/workflows/docker*.yml"
+      - ".github/workflows/praxis-release.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docker-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Build and verify Docker modes (no publication)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24.15"
+      - uses: docker/setup-buildx-action@v4
+      - name: Build local image
+        run: node scripts/docker-build.mjs --tag praxis:check
+      - name: Install browser evidence dependencies
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Verify all and split modes
+        env:
+          DOCKER_EVIDENCE_DIR: docker-evidence
+        run: node scripts/praxis/docker-modes-smoke.mjs praxis:check
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: praxis-docker-modes-evidence
+          path: docker-evidence/
+          if-no-files-found: warn
+          retention-days: 14

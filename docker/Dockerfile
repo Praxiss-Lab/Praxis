@@ -80,10 +80,11 @@ ARG VITE_BASE_PATH="/canvas"
 ARG VITE_POSTHOG_API_KEY=""
 
 ARG AGENT_CANVAS_VERSION=dev
+ARG PRAXIS_VERSION=dev
 LABEL org.opencontainers.image.title="agent-canvas"
 LABEL org.opencontainers.image.description="All-in-one agent-canvas: Agent Server + Automation + Frontend"
 LABEL org.opencontainers.image.source="https://github.com/Emilio-01-T/Praxis"
-LABEL org.opencontainers.image.version="${AGENT_CANVAS_VERSION}"
+LABEL org.opencontainers.image.version="${PRAXIS_VERSION}"
 LABEL org.opencontainers.image.revision="${OPENHANDS_BUILD_GIT_SHA}"
 
 ENV AGENT_CANVAS_BUILD_GIT_SHA=${OPENHANDS_BUILD_GIT_SHA}
@@ -140,6 +141,7 @@ COPY --from=frontend-build /build/build /opt/agent-canvas/frontend
 
 # Copy the static-server scripts and their production runtime deps.
 COPY scripts/static-server.mjs /opt/agent-canvas/static-server.mjs
+COPY scripts/ingress.mjs /opt/agent-canvas/ingress.mjs
 COPY scripts/bind-host.mjs /opt/agent-canvas/bind-host.mjs
 COPY scripts/proxy-utils.mjs /opt/agent-canvas/proxy-utils.mjs
 COPY --from=frontend-build /build/node_modules/httpxy /opt/agent-canvas/node_modules/httpxy
@@ -162,6 +164,7 @@ COPY --from=config-gen /tmp/defaults.env /opt/agent-canvas/defaults.env
 
 # Copy the entrypoint
 COPY docker/entrypoint.sh /opt/agent-canvas/entrypoint.sh
+COPY docker/frontend-entrypoint.sh /opt/agent-canvas/frontend-entrypoint.sh
 RUN chmod +x /opt/agent-canvas/entrypoint.sh
 
 # Pre-create persistence directories with correct ownership so the

@@ -126,3 +126,13 @@ Before writing any test:
 
 Ensure each test is meaningful, concise, and covers a unique aspect of user interaction.
 </TESTING_RULES>
+
+## Praxis Docker distribution verification
+
+`docker-check.yml` validates local images on runtime-related PR/main changes,
+without registry publication. It exercises all, backend and frontend proxy modes,
+authentication, runtime metadata and backend restart, and uploads UI media.
+`mock-llm-docker-e2e.yml` is manual-only and requires an explicit published release
+image. It no longer follows `workflow_run` or assumes SHA-tagged packages exist.
+The release workflow verifies its exact dispatched commit and calls Docker
+publication directly before creating the GitHub release.

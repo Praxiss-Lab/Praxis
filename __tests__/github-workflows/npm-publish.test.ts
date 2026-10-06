@@ -32,7 +32,7 @@ describe("Praxis repository and publishing policy", () => {
       'LABEL org.opencontainers.image.source="https://github.com/Emilio-01-T/Praxis"',
     );
     expect(dockerWorkflow).toContain(
-      "https://github.com/Emilio-01-T/Praxis/pkgs/container/praxis",
+      "ghcr.io/emilio-01-t/praxis",
     );
     expect(dockerWorkflow).toContain("ghcr.io/emilio-01-t/praxis");
   });
@@ -64,7 +64,7 @@ describe("Praxis repository and publishing policy", () => {
     const dockerfile = read("docker/Dockerfile");
 
     expect(workflow).toContain(
-      "VITE_POSTHOG_API_KEY=${{ steps.prep.outputs.posthog_api_key }}",
+      "VITE_POSTHOG_API_KEY=${{ vars.POSTHOG_PROD_KEY }}",
     );
     expect(workflow).not.toContain("VITE_POSTHOG_CLIENT_KEY");
     expect(workflow).not.toContain("vite_app_env");

@@ -3,8 +3,10 @@ name: Praxis CI
 on:
   pull_request:
     branches: [main]
+    paths-ignore: ['docs/**', '**/*.md', 'LICENSE', 'NOTICE']
   push:
     branches: [main]
+    paths-ignore: ['docs/**', '**/*.md', 'LICENSE', 'NOTICE']
   workflow_dispatch:
 
 concurrency:

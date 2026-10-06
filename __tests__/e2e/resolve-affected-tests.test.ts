@@ -90,16 +90,12 @@ describe("mock-LLM E2E affected test resolver", () => {
     expect(workflow).toContain("npm run test:e2e:mock-llm &");
   });
 
-  it("runs Docker mock E2E after successful main builds or manual dispatch", () => {
+  it("runs Docker mock E2E only for explicitly selected images", () => {
     const dockerWorkflow = readFileSync(dockerWorkflowPath, "utf-8");
-
-    expect(dockerWorkflow).toContain('workflows: ["Docker"]');
-    expect(dockerWorkflow).toContain("branches: [main]");
     expect(dockerWorkflow).toContain("workflow_dispatch:");
-    expect(dockerWorkflow).not.toContain("pull_request:");
-    expect(dockerWorkflow).toContain(
-      "github.event.workflow_run.conclusion == 'success'",
-    );
+    expect(dockerWorkflow).not.toMatch(/^  workflow_run:/m);
+    expect(dockerWorkflow).toContain("required: true");
+    expect(dockerWorkflow).not.toContain("sha-${SHORT_SHA}-amd64");
   });
 
   it("keeps inherited compatibility CI manual-only in Praxis", () => {

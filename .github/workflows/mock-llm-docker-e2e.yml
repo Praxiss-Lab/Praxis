@@ -4,30 +4,19 @@ name: Mock-LLM Docker E2E Tests
 # the Docker image instead of the npm build path (bin/agent-canvas.mjs).
 #
 # Trigger chain:
-#   1. workflow_run — fires automatically after the "Docker" workflow
-#      completes on main. The image is already built/pushed to GHCR.
-#   2. workflow_dispatch — manual trigger with a custom image tag.
+#   workflow_dispatch only — test an explicitly selected published release.
+# PR/main image verification uses Docker Check without registry publication.
 
 on:
-  workflow_run:
-    workflows: ["Docker"]
-    types: [completed]
-    branches: [main]
   workflow_dispatch:
     inputs:
       docker_image:
-        description: "Docker image to test (e.g., ghcr.io/emilio-01-t/praxis:sha-abc1234-amd64)"
+        description: "Published Praxis release image to test (e.g. ghcr.io/emilio-01-t/praxis:0.1.0)"
+        required: true
         type: string
-        default: ""
 
-# Concurrency: deduplicate runs for the same logical trigger. Docker workflow
-# completions are keyed by branch; manual runs use their selected ref.
 concurrency:
-  group: >-
-    mock-llm-docker-e2e-${{
-      (github.event.workflow_run.id && format('wr-{0}', github.event.workflow_run.head_branch)) ||
-      github.ref
-    }}
+  group: mock-llm-docker-e2e-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -37,13 +26,6 @@ permissions:
 
 jobs:
   mock-llm-docker-e2e:
-    # workflow_run validates the image published from main after a successful
-    # Docker build. workflow_dispatch always runs.
-    if: >-
-      (github.event_name == 'workflow_dispatch' ||
-       (github.event_name == 'workflow_run' &&
-        github.event.workflow_run.conclusion == 'success' &&
-        github.event.workflow_run.head_branch == 'main'))
     runs-on: ubuntu-24.04
     # Give the 20-minute Playwright test budget enough room for setup and reporting.
     timeout-minutes: 25
@@ -53,27 +35,10 @@ jobs:
       MOCK_LLM_WORKFLOW_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
     steps:
-      # ── Resolve which commit to test ───────────────────────────────────
-      - name: Resolve source context
-        id: ctx
-        env:
-          GITHUB_REF_VALUE: ${{ github.ref }}
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_run" ]; then
-            # workflow_run only fires for main (event filter and job guard), so
-            # this path always tests the main-branch Docker image. Never
-            # post PR comments; results go to the step summary only.
-            echo "sha=${{ github.event.workflow_run.head_sha }}" >> "$GITHUB_OUTPUT"
-            echo "ref=${{ github.event.workflow_run.head_sha }}" >> "$GITHUB_OUTPUT"
-          else
-            echo "sha=${{ github.sha }}" >> "$GITHUB_OUTPUT"
-            echo "ref=$GITHUB_REF_VALUE" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Check out repository
+      - name: Check out dispatched commit
         uses: actions/checkout@v7
         with:
-          ref: ${{ steps.ctx.outputs.ref }}
+          ref: ${{ github.sha }}
 
       - name: Read defaults from config/defaults.json
         id: defaults
@@ -86,13 +51,8 @@ jobs:
         env:
           DOCKER_IMAGE_INPUT: ${{ inputs.docker_image }}
         run: |
-          if [ -n "$DOCKER_IMAGE_INPUT" ]; then
-            echo "tag=$DOCKER_IMAGE_INPUT" >> "$GITHUB_OUTPUT"
-          else
-            SHORT_SHA=$(echo "${{ steps.ctx.outputs.sha }}" | cut -c1-7)
-            # Use the amd64-specific tag (always pushed by the Docker workflow).
-            echo "tag=ghcr.io/emilio-01-t/praxis:sha-${SHORT_SHA}-amd64" >> "$GITHUB_OUTPUT"
-          fi
+          test -n "$DOCKER_IMAGE_INPUT"
+          echo "tag=$DOCKER_IMAGE_INPUT" >> "$GITHUB_OUTPUT"
 
       - name: Log in to GHCR
         uses: docker/login-action@v4.6.0
@@ -277,7 +237,7 @@ jobs:
             --results "test-results-mock-llm-docker/results.json" \
             --output "$MOCK_LLM_REPORT_PATH" \
             --workflow-url "$MOCK_LLM_WORKFLOW_URL" \
-            --commit "${{ steps.ctx.outputs.sha }}" \
+            --commit "${{ github.sha }}" \
             --artifact-url "${{ steps.upload_artifacts.outputs.artifact-url || '' }}" \
             --title "Mock-LLM Docker E2E Test Results" \
             --exit-code "${{ steps.run_tests.outputs.exit_code }}"
