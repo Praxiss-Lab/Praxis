@@ -35,6 +35,30 @@ async function capture(url, mode) {
     const page = await context.newPage();
     await page.goto(url + "/canvas/", { waitUntil: "networkidle" });
     await page.locator("body").waitFor();
+    const backendForm = page.getByTestId("onboarding-step-check-backend");
+    if (await backendForm.isVisible()) {
+      await page.getByTestId("onboarding-backend-host").fill(url);
+      await page.getByTestId("onboarding-backend-api-key").fill(key);
+      await page.getByTestId("onboarding-backend-next").click();
+      await page.getByTestId("onboarding-step-choose-agent").waitFor();
+    }
+    const skip = page.getByTestId("onboarding-skip");
+    if (await skip.isVisible()) await skip.click();
+    await page.getByTestId("home-chat-launcher").waitFor();
+    const browserStatus = await page.evaluate(
+      async ({ key }) => {
+        const response = await fetch("/api/settings", {
+          headers: { "X-Session-API-Key": key },
+        });
+        return response.status;
+      },
+      { key },
+    );
+    assert.equal(
+      browserStatus,
+      200,
+      "Browser must authenticate through the frontend proxy",
+    );
     assert.ok(
       (await page.locator("body").innerText()).trim(),
       "Canvas must render",
