@@ -44,12 +44,25 @@ Result: **FAILURE**
 The same seven upstream failures were observed, plus one additional
 cross-connect navigation timeout.
 
-An exact rerun with no code change was started to determine whether that
-additional failure is persistent or flaky.
+An exact rerun with no code change completed as attempt 2 of run
+`37453687970`.
+
+Attempt 2 reported 6 failures:
+
+1. preset automation slash-command conversation;
+2. conversation step 3 / mock-LLM execution;
+3. image upload;
+4. onboarding response;
+5. same-model profile identity;
+6. project skill trigger.
+
+The additional cross-connect timeout from attempt 1 did **not** recur. The
+files/git scenario that failed upstream and on Praxis attempt 1 also passed on
+attempt 2.
 
 Classification:
 
-`BASELINE_LIMITATION_CONFIRMED; ONE_ADDITIONAL_FAILURE_UNDER_RETEST`
+`BASELINE_LIMITATION_CONFIRMED; NO_NEW_PERSISTENT_BROWSER_E2E_REGRESSION_DETECTED`
 
 ## Docker Mock-LLM E2E
 
