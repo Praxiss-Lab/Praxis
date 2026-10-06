@@ -26,8 +26,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Verify fork foundation invariants
-        run: bash scripts/praxis/foundation-check.sh
+      - name: Verify repository invariants
+        run: bash scripts/praxis/repository-check.sh
 
       - name: Validate Praxis shell helpers
         run: bash -n scripts/praxis/*.sh

@@ -1,6 +1,6 @@
 name: Release readiness automation
 
-# Disabled during the Praxis Fork Foundation.
+# Inherited workflow disabled in Praxis.
 # The inherited OpenHands release/Slack workflow is organization-specific.
 
 on:
@@ -12,4 +12,4 @@ jobs:
   disabled:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Disabled in Praxis Foundation; see docs/foundation/WORKFLOW_AUDIT.md."
+      - run: echo "Inherited workflow disabled in Praxis."

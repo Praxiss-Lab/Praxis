@@ -16,20 +16,10 @@ Recorded: 2026-10-06
 | OpenHands TypeScript client | `1.53.0` |
 | OpenHands extensions | `0.29.0` |
 | OpenHands automation | `1.19.0` |
-| Initial Praxis version | `0.1.0-dev` |
 | License | MIT |
 
 At the moment this baseline was recorded, Praxis `main` and upstream
 `OpenHands/OpenHands:main` pointed to the same commit.
-
-## Baseline rule
-
-The upstream baseline is an immutable historical reference. Future upstream
-updates do not silently redefine it.
-
-When Praxis intentionally adopts a later upstream state, the integration must
-be recorded in the sync log together with the accepted upstream commit or
-release and the integration decision.
 
 ## Terminology
 

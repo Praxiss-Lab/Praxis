@@ -1,6 +1,6 @@
 name: PR Description Check
 
-# Disabled during the Praxis Fork Foundation.
+# Inherited workflow disabled in Praxis.
 # Inherited OpenHands PR-template gate disabled while Praxis defines its own contribution policy.
 # The original upstream implementation remains available in Git history.
 
@@ -15,4 +15,4 @@ jobs:
     steps:
       - run: |
           echo "This inherited OpenHands workflow is intentionally disabled in Praxis."
-          echo "See docs/foundation/WORKFLOW_AUDIT.md."
+          echo "See docs/policies/RELEASE.md for Praxis release publication."

@@ -46,7 +46,7 @@ describe("Praxis repository and publishing policy", () => {
     );
   });
 
-  it("keeps inherited npm publication disabled during Praxis Foundation", () => {
+  it("keeps inherited npm publication disabled in Praxis", () => {
     const workflow = read(".github/workflows/npm-publish.yml");
 
     expect(workflow).toContain("name: Publish to npm");
