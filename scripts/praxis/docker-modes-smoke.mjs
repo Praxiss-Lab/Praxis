@@ -33,6 +33,12 @@ async function capture(url, mode) {
       recordVideo: { dir },
     });
     const page = await context.newPage();
+    const consent = page.getByTestId("telemetry-consent-form");
+    await page.addLocatorHandler(consent, async () => {
+      await consent.getByRole("checkbox").uncheck();
+      await consent.getByTestId("confirm-telemetry-preferences").click();
+      await consent.waitFor({ state: "hidden" });
+    });
     await page.goto(url + "/canvas/", { waitUntil: "networkidle" });
     await page.locator("body").waitFor();
     const backendForm = page.getByTestId("onboarding-step-check-backend");
