@@ -24,8 +24,8 @@ product development.
 | Praxis GHCR target | VERIFIED | `ghcr.io/emilio-01-t/praxis` |
 | Praxis-specific compatibility smoke tests | VERIFIED | main push run `37453687808` succeeded |
 | Container build/publish evidence | VERIFIED | main push Docker run `37453688064` succeeded after PR verification run `37444356264` |
-| Mock-LLM browser E2E | IN VERIFICATION | main run `37453687970` failed 8/73 on first attempt; exact rerun in progress to classify regression vs flakiness |
-| Mock-LLM Docker E2E | IN VERIFICATION | run `37454500619` currently validating the published Praxis image |
+| Mock-LLM browser E2E | IN VERIFICATION / BASELINE LIMITATION | upstream baseline run `37418681772` already fails the same 7 core scenarios; Praxis rerun is classifying one additional first-attempt timeout |
+| Mock-LLM Docker E2E | BASELINE LIMITATION / NO NEW REGRESSION DETECTED | Praxis run `37454500619` reproduced the same six failures as upstream baseline run `37419222494` |
 | Deployment contract | VERIFIED AS DESIGN | `DEPLOYMENT_AND_ROLLBACK.md` |
 | Deploy Praxis build to target VM | PENDING | requires target VM execution |
 | Runtime smoke test on target VM | PENDING | requires target VM execution |
