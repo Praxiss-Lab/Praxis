@@ -65,7 +65,7 @@
 - **Docker image**: Set `MOCK_LLM_DOCKER_IMAGE` to the image tag (default: `ghcr.io/openhands/agent-canvas:latest`). The container is started with `--rm --network host` and a unique `--name` for cleanup.
 - **State isolation**: The Docker container uses its internal state directory (no host mount needed for tests). Each test run starts a fresh container.
 - **Skill test volume mounts**: Tests that create files the agent-server needs to read (skill repos, user skills) require Docker volume mounts because the container has an isolated filesystem. The Docker config mounts `.tmp/mock-llm-skill-repos/` → `/tmp/mock-llm-skill-repos/` for project skills and `.tmp/mock-llm-user-skills/` → `/home/openhands/.openhands/skills/` for user skills. Env vars `MOCK_LLM_SKILL_REPOS_CONTAINER_DIR` and `MOCK_LLM_USER_SKILLS_HOST_DIR` tell `skill-test-helpers.ts` which paths to use for agent-server API registration vs. host-side file operations.
-- CI workflow: `.github/workflows/mock-llm-docker-e2e.yml` has two triggers, both using an already-built image from GHCR: (1) `workflow_run` fires automatically after a successful `Docker` workflow on `main`; (2) `workflow_dispatch` accepts a custom `docker_image` input. It does not run on pull-request events. The default image tag is derived from the tested commit SHA (`ghcr.io/openhands/agent-canvas:sha-<short>-amd64`). Report artifacts go to `test-results-mock-llm-docker/` and `playwright-report-mock-llm-docker/`.
+- CI workflow: `.github/workflows/mock-llm-docker-e2e.yml` is manual-only and requires an explicit `docker_image` pointing to a published Praxis release. It does not run on pull-request events or follow image-build events. Report artifacts go to `test-results-mock-llm-docker/` and `playwright-report-mock-llm-docker/`. PR/main image launch checks use `docker-check.yml` without GHCR publication.
 
 ## Debugging E2E Test Failures
 
@@ -126,3 +126,13 @@ Before writing any test:
 
 Ensure each test is meaningful, concise, and covers a unique aspect of user interaction.
 </TESTING_RULES>
+
+## Praxis Docker distribution verification
+
+`docker-check.yml` validates local images on runtime-related PR/main changes,
+without registry publication. It exercises all, backend and frontend proxy modes,
+authentication, runtime metadata and backend restart, and uploads UI media.
+`mock-llm-docker-e2e.yml` is manual-only and requires an explicit published release
+image. It no longer follows `workflow_run` or assumes SHA-tagged packages exist.
+The release workflow verifies its exact dispatched commit and calls Docker
+publication directly before creating the GitHub release.

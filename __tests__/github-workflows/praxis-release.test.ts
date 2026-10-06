@@ -20,7 +20,9 @@ describe("Praxis release workflow", () => {
     expect(workflow).toContain("name: Praxis Release");
     expect(workflow).toContain("workflow_dispatch:");
     expect(workflow).toContain("Type RELEASE to confirm");
-    expect(workflow).toContain("< PRAXIS_VERSION");
+    expect(workflow).toContain("node scripts/praxis/release-inputs.mjs");
+    expect(workflow).toContain("uses: ./.github/workflows/docker.yml");
+    expect(workflow).toContain("needs: [verify, image]");
     expect(workflow).toContain("inputs.version");
     expect(workflow).toContain('tag="v$PRAXIS_RELEASE_VERSION"');
     expect(workflow).toContain('gh release create "$tag"');

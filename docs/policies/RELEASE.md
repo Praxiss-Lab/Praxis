@@ -1,6 +1,6 @@
 # Praxis Release Policy
 
-Status: FOUNDATION POLICY — initial version
+Status: active
 
 Praxis releases are independent from OpenHands releases.
 
@@ -44,8 +44,9 @@ Stable releases are versions without pre-release metadata.
 The release workflow must run the Praxis Foundation/static checks and core
 application verification before creating a tag/release.
 
-Container publication is performed from the release tag by the Praxis-adapted
-Docker workflow and targets:
+After verification, the release workflow calls the reusable Docker workflow
+directly for the same exact commit. Image publication completes before GitHub
+Release creation; no tag-event cascade is required. The registry target is:
 
 `ghcr.io/emilio-01-t/praxis`
 
@@ -55,3 +56,19 @@ The release notes and upstream sync log should identify material OpenHands
 changes adopted since the previous Praxis release.
 
 An OpenHands version number does not determine the Praxis version number.
+
+## Published artifacts
+
+Each release publishes one multi-architecture amd64/arm64 image tagged with the
+Praxis version. Stable releases additionally update `latest`. No PR, branch, SHA
+or architecture-suffixed package tags are published. `main` pushes only validate.
+The image supports complete, backend-only and frontend-only launch modes.
+
+The release attaches the native npm archive and `image.txt` containing the source
+commit and image digest. The inherited package identity is retained inside the
+archive; there is no publication to the upstream npm namespace.
+
+Publication is sequential, not transactional: if GitHub Release creation fails
+after GHCR publication, inspect the existing image before retrying. Do not move
+a released version tag to a different commit. See
+[distribution](../distribution/README.md) for commands and workflow responsibilities.

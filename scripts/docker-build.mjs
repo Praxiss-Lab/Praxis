@@ -23,6 +23,10 @@ const config = JSON.parse(
   readFileSync(join(projectRoot, "config", "defaults.json"), "utf-8"),
 );
 
+const praxisVersion = readFileSync(
+  join(projectRoot, "PRAXIS_VERSION"),
+  "utf8",
+).trim();
 const agentServerImage = `${config.images.agentServer}:${config.versions.agentServer}-python`;
 const agentServerVersion = config.versions.agentServer;
 const automationVersion = config.versions.automation;
@@ -56,6 +60,10 @@ const cmd = [
   `AUTOMATION_VERSION=${automationVersion}`,
   "--build-arg",
   `VITE_BASE_PATH=${canvasBasePath}`,
+  "--build-arg",
+  `PRAXIS_VERSION=${praxisVersion}`,
+  "--build-arg",
+  `AGENT_CANVAS_VERSION=${config.versions.agentCanvas}`,
   "-t",
   tag,
   ...extraArgs,

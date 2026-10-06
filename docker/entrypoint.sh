@@ -61,6 +61,24 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 set -uo pipefail
 
+PRAXIS_MODE="${PRAXIS_MODE:-all}"
+if [ "$#" -gt 1 ]; then
+  echo "usage: entrypoint.sh [--frontend-only|--backend-only|--all]" >&2
+  exit 2
+fi
+case "${1:-}" in
+  '') ;;
+  --frontend-only) PRAXIS_MODE=frontend ;;
+  --backend-only) PRAXIS_MODE=backend ;;
+  --all) PRAXIS_MODE=all ;;
+  *) echo "Unknown mode argument: $1" >&2; exit 2 ;;
+esac
+case "$PRAXIS_MODE" in
+  all|backend) ;;
+  frontend) exec bash /opt/agent-canvas/frontend-entrypoint.sh ;;
+  *) echo "PRAXIS_MODE must be all, frontend or backend" >&2; exit 2 ;;
+esac
+
 log() { printf '[agent-canvas] %s\n' "$*"; }
 log_error() { printf '[agent-canvas] ERROR: %s\n' "$*" >&2; }
 
@@ -226,6 +244,7 @@ fi
 # header for authentication.  Default OPENHANDS_AUTOMATION_API_KEY to the
 # API key so a single credential secures the whole stack.
 EFFECTIVE_SESSION_KEY="${OH_SESSION_API_KEYS_0:-${LOCAL_BACKEND_API_KEY:-}}"
+export OH_SESSION_API_KEYS_0="$EFFECTIVE_SESSION_KEY"
 if [ -z "$EFFECTIVE_SESSION_KEY" ]; then
   log "ERROR: No session API key available — cannot configure automation auth"
   exit 1
@@ -383,7 +402,35 @@ wait_for_port "$AGENT_SERVER_PORT" "Agent Server" 60 &
 WAIT_PID1=$!
 wait_for_port "$AUTOMATION_PORT" "Automation Server" 60 &
 WAIT_PID2=$!
-wait "$WAIT_PID1" "$WAIT_PID2"
+if ! wait "$WAIT_PID1" || ! wait "$WAIT_PID2"; then
+  log_error "Required backend did not become ready"
+  exit 1
+fi
+
+# API ingress only: no frontend HTML and no session-key injection.
+if [ "$PRAXIS_MODE" = backend ]; then
+  RUNTIME_SERVICES_INFO="$(node /opt/agent-canvas/runtime-services-info.mjs \
+    --mode docker:backend --agent-host-alias 127.0.0.1 \
+    --agent-server-url "$AGENT_SERVER_URL" \
+    --automation-url "$AUTOMATION_BASE_URL")"
+  BACKEND_ROUTE_ARGS=()
+  for prefix in /api /server_info /sockets /alive /health /ready /docs /redoc /openapi.json; do
+    BACKEND_ROUTE_ARGS+=(--route "$prefix=http://127.0.0.1:${AGENT_SERVER_PORT}")
+  done
+  BACKEND_EDITOR_ARGS=()
+  if [ "${OH_CANVAS_ENABLE_VSCODE:-false}" = true ]; then
+    BACKEND_EDITOR_ARGS=(--route "$VSCODE_ROUTE" --no-referrer-prefix "$VSCODE_BASE_PATH")
+  fi
+  node /opt/agent-canvas/ingress.mjs --port "$PORT" --host :: \
+    --route "/api/automation=http://127.0.0.1:${AUTOMATION_PORT}" \
+    "${BACKEND_ROUTE_ARGS[@]}" "${BACKEND_EDITOR_ARGS[@]}" \
+    --runtime-services-info "$RUNTIME_SERVICES_INFO" &
+  INGRESS_PID=$!
+  PIDS+=("$INGRESS_PID")
+  log "Backend-only API on port $PORT"
+  wait "$INGRESS_PID"
+  exit $?
+fi
 
 # ── 4. Start static server (frontend + proxy) ────────────────────────────────
 log "Starting frontend + proxy on port $PORT..."
