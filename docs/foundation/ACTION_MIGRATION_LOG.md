@@ -140,3 +140,20 @@ Verified image namespace:
 The inherited PR-summary generator initially still displayed the OpenHands GHCR
 package hyperlink even though the actual image value was already Praxis. The
 workflow was corrected so future summaries link to the Praxis package page.
+
+
+## Praxis runtime smoke gate
+
+A Praxis-owned runtime smoke test was added:
+
+- script: `scripts/praxis/smoke.sh`;
+- workflow: `.github/workflows/praxis-smoke.yml`.
+
+The smoke gate builds the application, checks CLI metadata commands, starts the
+source distribution with `--frontend-only`, performs a real HTTP request, and
+verifies that the process remains alive after serving the application.
+
+This is intentionally lighter than the full mock-LLM E2E suite. Its purpose is
+to catch packaging/startup/runtime regressions quickly on every Praxis PR.
+
+Status at creation: `IN VERIFICATION`.
