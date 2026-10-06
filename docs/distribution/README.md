@@ -101,8 +101,11 @@ Praxis artifact.
   equal to `PRAXIS_VERSION`, confirmation `RELEASE`. It verifies the dispatched
   commit, builds native artifacts, tests Docker, calls Docker publication directly,
   and creates the GitHub release on that exact commit.
-- **Docker Release Image (`docker.yml`):** reusable publication job called by the
-  release workflow. Publishes one amd64/arm64 image as
+- **Docker Release Image (`docker.yml`):** reusable publication workflow called by
+  the release workflow. Builds amd64 and arm64 in parallel on native GitHub
+  runners (`ubuntu-24.04` / `ubuntu-24.04-arm`), with separate architecture caches.
+  A final job combines this run's image digests, preserving provenance/SBOM, and
+  publishes one amd64/arm64 image as
   `ghcr.io/emilio-01-t/praxis:<version>`; stable versions also get `latest`.
 - **Mock-LLM Docker E2E:** optional manual test of an explicitly selected published
   release image.

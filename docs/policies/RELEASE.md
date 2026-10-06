@@ -63,8 +63,10 @@ automatically publish or advance Praxis.
 
 ## Published artifacts
 
-Each release publishes one multi-architecture amd64/arm64 image tagged with the
-Praxis version. Stable releases additionally update `latest`. No PR, branch, SHA
+Each release builds amd64 and arm64 in parallel on native runners, using
+separate BuildKit cache scopes. Architecture results are pushed by digest without
+architecture tags; a dependent job combines their exact digests into one
+multi-architecture image tagged with the Praxis version. Stable releases additionally update `latest`. No PR, branch, SHA
 or architecture-suffixed package tags are published. `main` pushes only validate.
 The image supports complete, backend-only and frontend-only launch modes.
 
