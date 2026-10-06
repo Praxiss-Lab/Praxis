@@ -19,11 +19,13 @@ product development.
 | Branding/compatibility boundary | VERIFIED | `docs/foundation/BRANDING_AND_COMPATIBILITY.md` |
 | Inherited Actions audit | VERIFIED | `docs/foundation/ACTION_MIGRATION_LOG.md` |
 | OpenHands organization write/publish workflows isolated | VERIFIED | disabled/manualized Foundation workflow changes |
-| Praxis automatic CI | IN VERIFICATION | `.github/workflows/praxis-ci.yml` |
+| Praxis automatic CI | VERIFIED | main push run `37453687805` succeeded |
 | Upstream compatibility CI | VERIFIED AS DESIGN | manual-only `.github/workflows/ci.yml` |
 | Praxis GHCR target | VERIFIED | `ghcr.io/emilio-01-t/praxis` |
-| Praxis-specific compatibility smoke tests | VERIFIED | Praxis Smoke run `37451672246`: build, CLI metadata, frontend startup, HTTP response all passed |
-| Container build/publish evidence | VERIFIED | Docker run `37444356264`: amd64 + arm64 build/push, multi-arch manifest, consolidation succeeded |
+| Praxis-specific compatibility smoke tests | VERIFIED | main push run `37453687808` succeeded |
+| Container build/publish evidence | VERIFIED | main push Docker run `37453688064` succeeded after PR verification run `37444356264` |
+| Mock-LLM browser E2E | IN VERIFICATION | main run `37453687970` failed 8/73 on first attempt; exact rerun in progress to classify regression vs flakiness |
+| Mock-LLM Docker E2E | IN VERIFICATION | run `37454500619` currently validating the published Praxis image |
 | Deployment contract | VERIFIED AS DESIGN | `DEPLOYMENT_AND_ROLLBACK.md` |
 | Deploy Praxis build to target VM | PENDING | requires target VM execution |
 | Runtime smoke test on target VM | PENDING | requires target VM execution |
@@ -32,15 +34,16 @@ product development.
 | Main protection / required checks | PENDING | repository rules must be configured after final CI check names are stable |
 | Initial development roadmap | PENDING | define after Foundation infrastructure is stable |
 
-## Transitional PR note
+## Bootstrap merge completed
 
-Foundation PR #2 can still receive failures from inherited
-`pull_request_target` workflows because those workflows execute from the
-current base branch (`main`). Their disabled definitions on the Foundation
-branch cannot take effect for that same PR.
+Foundation PR #2 was merged into `main` as commit
+`a7a89c495a9fb105e2a6c42c9423cc51d7b83e39`.
 
-This is documented in `ACTION_MIGRATION_LOG.md` and must not be confused with
-Praxis CI/application failure.
+The inherited `pull_request_target` failures seen on the bootstrap PR are
+historical transition evidence. The disabled Praxis definitions are now present
+on `main` and govern future pull requests.
+
+Post-merge runtime verification continues on this ledger.
 
 ## Exit condition
 
