@@ -1,33 +1,35 @@
 <a name="readme-top"></a>
 
 <div align="center">
-  <img src="https://assets.openhands.dev/logo-whitebackground.png" alt="OpenHands logo" width="340">
-  <h1 align="center" style="border-bottom: none">Agent Canvas</h1>
+  <h1 align="center">Praxis</h1>
   <p align="center">
-    <strong>The self-hosted developer control center for coding agents and automations.</strong>
+    <strong>AI-Driven Development</strong>
   </p>
   <p align="center">
-    Run OpenHands, Claude Code, Codex, Gemini, or any ACP-compatible agent across local, remote, and cloud backends.
+    An independently maintained, MIT-licensed fork of OpenHands Agent Canvas.
   </p>
 </div>
-<div align="center">
-  <a href="https://github.com/OpenHands/incubator-program"><img src="https://img.shields.io/badge/status-beta-blue?style=for-the-badge" alt="Project status beta"></a>
-  <a href="https://github.com/OpenHands/OpenHands/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/OpenHands/OpenHands/ci.yml?branch=main&style=for-the-badge" alt="CI status"></a>
-  <a href="https://www.npmjs.com/package/@openhands/agent-canvas"><img src="https://img.shields.io/npm/v/%40openhands%2Fagent-canvas?style=for-the-badge&logo=npm" alt="npm version"></a>
-  <a href="https://docs.openhands.dev/openhands/usage/agent-canvas/backends"><img src="https://img.shields.io/badge/Documentation-000?logo=googledocs&logoColor=FFE165&style=for-the-badge" alt="Documentation"></a>
-  <a href="https://go.openhands.dev/slack"><img src="https://img.shields.io/badge/Slack-Join%20the%20community-611f69?logo=slack&logoColor=white&style=for-the-badge" alt="Join us on Slack"></a>
-</div>
-<div align="center">
-  <a href="#quickstart">Quickstart</a> |
-  <a href="./docs/README.md">Docs</a> |
-  <a href="./docs/SELF_HOSTING.md">Self-Hosting</a> |
-  <a href="https://docs.openhands.dev/openhands/usage/agent-canvas/acp-agents">ACP Agents</a> |
-  <a href="https://docs.openhands.dev/openhands/usage/agent-canvas/prebuilt-automations">Automations</a> |
-  <a href="https://go.openhands.dev/slack">Slack</a>
-</div>
-<p align="center">
-  <img src="https://assets.openhands.dev/screenshot/automation-preview.png" alt="Agent Canvas automation preview" width="100%">
-</p>
+
+> [!IMPORTANT]
+> Praxis is currently in its **Fork Foundation Phase**. The product code still intentionally preserves many OpenHands internal names and compatibility surfaces while Praxis establishes its own CI, releases, deployment path, and controlled upstream integration workflow.
+
+## Praxis and OpenHands
+
+Praxis is based on [OpenHands/OpenHands](https://github.com/OpenHands/OpenHands). OpenHands remains the upstream source; Praxis `main` is the source of truth for this fork.
+
+Upstream changes are **not merged automatically**. They are reviewed and integrated according to [the Praxis Upstream Integration Policy](docs/policies/UPSTREAM_INTEGRATION.md).
+
+Foundation status and policies:
+
+- [Fork Foundation](docs/foundation/README.md)
+- [Upstream baseline](docs/upstream/BASELINE.md)
+- [Upstream sync log](docs/upstream/SYNC_LOG.md)
+- [Engineering policy](docs/policies/ENGINEERING.md)
+- [Versioning policy](docs/policies/VERSIONING.md)
+- [Inherited workflow audit](docs/foundation/WORKFLOW_AUDIT.md)
+
+The original OpenHands documentation below is retained during Foundation because the current codebase remains upstream-compatible. It will be progressively adapted where Praxis intentionally diverges.
+
 <hr>
 
 OpenHands Agent Canvas turns your coding agents into a self-hosted, always-on engineering team. It's a developer control center for starting conversations and automating everyday tasks — like generating reports that publish to Slack or automatically decomposing GitHub issues into tasks.
