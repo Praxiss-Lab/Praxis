@@ -83,8 +83,9 @@ built from this checkout. Install that downloaded archive with
 `npm install -g /path/to/package.tgz`, then use `agent-canvas` and its mode flags.
 Node 24+ and `uv` are required for the native stack.
 
-The npm package name `@openhands/agent-canvas`, binary `agent-canvas`, and inherited
-package version remain compatibility metadata. Installing that name from npm
+The npm package name `@openhands/agent-canvas` and binary `agent-canvas` remain
+unchanged; its version matches `PRAXIS_VERSION`, starting at `1.25.0`.
+Installing that name from npm
 fetches upstream OpenHands, not this Praxis fork. Praxis does not publish to the
 upstream npm namespace. The GitHub release and `PRAXIS_VERSION` identify the
 Praxis artifact.

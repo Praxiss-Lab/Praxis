@@ -2,7 +2,8 @@
 
 Status: active
 
-Praxis releases are independent from OpenHands releases.
+Praxis continues the Agent Canvas version line, starting at `1.25.0`.
+Release publication remains independent from OpenHands.
 
 ## Source of version truth
 
@@ -10,8 +11,9 @@ The Praxis product version is stored in:
 
 `PRAXIS_VERSION`
 
-The inherited Agent Canvas version in `package.json` remains upstream
-compatibility metadata until Praxis intentionally migrates the package identity.
+Keep the native package version in `package.json` / `package-lock.json` and
+`versions.agentCanvas` in `config/defaults.json` aligned with `PRAXIS_VERSION`.
+Agent Server and Automation retain their own dependency versions.
 
 ## Release tag
 
@@ -21,9 +23,9 @@ A Praxis release uses:
 
 Examples:
 
-- `v0.1.0-dev`
-- `v0.1.0-alpha.1`
-- `v0.1.0`
+- `v1.25.0`
+- `v1.25.1`
+- `v1.26.0-alpha.1`
 
 ## Release authority
 
@@ -55,7 +57,9 @@ Release creation; no tag-event cascade is required. The registry target is:
 The release notes and upstream sync log should identify material OpenHands
 changes adopted since the previous Praxis release.
 
-An OpenHands version number does not determine the Praxis version number.
+The first Praxis release retains the source baseline version `1.25.0`. Future
+Praxis versions follow semantic versioning; an upstream release does not
+automatically publish or advance Praxis.
 
 ## Published artifacts
 
