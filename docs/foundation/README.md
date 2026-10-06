@@ -1,11 +1,15 @@
 # Praxis Fork Foundation
 
-Status: IN PROGRESS
+Status: FOUNDATION_READY — closed 2026-10-06
 
 Praxis is being established as an independently maintained MIT-licensed fork
 of OpenHands. The purpose of the Foundation Phase is to make the fork stable,
 auditable, testable, deployable, and safe to evolve before structural product
 development begins.
+
+The owner accepted repository setup and local laptop operation as the closure
+scope. VM execution, rollback and main protection are deferred follow-ups, not
+verified prerequisites. See `LOCAL_RUNTIME_EVIDENCE.md` and `EXTERNAL_GATES.md`.
 
 ## Foundation objectives
 
@@ -34,6 +38,9 @@ are not Foundation Gate prerequisites.
 ## Foundation documents
 
 - `FOUNDATION_GATE.md` — authoritative readiness ledger.
+- `LOCAL_RUNTIME_EVIDENCE.md` — executed local checks and operator confirmations.
+- `EXTERNAL_GATES.md` — explicitly deferred operational follow-ups.
+- `INITIAL_DEVELOPMENT_ROADMAP.md` — revisable initial development proposal.
 - `WORKFLOW_AUDIT.md` — inherited Actions classification.
 - `ACTION_MIGRATION_LOG.md` — concrete automation migration history and transitional failures.
 - `BRANDING_AND_COMPATIBILITY.md` — Praxis branding vs inherited technical identifiers.
@@ -69,7 +76,7 @@ are not treated as Praxis product evidence.
 Stage A can merge only after the new Praxis-owned CI and container pipeline
 have produced acceptable evidence.
 
-### Stage B — post-merge verification
+### Stage B — original post-merge plan (revised at closure)
 
 After Stage A lands on `main`:
 
@@ -82,7 +89,10 @@ After Stage A lands on `main`:
 7. runtime smoke and rollback behavior are verified;
 8. the initial product-development roadmap is accepted.
 
-Only then may the Foundation Gate become `FOUNDATION_READY`.
+The original plan above included VM, rollback and branch protection. On
+2026-10-06 the owner revised the exit scope: repository verification plus
+basic application operation and restart persistence on the laptop suffice.
+Those three operational items remain DEFERRED, with their procedures retained.
 
 ## Foundation Gate
 

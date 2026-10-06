@@ -42,7 +42,7 @@ Result: **SUCCESS**
 
 The retained SDK consistency check passed on the merged Foundation state.
 
-## E2E under investigation
+## Initial E2E investigation (historical)
 
 ### Mock-LLM browser E2E
 
@@ -64,11 +64,8 @@ Because the failures were broad rather than concentrated around one Praxis
 Foundation code change, the exact failed workflow was rerun without code
 changes.
 
-Classification remains:
-
-`IN_VERIFICATION`
-
-until the rerun completes.
+Initial classification was `IN_VERIFICATION`; the completed rerun result
+is recorded below.
 
 ### Mock-LLM Docker E2E
 
@@ -89,8 +86,9 @@ After E2E classification, the remaining major external evidence is:
 4. perform and verify rollback;
 5. finalize the initial post-Foundation development roadmap.
 
-No `FOUNDATION_READY` declaration is allowed before those required gates are
-resolved.
+This was the original exit plan. On 2026-10-06 the owner accepted repository
+verification and local basic runtime/persistence checks as the closure scope.
+VM, rollback and main protection are DEFERRED; see `FOUNDATION_GATE.md`.
 
 
 ## Upstream baseline comparison
@@ -122,3 +120,25 @@ Praxis browser-E2E regression was detected.
 Final classification:
 
 `BASELINE_LIMITATION / NO_NEW_PERSISTENT_REGRESSION_DETECTED`
+
+## Latest repository checks and local closure
+
+Repository head inspected: `429e56a142280c451e856fb1331725bfe8113520`.
+
+| Workflow | Run | Result |
+| --- | --- | --- |
+| Praxis CI | 37474386465 | SUCCESS |
+| Praxis Smoke | 37474386481 | SUCCESS |
+| Docker build/publish | 37474386515 | SUCCESS |
+| Browser Mock-LLM | 37474386414 | FAILURE: six failures matching documented baseline scenarios |
+| Docker Mock-LLM | 37474980288 | INCOMPLETE: 20-minute timeout; 3 failed, 4 flaky, 49 passed, 17 did not run |
+
+The latest Docker run does not establish a complete non-regression result.
+Its three final failing scenarios were already documented baseline failures;
+the additional cross-connect failure passed on retry. Remaining unexecuted
+tests must not be reported as passed.
+
+The local laptop tested the earlier pinned `31754b2` image, not `429e56a`.
+Executed checks and operator-confirmed UI results are recorded in
+`LOCAL_RUNTIME_EVIDENCE.md`. Owner-approved Foundation closure does not assert
+that inherited E2E failures or deferred operational checks have been resolved.

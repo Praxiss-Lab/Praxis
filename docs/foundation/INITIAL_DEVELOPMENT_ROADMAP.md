@@ -1,6 +1,10 @@
 # Praxis Initial Development Roadmap
 
-Status: FOUNDATION ROADMAP — initial ordering
+Status: DEVELOPMENT START ALLOWED — initial ordering subject to owner review
+
+Foundation closed on 2026-10-06 for repository setup and local basic runtime
+verification. See `FOUNDATION_GATE.md`. This ordering remains a revisable
+proposal; closure does not approve every architecture or implementation choice.
 
 This roadmap begins **after** `FOUNDATION_READY`.
 

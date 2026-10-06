@@ -1,6 +1,10 @@
 # Praxis Target VM Deployment Runbook
 
-Status: READY FOR EXECUTION — remote access required
+Status: DEFERRED BY OWNER — NOT EXECUTED
+
+Deferred on 2026-10-06 after local laptop verification. This runbook is retained
+for later execution and does not block the agreed Foundation closure. See
+`FOUNDATION_GATE.md` and `LOCAL_RUNTIME_EVIDENCE.md`.
 
 This runbook is the final Foundation procedure for deploying the independently
 built Praxis image to the existing target VM and proving rollback.

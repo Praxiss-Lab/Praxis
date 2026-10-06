@@ -1,6 +1,9 @@
 # Main Protection Plan
 
-Status: READY FOR MANUAL GITHUB CONFIGURATION
+Status: DEFERRED BY OWNER — not activated
+
+Deferred on 2026-10-06; does not block the accepted Foundation closure scope.
+The configuration below remains a future plan.
 
 Praxis currently has no repository rulesets configured for `main`.
 

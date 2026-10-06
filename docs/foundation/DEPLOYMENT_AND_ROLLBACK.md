@@ -1,6 +1,10 @@
 # Praxis Foundation Deployment and Rollback
 
-Status: DESIGN COMPLETE — runtime verification pending
+Status: LOCAL BASIC RUNTIME VERIFIED — VM / rollback deferred
+
+Foundation closed on 2026-10-06 for the owner-approved repository/local-runtime
+scope. See `LOCAL_RUNTIME_EVIDENCE.md`. The production procedure below remains
+unexecuted and does not block that closure.
 
 ## Objective
 
@@ -36,7 +40,7 @@ Do not use `latest` as the long-term production rollback anchor.
 
 ## Existing VM/Dokploy environment
 
-The current self-hosted environment uses Dokploy-managed Compose and includes
+The previously documented self-hosted environment uses Dokploy-managed Compose and includes
 separate Agent Canvas/Praxis, Docker-in-Docker/Sysbox, and Preview Gateway
 services.
 
@@ -55,8 +59,8 @@ reconfigure:
 
 ## Deployment verification
 
-A Foundation deployment is VERIFIED only when all of the following have been
-observed on the target VM:
+A target VM deployment is VERIFIED only when all of the following have been
+observed on that VM:
 
 1. Dokploy/Compose resolves the intended Praxis image tag or digest;
 2. the running container image ID matches the intended image;
@@ -87,8 +91,8 @@ A valid rollback must not delete persistent volumes or project data.
 The repository can define and build the deployment path, but VM execution
 evidence must come from the actual target environment. Until that happens:
 
-`DEPLOYMENT_VERIFICATION = PENDING`
+`DEPLOYMENT_VERIFICATION = DEFERRED / NOT EXECUTED`
 
 and
 
-`ROLLBACK_VERIFICATION = PENDING`.
+`ROLLBACK_VERIFICATION = DEFERRED / NOT EXECUTED`.
