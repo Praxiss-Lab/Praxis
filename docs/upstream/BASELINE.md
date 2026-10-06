@@ -15,6 +15,8 @@ Recorded: 2026-10-06
 | Upstream package version | `1.25.0` |
 | OpenHands TypeScript client | `1.53.0` |
 | OpenHands extensions | `0.29.0` |
+| OpenHands automation | `1.19.0` |
+| Initial Praxis version | `0.1.0-dev` |
 | License | MIT |
 
 At the moment this baseline was recorded, Praxis `main` and upstream
