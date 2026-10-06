@@ -22,7 +22,7 @@ product development.
 | Praxis automatic CI | IN VERIFICATION | `.github/workflows/praxis-ci.yml` |
 | Upstream compatibility CI | VERIFIED AS DESIGN | manual-only `.github/workflows/ci.yml` |
 | Praxis GHCR target | VERIFIED | `ghcr.io/emilio-01-t/praxis` |
-| Praxis-specific compatibility smoke tests | IN VERIFICATION | `scripts/praxis/smoke.sh` + `.github/workflows/praxis-smoke.yml` added; successful run pending |
+| Praxis-specific compatibility smoke tests | VERIFIED | Praxis Smoke run `37451672246`: build, CLI metadata, frontend startup, HTTP response all passed |
 | Container build/publish evidence | VERIFIED | Docker run `37444356264`: amd64 + arm64 build/push, multi-arch manifest, consolidation succeeded |
 | Deployment contract | VERIFIED AS DESIGN | `DEPLOYMENT_AND_ROLLBACK.md` |
 | Deploy Praxis build to target VM | PENDING | requires target VM execution |
