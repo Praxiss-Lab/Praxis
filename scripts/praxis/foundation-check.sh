@@ -23,6 +23,10 @@ require_file docs/policies/UPSTREAM_INTEGRATION.md
 require_file docs/policies/VERSIONING.md
 require_file docs/policies/ENGINEERING.md
 require_file .github/workflows/praxis-ci.yml
+require_file scripts/praxis/deploy-compose.sh
+require_file scripts/praxis/rollback-compose.sh
+require_file scripts/praxis/target-smoke.sh
+require_file docs/foundation/TARGET_VM_RUNBOOK.md
 
 if grep -q 'ghcr.io/openhands/agent-canvas' .github/workflows/docker.yml; then
   echo "ERROR: Docker workflow still targets the OpenHands Agent Canvas registry" >&2
