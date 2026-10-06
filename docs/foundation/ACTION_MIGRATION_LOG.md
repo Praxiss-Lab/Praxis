@@ -157,3 +157,18 @@ This is intentionally lighter than the full mock-LLM E2E suite. Its purpose is
 to catch packaging/startup/runtime regressions quickly on every Praxis PR.
 
 Status at creation: `IN VERIFICATION`.
+
+
+### Verified smoke evidence
+
+Praxis Smoke run `37451672246` completed successfully.
+
+Verified on the Foundation branch:
+
+- application build;
+- CLI `--version`, `--info`, and `--help`;
+- source distribution startup in `--frontend-only` mode;
+- successful HTTP response from the running process;
+- process remained alive after serving the request.
+
+Result: `VERIFIED`.
