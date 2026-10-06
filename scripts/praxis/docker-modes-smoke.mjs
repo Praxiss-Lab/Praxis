@@ -130,7 +130,7 @@ try {
     "docker:backend",
     "Frontend must preserve backend metadata",
   );
-  const frontendProcesses = docker("top", frontend.name, "-eo", "args");
+  const frontendProcesses = docker("top", frontend.name, "-eo", "pid,args");
   assert.ok(
     !/openhands-agent-server|uvicorn openhands\.automation/.test(
       frontendProcesses,

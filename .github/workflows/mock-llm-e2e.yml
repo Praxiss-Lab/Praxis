@@ -3,7 +3,7 @@ name: Mock-LLM E2E Tests
 on:
   push:
     branches: [main]
-    paths-ignore: ['docs/**', '**/*.md', 'LICENSE', 'NOTICE']
+    paths-ignore: ['.pr/**', 'docs/**', '**/*.md', 'LICENSE', 'NOTICE']
   workflow_dispatch:
 
 concurrency:

@@ -3,10 +3,10 @@ name: Praxis Smoke
 on:
   pull_request:
     branches: [main]
-    paths-ignore: ['docs/**', '**/*.md', 'LICENSE', 'NOTICE']
+    paths-ignore: ['.pr/**', 'docs/**', '**/*.md', 'LICENSE', 'NOTICE']
   push:
     branches: [main]
-    paths-ignore: ['docs/**', '**/*.md', 'LICENSE', 'NOTICE']
+    paths-ignore: ['.pr/**', 'docs/**', '**/*.md', 'LICENSE', 'NOTICE']
   workflow_dispatch:
 
 concurrency:
