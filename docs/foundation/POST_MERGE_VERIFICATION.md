@@ -107,3 +107,18 @@ Detailed classification is recorded in
 This means a fully green inherited Mock-LLM suite is not a truthful property of
 the selected upstream baseline. Praxis therefore tracks non-regression relative
 to baseline separately from Praxis-owned CI/smoke verification.
+
+
+### Browser Mock-LLM rerun result
+
+Praxis run `37453687970`, attempt 2: **FAILURE**
+
+The exact rerun completed with 6 failing scenarios. The extra cross-connect
+timeout observed only on attempt 1 did not recur.
+
+Compared with the upstream baseline's 7 failing scenarios, no new persistent
+Praxis browser-E2E regression was detected.
+
+Final classification:
+
+`BASELINE_LIMITATION / NO_NEW_PERSISTENT_REGRESSION_DETECTED`
