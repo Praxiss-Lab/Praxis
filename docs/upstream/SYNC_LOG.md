@@ -2,15 +2,6 @@
 
 This file records deliberate upstream-integration decisions for Praxis.
 
-## Rules
-
-- Fetching or observing upstream does not change Praxis.
-- Upstream changes are never merged automatically into Praxis `main`.
-- Material integrations are evaluated on an integration branch.
-- Accepted changes must pass the applicable Praxis verification gates.
-- Partial adaptations and rejected changes must be recorded when they matter
-  to future maintainers.
-
 ## Entries
 
 ### 2026-10-06 — Initial fork baseline

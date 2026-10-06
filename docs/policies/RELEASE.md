@@ -43,7 +43,7 @@ Stable releases are versions without pre-release metadata.
 
 ## Verification before release
 
-The release workflow must run the Praxis Foundation/static checks and core
+The release workflow must run the repository static checks and core
 application verification before creating a tag/release.
 
 After verification, the release workflow calls the reusable Docker workflow

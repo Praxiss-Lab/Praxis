@@ -4,17 +4,9 @@ Praxis is an independently maintained MIT-licensed fork of OpenHands.
 
 ## Before changing code
 
-Read:
-
-- `docs/policies/ENGINEERING.md`
-- `docs/policies/UPSTREAM_INTEGRATION.md`
-- `docs/upstream/BASELINE.md`
-
-For Foundation work, also read:
-
-- `docs/foundation/README.md`
-- `docs/foundation/ACTION_MIGRATION_LOG.md`
-- `docs/foundation/FOUNDATION_GATE.md`
+Read `AGENTS.md` and the contributor skills relevant to the affected code.
+See [distribution](docs/distribution/README.md) for supported launch modes and
+[release policy](docs/policies/RELEASE.md) for publication.
 
 ## Branches
 
@@ -24,7 +16,6 @@ Use short-lived branches:
 - `fix/*`
 - `refactor/*`
 - `integration/upstream-*`
-- `foundation/*` while the Foundation Phase is active
 
 ## Pull requests
 
@@ -40,7 +31,7 @@ A pull request should explain:
 ## Verification
 
 Run the checks appropriate to the change. The default Praxis CI includes
-foundation invariants, generated i18n declarations, typecheck, lint, unit
+repository invariants, generated i18n declarations, typecheck, lint, unit
 tests, application build, library build, and package-content verification.
 
 Additional integration, browser/E2E, container, security, migration, or runtime
@@ -50,7 +41,7 @@ checks are required when the affected boundary warrants them.
 
 Do not merge OpenHands changes directly into Praxis `main`.
 
-Use the upstream integration process and record material decisions in
+Review and test adopted upstream changes, and record their provenance in
 `docs/upstream/SYNC_LOG.md`.
 
 ## License

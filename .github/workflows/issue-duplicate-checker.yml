@@ -1,6 +1,6 @@
 name: Issue duplicate automation
 
-# Disabled during the Praxis Fork Foundation.
+# Inherited workflow disabled in Praxis.
 # The inherited workflow depends on OpenHands Cloud/API credentials and issue policy.
 
 on:
@@ -12,4 +12,4 @@ jobs:
   disabled:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Disabled in Praxis Foundation; see docs/foundation/WORKFLOW_AUDIT.md."
+      - run: echo "Inherited workflow disabled in Praxis."

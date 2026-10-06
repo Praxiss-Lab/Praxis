@@ -1,6 +1,6 @@
 name: Publish to npm
 
-# Disabled during the Praxis Fork Foundation.
+# Inherited workflow disabled in Praxis.
 # Praxis does not publish the inherited @openhands/agent-canvas package.
 # The original upstream implementation remains available in Git history.
 
@@ -15,4 +15,4 @@ jobs:
     steps:
       - run: |
           echo "This inherited OpenHands workflow is intentionally disabled in Praxis."
-          echo "See docs/foundation/WORKFLOW_AUDIT.md."
+          echo "See docs/policies/RELEASE.md for Praxis release publication."

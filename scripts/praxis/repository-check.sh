@@ -15,18 +15,15 @@ require_file() {
 require_file LICENSE
 require_file NOTICE
 require_file PRAXIS_VERSION
-require_file docs/foundation/README.md
-require_file docs/foundation/WORKFLOW_AUDIT.md
 require_file docs/upstream/BASELINE.md
 require_file docs/upstream/SYNC_LOG.md
-require_file docs/policies/UPSTREAM_INTEGRATION.md
 require_file docs/policies/VERSIONING.md
-require_file docs/policies/ENGINEERING.md
+require_file docs/policies/RELEASE.md
+require_file docs/distribution/README.md
 require_file .github/workflows/praxis-ci.yml
 require_file scripts/praxis/deploy-compose.sh
 require_file scripts/praxis/rollback-compose.sh
 require_file scripts/praxis/target-smoke.sh
-require_file docs/foundation/TARGET_VM_RUNBOOK.md
 
 if grep -q 'ghcr.io/openhands/agent-canvas' .github/workflows/docker.yml; then
   echo "ERROR: Docker workflow still targets the OpenHands Agent Canvas registry" >&2
@@ -43,8 +40,8 @@ else
 fi
 
 if [ "$fail" -ne 0 ]; then
-  echo "Foundation static checks FAILED" >&2
+  echo "Repository static checks FAILED" >&2
   exit 1
 fi
 
-echo "Foundation static checks PASSED"
+echo "Repository static checks PASSED"

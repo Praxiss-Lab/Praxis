@@ -13,7 +13,7 @@ if [[ -z "$TARGET_IMAGE" ]]; then
 fi
 
 if [[ "$TARGET_IMAGE" != ghcr.io/emilio-01-t/praxis:sha-* && "$TARGET_IMAGE" != ghcr.io/emilio-01-t/praxis@sha256:* ]]; then
-  echo "error: Foundation deployment requires an immutable Praxis sha tag or digest" >&2
+  echo "error: Deployment requires an immutable Praxis sha tag or digest" >&2
   exit 2
 fi
 

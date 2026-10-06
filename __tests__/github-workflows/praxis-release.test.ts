@@ -35,7 +35,7 @@ describe("Praxis release workflow", () => {
   it("verifies the repository before creating a release", () => {
     const workflow = read(".github/workflows/praxis-release.yml");
 
-    expect(workflow).toContain("bash scripts/praxis/foundation-check.sh");
+    expect(workflow).toContain("bash scripts/praxis/repository-check.sh");
     expect(workflow).toContain("npm run typecheck");
     expect(workflow).toContain("npm run lint");
     expect(workflow).toContain("npm test");

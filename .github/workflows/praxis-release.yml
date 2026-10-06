@@ -42,8 +42,8 @@ jobs:
           RELEASE_VERSION: ${{ inputs.version }}
         run: node scripts/praxis/release-inputs.mjs
 
-      - name: Verify foundation invariants
-        run: bash scripts/praxis/foundation-check.sh
+      - name: Verify repository invariants
+        run: bash scripts/praxis/repository-check.sh
 
       - name: Set up Node.js
         uses: actions/setup-node@v7

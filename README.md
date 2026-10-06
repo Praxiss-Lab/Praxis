@@ -2,61 +2,22 @@
 
 **AI-Driven Development**
 
-Praxis is an independent, MIT-licensed fork of [OpenHands](https://github.com/OpenHands/OpenHands).
-The fork is currently in its **Foundation Phase**: upstream integration, CI,
-container publication, deployment, rollback, and engineering governance are
-being made Praxis-owned before structural product development begins.
+Praxis is an independently maintained, MIT-licensed fork of
+[OpenHands Agent Canvas](https://github.com/OpenHands/OpenHands).
+It supports native execution and Docker, with complete or separate frontend and
+backend modes.
 
-> Praxis is not affiliated with or endorsed by the OpenHands project. OpenHands
-> remains the upstream source from which selected changes may be evaluated and
-> integrated under the Praxis upstream integration policy.
+Praxis is not affiliated with or endorsed by OpenHands. The original package
+name and launcher are retained for compatibility.
 
-See:
-- [Fork Foundation](docs/foundation/README.md)
+- [Installation and launch modes](docs/distribution/README.md)
+- [Releases](docs/policies/RELEASE.md)
+- [Versioning](docs/policies/VERSIONING.md)
 - [Upstream baseline](docs/upstream/BASELINE.md)
-- [Upstream integration policy](docs/policies/UPSTREAM_INTEGRATION.md)
-- [Engineering policy](docs/policies/ENGINEERING.md)
-- [Actions migration log](docs/foundation/ACTION_MIGRATION_LOG.md)
-
----
-
-## Upstream Agent Canvas documentation
 
 <a name="readme-top"></a>
 
-<div align="center">
-  <h1 align="center">Praxis</h1>
-  <p align="center">
-    <strong>AI-Driven Development</strong>
-  </p>
-  <p align="center">
-    An independently maintained, MIT-licensed fork of OpenHands Agent Canvas.
-  </p>
-</div>
-
-> [!IMPORTANT]
-> Praxis is currently in its **Fork Foundation Phase**. The product code still intentionally preserves many OpenHands internal names and compatibility surfaces while Praxis establishes its own CI, releases, deployment path, and controlled upstream integration workflow.
-
-## Praxis and OpenHands
-
-Praxis is based on [OpenHands/OpenHands](https://github.com/OpenHands/OpenHands). OpenHands remains the upstream source; Praxis `main` is the source of truth for this fork.
-
-Upstream changes are **not merged automatically**. They are reviewed and integrated according to [the Praxis Upstream Integration Policy](docs/policies/UPSTREAM_INTEGRATION.md).
-
-Foundation status and policies:
-
-- [Fork Foundation](docs/foundation/README.md)
-- [Upstream baseline](docs/upstream/BASELINE.md)
-- [Upstream sync log](docs/upstream/SYNC_LOG.md)
-- [Engineering policy](docs/policies/ENGINEERING.md)
-- [Versioning policy](docs/policies/VERSIONING.md)
-- [Inherited workflow audit](docs/foundation/WORKFLOW_AUDIT.md)
-
-The original OpenHands documentation below is retained during Foundation because the current codebase remains upstream-compatible. It will be progressively adapted where Praxis intentionally diverges.
-
-<hr>
-
-OpenHands Agent Canvas turns your coding agents into a self-hosted, always-on engineering team. It's a developer control center for starting conversations and automating everyday tasks — like generating reports that publish to Slack or automatically decomposing GitHub issues into tasks.
+Praxis turns your coding agents into a self-hosted, always-on engineering team. It's a developer control center for starting conversations and automating everyday tasks — like generating reports that publish to Slack or automatically decomposing GitHub issues into tasks.
 
 It runs locally on your machine by default, but can connect to multiple “agent backends”, e.g. running agents in Docker containers, on VMs, or within your company infrastructure. You can optionally choose to run agents on OpenHands Cloud or OpenHands Enterprise infrastructure.
 
