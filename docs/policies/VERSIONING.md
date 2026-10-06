@@ -1,8 +1,9 @@
 # Praxis Versioning Policy
 
-Status: FOUNDATION POLICY — initial version
+Status: active
 
-Praxis uses its own product version independently from the version published by OpenHands.
+Praxis continues the OpenHands Agent Canvas version line, starting at `1.25.0`.
+Its release schedule remains independently maintained.
 
 ## Two version axes
 
@@ -15,11 +16,14 @@ They must never be conflated.
 
 ## Praxis version source
 
-During the Foundation Phase, the Praxis product version is stored in `PRAXIS_VERSION`.
+The Praxis product version is stored in `PRAXIS_VERSION`. The first release is
+`1.25.0`, matching the Agent Canvas source baseline; packaging work alone does
+not increment it.
 
-Initial value: `0.1.0-dev`.
-
-The inherited `package.json` version remains an upstream compatibility detail until packaging/publication is intentionally migrated to the Praxis namespace. This reduces unnecessary upstream merge conflicts during Foundation.
+Keep `package.json`, the root package versions in `package-lock.json`, and
+`config/defaults.json` (`versions.agentCanvas`) aligned with this version.
+The inherited npm package name and binary remain unchanged. Agent Server and
+Automation versions are dependency pins, not the Praxis release version.
 
 ## Release semantics
 
