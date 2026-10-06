@@ -120,3 +120,23 @@ dependencies until Praxis deliberately decides otherwise.
 No inherited workflow becomes authoritative merely because it exists in the
 fork. Automation authority must be explicitly accepted by Praxis and recorded
 here or in a successor policy document.
+
+
+## Verified container publication evidence
+
+GitHub Actions Docker run `37444356264` successfully completed the Praxis
+multi-architecture publication path for the Foundation branch:
+
+- amd64 build/push: success;
+- arm64 build/push: success;
+- multi-arch manifest merge: success;
+- consolidated build information: success;
+- PR image metadata update: success.
+
+Verified image namespace:
+
+`ghcr.io/emilio-01-t/praxis`
+
+The inherited PR-summary generator initially still displayed the OpenHands GHCR
+package hyperlink even though the actual image value was already Praxis. The
+workflow was corrected so future summaries link to the Praxis package page.
