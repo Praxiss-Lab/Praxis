@@ -1,17 +1,17 @@
 {
   "name": "@openhands/agent-canvas",
   "version": "1.25.0",
-  "description": "Agent Canvas UI for OpenHands - run AI coding agents with a visual interface",
+  "description": "Praxis AI-driven development interface, independently maintained from the OpenHands Agent Canvas codebase",
   "license": "MIT",
   "private": false,
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/OpenHands/OpenHands"
+    "url": "https://github.com/Emilio-01-T/Praxis"
   },
-  "homepage": "https://github.com/OpenHands/OpenHands#readme",
+  "homepage": "https://github.com/Emilio-01-T/Praxis#readme",
   "bugs": {
-    "url": "https://github.com/OpenHands/OpenHands/issues"
+    "url": "https://github.com/Emilio-01-T/Praxis/issues"
   },
   "bin": {
     "agent-canvas": "bin/agent-canvas.mjs"
