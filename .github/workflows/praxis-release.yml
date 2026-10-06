@@ -1,0 +1,99 @@
+name: Praxis Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Praxis version to release (must match PRAXIS_VERSION)"
+        required: true
+        type: string
+      confirm:
+        description: "Type RELEASE to confirm tag and GitHub Release creation"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: praxis-release
+  cancel-in-progress: false
+
+jobs:
+  verify-and-release:
+    name: Verify and create Praxis release
+    if: inputs.confirm == 'RELEASE'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Verify requested version
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected="$(tr -d '[:space:]' < PRAXIS_VERSION)"
+          if [ "$expected" != "${{ inputs.version }}" ]; then
+            echo "::error::Requested version '${{ inputs.version }}' does not match PRAXIS_VERSION '$expected'."
+            exit 1
+          fi
+          if ! [[ "$expected" =~ ^[0-9]+\.[0-9]+\.[0-9]+([+-][0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::PRAXIS_VERSION is not a supported semantic version: $expected"
+            exit 1
+          fi
+          echo "PRAXIS_RELEASE_VERSION=$expected" >> "$GITHUB_ENV"
+
+      - name: Verify foundation invariants
+        run: bash scripts/praxis/foundation-check.sh
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24.15"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate i18n declarations
+        run: npm run make-i18n
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build app
+        run: npm run build
+
+      - name: Ensure tag does not already exist
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="v$PRAXIS_RELEASE_VERSION"
+          if git rev-parse "$tag" >/dev/null 2>&1 || git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null 2>&1; then
+            echo "::error::Release tag $tag already exists."
+            exit 1
+          fi
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="v$PRAXIS_RELEASE_VERSION"
+          prerelease_flag=""
+          if [[ "$PRAXIS_RELEASE_VERSION" == *-* ]]; then
+            prerelease_flag="--prerelease"
+          fi
+          gh release create "$tag"             --target "${{ github.sha }}"             --title "Praxis $PRAXIS_RELEASE_VERSION"             --generate-notes             $prerelease_flag
