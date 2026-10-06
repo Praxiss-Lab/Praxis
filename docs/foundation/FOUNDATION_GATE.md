@@ -19,17 +19,17 @@ product development.
 | Branding/compatibility boundary | VERIFIED | `docs/foundation/BRANDING_AND_COMPATIBILITY.md` |
 | Inherited Actions audit | VERIFIED | `docs/foundation/ACTION_MIGRATION_LOG.md` |
 | OpenHands organization write/publish workflows isolated | VERIFIED | disabled/manualized Foundation workflow changes |
-| Praxis automatic CI | VERIFIED | main push run `37453687805` succeeded |
+| Praxis automatic CI | VERIFIED | main push runs `37453687805` and `37461832824` succeeded |
 | Upstream compatibility CI | VERIFIED AS DESIGN | manual-only `.github/workflows/ci.yml` |
 | Praxis GHCR target | VERIFIED | `ghcr.io/emilio-01-t/praxis` |
-| Praxis-specific compatibility smoke tests | VERIFIED | main push run `37453687808` succeeded |
-| Container build/publish evidence | VERIFIED | main push Docker run `37453688064` succeeded after PR verification run `37444356264` |
+| Praxis-specific compatibility smoke tests | VERIFIED | main push runs `37453687808` and `37461832885` succeeded |
+| Container build/publish evidence | VERIFIED | main push Docker runs `37453688064` and `37461832805` succeeded; latest immutable image `ghcr.io/emilio-01-t/praxis:sha-31754b2` |
 | Mock-LLM browser E2E | BASELINE LIMITATION / NO NEW PERSISTENT REGRESSION DETECTED | upstream baseline run `37418681772` failed 7; Praxis run `37453687970` failed 8 on attempt 1 and 6 on exact rerun, with the extra cross-connect timeout not recurring |
 | Mock-LLM Docker E2E | BASELINE LIMITATION / NO NEW REGRESSION DETECTED | Praxis run `37454500619` reproduced the same six failures as upstream baseline run `37419222494` |
-| Deployment contract | VERIFIED AS DESIGN | `DEPLOYMENT_AND_ROLLBACK.md` |
-| Deploy Praxis build to target VM | PENDING | requires target VM execution |
-| Runtime smoke test on target VM | PENDING | requires target VM execution |
-| Rollback test | PENDING | requires target VM execution |
+| Deployment contract | VERIFIED AS DESIGN | `DEPLOYMENT_AND_ROLLBACK.md` + `VM_DEPLOYMENT_RUNBOOK.md`; immutable target and rollback procedure defined |
+| Deploy Praxis build to target VM | PENDING / EXECUTION READY | runbook, immutable image and evidence ledger prepared; requires target VM terminal access |
+| Runtime smoke test on target VM | PENDING / EXECUTION READY | deterministic checklist prepared in `VM_DEPLOYMENT_RUNBOOK.md` and evidence ledger |
+| Rollback test | PENDING / EXECUTION READY | pre-state, runtime and rollback verification helpers prepared under `scripts/praxis/` |
 | Praxis release automation | VERIFIED | explicit `praxis-release.yml` plus static contract test validated by PR #3 Praxis CI |
 | Main protection / required checks | PENDING | repository rules must be configured after final CI check names are stable |
 | Initial development roadmap | VERIFIED / INITIAL ORDER ACCEPTED | `INITIAL_DEVELOPMENT_ROADMAP.md`; relevant AC items are re-evaluated only when each roadmap area begins |

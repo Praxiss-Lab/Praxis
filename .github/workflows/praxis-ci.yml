@@ -27,6 +27,9 @@ jobs:
       - name: Verify fork foundation invariants
         run: bash scripts/praxis/foundation-check.sh
 
+      - name: Validate Praxis shell helpers
+        run: bash -n scripts/praxis/*.sh
+
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
