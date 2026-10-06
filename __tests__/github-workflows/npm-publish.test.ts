@@ -13,27 +13,28 @@ function read(rel: string): string {
   return readFileSync(path.join(repoRoot, rel), "utf-8");
 }
 
-describe("npm publish workflow", () => {
-  it("uses the canonical GitHub repository in release metadata", () => {
+describe("Praxis repository and publishing policy", () => {
+  it("uses the Praxis GitHub repository in release/container metadata", () => {
     const packageJson = JSON.parse(read("package.json"));
     const dockerfile = read("docker/Dockerfile");
     const dockerWorkflow = read(".github/workflows/docker.yml");
 
     expect(packageJson.repository.url).toBe(
-      "https://github.com/OpenHands/OpenHands",
+      "https://github.com/Emilio-01-T/Praxis",
     );
     expect(packageJson.homepage).toBe(
-      "https://github.com/OpenHands/OpenHands#readme",
+      "https://github.com/Emilio-01-T/Praxis#readme",
     );
     expect(packageJson.bugs.url).toBe(
-      "https://github.com/OpenHands/OpenHands/issues",
+      "https://github.com/Emilio-01-T/Praxis/issues",
     );
     expect(dockerfile).toContain(
-      'LABEL org.opencontainers.image.source="https://github.com/OpenHands/OpenHands"',
+      'LABEL org.opencontainers.image.source="https://github.com/Emilio-01-T/Praxis"',
     );
     expect(dockerWorkflow).toContain(
-      "https://github.com/OpenHands/OpenHands/pkgs/container/agent-canvas",
+      "https://github.com/Emilio-01-T/Praxis/pkgs/container/praxis",
     );
+    expect(dockerWorkflow).toContain("ghcr.io/emilio-01-t/praxis");
   });
 
   it("does not let electron-builder auto-publish during desktop builds", () => {
@@ -45,24 +46,17 @@ describe("npm publish workflow", () => {
     );
   });
 
-  it("builds both package surfaces with the production PostHog key", () => {
+  it("keeps inherited npm publication disabled during Praxis Foundation", () => {
     const workflow = read(".github/workflows/npm-publish.yml");
-    const buildAppStep = workflow.match(
-      /- name: Build app[\s\S]*?(?=\n\s*- name: Build library)/,
-    )?.[0];
-    const buildLibraryStep = workflow.match(
-      /- name: Build library[\s\S]*?(?=\n\s*- name: Bake package telemetry defaults)/,
-    )?.[0];
 
-    expect(buildAppStep).toBeTruthy();
-    expect(buildAppStep).toContain(
-      "VITE_POSTHOG_API_KEY: ${{ vars.POSTHOG_PROD_KEY }}",
+    expect(workflow).toContain("name: Publish to npm");
+    expect(workflow).toContain("workflow_dispatch:");
+    expect(workflow).toContain("permissions: {}");
+    expect(workflow).toContain(
+      "This inherited OpenHands workflow is intentionally disabled in Praxis.",
     );
-    expect(buildAppStep).toContain("npm run build");
-    expect(buildLibraryStep).toContain(
-      "VITE_POSTHOG_API_KEY: ${{ vars.POSTHOG_PROD_KEY }}",
-    );
-    expect(buildLibraryStep).toContain("npm run build:lib");
+    expect(workflow).not.toContain("npm publish");
+    expect(workflow).not.toContain("id-token: write");
   });
 
   it("passes the selected PostHog key through Docker's supported build arg", () => {
