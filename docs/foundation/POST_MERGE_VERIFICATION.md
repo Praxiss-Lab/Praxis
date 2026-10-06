@@ -91,3 +91,19 @@ After E2E classification, the remaining major external evidence is:
 
 No `FOUNDATION_READY` declaration is allowed before those required gates are
 resolved.
+
+
+## Upstream baseline comparison
+
+The exact OpenHands baseline was checked directly.
+
+- upstream browser Mock-LLM E2E run `37418681772`: FAILURE, 7 failing scenarios;
+- upstream Docker Mock-LLM E2E run `37419222494`: FAILURE, 6 failing scenarios;
+- Praxis Docker Mock-LLM E2E run `37454500619`: reproduced the same six Docker scenarios.
+
+Detailed classification is recorded in
+`UPSTREAM_BASELINE_LIMITATIONS.md`.
+
+This means a fully green inherited Mock-LLM suite is not a truthful property of
+the selected upstream baseline. Praxis therefore tracks non-regression relative
+to baseline separately from Praxis-owned CI/smoke verification.
