@@ -21,9 +21,9 @@ product development.
 | OpenHands organization write/publish workflows isolated | VERIFIED | disabled/manualized Foundation workflow changes |
 | Praxis automatic CI | IN VERIFICATION | `.github/workflows/praxis-ci.yml` |
 | Upstream compatibility CI | VERIFIED AS DESIGN | manual-only `.github/workflows/ci.yml` |
-| Praxis GHCR target | IN VERIFICATION | `ghcr.io/emilio-01-t/praxis` |
+| Praxis GHCR target | VERIFIED | `ghcr.io/emilio-01-t/praxis` |
 | Praxis-specific compatibility smoke tests | PENDING | runtime-facing smoke suite still required |
-| Container build/publish evidence | PENDING | GitHub Actions run must complete successfully |
+| Container build/publish evidence | VERIFIED | Docker run `37444356264`: amd64 + arm64 build/push, multi-arch manifest, consolidation succeeded |
 | Deployment contract | VERIFIED AS DESIGN | `DEPLOYMENT_AND_ROLLBACK.md` |
 | Deploy Praxis build to target VM | PENDING | requires target VM execution |
 | Runtime smoke test on target VM | PENDING | requires target VM execution |
