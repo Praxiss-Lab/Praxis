@@ -1,31 +1,15 @@
----
-name: Remove duplicate candidate label on activity
+name: Duplicate label maintenance
+
+# Disabled during the Praxis Fork Foundation.
+# This depends on inherited OpenHands issue automation policy.
 
 on:
-    issue_comment:
-        types: [created]
+  workflow_dispatch:
 
-permissions:
-    issues: write
-
-concurrency:
-    group: remove-duplicate-${{ github.repository }}-${{ github.event.issue.number }}
-    cancel-in-progress: false
+permissions: {}
 
 jobs:
-    remove-duplicate-candidate:
-        if: |
-            github.event.issue.state == 'open' &&
-            github.event.issue.pull_request == null &&
-            contains(github.event.issue.labels.*.name, 'duplicate-candidate') &&
-            github.event.comment.user.type != 'Bot' &&
-            !startsWith(github.event.comment.body || '', '<!-- openhands-duplicate-check') &&
-            !startsWith(github.event.comment.body || '', '<!-- openhands-duplicate-veto')
-        runs-on: ubuntu-latest
-        timeout-minutes: 10
-        steps:
-            - name: Remove duplicate-candidate label
-              uses: OpenHands/extensions/plugins/issue-duplicate-checker@fb020c71eb8e7cd2678f0251ab24327d3738da7d
-              with:
-                  mode: remove-label
-                  github-token: ${{ secrets.OPENHANDS_BOT_GITHUB_PAT_PUBLIC || github.token }}
+  disabled:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Disabled in Praxis Foundation; see docs/foundation/WORKFLOW_AUDIT.md."

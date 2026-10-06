@@ -102,17 +102,13 @@ describe("mock-LLM E2E affected test resolver", () => {
     );
   });
 
-  it("runs live LLM E2E on main or by manual PR dispatch", () => {
+  it("keeps inherited compatibility CI manual-only in Praxis", () => {
     const ciWorkflow = readFileSync(ciWorkflowPath, "utf-8");
-    const liveJob = ciWorkflow.slice(ciWorkflow.indexOf("  live-e2e:"));
 
-    expect(liveJob).toContain("github.event_name == 'workflow_dispatch'");
-    expect(liveJob).toContain(
-      "github.event_name == 'push' && github.ref == 'refs/heads/main'",
-    );
-    expect(liveJob).not.toContain("github.event_name == 'pull_request'");
-    expect(liveJob).toContain(
-      "LIVE_E2E_PR_NUMBER: ${{ inputs.pr_number || '' }}",
-    );
+    expect(ciWorkflow).toContain("name: Upstream Compatibility CI");
+    expect(ciWorkflow).toContain("workflow_dispatch:");
+    expect(ciWorkflow).not.toContain("pull_request:");
+    expect(ciWorkflow).not.toContain("push:");
+    expect(ciWorkflow).not.toContain("live-e2e:");
   });
 });

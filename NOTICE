@@ -1,0 +1,15 @@
+Praxis
+
+Praxis is an independent public fork of OpenHands/OpenHands.
+
+Upstream project:
+  OpenHands
+  https://github.com/OpenHands/OpenHands
+
+Upstream portions retain the MIT License and the copyright notice of
+OpenHands contributors.
+
+Praxis modifications and original additions are also released under the
+MIT License unless a file explicitly states otherwise.
+
+This notice is informational and does not replace the repository LICENSE.

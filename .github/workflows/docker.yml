@@ -21,7 +21,7 @@ on:
       image:
         description: GHCR image name
         type: string
-        default: ghcr.io/openhands/agent-canvas
+        default: ghcr.io/emilio-01-t/praxis
 
 # Cancel redundant runs for the same branch/PR.
 concurrency:
@@ -33,7 +33,7 @@ permissions:
   packages: write
 
 env:
-  IMAGE: ${{ inputs.image != '' && inputs.image || 'ghcr.io/openhands/agent-canvas' }}
+  IMAGE: ${{ inputs.image != '' && inputs.image || 'ghcr.io/emilio-01-t/praxis' }}
   # Use the PR head SHA for PR events so tags point at the actual code.
   RELEVANT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
   RELEVANT_REF: ${{ github.head_ref != '' && format('refs/heads/{0}', github.head_ref) || github.ref }}
@@ -49,7 +49,7 @@ jobs:
       github.event_name == 'push' ||
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'pull_request' &&
-       !github.event.pull_request.head.repo.fork)
+       github.event.pull_request.head.repo.full_name == github.repository)
     strategy:
       fail-fast: false
       matrix:
@@ -257,7 +257,7 @@ jobs:
       github.event_name == 'push' ||
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'pull_request' &&
-       !github.event.pull_request.head.repo.fork)
+       github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-24.04
     steps:
       - name: Download build info artifacts
@@ -450,7 +450,7 @@ jobs:
             --arg automation_version "$AUTOMATION_VERSION" \
             --arg git_sha "$GIT_SHA" \
             --arg git_ref "$GIT_REF" \
-            --arg ghcr_url "https://github.com/OpenHands/OpenHands/pkgs/container/agent-canvas" \
+            --arg ghcr_url "https://github.com/Emilio-01-T/Praxis/pkgs/container/praxis" \
             '{image: $image, short_sha: $short_sha, all_tags: $all_tags, architectures: $archs, agent_server_image: $agent_server_image, automation_version: $automation_version, git_sha: $git_sha, git_ref: $git_ref, ghcr_package_url: $ghcr_url}')
 
           echo "Consolidated build summary:"
