@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
+<title id="title">Praxis: your infrastructure, your personal clouds</title>
+<desc id="desc">A Praxis frontend connects through HTTP and WebSocket to a local backend or independent personal clouds on two virtual machines. Each backend contains Agent Server, Automation and its own persistent storage. There is no shared central cloud.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto-start-reverse"><path d="M0 0L9 4.5L0 9Z" fill="#54657d"/></marker></defs>
+<rect width="1200" height="820" rx="24" fill="#f6f4ee"/>
+<g font-family="DejaVu Sans, sans-serif" fill="#17263b">
+<text x="64" y="70" font-size="34" font-weight="700">Praxis</text>
+<text x="64" y="109" font-size="20" fill="#54657d">Your computer. Your VMs. Your personal clouds.</text>
+<rect x="350" y="150" width="500" height="150" rx="20" fill="#17263b"/>
+<text x="600" y="191" text-anchor="middle" font-size="15" fill="#cbd9ef">ON YOUR COMPUTER OR A SEPARATE HOST</text>
+<text x="600" y="235" text-anchor="middle" font-size="27" font-weight="700" fill="#ffffff">Praxis frontend</text>
+<text x="600" y="273" text-anchor="middle" font-size="16" fill="#cbd9ef">Canvas · conversations · files · backend selector</text>
+<g fill="none" stroke="#54657d" stroke-width="3" marker-start="url(#arrow)" marker-end="url(#arrow)">
+<path d="M470 314V362H238V424"/>
+<path d="M600 314V424"/>
+<path d="M730 314V362H962V424"/>
+</g>
+<rect x="414" y="344" width="372" height="40" rx="20" fill="#f6f4ee"/>
+<text x="600" y="371" text-anchor="middle" font-size="16" fill="#54657d">HTTP + WebSocket · backend API key</text>
+
+<rect x="64" y="442" width="348" height="272" rx="20" fill="#fff" stroke="#d5dce5" stroke-width="2"/>
+<text x="88" y="480" font-size="23" font-weight="700">Local backend</text>
+<text x="88" y="511" font-size="16" fill="#54657d">Your computer · optional</text>
+<rect x="88" y="536" width="300" height="47" rx="10" fill="#d8e8fa"/>
+<text x="238" y="566" text-anchor="middle" font-size="18">Agent Server</text>
+<rect x="88" y="595" width="300" height="47" rx="10" fill="#ffe1bc"/>
+<text x="238" y="625" text-anchor="middle" font-size="18">Automation</text>
+<text x="238" y="682" text-anchor="middle" font-size="15" fill="#54657d">Own workspaces · state · credentials</text>
+<rect x="426" y="442" width="348" height="272" rx="20" fill="#fff" stroke="#d5dce5" stroke-width="2"/>
+<text x="450" y="480" font-size="23" font-weight="700">Personal cloud A</text>
+<text x="450" y="511" font-size="16" fill="#54657d">Your VM</text>
+<rect x="450" y="536" width="300" height="47" rx="10" fill="#d8e8fa"/>
+<text x="600" y="566" text-anchor="middle" font-size="18">Agent Server</text>
+<rect x="450" y="595" width="300" height="47" rx="10" fill="#ffe1bc"/>
+<text x="600" y="625" text-anchor="middle" font-size="18">Automation</text>
+<text x="600" y="682" text-anchor="middle" font-size="15" fill="#54657d">Own workspaces · state · credentials</text>
+<rect x="788" y="442" width="348" height="272" rx="20" fill="#fff" stroke="#d5dce5" stroke-width="2"/>
+<text x="812" y="480" font-size="23" font-weight="700">Personal cloud B</text>
+<text x="812" y="511" font-size="16" fill="#54657d">Another VM you control</text>
+<rect x="812" y="536" width="300" height="47" rx="10" fill="#d8e8fa"/>
+<text x="962" y="566" text-anchor="middle" font-size="18">Agent Server</text>
+<rect x="812" y="595" width="300" height="47" rx="10" fill="#ffe1bc"/>
+<text x="962" y="625" text-anchor="middle" font-size="18">Automation</text>
+<text x="962" y="682" text-anchor="middle" font-size="15" fill="#54657d">Own workspaces · state · credentials</text>
+<text x="600" y="766" text-anchor="middle" font-size="17" fill="#54657d">Choose a backend. Each installation stays independent.</text>
+</g></svg>

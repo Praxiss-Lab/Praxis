@@ -1,99 +1,47 @@
-# Containerized ACP agent-server for Agent Canvas
+# Praxis ACP backend example
 
-Run an ACP agent (Codex / Claude Code / Gemini CLI) against a **containerized**
-Agent Server and drive it from Agent Canvas, with credentials supplied through
-the Canvas UI. This is the local-Docker counterpart of the cloud path — a fresh
-container has no host CLI login, so credentials come from you instead.
+Run Codex, Claude Code or Gemini CLI through a containerized Agent Server and connect the Praxis frontend to it. This example starts Agent Server only; it does not start the complete Praxis backend with Automation.
 
-See [`../../docs/ACP_AGENTS.md`](../../docs/ACP_AGENTS.md#running-acp-agents-in-a-docker-container)
-for the full walkthrough; this is the quick start.
+## Start the pinned backend
 
-## 1. Bring up the agent-server
+From the repository root, generate the image configuration using `config/defaults.json`:
 
-```bash
+```sh
+npm run example:acp-docker:env
 cd examples/acp-docker
 docker compose up
 ```
 
-This starts `ghcr.io/openhands/agent-server:latest-python` on
-`http://localhost:8010` with a persistent `acp-data` volume. The image
-pre-installs the ACP CLI wrappers and the SDK rewrites `npx -y <pkg>` to those
-pinned binaries in-pod, so Canvas can keep sending the default `npx` command
-unchanged.
+The server listens at `http://localhost:8010` and stores state in the `acp-data` volume. Rerun the generation command after updating runtime versions. A manually maintained `.env` override can otherwise keep an obsolete image. The Compose fallback without this generated file uses a moving image tag.
 
-For a **reproducible, pinned** image, generate `.env` from the repo's single
-source of truth (`config/defaults.json`) first — it pins `AGENT_SERVER_IMAGE`
-to the exact `versions.agentServer` release, so two people get the same build:
+## Connect the frontend
 
-```bash
-npm run example:acp-docker:env   # from the repo root; writes examples/acp-docker/.env
-cd examples/acp-docker && docker compose up
-```
+In a second shell, from the repository root:
 
-> **Version compatibility.** The common paths keep Canvas and agent-server in
-> sync: zero-config Compose uses `latest-python`, while the pinned path reads
-> `versions.agentServer` from the same `config/defaults.json` used by the Canvas
-> launchers. If you carry an old hand-written `.env` with `AGENT_SERVER_IMAGE`,
-> rerun `npm run example:acp-docker:env` or remove that override so the example
-> does not stay pinned below `compatibility.minimumAgentServer`.
-
-To pin a newer release or a current main build by hand instead:
-
-```bash
-AGENT_SERVER_IMAGE=ghcr.io/openhands/agent-server:$(gh api repos/OpenHands/software-agent-sdk/commits/main --jq '.sha[0:7]')-python docker compose up
-```
-
-To bake credentials into the container instead of entering them in Canvas, copy
-the env template first: `cp .env.example .env` (optional — see [§3](#3-onboard-with-credentials)).
-
-## 2. Point Canvas at it
-
-```bash
-cd ../..                      # repo root
+```sh
 VITE_BACKEND_BASE_URL=http://localhost:8010 npm run dev:frontend
 ```
 
-The image's CORS allows `localhost`, so the browser talks to the container
-directly. (You can also add it as a backend in the Canvas backend selector with
-host `http://localhost:8010`.)
+Alternatively, add `http://localhost:8010` as an Agent Server backend in the backend selector. The example permits localhost browser origins. See [ACP agents](../../docs/ACP_AGENTS.md#running-acp-agents-in-a-docker-container) for the complete walkthrough.
 
-## 3. Onboard with credentials
+## Supply credentials
 
-Pick the ACP provider in onboarding and fill in the **Set up credentials** step.
-On a containerized backend this step is **required** (there's no host login to
-fall back on):
+Choose the ACP provider in onboarding and complete its credential step. A fresh container does not have your host CLI login.
 
-| Provider | What to paste |
-|---|---|
-| **Codex** (subscription) | `CODEX_AUTH_JSON` — the full contents of `~/.codex/auth.json` |
-| **Claude Code** (subscription) | `CLAUDE_CODE_OAUTH_TOKEN` — your Pro/Max OAuth token |
-| **Gemini CLI** (Vertex) | `GOOGLE_APPLICATION_CREDENTIALS_JSON` (SA / ADC JSON) + `GOOGLE_CLOUD_PROJECT` + `GOOGLE_CLOUD_LOCATION` + `GOOGLE_GENAI_USE_VERTEXAI=true` |
+| Provider            | Subscription or account credentials                                                                                      | API-key alternative |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------- |
+| Codex               | `CODEX_AUTH_JSON`, contents of `~/.codex/auth.json`                                                                      | `OPENAI_API_KEY`    |
+| Claude Code         | `CLAUDE_CODE_OAUTH_TOKEN`                                                                                                | `ANTHROPIC_API_KEY` |
+| Gemini CLI / Vertex | `GOOGLE_APPLICATION_CREDENTIALS_JSON`, `GOOGLE_CLOUD_PROJECT`, `GOOGLE_CLOUD_LOCATION`, `GOOGLE_GENAI_USE_VERTEXAI=true` | `GEMINI_API_KEY`    |
 
-Each provider also accepts an API-key path (`OPENAI_API_KEY` / `ANTHROPIC_API_KEY` /
-`GEMINI_API_KEY`). Canvas saves these to the agent-server's secret store and the
-start request references them as `LookupSecret`s; the SDK resolves each value at
-spawn time (off the event loop, per #3510), materialises the `*_JSON` blobs to
-disk, and points the CLI's data-dir env at them automatically.
+The frontend saves values to the backend secret store. Start requests reference them as `LookupSecret` values, resolved when the agent starts. JSON credentials are materialized for the CLI on the backend.
 
-> ⚠️ **Do not set `ANTHROPIC_BASE_URL` with the Claude OAuth token.** An inherited
-> LiteLLM base URL silently breaks bearer auth. Canvas never sets it for you, but
-> a *saved* `ANTHROPIC_BASE_URL` secret rides along on every start request — the
-> credential form warns about the pair.
+Claude OAuth must not be combined with a saved `ANTHROPIC_BASE_URL`. Gemini ADC must be current; an expired login can produce `invalid_rapt`. Credentials supplied only through container environment variables may not satisfy the UI login probe: complete the UI credential step when prompted.
 
-> ⚠️ **Gemini Vertex ADC must be freshly logged in.** Run
-> `gcloud auth application-default login` — a stale token returns `invalid_rapt`.
+## Stop and preserve state
 
-> ℹ️ **Baked creds in `.env` may not satisfy the onboarding gate.** The login
-> probe checks CLI login state (`claude auth status` / `codex login status` /
-> Gemini's OAuth credentials file), not container env vars — a container with
-> only e.g. `GEMINI_API_KEY` baked via `.env` typically still probes as
-> logged-out, and the credentials step then blocks "Next". Enter (or re-enter)
-> a credential in the UI to proceed; the baked env var still works for the
-> agent itself.
-
-## Tear down
-
-```bash
-docker compose down           # keep the volume
-docker compose down -v        # also drop credentials/conversations
+```sh
+docker compose down
 ```
+
+This retains the volume. `docker compose down -v` also deletes stored credentials, conversations and other volume data.

@@ -1,9 +1,8 @@
 # Praxis on Windows
 
-Use Docker Desktop for the published container image, or WSL 2 for source/native
-launchers. See the [main README](README.md) for the installation options.
+Run Praxis with Docker Desktop, or directly inside WSL 2. The frontend and backend can run together or independently; a backend on your VM is your personal cloud. See the [main README](README.md) for all installation options.
 
-## Docker (PowerShell)
+## Complete stack with Docker (PowerShell)
 
 **Prerequisites:** Docker Desktop running Linux containers, and a projects
 folder to mount into Praxis.
@@ -24,16 +23,14 @@ docker run -it --rm --name praxis `
 ```
 
 Open [http://localhost:8000/canvas/](http://localhost:8000/canvas/).
-Settings and conversations persist in the mounted `.openhands` folder. The agent
-can access the mounted projects. Stop with `Ctrl+C`; host folders remain after
-the container is removed.
+The state mount retains settings and conversations. Agents work in the mounted project directory. Stop with `Ctrl+C`; replacing the container preserves both host directories.
 
 Docker selects amd64 or arm64 for its engine. `linux` in the image platform refers
 to the container operating system, not the Windows host.
 
 The quickstart publishes only to host loopback before allowing local session-key
 injection. For LAN/public access, omit `AGENT_CANVAS_ALLOW_LAN_SESSION_KEY`, set
-`LOCAL_BACKEND_API_KEY` to a strong key, and enter it in Canvas. See
+`LOCAL_BACKEND_API_KEY` to a strong key, and enter it in Praxis. See
 [self-hosting](docs/SELF_HOSTING.md) for network exposure and HTTPS.
 
 Retrieve the automatically generated key from the running quickstart container:
@@ -42,19 +39,18 @@ Retrieve the automatically generated key from the running quickstart container:
 docker exec praxis cat /home/openhands/.openhands/agent-canvas/api-key.txt
 ```
 
-## Source and native release installation (WSL 2)
+## Run directly in WSL 2
 
 Inside your WSL Linux distribution, install Git, Node.js 24 or later, npm and
 `uv` / `uvx`. Use workspace paths inside that Linux environment.
 
 Follow either the [source quickstart](README.md#quickstart-from-source) or the
 [published release installation](README.md#install-a-published-release-without-docker)
-in the WSL shell. Both use Praxis sources/artifacts. Installing the inherited
-package name directly from npm downloads upstream OpenHands.
+in the WSL shell. Use the sources or archive linked there. The native executable remains `agent-canvas`; download the archive from the Praxis GitHub release.
 
 Open [http://localhost:8000](http://localhost:8000) after launching the stack.
 
-## Split Docker containers
+## Separate frontend and backend containers
 
 With Git installed, clone the repository in PowerShell to obtain its Compose file:
 
@@ -70,7 +66,7 @@ docker compose -f docker/compose.split.yml up -d
 
 Frontend: [http://localhost:18080/canvas/](http://localhost:18080/canvas/).
 Backend health: [http://localhost:18081/health](http://localhost:18081/health).
-Enter `PRAXIS_SESSION_API_KEY` when Canvas asks for the backend key. Keep that key
+Enter `PRAXIS_SESSION_API_KEY` when Praxis asks for the backend key. Keep that key
 available when recreating the backend. Compose stores state and projects in
 named volumes; `docker compose -f docker/compose.split.yml down` retains them.
 These project volumes are separate from the host projects folder used above.
@@ -78,7 +74,7 @@ These project volumes are separate from the host projects folder used above.
 See [distribution and launch modes](docs/distribution/README.md) for backend and
 frontend on separate machines.
 
-## Per-conversation sandboxes (WSL 2)
+## Isolate conversation execution
 
 Enable Docker Desktop's WSL integration for your Linux distribution and confirm
 `docker info` succeeds in the WSL shell. After installing the Praxis release
@@ -90,3 +86,7 @@ OH_CONVERSATION_RUNTIME=docker agent-canvas
 
 This runtime uses POSIX user/group IDs and requires WSL 2 on Windows. It isolates
 conversation execution while Canvas and Automation run in the WSL environment.
+
+## Personal clouds
+
+Run a backend on each VM you control and add its Agent Server address and API key in the frontend backend selector. Each installation has independent storage and credentials. The browser must reach the backend for direct connections; a configured frontend proxy must reach it from its container. See the [distribution guide](docs/distribution/README.md#backend-on-your-vm) for commands.
