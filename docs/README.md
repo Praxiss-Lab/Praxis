@@ -1,16 +1,29 @@
 # Praxis documentation
 
-This directory contains Praxis documentation and inherited OpenHands technical
-guides. For installation commands, use the Praxis entry points below.
+## Install and run
 
-- [Quickstart](../README.md)
-- [Windows installation](../README.windows.md)
-- [Distribution and launch modes](./distribution/README.md)
+- [Main README](../README.md): native installation, Docker and personal clouds.
+- [Windows](../README.windows.md): Docker Desktop and WSL 2.
+- [Distribution](distribution/README.md): complete, backend and frontend modes.
+- [Self-hosting](SELF_HOSTING.md): persistence, authentication and remote access.
+- [Kubernetes chart](../helm/agent-canvas/README.md): experimental persistent deployment.
 
-- [Architecture](./architecture.md): system boundaries, runtime modes, and quality gates.
-- [Using ACP agents](./ACP_AGENTS.md): onboard and configure external agents (Claude Code, Codex, Gemini CLI).
-- [Development guide](./DEVELOPMENT.md)
-- [Canvas Extensions manual testing](./CANVAS_EXTENSIONS_TESTING.md)
-- [Self-hosting guide](./SELF_HOSTING.md)
-- [Integrating DefenseClaw](./DefenseClaw.md): run the DefenseClaw security governance layer alongside the Agent Server.
-- [Testing matrix](./TESTING_MATRIX.md): release smoke-test coverage across installers, operating systems, and agents.
+## Understand and develop
+
+- [Architecture](architecture.md): frontend, backend and independent personal clouds.
+- [Development](DEVELOPMENT.md): local development and verification.
+- [API services](../src/api/README.md): typed clients and connection ownership.
+- [Themes](../src/themes/README.md): interface, editor and terminal palettes.
+- [ACP agents](ACP_AGENTS.md): external agent configuration and credentials.
+- [ACP Docker example](../examples/acp-docker/README.md).
+- [Canvas extensions testing](CANVAS_EXTENSIONS_TESTING.md).
+- [DefenseClaw integration](DefenseClaw.md).
+
+## Verify and release
+
+- [Testing matrix](TESTING_MATRIX.md).
+- [WebSocket test helpers](../__tests__/helpers/README.md).
+- [Live ACP tests](../tests/e2e/live-acp/README.md).
+- [Release policy](policies/RELEASE.md) and [versioning](policies/VERSIONING.md).
+
+Legal notices and attribution live in [LICENSE](../LICENSE) and [NOTICE](../NOTICE).

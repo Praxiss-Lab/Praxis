@@ -1,47 +1,28 @@
-# Canvas color themes
+# Praxis theme system
 
-Canvas has three rendering systems: scoped CSS/HeroUI for the interface, Prism
-and Monaco for code, and xterm for terminal output. A palette must cover all of
-them; changing the page background alone is not a complete theme.
+A Praxis palette covers the interface, code views and terminal output together. CSS/HeroUI, Prism/Monaco and xterm render colors differently, so a new theme needs an explicit mapping for each system.
 
-## Adding a palette
+## Add and register a palette
 
-1. Add a definition under `color-theme/definitions/`, including its appearance,
-   grey scale, HeroUI HSL channels, and semantic token overrides.
-2. Add the key to `ColorThemeKey` and register the definition in
-   `color-theme/definitions/index.ts`. The settings menu is generated from this
-   registry.
-3. Select a Prism palette in `syntax-highlighter-themes.ts`, a Monaco palette in
-   `file-diff-viewer.tsx`, and all 16 ANSI colors in `terminal-themes.ts`.
-   These mappings are exhaustive so new themes cannot silently inherit a dark
-   code or terminal palette.
-4. Run the theme tests and inspect settings, portalled menus/modals, chat
-   Markdown, inline code, diffs, and ANSI output. Check disabled, selected,
-   hover, and keyboard-focus states, then switch back to every dark palette.
+1. Create a definition in `color-theme/definitions/` with its appearance, grey scale, HeroUI HSL channels and semantic token overrides.
+2. Extend `ColorThemeKey` and register the definition in `color-theme/definitions/index.ts`. The registry supplies the settings menu.
+3. Map the key in `syntax-highlighter-themes.ts`, `file-diff-viewer.tsx` and `terminal-themes.ts`. Supply all 16 ANSI terminal colors. These mappings must remain exhaustive.
+4. Run the theme tests and inspect the interface, code and terminal together. Include portalled menus/modals, Markdown, inline code, diffs, ANSI output and keyboard focus. Check selected, disabled and hover states, then switch between existing palettes.
 
-## Ownership and component colors
+## Selection and persistence
 
-- `setColorTheme` is the selection/persistence entry point. React consumers use
-  `useColorTheme`; do not keep another copy of selected-theme state.
-- The stylesheet owns theme defaults. `AgentServerUIRoot` owns its React
-  attributes and preserves caller `styleOverrides` / `style` inline. The
-  runtime must never erase or rewrite those caller-owned properties.
-- Runtime CSS includes only palette overrides, not a second copy of base
-  defaults. Omitted tokens continue to resolve from the base/host stylesheet.
-- Embedded roots use the default appearance until a palette has actually been
-  applied; a stored Canvas preference alone must not select an unstyled light
-  wrapper. The application owns loading and applying its saved preference.
-- The head bootstrap uses the same CSS generator before hydration, including
-  when storage is unavailable or contains an obsolete key.
-- Use surface/foreground tokens for ordinary content. `contrast` is the
-  high-emphasis ink (white in dark palettes, dark in light palettes); its
-  paired `contrast-foreground` is for inverse pills and tooltips. Opacity and
-  state variants such as `hover:bg-contrast/10` retain their stated values.
-- Literal white is reserved for fixed-color surfaces (for example the blue
-  Plan control, an image-lightbox scrim, or a document preview). Do not globally
-  redefine white or add theme-specific selectors that reinterpret utilities.
-- SVG recoloring must preserve transparent negative-space paths.
+`setColorTheme` owns selection and persistence. React consumers use `useColorTheme`; avoid a second selected-theme store. The application loads and applies its saved preference. An embedded root uses its default appearance until a palette has actually been applied.
 
-CSS custom properties cannot be passed as colors to Monaco or xterm. Those
-renderers require concrete colors; xterm's main foreground is resolved from
-the mounted scope so embedding overrides still work.
+The head bootstrap uses the same CSS generator before hydration. It must work when storage is unavailable or contains an obsolete key.
+
+## CSS and embedding
+
+The stylesheet owns base defaults; runtime CSS supplies palette overrides only. Missing overrides fall back to the base or host stylesheet. `AgentServerUIRoot` owns its React attributes and preserves caller-provided `styleOverrides` and inline `style` properties.
+
+Use surface and foreground tokens for ordinary content. `contrast` provides high-emphasis ink; `contrast-foreground` supplies its inverse foreground for pills and tooltips. Preserve opacity and state variants such as `hover:bg-contrast/10`.
+
+Reserve literal white for fixed-color surfaces such as the blue Plan control, image-lightbox scrims and document previews. Do not redefine the white utility globally. SVG recoloring must preserve transparent negative-space paths.
+
+## Editor and terminal colors
+
+Monaco and xterm require concrete colors rather than CSS custom-property strings. The terminal resolves its main foreground from the mounted scope, preserving embedding overrides. Check those renderers directly; a correct page background does not prove that editor or terminal contrast is correct.

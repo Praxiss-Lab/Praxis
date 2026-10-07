@@ -1,27 +1,23 @@
 # Praxis
 
-**AI-Driven Development**
+Praxis is a workspace for agent-assisted software development. Use its Canvas to work with conversations, files, terminals, browser sessions and automations, while your backend runs the agents on infrastructure you control.
 
-Praxis is an independently maintained, MIT-licensed fork of
-[OpenHands Agent Canvas](https://github.com/OpenHands/OpenHands). It provides a
-web interface for coding agents, conversations and automations, using the
-OpenHands Agent Server and Automation services.
+Run everything on your computer, put the backend on a VM, or connect the same frontend to several independent backends. **Your VM is your personal cloud.** Each backend keeps its own workspaces, conversations, settings and credentials; switching backends does not synchronize their data.
 
-Run the complete stack locally, or run frontend and backend separately on the
-same machine or different machines. Both native launchers and Docker support
-these modes.
+![Praxis: one frontend, a local backend and independent personal clouds](docs/assets/praxis-architecture.svg)
 
-Praxis is not affiliated with or endorsed by OpenHands. The inherited package
-name `@openhands/agent-canvas`, launcher `agent-canvas` and `.openhands` state
-folder are retained for compatibility.
+## Choose how to run Praxis
+
+| Setup                         | Where it runs                                                | Start here                                                                                                     |
+| ----------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| Native                        | Directly on Linux/macOS, or inside WSL 2                     | [Source quickstart](#quickstart-from-source) or [release archive](#install-a-published-release-without-docker) |
+| Complete container            | Frontend and backend on one machine                          | [Docker quickstart](#docker-quickstart)                                                                        |
+| Separate frontend and backend | Separate processes or containers, on one or several machines | [Distribution guide](docs/distribution/README.md)                                                              |
+| Personal cloud                | Backend on your VM; frontend wherever you use Praxis         | [Personal clouds](#personal-clouds) and [self-hosting](docs/SELF_HOSTING.md)                                   |
 
 ## Quickstart from source
 
-Use this path to develop Praxis from the current repository checkout.
-
-**Prerequisites:** Git, Node.js 24 or later (with npm), and `uv` / `uvx` on your
-PATH. On Windows, run these commands inside WSL 2; see the
-[Windows guide](README.windows.md).
+Install Git, Node.js 24 or later, npm and `uv` / `uvx`. On Windows, use [WSL 2](README.windows.md).
 
 ```sh
 git clone https://github.com/Emilio-01-T/Praxis.git
@@ -30,60 +26,39 @@ npm ci
 npm run dev
 ```
 
-The launcher starts the frontend, Agent Server, Automation and ingress. It uses
-`uvx` to install and run the pinned Python services; Docker is not required for
-this path. If you need environment overrides, create an optional `.env` before
-starting the launcher.
+Open [http://localhost:8000](http://localhost:8000) and configure your model provider in the UI. This starts the frontend, Agent Server, Automation and ingress. Native agent execution can access the host filesystem: choose the workspace you intend to use.
 
-Open [http://localhost:8000](http://localhost:8000). Configure your model/provider
-in Canvas before starting an agent conversation. Stop the stack with `Ctrl+C`.
-
-> [!WARNING]
-> Native execution runs the agent on your machine with access to your filesystem.
-
-For a built frontend from the checkout:
+To serve a production frontend build from the checkout:
 
 ```sh
 npm run build
 npm run dev:static
 ```
 
+See the [development guide](docs/DEVELOPMENT.md) for mock mode, tests and builds.
+
 ## Install a published release without Docker
 
-**Prerequisites:** Node.js 24 or later, npm and `uv` / `uvx`. Use Linux or macOS;
-Windows users should use WSL 2.
-
-Download the `.tgz` archive from a [Praxis release](https://github.com/Emilio-01-T/Praxis/releases).
-For version `1.25.0`, run:
+Install Node.js 24+, npm and `uv` / `uvx`, then download the Praxis archive from its [GitHub release](https://github.com/Emilio-01-T/Praxis/releases/tag/v1.25.0):
 
 ```sh
-curl -fL --output openhands-agent-canvas-1.25.0.tgz \
+curl -fL --output praxis-1.25.0.tgz \
   https://github.com/Emilio-01-T/Praxis/releases/download/v1.25.0/openhands-agent-canvas-1.25.0.tgz
-npm install -g ./openhands-agent-canvas-1.25.0.tgz
+npm install -g ./praxis-1.25.0.tgz
 agent-canvas
 ```
 
-Open [http://localhost:8000](http://localhost:8000). This serves the frontend built
-into the release archive and starts the backend services through `uvx`.
+Open [http://localhost:8000/canvas/](http://localhost:8000/canvas/). Use the archive attached to the Praxis release; the executable remains `agent-canvas`. Package filenames and executable names are technical identifiers.
 
-Installing `@openhands/agent-canvas` by name from npm downloads upstream OpenHands.
-To install this fork, use the Praxis release archive above. The archive retains
-the original package name and replaces a global installation with that name.
+## Docker quickstart
 
-## Run a published Docker image
-
-**Prerequisites:** Docker Engine on Linux, or Docker Desktop on macOS/Windows
-configured to run Linux containers. The image supports amd64 and arm64; Docker
-selects the architecture for the machine running the Docker engine.
-
-**Linux / macOS:**
+Install Docker, choose your project directory, and start the released image:
 
 ```sh
 export PRAXIS_IMAGE="ghcr.io/emilio-01-t/praxis:1.25.0"
 export PROJECTS_PATH="$HOME/projects"
 mkdir -p "$PROJECTS_PATH" "$HOME/.openhands"
 docker pull "$PRAXIS_IMAGE"
-
 docker run -it --rm --name praxis \
   -p 127.0.0.1:8000:8000 \
   -e PRAXIS_MODE=all \
@@ -93,80 +68,52 @@ docker run -it --rm --name praxis \
   "$PRAXIS_IMAGE"
 ```
 
-Open [http://localhost:8000/canvas/](http://localhost:8000/canvas/).
-Settings and conversations persist under the mounted `.openhands` directory.
-The agent can access the mounted projects. `Ctrl+C` stops the container; `--rm`
-removes the stopped container while retaining those host directories.
+Open [http://localhost:8000/canvas/](http://localhost:8000/canvas/). The mounted state directory preserves conversations and settings; `/projects` exposes your chosen host projects to the agent. `Ctrl+C` stops the container and leaves those directories intact.
 
-For PowerShell commands, see the [Windows guide](README.windows.md#docker-powershell).
+The image supports Linux `amd64` and `arm64`; Docker selects the matching platform. Docker Desktop runs these Linux containers on Windows and macOS. [PowerShell instructions](README.windows.md) are available separately.
 
-## Run frontend and backend separately
-
-| Mode | Installed native launcher | Docker environment | Services |
-| --- | --- | --- | --- |
-| Complete | `agent-canvas` | `PRAXIS_MODE=all` | Frontend, Agent Server, Automation, ingress |
-| Backend | `agent-canvas --backend-only` | `PRAXIS_MODE=backend` | Agent Server, Automation, API ingress |
-| Frontend | `agent-canvas --frontend-only` | `PRAXIS_MODE=frontend` | Frontend serving and optional backend proxy |
-
-From source, use `npm run dev -- --backend-only` or
-`npm run dev -- --frontend-only` in separate terminals/checkouts, choosing
-non-conflicting ingress ports if both run on the same machine.
-
-Docker uses the same image for every mode. See
-[distribution and launch modes](docs/distribution/README.md) for split Compose,
-separate machines, frontend proxy settings and local image builds.
-
-## Use a Docker sandbox for each conversation
-
-After installing the native Praxis release archive, run:
-
-```sh
-OH_CONVERSATION_RUNTIME=docker agent-canvas
-```
-
-This also requires Docker and access to its daemon. Each new conversation runs
-in its own container; Canvas and Automation remain on the host. Existing local
-conversations are not converted. Workspace and conversation mounts persist
-across container replacement. Conversations using the same host workspace can
-still modify the same files.
-
-Windows users must run this mode inside WSL 2 with Docker Desktop integration;
-see the [Windows guide](README.windows.md#per-conversation-sandboxes-wsl-2).
-
-## Connections and authentication
-
-Native launchers bind to `127.0.0.1` by default. To listen on another interface,
-use `--host` or `OH_BIND_HOST`; a non-loopback bind disables automatic session-key
-injection. Enter the backend key in Canvas when requested.
-
-The Docker quickstart above publishes only to host loopback and explicitly
-allows local session-key injection. For a LAN/public deployment, omit
-`AGENT_CANVAS_ALLOW_LAN_SESSION_KEY`, set `LOCAL_BACKEND_API_KEY` to a strong key,
-and enter that key in the UI. Follow the [self-hosting guide](docs/SELF_HOSTING.md)
-for network exposure and HTTPS.
-
-For the automatically generated key in the running quickstart container:
+This quickstart publishes only on loopback and allows local session-key injection. For remote access, use explicit authentication and the network setup in the [self-hosting guide](docs/SELF_HOSTING.md). The generated Docker key can be read with:
 
 ```sh
 docker exec praxis cat /home/openhands/.openhands/agent-canvas/api-key.txt
 ```
 
-## Architecture and documentation
+## Frontend and backend independently
 
-Praxis provides Canvas and local-stack orchestration. The
-[OpenHands Agent Server](https://github.com/OpenHands/software-agent-sdk) provides
-agent execution and its REST/WebSocket APIs;
-[OpenHands Automation](https://github.com/OpenHands/automation) provides scheduling
-and dispatch. Automation is included in the complete and backend-only stacks.
+| Mode     | Installed native launcher      | Container setting      | Services                                    |
+| -------- | ------------------------------ | ---------------------- | ------------------------------------------- |
+| Complete | `agent-canvas`                 | `PRAXIS_MODE=all`      | Frontend, Agent Server, Automation, ingress |
+| Backend  | `agent-canvas --backend-only`  | `PRAXIS_MODE=backend`  | Agent Server, Automation, API ingress       |
+| Frontend | `agent-canvas --frontend-only` | `PRAXIS_MODE=frontend` | Frontend server, optional backend proxy     |
 
-- [Installation and launch modes](docs/distribution/README.md)
-- [Windows instructions](README.windows.md)
+All container modes use **one versioned image**. The mode selects the services to start; it does not reduce the downloaded image. Frontend and backend can run in separate containers, including on different devices.
+
+From source, use `npm run dev -- --backend-only` or `npm run dev -- --frontend-only`. Choose separate ports if both processes run on one machine. The [distribution guide](docs/distribution/README.md) provides Compose and remote-backend examples.
+
+## Personal clouds
+
+A personal cloud is a Praxis backend running on a machine you control, such as a VM. Agent execution, workspaces, credentials and Automation live on that backend; the frontend connects to it over HTTP and WebSocket.
+
+You can register several Agent Server backends in the backend selector and switch between them. Give each one its own name, address and API key. The backend URLs must be reachable from the browser for direct connections, or from the frontend container when using its configured proxy. Configure allowed origins for direct browser access.
+
+Each backend is an independent installation. This model does not require a centralized cloud service and does not pool or replicate backend state.
+
+## Conversation isolation
+
+With Docker available on the host, an installed native launcher can use per-conversation containers:
+
+```sh
+OH_CONVERSATION_RUNTIME=docker agent-canvas
+```
+
+This isolates conversation execution while the frontend and Automation remain on the host. On Windows, run this mode inside WSL 2 with Docker integration enabled. See [self-hosting](docs/SELF_HOSTING.md) for runtime and workspace details.
+
+## Documentation
+
 - [Documentation index](docs/README.md)
-- [Architecture overview](docs/architecture.md)
-- [Development guide](docs/DEVELOPMENT.md)
-- [Using ACP agents](docs/ACP_AGENTS.md)
-- [Release policy](docs/policies/RELEASE.md)
-- [Versioning](docs/policies/VERSIONING.md)
-- [Upstream baseline](docs/upstream/BASELINE.md)
-- [Contributing](CONTRIBUTING.md)
-- [MIT license](LICENSE) and [attribution](NOTICE)
+- [Architecture](docs/architecture.md)
+- [Distribution and launch modes](docs/distribution/README.md)
+- [ACP agents](docs/ACP_AGENTS.md)
+- [Release policy](docs/policies/RELEASE.md) and [versioning](docs/policies/VERSIONING.md)
+
+Licensing and attribution are recorded in [LICENSE](LICENSE) and [NOTICE](NOTICE).

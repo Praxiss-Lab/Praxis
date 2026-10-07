@@ -1,98 +1,36 @@
-# API Services Guide
+# Praxis frontend API services
 
-## Overview
+This directory connects the frontend to the selected backend. Services own transport and app-specific adaptation; query and mutation hooks own fetching, caching and loading/error state for React consumers.
 
-Services are the abstraction layer between frontend components and backend APIs. Local agent-server API access should use `@openhands/typescript-client` classes directly, with shared connection options from `src/api/agent-server-client-options.ts` for the active local backend host, session API key, and workspace defaults.
+## Agent Server access
 
-Cloud-specific APIs should use the cloud service modules/proxy helpers instead of local agent-server clients.
+Use typed clients from `@openhands/typescript-client`. Obtain the selected host, session key and workspace defaults through `getAgentServerClientOptions` or `getAgentServerHttpClientOptions` in `agent-server-client-options.ts`. Do not replace those helpers with hardcoded localhost addresses or a separate credential store.
 
-Each service is a plain object with async methods.
+For a conversation with its own runtime URL/key, pass those conversation overrides through the shared options helper. Runtime requests go directly to that runtime via the typed client. When an endpoint is missing, extend the owning client contract before consuming it here.
 
-## Structure
+Existing implementations such as `conversation-service/conversation-service.api.ts` demonstrate typed event access and conversation-specific overrides. `no-direct-agent-server-calls.test.ts` guards the transport boundary.
 
-Each service lives in its own directory:
+## A VM is still an Agent Server backend
 
-```
-src/api/
-└── feature-service/
-    ├── feature-service.api.ts    # Service methods
-    └── feature.types.ts          # Types and interfaces
-```
+The backend registry's literal `kind: "local"` selects the Agent Server contract. It can point to the laptop, a container or a remote VM; the word does not require a physically local machine. Register personal-cloud VMs using that Agent Server contract and each backend's own host/key.
 
-## Creating a Service
+The existing `kind: "cloud"` adapters represent a different legacy application API contract. They remain compatibility code, rather than the mechanism for registering a personal VM. Those application requests use `callCloudProxy`; conversation runtime requests use typed runtime clients. Do not interchange these transports based on physical hosting location.
 
-Use an object literal with named export. Use object destructuring for parameters to make calls self-documenting. Prefer typed `@openhands/typescript-client` classes over generic HTTP calls. If a needed endpoint is missing, add it to `@openhands/typescript-client` first.
+## Organize services and hooks
 
-```typescript
-// feature-service/feature-service.api.ts
-import { FeatureClient } from "@openhands/typescript-client/clients";
-import { getAgentServerClientOptions } from "../agent-server-client-options";
-import { Feature, CreateFeatureParams } from "./feature.types";
+Keep service methods together by feature, with app-specific types beside them when client models are insufficient. Existing APIs include both object services and class-based adapters; use the owning module's convention when extending it.
 
-export const featureService = {
-  getFeature: async ({ id }: { id: string }): Promise<Feature> => {
-    return new FeatureClient(getAgentServerClientOptions()).getFeature(id);
-  },
+| Item               | Location or convention                   |
+| ------------------ | ---------------------------------------- |
+| Feature service    | `feature-service/feature-service.api.ts` |
+| App-specific types | `feature-service/feature.types.ts`       |
+| Fetch hooks        | `src/hooks/query/`                       |
+| Write hooks        | `src/hooks/mutation/`                    |
 
-  createFeature: async (params: CreateFeatureParams): Promise<Feature> => {
-    return new FeatureClient(getAgentServerClientOptions()).createFeature(params);
-  },
-};
-```
+Components consume hooks rather than initiating transport directly. Query keys must distinguish the backend and conversation identities that affect the result. Keep durable selection state in its existing registry/store owner.
 
-### Types
+## Compatibility and verification
 
-Define app-specific types in a separate file within the same directory when the TypeScript client models are not sufficient:
+If an integration requires a new backend endpoint, field or behavior, update `compatibility.minimumAgentServer` in `config/defaults.json` to the first compatible released server version. Updating client types alone does not upgrade deployed backends.
 
-```typescript
-// feature-service/feature.types.ts
-export interface Feature {
-  id: string;
-  name: string;
-  description: string;
-}
-
-export interface CreateFeatureParams {
-  name: string;
-  description: string;
-}
-```
-
-## Usage
-
-> [!IMPORTANT]
-> **Don't call services directly in components.** Wrap them in TanStack Query hooks.
->
-> Why? TanStack Query provides:
->
-> - **Caching** - Avoid redundant network requests
-> - **Deduplication** - Multiple components requesting the same data share one request
-> - **Loading/error states** - Built-in `isLoading`, `isError`, `data` states
-> - **Background refetching** - Data stays fresh automatically
->
-> Hooks location:
->
-> - `src/hooks/query/` for data fetching (`useQuery`)
-> - `src/hooks/mutation/` for writes/updates (`useMutation`)
-
-```typescript
-// src/hooks/query/use-feature.ts
-import { useQuery } from "@tanstack/react-query";
-import { featureService } from "#/api/feature-service/feature-service.api";
-
-export const useFeature = (id: string) => {
-  return useQuery({
-    queryKey: ["feature", id],
-    queryFn: () => featureService.getFeature({ id }),
-  });
-};
-```
-
-## Naming Conventions
-
-| Item         | Convention               | Example                  |
-| ------------ | ------------------------ | ------------------------ |
-| Directory    | `feature-service/`       | `secrets-service/`       |
-| Service file | `feature-service.api.ts` | `secrets-service.api.ts` |
-| Types file   | `feature.types.ts`       | `secrets.types.ts`       |
-| Export name  | `featureService`         | `secretsService`         |
+Verify affected adapters, backend switching and conversation runtime overrides. Follow the repository's frontend API guidance for contract changes; this README describes the current service boundary rather than defining a second wire schema.

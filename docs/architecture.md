@@ -1,82 +1,52 @@
-# Agent Canvas architecture
+# Praxis architecture
 
-Agent Canvas is a React and TypeScript frontend for running and monitoring OpenHands agents across local, remote, and hosted environments. It is adapted from the OpenHands frontend to talk directly to the OpenHands Agent Server and related automation services.
+Praxis separates the interactive frontend from the services that execute agents. The frontend can connect to a backend on the same computer or to independent backends on your VMs. A VM running that backend is your personal cloud.
 
-## System boundaries
+![Praxis architecture](assets/praxis-architecture.svg)
 
-Agent Canvas is responsible for:
+## Components and ownership
 
-- Rendering the agent conversation, terminal, browser, files, settings, and automation UI.
-- Managing frontend state for conversations, backend selection, settings, profiles, and local metadata.
-- Translating UI actions into OpenHands Agent Server API calls.
-- Packaging the UI both as a standalone app and as library entrypoints for host applications.
+| Component          | Responsibility                                                                                | Location                                                     |
+| ------------------ | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| Frontend           | Conversations, files, terminals, browser views, settings, backend selection and automation UI | Local process, frontend container or complete stack          |
+| Agent Server       | Agent execution, conversation APIs/events, workspaces, settings and secrets                   | Selected backend                                             |
+| Automation         | Scheduling, triggers and agent-run dispatch                                                   | Backend                                                      |
+| Ingress            | Routes frontend/API/WebSocket and automation traffic                                          | Complete or backend stack; frontend mode can proxy a backend |
+| Persistent storage | Backend conversations, settings, secrets and workspace files                                  | Backend host directories or volumes                          |
 
-Agent Canvas is not responsible for:
+The UI consumes typed server contracts. Execution and scheduling belong to their backend services. Runtime service URLs are advertised through `/server_info.runtime_services`; the frontend includes relevant backend-provided context in new conversations.
 
-- Executing agent actions directly.
-- Providing the sandbox or workspace isolation layer.
-- Hosting LLM provider credentials outside the configured backend.
-- Running scheduled or event-triggered automations without an automation backend.
+## Personal clouds
 
-## Runtime services
+Each backend has its own endpoint, key and storage. The backend selector allows the frontend to switch between Agent Server installations. Backend selection does not create replication, shared storage or a cluster. Automation runs where that backend is installed, so it can continue running while a browser is closed, provided the backend remains running.
 
-The primary backend is the [OpenHands Agent Server](https://github.com/OpenHands/software-agent-sdk/tree/main/openhands-agent-server/openhands/agent_server). Agent Canvas can connect to one or more Agent Server instances and switch between them from the UI.
+Direct connections require backend reachability and allowed origins from the browser. A configured frontend proxy requires reachability from the frontend server/container. Remote access uses explicit API-key authentication and the HTTPS or private-network setup described in [self-hosting](SELF_HOSTING.md).
 
-Optional runtime services include:
+## Launch modes
 
-- An ingress service that routes frontend, Agent Server, and automation traffic behind one local origin.
-- An Automation Server for scheduled or event-triggered agent runs.
-- OpenHands Cloud APIs for hosted sandbox and organization workflows.
+| Mode     | Services                                       |
+| -------- | ---------------------------------------------- |
+| Complete | Frontend, Agent Server, Automation and ingress |
+| Backend  | Agent Server, Automation and API ingress       |
+| Frontend | Frontend server and optional backend proxy     |
 
-Agent Canvas stack launchers expose runtime service information through the backend `/server_info.runtime_services` field. The frontend forwards that backend-provided information into new conversations as an agent context suffix so agents can use the correct URLs instead of guessing ports.
+Native processes and Docker expose these same modes. Docker publishes one image with selectable services. The [distribution guide](distribution/README.md) contains commands for all three modes and separate machines.
 
-## Frontend modules
+Development also provides a minimal stack without Automation, a static frontend stack and an MSW mock frontend. `npm run build` builds the standalone application; `npm run build:lib` builds embedding entrypoints.
 
-The most important source areas are:
+## Source layout
 
-- `src/api/`: service adapters for Agent Server, cloud, settings, git, skills, automations, and backend registry behavior.
-- `src/components/`: route and feature UI, including conversation, chat, browser, files, settings, backend, automation, and onboarding components.
-- `src/hooks/`: reusable React Query, state, and feature hooks.
-- `src/stores/`: Zustand state stores for conversation and UI state.
-- `src/i18n/`: translation resources and generated bundles.
-- `src/mocks/`: MSW handlers for mock-mode development and tests.
-- `bin/` and `scripts/`: CLI and development stack launchers.
+- `src/api/`: typed service adapters, connection options and backend registry.
+- `src/components/`, `src/hooks/`, `src/stores/`: UI, query/mutation hooks and frontend state.
+- `src/i18n/`, `src/themes/`: localization and appearance.
+- `src/mocks/`, `__tests__/`, `tests/`: mocks and verification suites.
+- `bin/`, `scripts/`, `docker/`: native launchers, stack orchestration and container distribution.
+- `config/defaults.json`: runtime dependency versions and compatibility floor.
 
-## Runtime modes
+Compatibility adapters remain in the source tree. Their API contract names do not define whether an Agent Server is physically local or hosted on your VM; see [API services](../src/api/README.md).
 
-Agent Canvas supports several modes:
+## Distribution and verification
 
-| Mode | Purpose |
-|---|---|
-| `npm run dev` | Starts the full local stack directly on the host: agent-server and automation backend via `uvx`, the Vite dev server, and an ingress proxy. The agent has host filesystem access; use only in trusted environments. |
-| `npm run dev:minimal` | Starts just the agent-server plus Vite dev server, without the automation backend. |
-| `npm run dev:static` | Same as `dev`, but serves a production build of the frontend instead of the Vite dev server. |
-| `npm run dev:mock` | Runs the frontend against MSW mocks for UI development and tests. |
-| `npm run build` | Builds the standalone application. |
-| `npm run build:lib` | Builds library entrypoints for embedding Agent Canvas components. |
+GitHub releases contain the native installation archive and Docker image reference. The native executable is `agent-canvas`. The Docker image supports `linux/amd64` and `linux/arm64` and starts the selected mode.
 
-## Packaging and distribution
-
-The npm package is `@openhands/agent-canvas`. The package exposes:
-
-- The `agent-canvas` binary for launching a local stack.
-- A standalone app build.
-- Library entrypoints for browser, conversation, files, settings, sidebar, terminal, and i18n modules.
-
-Tagged releases are published through the `Publish to npm` GitHub Actions workflow using npm trusted publishing and provenance.
-
-## Quality gates
-
-The main CI workflow installs dependencies with `npm ci` and runs:
-
-- Typecheck, ESLint, and Prettier through `npm run lint`.
-- Unit and component tests through `npm test`.
-- Standalone app build through `npm run build`.
-- Library build through `npm run build:lib`.
-- Package verification through `npm pack --dry-run`.
-
-Additional workflows run optional live end-to-end QA.
-
-## Security posture
-
-Local operation can give agents access to user workspaces. The README and self-hosting guide call out this risk and recommend Docker sandbox mode for laptop usage. Self-hosted deployments should use normal server hardening practices, authentication, HTTPS, firewall rules, and careful workspace scoping.
+CI runs type checking separately from linting, unit/component tests, standalone and library builds, and package checks. Release verification also checks the container modes and their integration. These checks validate artifacts; deployment to a computer or VM remains a separate operation.

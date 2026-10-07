@@ -1,10 +1,7 @@
-# Demo page Canvas Extension
+# Praxis demo page extension
 
-This fixture is a standalone, dependency-free implementation of manifest
-schema 1 and host API 1. Its JavaScript file is already a self-contained browser
-ES module, so an Agent Server test implementation can install this directory and
-serve `extension.js` directly from the authenticated bundle endpoint.
+A dependency-free browser ES module fixture for the Canvas extension host API v1. The manifest is `canvas-extension.json`; `extension.js` is its entrypoint.
 
-For the browser-only installation flow that works before those Agent Server
-endpoints exist, see
-[`docs/CANVAS_EXTENSIONS_TESTING.md`](../../../../docs/CANVAS_EXTENSIONS_TESTING.md).
+The extension contributes a page with ID `hello`, route `/hello` and navigation label **Extension demo**. It demonstrates page registration without adding a build step or external dependencies.
+
+Use this fixture with the [extension manual testing guide](../../../../docs/CANVAS_EXTENSIONS_TESTING.md). Registration and loading require the extension-capable backend/host described there; copying this directory alone does not install it.
