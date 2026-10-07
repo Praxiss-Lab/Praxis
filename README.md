@@ -1,5 +1,8 @@
 <p align="center">
-  <img src="docs/assets/brand/praxis-app-icon-dark.png" alt="Praxis" width="112">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/brand/praxis-primary-white.png">
+    <img src="docs/assets/brand/praxis-primary.png" alt="Praxis" width="420">
+  </picture>
 </p>
 
 # Praxis

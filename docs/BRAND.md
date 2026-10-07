@@ -20,3 +20,15 @@ The ribbon includes a blue-to-cyan gradient. Cyan is a secondary accent within t
 The files live under `docs/assets/brand/`. Transparent masters are suitable for composition; choose a variant with sufficient contrast against the background. The architecture illustration uses an inverse ribbon on its dark background.
 
 Use this identity when designing the dashboard. Preserve readable text, keyboard focus and sufficient contrast in interactive states rather than applying the brand blue to every surface.
+
+## Light and dark artwork
+
+The dark artwork combines Charcoal lettering/folds with the blue-to-cyan ribbon. The white artwork keeps the same blue-to-cyan ribbon and changes only the lettering and end folds to white. Neither version is a monochrome replacement. Primary marks, isolated symbols and wordmarks have transparent backgrounds.
+
+| Asset           | Dark artwork                                                             | White artwork                                                                        |
+| --------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| Primary mark    | [PNG](assets/brand/praxis-primary.png)                                   | [PNG](assets/brand/praxis-primary-white.png)                                         |
+| Isolated symbol | [PNG](assets/brand/praxis-icon.png), [SVG](assets/brand/praxis-icon.svg) | [PNG](assets/brand/praxis-icon-white.png), [SVG](assets/brand/praxis-icon-white.svg) |
+| Wordmark        | [PNG](assets/brand/praxis-wordmark.png)                                  | [PNG](assets/brand/praxis-wordmark-white.png)                                        |
+
+The app icons use dark artwork on a light tile and white artwork on a dark tile. Both have transparent space outside their rounded tile: [light tile](assets/brand/praxis-app-icon-light.png), [dark tile](assets/brand/praxis-app-icon-dark.png).
