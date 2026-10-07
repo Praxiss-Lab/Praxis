@@ -2,6 +2,8 @@
 
 A Praxis palette covers the interface, code views and terminal output together. CSS/HeroUI, Prism/Monaco and xterm render colors differently, so a new theme needs an explicit mapping for each system.
 
+For the dashboard design, use the agreed brand palette in [Praxis visual identity](../../docs/BRAND.md): Charcoal `#0F172A`, Electric Blue `#2563EB` and Light `#F8FAFC`.
+
 ## Add and register a palette
 
 1. Create a definition in `color-theme/definitions/` with its appearance, grey scale, HeroUI HSL channels and semantic token overrides.

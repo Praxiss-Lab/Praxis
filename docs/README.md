@@ -10,6 +10,8 @@
 
 ## Understand and develop
 
+- [Visual identity](BRAND.md): logo assets and the agreed dashboard palette.
+
 - [Architecture](architecture.md): frontend, backend and independent personal clouds.
 - [Development](DEVELOPMENT.md): local development and verification.
 - [API services](../src/api/README.md): typed clients and connection ownership.

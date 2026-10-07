@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/brand/praxis-app-icon-dark.png" alt="Praxis" width="112">
+</p>
+
 # Praxis
 
 Praxis is a workspace for agent-assisted software development. Use its Canvas to work with conversations, files, terminals, browser sessions and automations, while your backend runs the agents on infrastructure you control.
