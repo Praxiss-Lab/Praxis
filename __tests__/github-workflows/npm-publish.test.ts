@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -31,9 +31,7 @@ describe("Praxis repository and publishing policy", () => {
     expect(dockerfile).toContain(
       'LABEL org.opencontainers.image.source="https://github.com/Emilio-01-T/Praxis"',
     );
-    expect(dockerWorkflow).toContain(
-      "ghcr.io/emilio-01-t/praxis",
-    );
+    expect(dockerWorkflow).toContain("ghcr.io/emilio-01-t/praxis");
     expect(dockerWorkflow).toContain("ghcr.io/emilio-01-t/praxis");
   });
 
@@ -46,17 +44,10 @@ describe("Praxis repository and publishing policy", () => {
     );
   });
 
-  it("keeps inherited npm publication disabled in Praxis", () => {
-    const workflow = read(".github/workflows/npm-publish.yml");
-
-    expect(workflow).toContain("name: Publish to npm");
-    expect(workflow).toContain("workflow_dispatch:");
-    expect(workflow).toContain("permissions: {}");
-    expect(workflow).toContain(
-      "This inherited OpenHands workflow is intentionally disabled in Praxis.",
-    );
-    expect(workflow).not.toContain("npm publish");
-    expect(workflow).not.toContain("id-token: write");
+  it("has no inherited npm publication workflow", () => {
+    expect(
+      existsSync(path.join(repoRoot, ".github/workflows/npm-publish.yml")),
+    ).toBe(false);
   });
 
   it("passes the selected PostHog key through Docker's supported build arg", () => {

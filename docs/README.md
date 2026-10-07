@@ -23,6 +23,7 @@
 
 ## Verify and release
 
+- [Upstream review and selective integration](upstream/README.md).
 - [Testing matrix](TESTING_MATRIX.md).
 - [WebSocket test helpers](../__tests__/helpers/README.md).
 - [Live ACP tests](../tests/e2e/live-acp/README.md).

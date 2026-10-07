@@ -2,6 +2,11 @@
 
 This file records deliberate upstream-integration decisions for Praxis.
 
+The completed-review checkpoint is stored in [LAST_REVIEWED](LAST_REVIEWED).
+It advances only after all changes in an interval have explicit decisions,
+including rejected or deferred changes; it does not imply a full merge.
+See [the review procedure](README.md).
+
 ## Entries
 
 ### 2026-10-06 — Initial fork baseline
