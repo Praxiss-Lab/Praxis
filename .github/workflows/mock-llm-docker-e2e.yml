@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       docker_image:
-        description: "Published Praxis release image to test (e.g. ghcr.io/emilio-01-t/praxis:0.1.0)"
+        description: "Published Praxis release image to test (e.g. ghcr.io/emilio-01-t/praxis:1.25.0)"
         required: true
         type: string
 

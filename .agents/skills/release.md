@@ -1,110 +1,78 @@
 ---
 name: release
-description: Guide the release process for @openhands/agent-canvas — review the release-please draft PR, mark it ready, merge it; the tag push publishes to npm and Docker.
-triggers:
-- release
-- new release
-- cut a release
-- publish release
-- bump version
+description: Prepare and verify a Praxis release, align version files, dispatch Praxis Release explicitly, and inspect the native archive and multi-architecture Docker image.
 ---
 
-# Release Process for @openhands/agent-canvas
+# Praxis release procedure
 
-## Overview
+Read [the release policy](../../docs/policies/RELEASE.md) and
+[distribution instructions](../../docs/distribution/README.md) before preparing a
+release. Use `.github/workflows/praxis-release.yml` as the executable workflow.
 
-Releases are **trunk-based and automated by release-please**, via the shared reusable
-workflows in [`OpenHands/release-actions`](https://github.com/OpenHands/release-actions):
+## Prepare the release commit
 
-1. PRs merge to `main` with **Conventional Commit titles** (`feat`, `fix`, `perf`, `docs`, `chore`, `build`, `ci`, `refactor`, `style`, `test`, `revert`). `.github/workflows/pr.yml` lints the title and applies the matching `type:` label; squash merge uses the PR title as the commit message.
-2. On every push to `main`, `.github/workflows/release.yml` runs release-please, which maintains a **draft release PR** titled `chore(main): release X.Y.Z` accumulating everything merged since the last release.
-3. The release PR pre-stages **every version bump**: `package.json`, `package-lock.json`, `config/defaults.json` (`versions.agentCanvas`), and the Docker image pins in `README.md` / `README.windows.md` (lines annotated with `x-release-please-version`).
-4. Marking the release PR **Ready for review** is the explicit cut-a-release signal: `.github/workflows/release-ready.yml` notifies `#proj-agent-canvas` on Slack and labels the PR `release: ready`.
-5. Merging the release PR makes release-please push the `vX.Y.Z` tag (using the org release App token) and create the GitHub Release. The same tag push triggers `npm-publish.yml` (npm) and `docker.yml` (multi-arch GHCR images).
+1. Choose the product version deliberately. The first Praxis release is 1.25.0;
+   later releases follow semantic versioning. An upstream update does not decide
+   the Praxis version or publish a release.
+2. Align `PRAXIS_VERSION`, root `package.json`, root `package-lock.json` and
+   `config/defaults.json` (`versions.agentCanvas`). Use npm to update package
+   metadata and the lock together. Review the chart's `appVersion` and documented
+   image pins. Keep Agent Server and Automation versions independent.
+3. Review selected changes, compatibility, applicable CI and upstream provenance.
+   Merge the approved preparation into `main` before dispatching publication.
+4. Check that the version tag does not already exist. Do not move a released tag
+   or overwrite an existing version with a different commit.
 
-The next version is derived from the conventional-commit types merged since the last release: `fix` → patch, `feat` → minor, any `!` suffix or `BREAKING CHANGE` footer → major. Other types (`docs`, `chore`, `refactor`, …) appear in the release notes but do not by themselves produce a release PR. Release notes are grouped by the `type:` labels via `.github/release.yml`; there is no `CHANGELOG.md` file — GitHub Releases are the changelog.
+## Publish only when requested
 
-Configuration lives in `release-please-config.json` (version surfaces, draft PR) and `.release-please-manifest.json` (current released version). Maintenance releases for an older line use `release/**` branches (`release.yml` triggers there too).
+A maintainer dispatches **Praxis Release** from `main` with `version` equal to
+`PRAXIS_VERSION` and `confirm` equal to `RELEASE`. Obtain release authorization
+from the user unless the current request already authorizes that release.
+Ordinary pushes, PR merges, tags and upstream updates do not dispatch it.
 
-**Never commit to the release PR's branch by hand** — release-please owns it and force-pushes it on every push to `main`.
+The workflow checks out the selected commit, validates inputs, runs repository
+checks, typecheck, lint, tests and builds, creates the native archive, and checks
+Docker launch modes. It then calls `docker.yml` directly. Native amd64 and arm64
+jobs use separate caches and produce digests; the merge job publishes one image
+index at `ghcr.io/emilio-01-t/praxis:<version>`. Stable versions also update
+`latest`. Finally, the workflow creates `v<version>` and the GitHub release with
+the native `.tgz` archive and `image.txt`.
 
----
+Keep the inherited native package identity inside the archive until a separately
+reviewed package migration. Do not publish to the upstream npm namespace.
+There is no automatic deployment to a laptop or VM.
 
-## Step 1: Find the Release PR
+## Verify publication
+
+Inspect the completed run and its exact commit. Check the release tag, attached
+archive, `image.txt`, image index and recorded digest. For example:
 
 ```bash
-gh pr list --state open --label "autorelease: pending"
+gh run list --repo Emilio-01-T/Praxis --workflow praxis-release.yml --limit 3
+gh release view v<version> --repo Emilio-01-T/Praxis
+docker buildx imagetools inspect ghcr.io/emilio-01-t/praxis:<version>
 ```
 
-If no release PR is open, nothing releasable (`feat`/`fix`/breaking) has merged since the last release — or `release.yml` is failing on `main`:
+Treat `<version>` as a placeholder. Check both linux/amd64 and linux/arm64;
+provenance/attestation descriptors can additionally appear as unknown/unknown.
+Record actual runtime tests separately: registry metadata does not prove that an
+application ran successfully. Use the agreed laptop/VM test plan when authorized.
 
-```bash
-gh run list --workflow=release.yml --limit=3
-```
+## Desktop artifacts
 
----
+Keep Linux, Windows and macOS desktop workflows for PR builds and manual builds.
+The Praxis release is created with `GITHUB_TOKEN`; its `release` event does not
+start those workflows. For desktop artifacts, dispatch each required workflow on
+`v<version>` explicitly, review its output and test the installed artifacts.
+Manual runs upload Actions artifacts; they do not attach them to the release.
+Attach approved files separately when publication is authorized. See the release
+policy for the supported artifacts and this limitation.
 
-## Step 2: Review It
+## Recover from failure
 
-Open the release PR and confirm:
-
-- **The version** in the title matches expectations. It is computed from the merged commit types — if it looks wrong, check the conventional types of the PR titles merged since the last release. To force a specific version, merge a commit to `main` whose message contains a `Release-As: X.Y.Z` footer.
-- **The staged bumps** cover all version surfaces (`package.json`, `package-lock.json`, `config/defaults.json`, `README.md`, `README.windows.md`) and the notes list the expected changes.
-
----
-
-## Step 3: Cut the Release
-
-**STOP HERE and confirm with the user before proceeding.** Marking the PR ready and merging it publishes to npm and GHCR.
-
-```bash
-gh pr ready <release-pr-number>
-```
-
-This fires the release-ready gate: a Slack notification lands in `#proj-agent-canvas` and the PR is labeled `release: ready`. Then merge the release PR (squash, like any other PR).
-
----
-
-## Step 4: Watch the Pipeline
-
-Merging the release PR triggers `release.yml` on `main`, which pushes the `vX.Y.Z` tag and creates the GitHub Release; the tag push then fires the publish workflows:
-
-```bash
-gh run list --workflow=release.yml --limit=3
-gh run list --workflow=npm-publish.yml --limit=3
-gh run list --workflow=docker.yml --limit=3
-```
-
----
-
-## Step 5: Verify the Release
-
-```bash
-# GitHub release
-gh release view v<version>
-
-# npm (allow ~2 min for publish to propagate)
-npm view @openhands/agent-canvas@<version>
-npm view @openhands/agent-canvas dist-tags  # stable releases get `latest`
-
-# Docker
-docker pull ghcr.io/openhands/agent-canvas:<version>
-```
-
-External install docs on docs.openhands.dev are maintained separately; update them there when closing #1073.
-
----
-
-## Troubleshooting
-
-### No release PR appears after merging to main
-Only `feat`, `fix`, and breaking changes produce a release PR. Also check `release.yml` runs on `main` — the workflow fails by design if the org secrets `RELEASE_APP_ID` / `RELEASE_APP_PRIVATE_KEY` are unavailable (a `GITHUB_TOKEN` fallback would create a tag that never triggers the publish workflows).
-
-### The proposed version is wrong
-The version comes from the conventional-commit history since the last release. Fix forward: merge a commit to `main` with a `Release-As: X.Y.Z` footer to pin the next version.
-
-### No Slack message when the PR was marked ready
-`SLACK_BOT_TOKEN` is optional by design — the gate still applies the `release: ready` label and the release proceeds normally.
-
-### package.json version doesn't match the tag
-This cannot happen in the normal flow: release-please bumps `package.json` in the release PR and tags the resulting merge commit, and `npm-publish.yml` validates they match. If it ever fails, someone pushed a tag by hand — delete the tag and let release-please own tagging.
+Inspect which stage failed before retrying. If verification failed, nothing has
+been published. If image publication succeeded but GitHub release creation
+failed, publication is partially complete: inspect GHCR and the recorded commit
+before recovery. If the tag already exists, the verification job rejects another
+normal dispatch. Do not delete or move tags as a routine retry procedure.
+Never report a release as complete before its image and GitHub artifacts exist.

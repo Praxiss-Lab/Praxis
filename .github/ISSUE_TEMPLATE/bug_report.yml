@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report a bug or unexpected behavior in Agent Canvas.
+description: Report a bug or unexpected behavior in Praxis.
 title: "[Bug]: "
 labels: ["bug"]
 body:
@@ -23,10 +23,10 @@ body:
     id: install-method
     attributes:
       label: Installation Method
-      description: How did you install / run Agent Canvas?
+      description: How did you install / run Praxis?
       options:
-        - npm (`npx @openhands/agent-canvas` or `npm install -g @openhands/agent-canvas`)
-        - Docker (`ghcr.io/openhands/agent-canvas`)
+        - Native release archive (`agent-canvas`)
+        - Docker (`ghcr.io/emilio-01-t/praxis`)
         - From source (`npm run dev` / `npm run dev:minimal`)
         - Other
     validations:
@@ -35,9 +35,9 @@ body:
   - type: input
     id: version
     attributes:
-      label: Agent Canvas Version
-      description: "npm: `agent-canvas --version` · Docker: the image tag you pulled (e.g. `ghcr.io/openhands/agent-canvas:latest`)"
-      placeholder: "e.g. 1.0.0-alpha.6"
+      label: Praxis Version
+      description: "Native: `agent-canvas --version` · Docker: the exact version tag or image digest · Source: the commit SHA"
+      placeholder: "e.g. 1.25.0"
     validations:
       required: true
 
@@ -56,15 +56,18 @@ body:
       label: Steps to Reproduce
       description: |
         Step-by-step instructions to reproduce the behavior. To qualify for the
-        `ready-for-dev` label, include how you ran Agent Canvas using one of
+        `ready-for-dev` label, include how you ran Praxis using one of
         these supported methods:
-          - `npx @openhands/agent-canvas` (or `agent-canvas` if installed globally)
+          - `agent-canvas` installed from a Praxis release archive
           - `npm run dev` / `npm run dev:minimal` (from a source checkout)
-          - The hosted canvas at `app.all-hands.dev/canvas`
+          - Docker using `ghcr.io/emilio-01-t/praxis:<version>`
+          - The desktop application (include platform and artifact version)
+        Specify complete / backend-only / frontend-only mode, and whether the
+        backend is on the same device or a personal VM. Do not include API keys.
       placeholder: |
         Run method: `npm run dev`
 
-        1. npm install && npm run dev
+        1. npm ci && npm run dev
         2. Open http://localhost:8000
         3. …
         4. See error
@@ -76,7 +79,7 @@ body:
     attributes:
       label: Actual Behavior
       description: |
-        Describe what happened. For functional Canvas bugs, include a screenshot
+        Describe what happened. For functional Praxis bugs, include a screenshot
         or video of the failure in the running app. Logs, API output, and
         reproducers can supplement it. Say if you have not reproduced it.
         Links in comments count; no after-fix evidence is needed for triage.

@@ -85,7 +85,7 @@ const RUNTIME_PACKAGES = ["sirv", "httpxy"];
 const repoRoot = dirname(fileURLToPath(import.meta.url));
 
 // Root package.json is the single source of truth for the app version
-// (release-please bumps it). electron/package.json is a minimal manifest
+// (aligned with PRAXIS_VERSION in release preparation). electron/package.json is a minimal manifest
 // stub pinned at 1.0.0 — `extraMetadata` below overrides its version at
 // pack time so artifact names and app.getVersion() carry the released
 // version instead.

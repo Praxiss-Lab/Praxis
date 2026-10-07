@@ -4,7 +4,7 @@ This experimental chart runs one complete Praxis instance as a StatefulSet: fron
 
 ## Install
 
-Use a Praxis checkout, Helm, a configured Kubernetes context and a cluster with PVC provisioning. Explicitly select the Praxis image because the chart's default image repository is a legacy identifier:
+Use a Praxis checkout, Helm, a configured Kubernetes context and a cluster with PVC provisioning. The chart defaults to the Praxis image. Explicitly select the release tag for deployment:
 
 ```sh
 helm upgrade --install praxis ./helm/agent-canvas \

@@ -10,10 +10,10 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/openhands/agent-canvas
+  repository: ghcr.io/emilio-01-t/praxis
   # Image tag is pinned to the chart's appVersion. Override with
-  # `--set image.tag=sha-<...>` when you need a specific build (e.g. a PR
-  # image or a hotfix that doesn't match the chart's appVersion).
+  # `--set image.tag=<version>` to select another published Praxis release.
+  # PR and branch builds do not publish registry image tags.
   # tag: ""
   pullPolicy: IfNotPresent
 

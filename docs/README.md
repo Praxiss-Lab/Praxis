@@ -23,6 +23,8 @@
 
 ## Verify and release
 
+- [Workflow responsibilities](policies/WORKFLOWS.md).
+- [Issue triage](policies/ISSUES.md).
 - [Upstream review and selective integration](upstream/README.md).
 - [Testing matrix](TESTING_MATRIX.md).
 - [WebSocket test helpers](../__tests__/helpers/README.md).

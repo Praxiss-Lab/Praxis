@@ -267,10 +267,8 @@ Adequate design context states:
 
 Put it in the PR description, or link a `.pr/` design doc that covers it from
 the `pr-design-doc` skill. Count a `.pr/` doc only when the link is pinned to a
-commit SHA, not the branch name. Approving a same-repository PR runs the
-`PR Artifacts` cleanup, which removes `.pr/` from the branch, so a branch link
-stops resolving before a human maintainer reads it, while a SHA link keeps
-working.
+commit SHA, not the branch name. Use SHA-pinned links so the design context remains readable after the
+branch advances or is deleted. Praxis does not run automatic PR-artifact cleanup.
 
 Scale the response to the risk assessment:
 
@@ -348,11 +346,9 @@ substitute for live evidence when the changed behavior requires it. Submit
 **COMMENT** when production-facing evidence is required but absent or ambiguous,
 and name the exact capture or verification still needed before approval.
 
-The PR-description checker requires media for frontend paths and declared bug
-fixes or features, including nonfrontend changes. It checks presence, not whether
-Canvas actually ran or the capture proves before/after behavior. Reviewers enforce
-the functional-change evidence rule above even when a PR is labeled as a chore;
-do not fabricate media or relabel a functional change to avoid evidence.
+Praxis uses manual review of functional-change evidence; there is no automated
+PR-description media gate. Enforce the evidence requirements above without
+fabricating artifacts or relabeling functional work as a chore.
 
 Follow the test routing in `AGENTS.md`. Mock-LLM, Docker mock-LLM, and live
 LLM-backed E2E suites run after changes reach `main`, not from PR labels. For

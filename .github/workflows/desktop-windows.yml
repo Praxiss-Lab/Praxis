@@ -5,11 +5,14 @@ name: Desktop (Windows)
 #   pull_request:      paths-filtered smoke build — the uploaded artifact is
 #                      what a tester downloads to verify a PR on Windows.
 #   release published: rebuilds from the release tag and attaches the .exe to
-#                      the GitHub Release created by release-please.
+#                      the GitHub Release published by a maintainer.
 #   workflow_dispatch: manual escape hatch for any ref.
 # The installer is not code-signed (no signing certs exist for any platform);
 # Windows SmartScreen therefore warns on first run — dismiss it via
 # "More info" → "Run anyway".
+# Praxis Release uses GITHUB_TOKEN; its release event does not cascade into
+# this workflow. Dispatch manually on the release tag for desktop artifacts,
+# then attach approved artifacts separately (see docs/policies/RELEASE.md).
 on:
   workflow_dispatch:
   pull_request:

@@ -73,7 +73,7 @@ Do not use `[skip ci]` on integration commits that need automatic verification.
 | Praxis Smoke | Automatic on PRs to `main`, except documentation-only changes. |
 | Docker Check | Automatic when matching runtime, Docker or configuration paths change. |
 | SDK Version Sync | Automatic when its version-related paths change. |
-| Desktop / CI Script Tests | Automatic only when their respective paths match. |
+| Desktop builds | Automatic only when desktop paths match. |
 | Upstream Compatibility CI | Manual: Actions → workflow → Run workflow → select the integration branch. Repeats core build checks; use when an explicit upstream compatibility run is needed. |
 | Mock-LLM E2E Tests | Manual on the integration branch before merge when relevant; also automatic on eligible pushes to `main`. |
 | Mock-LLM Docker E2E Tests | Manual against an explicitly selected published image. It does not verify unpublished branch code. |

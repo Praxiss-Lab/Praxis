@@ -21,8 +21,7 @@ on:
       - "scripts/check-sdk-version-sync.mjs"
       - ".github/workflows/sdk-version-sync.yml"
 
-  # Triggered when new SDK packages are released on PyPI
-  # The OpenHands/software-agent-sdk repo can trigger this on release
+  # Maintainers may manually check against an explicitly selected SDK version.
   workflow_dispatch:
     inputs:
       sdk_version:
@@ -50,27 +49,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: '24'
-
-      - name: Log trigger info
-        env:
-          EVENT_ACTION: ${{ github.event.action }}
-          CLIENT_PAYLOAD: ${{ toJson(github.event.client_payload) }}
-          INPUT_VALUE: ${{ inputs.sdk_version }}
-        run: |
-          echo "Triggered by: ${{ github.event_name }}"
-          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
-            echo "Event type: $EVENT_ACTION"
-            echo "Client payload: $CLIENT_PAYLOAD"
-          fi
-          if [ -n "$INPUT_VALUE" ]; then
-            echo "SDK version input: $INPUT_VALUE"
-          fi
+          node-version: "24"
 
       - name: Check SDK version sync
         run: node scripts/check-sdk-version-sync.mjs
         env:
-          # Pass the SDK version from workflow_dispatch or repository_dispatch if provided
-          # workflow_dispatch: uses inputs.sdk_version
-          # repository_dispatch: uses client_payload.version
-          EXPECTED_SDK_VERSION: ${{ inputs.sdk_version || github.event.client_payload.version || '' }}
+          EXPECTED_SDK_VERSION: ${{ inputs.sdk_version || '' }}

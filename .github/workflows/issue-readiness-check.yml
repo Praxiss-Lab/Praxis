@@ -1,7 +1,7 @@
 ---
 name: Ready-for-dev Label Policy
 
-# The issue-triage automation and repository writers may grant ready-for-dev.
+# Praxis repository writers may grant ready-for-dev.
 # Labels from any other actor are removed.
 
 on:

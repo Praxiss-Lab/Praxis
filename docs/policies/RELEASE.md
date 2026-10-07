@@ -78,3 +78,25 @@ Publication is sequential, not transactional: if GitHub Release creation fails
 after GHCR publication, inspect the existing image before retrying. Do not move
 a released version tag to a different commit. See
 [distribution](../distribution/README.md) for commands and workflow responsibilities.
+
+## Desktop builds
+
+Desktop workflows remain available for Linux (AppImage and deb), Windows (NSIS
+installer), and macOS (native PR builds and a universal DMG for manual/release
+builds). PR builds are filtered to desktop-related paths. Build availability does
+not establish that an installer has been tested on its target platform.
+
+Praxis Release creates the GitHub release using `GITHUB_TOKEN`. GitHub does not
+cascade the resulting release event into other workflows; see
+[GitHub's workflow-trigger rules](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow).
+Desktop files therefore are not part of the automatic Praxis Release pipeline.
+A maintainer can dispatch the required desktop workflow on the published
+`v<version>` tag. Manual runs produce Actions artifacts; after platform testing,
+approved files can be attached separately to the existing release. The retained
+`release: published` handlers apply when a release is published through an
+identity that can trigger another workflow, such as a maintainer publishing it
+through GitHub. No additional publishing credential is configured by this policy.
+
+The desktop application's inherited technical names and packaging paths are
+retained until a separate branding migration. They do not change the Docker
+image's Praxis registry namespace or its complete/backend/frontend launch modes.

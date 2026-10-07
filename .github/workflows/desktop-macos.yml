@@ -11,7 +11,7 @@ name: Desktop (macOS)
 #   release published: rebuilds from the release tag as a UNIVERSAL build
 #                      (arm64 + x64, with per-arch bundled uv/node runtimes
 #                      selected at runtime by process.arch) and attaches the
-#                      .dmg to the GitHub Release created by release-please.
+#                      .dmg to the GitHub Release published by a maintainer.
 #                      Intel Macs are supported by the release DMG.
 #   workflow_dispatch: manual escape hatch for any ref — the native per-arch
 #                      builds above AND the universal build, so the universal
@@ -25,6 +25,9 @@ name: Desktop (macOS)
 #
 # Intel-leg removal date: macos-15-intel is available until August 2027, after
 # which GitHub drops x86_64 macOS support entirely and this leg must go.
+# Praxis Release uses GITHUB_TOKEN; its release event does not cascade into
+# this workflow. Dispatch manually on the release tag for desktop artifacts,
+# then attach approved artifacts separately (see docs/policies/RELEASE.md).
 on:
   workflow_dispatch:
   pull_request:

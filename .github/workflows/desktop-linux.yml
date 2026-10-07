@@ -8,7 +8,7 @@ name: Desktop (Linux)
 #   pull_request:      paths-filtered smoke build — the uploaded artifacts are
 #                      what a tester downloads to verify a PR on Linux.
 #   release published: rebuilds from the release tag and attaches the packages
-#                      to the GitHub Release created by release-please.
+#                      to the GitHub Release published by a maintainer.
 #   workflow_dispatch: manual escape hatch for any ref.
 # The packages are not signed (no signing certs exist for any platform);
 # no distro store review is involved, so AppImage/deb install without a
@@ -16,6 +16,9 @@ name: Desktop (Linux)
 # (FUSE required; FUSE 3 distros need the `--appimage-extract-and-run`
 # fallback or libfuse2 installed). The deb targets Debian/Ubuntu; Fedora and
 # other rpm distros use the AppImage.
+# Praxis Release uses GITHUB_TOKEN; its release event does not cascade into
+# this workflow. Dispatch manually on the release tag for desktop artifacts,
+# then attach approved artifacts separately (see docs/policies/RELEASE.md).
 on:
   workflow_dispatch:
   pull_request:

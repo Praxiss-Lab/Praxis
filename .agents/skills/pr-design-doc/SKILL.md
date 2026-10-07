@@ -39,17 +39,10 @@ non-trivial PR easy to review.
 
 ## The `.pr/` workflow
 
-Use the temporary **`.pr/`** directory for PR-only artifacts. Before relying on automatic
-cleanup, verify that the target repository has an enabled
-`.github/workflows/pr-artifacts.yml` workflow that removes `.pr/` after approval.
+Use the temporary **`.pr/`** directory for PR-only artifacts. Praxis has no
+automatic cleanup workflow. Remove `.pr/` manually before merging any PR.
 
-- Same-repository PR with verified cleanup workflow: the workflow removes `.pr/` after
-  approval.
-- Fork PR, or repository without a verified cleanup workflow: remove `.pr/` manually before
-  merge.
-
-The design doc is a temporary review aid and must not ship in the merged tree. Automated
-approval can trigger cleanup before human review. Keep the essential design summary in the
+The design doc is a temporary review aid and must not ship in the merged tree. Manual cleanup can happen before later review. Keep the essential design summary in the
 PR description: intent, important before/after behavior or API shape, compatibility, risk,
 and code references. Use commit-pinned document links so cleanup does not break access.
 

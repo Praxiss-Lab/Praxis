@@ -1,28 +1,24 @@
 apiVersion: v2
 name: agent-canvas
 description: |
-  Helm chart for running the OpenHands agent-canvas all-in-one image
+  Helm chart for running the Praxis all-in-one image
   (frontend + agent-server + automation) as a StatefulSet with persistent
   storage, ingress, and optional cluster RBAC.
 type: application
 # Chart-level version. Bump on chart changes.
 version: 0.1.0
-# Default appVersion pins the published agent-canvas image tag from
-# config/defaults.json (`versions.agentCanvas`). Override via
-# `--set image.tag=...` to pull a different build (e.g. `main`, `latest`,
-# or a `sha-<git-sha>` tag).
-# Kept in sync by release-please (extra-files, type `generic`) — do not edit by
-# hand; the trailing annotation is what marks this line for replacement.
-appVersion: "1.25.0" # x-release-please-version
+# Default appVersion pins the supported Praxis release. Update it explicitly
+# when preparing a release; override image.tag for another published version.
+appVersion: "1.25.0"
 kubeVersion: ">=1.24.0-0"
-home: https://github.com/OpenHands/OpenHands
+home: https://github.com/Emilio-01-T/Praxis
 sources:
-  - https://github.com/OpenHands/OpenHands
+  - https://github.com/Emilio-01-T/Praxis
 keywords:
-  - openhands
+  - praxis
   - agent
   - ai
   - agent-canvas
 maintainers:
-  - name: OpenHands
-    url: https://github.com/OpenHands
+  - name: Emilio-01-T
+    url: https://github.com/Emilio-01-T
