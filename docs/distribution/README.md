@@ -13,17 +13,32 @@ which services run; frontend mode still downloads the complete image.
 Docker also accepts `--frontend-only`, `--backend-only`, or `--all` after the image
 name. A command-line mode overrides `PRAXIS_MODE`.
 
-## Run the current checkout
+## Use a published release
 
-No Praxis registry image is available until a maintainer publishes a release.
-Build locally without publishing:
+Published images and native archives are listed in
+[Praxis releases](https://github.com/Emilio-01-T/Praxis/releases). For `1.25.0`:
+
+```sh
+export PRAXIS_IMAGE="ghcr.io/emilio-01-t/praxis:1.25.0"
+docker pull "$PRAXIS_IMAGE"
+```
+
+Docker selects the amd64 or arm64 variant automatically. Both variants contain
+the same three launch modes. Linux containers can also run through Docker Desktop
+on Windows/macOS. See the [Windows guide](../../README.windows.md).
+
+## Build the current checkout locally
+
+After cloning Praxis and installing Node.js 24+ and Docker, build without publishing:
 
 ```sh
 node scripts/docker-build.mjs --tag praxis:local
 export PRAXIS_IMAGE=praxis:local
 ```
 
-Complete stack:
+## Complete stack
+
+Choose `PRAXIS_IMAGE` from a release or the local build above.
 
 ```sh
 docker run --rm -p 127.0.0.1:18080:8000 \
@@ -36,7 +51,10 @@ Open `http://127.0.0.1:18080/canvas/`. The inherited local session-key policy is
 unchanged. Bind mounts can replace the named volumes to give the agent access to
 specific host projects.
 
-Split containers on one machine:
+## Split containers on one machine
+
+Run from a Praxis checkout containing `docker/compose.split.yml`, with
+`PRAXIS_IMAGE` already set.
 
 ```sh
 export PRAXIS_SESSION_API_KEY="$(openssl rand -hex 32)"
@@ -44,9 +62,12 @@ docker compose -f docker/compose.split.yml up -d
 ```
 
 Frontend: `http://127.0.0.1:18080/canvas/`; backend: `http://127.0.0.1:18081/health`.
-Enter `PRAXIS_SESSION_API_KEY` when Canvas requests the backend key. Frontend does
+Enter `PRAXIS_SESSION_API_KEY` when Canvas requests the backend key. Keep this
+key available when recreating the backend. Frontend does
 not generate or embed backend credentials. Backend state and projects persist in
-named volumes; `docker compose down` keeps them.
+named volumes; `docker compose -f docker/compose.split.yml down` keeps them.
+The project volume is separate from any host project folder. Use bind mounts in
+your Compose configuration if the agent should access existing host projects.
 
 ## Frontend and backend on different machines
 
@@ -77,16 +98,18 @@ the frontend, matching the backend's `VSCODE_BASE_PATH` (default `/vscode`).
 
 ## Native installation
 
-For development, use the existing source launchers (`npm ci`, then `npm run dev`)
-and the mode flags documented in the main README. Releases attach an npm `.tgz`
-built from this checkout. Install that downloaded archive with
-`npm install -g /path/to/package.tgz`, then use `agent-canvas` and its mode flags.
-Node 24+ and `uv` are required for the native stack.
+Follow the [source quickstart](../../README.md#quickstart-from-source) for
+development, or the [release archive installation](../../README.md#install-a-published-release-without-docker)
+for a published build. Both require Node.js 24+, npm and `uv` / `uvx`. Windows
+users should run native launchers inside WSL 2.
+
+After installing the release archive, use `agent-canvas`,
+`agent-canvas --backend-only`, or `agent-canvas --frontend-only`. Native launchers
+default to port 8000; select separate ports when both modes run on one machine.
 
 The npm package name `@openhands/agent-canvas` and binary `agent-canvas` remain
 unchanged; its version matches `PRAXIS_VERSION`, starting at `1.25.0`.
-Installing that name from npm
-fetches upstream OpenHands, not this Praxis fork. Praxis does not publish to the
+Installing that name from npm fetches upstream OpenHands, not this Praxis fork. Praxis does not publish to the
 upstream npm namespace. The GitHub release and `PRAXIS_VERSION` identify the
 Praxis artifact.
 
