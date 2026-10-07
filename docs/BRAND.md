@@ -32,3 +32,9 @@ The dark artwork combines Charcoal lettering/folds with the blue-to-cyan ribbon.
 | Wordmark        | [PNG](assets/brand/praxis-wordmark.png)                                  | [PNG](assets/brand/praxis-wordmark-white.png)                                        |
 
 The app icons use dark artwork on a light tile and white artwork on a dark tile. Both have transparent space outside their rounded tile: [light tile](assets/brand/praxis-app-icon-light.png), [dark tile](assets/brand/praxis-app-icon-dark.png).
+
+## Repository social preview
+
+The selected social preview is [Charcoal](assets/brand/praxis-social-charcoal.png): white folds, blue-to-cyan ribbon, solid Charcoal background. The [transparent alternative](assets/brand/praxis-social-transparent.png) is also available. Both PNGs are 1280 × 640 pixels, with a smaller centered symbol and generous margins.
+
+Upload the selected PNG in the repository's **Settings → General → Social preview**. Committing these assets does not update that GitHub setting automatically.
