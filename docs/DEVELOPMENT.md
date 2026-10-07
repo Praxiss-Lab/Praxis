@@ -1,6 +1,8 @@
 # Development
 
-This document is for contributors working on `agent-canvas` itself.
+This document is for contributors working on Praxis and its inherited
+`agent-canvas` runtime. Start with the [Praxis source quickstart](../README.md#quickstart-from-source)
+to clone this repository and install its locked dependencies.
 
 ## Recommended local workflow
 
@@ -21,6 +23,7 @@ When a feature crosses repositories, implement the backend contract in the SDK f
 For a static frontend build (better for slow networks, remote access, tunnels):
 
 ```sh
+npm run build
 npm run dev:static
 ```
 

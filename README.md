@@ -3,172 +3,170 @@
 **AI-Driven Development**
 
 Praxis is an independently maintained, MIT-licensed fork of
-[OpenHands Agent Canvas](https://github.com/OpenHands/OpenHands).
-It supports native execution and Docker, with complete or separate frontend and
-backend modes.
+[OpenHands Agent Canvas](https://github.com/OpenHands/OpenHands). It provides a
+web interface for coding agents, conversations and automations, using the
+OpenHands Agent Server and Automation services.
 
-Praxis is not affiliated with or endorsed by OpenHands. The original package
-name and launcher are retained for compatibility.
+Run the complete stack locally, or run frontend and backend separately on the
+same machine or different machines. Both native launchers and Docker support
+these modes.
 
-- [Installation and launch modes](docs/distribution/README.md)
-- [Releases](docs/policies/RELEASE.md)
-- [Versioning](docs/policies/VERSIONING.md)
-- [Upstream baseline](docs/upstream/BASELINE.md)
+Praxis is not affiliated with or endorsed by OpenHands. The inherited package
+name `@openhands/agent-canvas`, launcher `agent-canvas` and `.openhands` state
+folder are retained for compatibility.
 
-<a name="readme-top"></a>
+## Quickstart from source
 
-Praxis turns your coding agents into a self-hosted, always-on engineering team. It's a developer control center for starting conversations and automating everyday tasks — like generating reports that publish to Slack or automatically decomposing GitHub issues into tasks.
+Use this path to develop Praxis from the current repository checkout.
 
-It runs locally on your machine by default, but can connect to multiple “agent backends”, e.g. running agents in Docker containers, on VMs, or within your company infrastructure. You can optionally choose to run agents on OpenHands Cloud or OpenHands Enterprise infrastructure.
-
-Agent Canvas runs the open source OpenHands agent out-of-the-box, but can use any third-party agent like Claude Code and Codex.
-
-|                                                                                                                      |                                                                                                                                          |
-| -------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| [**Self-host your way**](https://docs.openhands.dev/openhands/usage/agent-canvas/backend-setup/vm)                   | Run agents locally, in Docker, on VMs, or anywhere you can run an agent server backend                                                   |
-| [**Switch between different backends**](https://docs.openhands.dev/openhands/usage/agent-canvas/backends)            | Switch between local, remote, and cloud agents without losing focus                                                                      |
-| [**Create automations**](https://docs.openhands.dev/openhands/usage/agent-canvas/prebuilt-automations)               | Create automations and workflows that integrate with Slack, GitHub, Linear, and more. Run on a schedule or in response to webhook events |
-| [**Integrate with the tools you use**](https://docs.openhands.dev/openhands/usage/agent-canvas/prebuilt-automations) | Connect your automations with third-party services like Slack, GitHub, Notion, and more to automate workflows                            |
-| [**Bring your own model**](https://docs.openhands.dev/openhands/usage/settings/llm-settings#llm-profiles)            | Use with any LLM                                                                                                                         |
-| [**Use with any agent**](https://docs.openhands.dev/openhands/usage/agent-canvas/acp-agents)                         | Use with OpenHands, Claude Code, Codex, Gemini, or any agent with Agent-Client Protocol (ACP).                                           |
-
-If you have questions or feedback, please open a GitHub issue or join the [#proj-agent-canvas channel in Slack](https://openhands.dev/joinslack).
-
-## Praxis distribution
-
-See [Praxis distribution and launch modes](docs/distribution/README.md) for native
-installation from this fork, release images, split Docker containers, and separate
-frontend/backend machines. The upstream npm install command below installs
-OpenHands; Praxis release archives are attached to this repository’s releases.
-
-## Quickstart
-
-You can install OpenHands to run agents on any machine: on your laptop, on a dedicated computer like a Mac Mini,
-or on a server in the cloud.
-
-The most powerful way to run OpenHands is on a server in the cloud. This allows your agents to continue running
-even when your laptop is shut, and makes it easier to trigger your agents through third-party services
-like Slack, GitHub, and Datadog. See [SELF_HOSTING.md](docs/SELF_HOSTING.md) for details, especially with respect to security hardening.
-
-Notably, you can run the backend in _multiple different environments_, and switch between
-them from the same Agent Canvas frontend. E.g. you can share an Agent Server with your team for agents doing
-code review and dependency updates, then have your personal agents running on your laptop.
-
-### Option 1: Without a Sandbox
-
-> [!WARNING]
-> This runs the agent-server directly on the machine you're installing on — the agent will have full access to your filesystem!
-
-**Prerequisites**: [Node.js](https://nodejs.org/) 24 or later, `uv`
+**Prerequisites:** Git, Node.js 24 or later (with npm), and `uv` / `uvx` on your
+PATH. On Windows, run these commands inside WSL 2; see the
+[Windows guide](README.windows.md).
 
 ```sh
-npm install -g @openhands/agent-canvas
+git clone https://github.com/Emilio-01-T/Praxis.git
+cd Praxis
+npm ci
+npm run dev
+```
+
+The launcher starts the frontend, Agent Server, Automation and ingress. It uses
+`uvx` to install and run the pinned Python services; Docker is not required for
+this path. If you need environment overrides, create an optional `.env` before
+starting the launcher.
+
+Open [http://localhost:8000](http://localhost:8000). Configure your model/provider
+in Canvas before starting an agent conversation. Stop the stack with `Ctrl+C`.
+
+> [!WARNING]
+> Native execution runs the agent on your machine with access to your filesystem.
+
+For a built frontend from the checkout:
+
+```sh
+npm run build
+npm run dev:static
+```
+
+## Install a published release without Docker
+
+**Prerequisites:** Node.js 24 or later, npm and `uv` / `uvx`. Use Linux or macOS;
+Windows users should use WSL 2.
+
+Download the `.tgz` archive from a [Praxis release](https://github.com/Emilio-01-T/Praxis/releases).
+For version `1.25.0`, run:
+
+```sh
+curl -fL --output openhands-agent-canvas-1.25.0.tgz \
+  https://github.com/Emilio-01-T/Praxis/releases/download/v1.25.0/openhands-agent-canvas-1.25.0.tgz
+npm install -g ./openhands-agent-canvas-1.25.0.tgz
 agent-canvas
 ```
 
-The `agent-canvas` command starts the full local stack by default. You can also split it when you want to run pieces separately:
+Open [http://localhost:8000](http://localhost:8000). This serves the frontend built
+into the release archive and starts the backend services through `uvx`.
+
+Installing `@openhands/agent-canvas` by name from npm downloads upstream OpenHands.
+To install this fork, use the Praxis release archive above. The archive retains
+the original package name and replaces a global installation with that name.
+
+## Run a published Docker image
+
+**Prerequisites:** Docker Engine on Linux, or Docker Desktop on macOS/Windows
+configured to run Linux containers. The image supports amd64 and arm64; Docker
+selects the architecture for the machine running the Docker engine.
+
+**Linux / macOS:**
 
 ```sh
-agent-canvas --frontend-only  # static frontend + ingress only
-agent-canvas --backend-only   # agent server + automation backend + ingress only
-```
-
-### Option 2: With a Docker Sandbox
-
-**Prerequisites**:
-
-- Docker: Docker Desktop on macOS/Windows, or Docker Engine/Docker Desktop on Linux.
-- A host directory for `PROJECTS_PATH` containing the project folders you want the agent to access. Create it before starting the container.
-
-**macOS / Linux:**
-
-```sh
-export PRAXIS_IMAGE="ghcr.io/emilio-01-t/praxis:1.25.0" # choose an existing Praxis release
-export PROJECTS_PATH="$HOME/projects"  # directory containing your project folders
+export PRAXIS_IMAGE="ghcr.io/emilio-01-t/praxis:1.25.0"
+export PROJECTS_PATH="$HOME/projects"
 mkdir -p "$PROJECTS_PATH" "$HOME/.openhands"
+docker pull "$PRAXIS_IMAGE"
 
-docker run -it --rm \
+docker run -it --rm --name praxis \
   -p 127.0.0.1:8000:8000 \
+  -e PRAXIS_MODE=all \
   -e AGENT_CANVAS_ALLOW_LAN_SESSION_KEY=true \
   -v "$HOME/.openhands:/home/openhands/.openhands" \
   -v "${PROJECTS_PATH}:/projects" \
   "$PRAXIS_IMAGE"
 ```
 
-**Windows (PowerShell / Windows Terminal):** See [README.windows.md](./README.windows.md) for the equivalent commands.
+Open [http://localhost:8000/canvas/](http://localhost:8000/canvas/).
+Settings and conversations persist under the mounted `.openhands` directory.
+The agent can access the mounted projects. `Ctrl+C` stops the container; `--rm`
+removes the stopped container while retaining those host directories.
 
-The agent will be able to access any project under `PROJECTS_PATH`.
+For PowerShell commands, see the [Windows guide](README.windows.md#docker-powershell).
 
-### Option 3: With Multiple Docker Sandboxes
+## Run frontend and backend separately
 
-Run each new conversation in its own Docker container, with its own Agent Server and tools. This is useful for running several agents concurrently. Canvas and the outer Agent Server run on your host and route conversation requests to the containers.
+| Mode | Installed native launcher | Docker environment | Services |
+| --- | --- | --- | --- |
+| Complete | `agent-canvas` | `PRAXIS_MODE=all` | Frontend, Agent Server, Automation, ingress |
+| Backend | `agent-canvas --backend-only` | `PRAXIS_MODE=backend` | Agent Server, Automation, API ingress |
+| Frontend | `agent-canvas --frontend-only` | `PRAXIS_MODE=frontend` | Frontend serving and optional backend proxy |
 
-**Prerequisites**: Node.js 24 or later, `uv`, and a running Docker Desktop (macOS) or Docker Engine/Desktop (Linux). The user starting Canvas must be able to run `docker` commands.
+From source, use `npm run dev -- --backend-only` or
+`npm run dev -- --frontend-only` in separate terminals/checkouts, choosing
+non-conflicting ingress ports if both run on the same machine.
 
-**macOS / Linux:**
+Docker uses the same image for every mode. See
+[distribution and launch modes](docs/distribution/README.md) for split Compose,
+separate machines, frontend proxy settings and local image builds.
+
+## Use a Docker sandbox for each conversation
+
+After installing the native Praxis release archive, run:
 
 ```sh
-npm install -g @openhands/agent-canvas
 OH_CONVERSATION_RUNTIME=docker agent-canvas
 ```
 
-Open [http://localhost:8000](http://localhost:8000) and start a new conversation. Existing local conversations are not converted. Each container mounts its conversation's workspace and persisted state, so workspace files and conversation history survive container replacement. Conversations using the same host workspace still share those files; choose separate directories or worktrees to avoid conflicting edits.
+This also requires Docker and access to its daemon. Each new conversation runs
+in its own container; Canvas and Automation remain on the host. Existing local
+conversations are not converted. Workspace and conversation mounts persist
+across container replacement. Conversations using the same host workspace can
+still modify the same files.
 
-This setting isolates conversation execution; it does not move the entire Canvas or automation service into a sandbox. For Windows, see [README.windows.md](./README.windows.md#option-3-with-multiple-docker-sandboxes-wsl-2).
+Windows users must run this mode inside WSL 2 with Docker Desktop integration;
+see the [Windows guide](README.windows.md#per-conversation-sandboxes-wsl-2).
 
-### Option 4: From Source
+## Connections and authentication
 
-> [!WARNING]
-> This runs the agent-server directly on the machine you're installing on — the agent will have full access to your filesystem!
+Native launchers bind to `127.0.0.1` by default. To listen on another interface,
+use `--host` or `OH_BIND_HOST`; a non-loopback bind disables automatic session-key
+injection. Enter the backend key in Canvas when requested.
 
-**Prerequisites**: [Node.js](https://nodejs.org/) 24 or later, `npm`, `uv` (for running the agent server via `uvx`)
+The Docker quickstart above publishes only to host loopback and explicitly
+allows local session-key injection. For a LAN/public deployment, omit
+`AGENT_CANVAS_ALLOW_LAN_SESSION_KEY`, set `LOCAL_BACKEND_API_KEY` to a strong key,
+and enter that key in the UI. Follow the [self-hosting guide](docs/SELF_HOSTING.md)
+for network exposure and HTTPS.
+
+For the automatically generated key in the running quickstart container:
 
 ```sh
-git clone https://github.com/OpenHands/OpenHands.git
-cd OpenHands
-npm install
-npm run dev
+docker exec praxis cat /home/openhands/.openhands/agent-canvas/api-key.txt
 ```
 
----
+## Architecture and documentation
 
-Access the UI at [http://localhost:8000](http://localhost:8000) for the npm/source launchers, or [http://localhost:8000/canvas](http://localhost:8000/canvas) for the Docker image. You can add additional backends directly from the UI.
+Praxis provides Canvas and local-stack orchestration. The
+[OpenHands Agent Server](https://github.com/OpenHands/software-agent-sdk) provides
+agent execution and its REST/WebSocket APIs;
+[OpenHands Automation](https://github.com/OpenHands/automation) provides scheduling
+and dispatch. Automation is included in the complete and backend-only stacks.
 
-Local (`npx` / `npm run dev`) listeners bind **loopback only** (`127.0.0.1`) so the auto-injected session key is not reachable from other machines on the network. To listen on all interfaces, pass `--host 0.0.0.0` (or set `OH_BIND_HOST`); the session key is then **not** injected and the UI uses the same API-key entry screen as `--public`.
-
-Docker listens on all container interfaces so port publishing works, but does not inject its session key into HTML by default. The quickstart above explicitly enables injection while publishing the host port on `127.0.0.1` only. If you publish Docker on a LAN or public interface, omit `AGENT_CANVAS_ALLOW_LAN_SESSION_KEY` and enter the API key in the UI. Set `LOCAL_BACKEND_API_KEY` to a strong value, or retrieve the generated value with `docker exec <container> sh -c 'cat "$STATE_DIR/api-key.txt"'`. For internet-facing installs, follow [self-hosting](./docs/SELF_HOSTING.md).
-
-# Architecture
-
-Agent Canvas is powered by the [OpenHands Agent Server](https://github.com/OpenHands/software-agent-sdk/tree/main/openhands-agent-server/openhands/agent_server), a REST API for running multiple agents on a single machine. Each Agent Server runs on a single host/port; the Agent Canvas can connect to multiple Agent Servers and easily flip between them.
-
-You can run an Agent Server anywhere:
-
-- Directly on your laptop (be careful!)
-- On a dedicated machine like a Mac Mini
-- On a virtual machine in the cloud
-- Inside OpenHands Cloud (our commercial offering)
-
-The Agent Server is often paired with an [Automation Server](https://github.com/OpenHands/automation), which lets you set up agents that run on a schedule or in response to events.
-
-<img width="1456" height="1258" alt="image" src="https://github.com/user-attachments/assets/cb6de6f5-ac30-4d04-a76a-b5c259f0c163" />
-
-### Repository boundaries
-
-Agent Canvas is part of a multi-repository OpenHands system. Changes should go to the repository that owns the behavior:
-
-| Repository                                                                        | Responsibility                                                                                            |
-| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| [`OpenHands/OpenHands`](https://github.com/OpenHands/OpenHands)                   | Agent Canvas frontend, user-facing control center, backend selection, and local-stack orchestration.      |
-| [`OpenHands/software-agent-sdk`](https://github.com/OpenHands/software-agent-sdk) | Python SDK, Agent Server, agents, tools, conversations, workspaces, events, and the canonical server API. |
-| [`OpenHands/typescript-client`](https://github.com/OpenHands/typescript-client)   | Browser-compatible TypeScript client for the Agent Server API.                                            |
-| [`OpenHands/automation`](https://github.com/OpenHands/automation)                 | Automation definitions, scheduling, webhooks, run history, and dispatching.                               |
-
-The Agent Server API is implemented by the SDK and consumed through the TypeScript client by Agent Canvas. The automation service decides when work runs and dispatches conversations to the Agent Server/SDK, which decides what runs. See [`AGENTS.md`](./AGENTS.md) for contributor-specific boundaries and the required custom code-review guide.
-
-## More documentation
-
-- [Documentation index](./docs/README.md)
-- [Architecture overview](./docs/architecture.md)
-- [Development guide](./docs/DEVELOPMENT.md)
-- [Self-hosting guide](./docs/SELF_HOSTING.md)
+- [Installation and launch modes](docs/distribution/README.md)
+- [Windows instructions](README.windows.md)
+- [Documentation index](docs/README.md)
+- [Architecture overview](docs/architecture.md)
+- [Development guide](docs/DEVELOPMENT.md)
+- [Using ACP agents](docs/ACP_AGENTS.md)
+- [Release policy](docs/policies/RELEASE.md)
+- [Versioning](docs/policies/VERSIONING.md)
+- [Upstream baseline](docs/upstream/BASELINE.md)
+- [Contributing](CONTRIBUTING.md)
+- [MIT license](LICENSE) and [attribution](NOTICE)

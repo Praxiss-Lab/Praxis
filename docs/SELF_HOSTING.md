@@ -1,7 +1,8 @@
-# Self-Hosting Agent Canvas on a Virtual Machine
+# Self-hosting Praxis on a virtual machine
 
-This guide walks through running Agent Canvas on a virtual machine (VM) so you
-can reach it from anywhere via a browser.
+This guide covers the native Praxis release on a virtual machine (VM), with
+remote browser access. First install the [Praxis release archive](../README.md#install-a-published-release-without-docker);
+Docker deployment examples are in [distribution and launch modes](distribution/README.md).
 
 > [!WARNING]
 > Agent Canvas drives an agent that can read and write the filesystem of the
@@ -14,7 +15,7 @@ can reach it from anywhere via a browser.
 
 1. **Provision a machine** — a cloud VM or dedicated hardware (Mac Mini, NUC, etc.)
 2. **Secure the machine** — lock down the network firewall
-3. **Run Agent Canvas** — generate a key with `openssl rand -base64 32`, then `export LOCAL_BACKEND_API_KEY=<key>` and `npx @openhands/agent-canvas --public`
+3. **Install and run Praxis** — install its release archive, generate a key with `openssl rand -base64 32`, then `export LOCAL_BACKEND_API_KEY=<key>` and `agent-canvas --public`
 4. **(Optional) Get a domain** — point a domain at the machine with nginx + Let's Encrypt for TLS
 5. **(Optional) Connect locally** — add the remote as a backend in your local Agent Canvas
 
@@ -40,7 +41,7 @@ flowchart LR
     user -- "HTTPS / 443" --> nginx
 ```
 
-`npx @openhands/agent-canvas --public` spins up the static frontend server,
+`agent-canvas --public` spins up the static frontend server,
 the agent server, and the automation backend, fronted by an ingress proxy on
 `127.0.0.1:8000` that routes by path. nginx only needs to know about that
 single ingress port.
@@ -114,28 +115,31 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 On macOS (Mac Mini, etc.) install Node and `uv` via `brew` instead.
 
-Start Agent Canvas in public mode:
+Install the Praxis archive using the [release installation commands](../README.md#install-a-published-release-without-docker).
+Install it as the user who will run the service, with Node and `uvx` on that user's PATH.
+
+Start the installed release in public mode:
 
 ```bash
 export LOCAL_BACKEND_API_KEY=$(openssl rand -base64 32)   # generate once; store securely
-npx @openhands/agent-canvas --public
+agent-canvas --public
 ```
 
 Using `export` keeps the key out of the process list (`ps aux`). The
 `openssl rand -base64 32` command generates a cryptographically random
 256-bit key — copy the printed value somewhere safe before proceeding.
 
-This single command downloads the latest release, starts the agent server,
-the automation backend, and the static frontend, and fronts them with an
-ingress proxy on `127.0.0.1:8000`.
+This command starts the installed Praxis release: Agent Server, Automation and
+the static frontend, behind ingress on `127.0.0.1:8000`. It does not download
+Canvas from the upstream npm registry.
 
 To keep the service running after your SSH session ends, use a process manager.
 
 **Option A — tmux (quick):**
 
 ```bash
-export LOCAL_BACKEND_API_KEY=<your-saved-key>
-tmux new-session -d -s canvas 'npx @openhands/agent-canvas --public'
+export LOCAL_BACKEND_API_KEY="your-saved-key"
+tmux new-session -d -s canvas 'agent-canvas --public'
 # Reconnect later with: tmux attach -t canvas
 ```
 
@@ -150,13 +154,18 @@ After=network.target
 
 [Service]
 Environment=LOCAL_BACKEND_API_KEY=<your-key>
-ExecStart=npx @openhands/agent-canvas --public
+ExecStart=/absolute/path/to/agent-canvas --public
 Restart=on-failure
 RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
 ```
+
+Replace `/absolute/path/to/agent-canvas` with the result of `command -v agent-canvas`.
+Set the service's `User`/`Group` to the intended account, and configure its `PATH`
+so Node.js and `uvx` are available under systemd; a shell's nvm/uv setup is not
+automatically loaded by the unit. Replace the key placeholder before starting.
 
 Then enable and start the unit:
 
