@@ -16,7 +16,7 @@
 - If live evidence is added to a PR, use commit-pinned artifact links and redact secrets. Praxis does not automatically publish live media or comments.
 - Praxis has no automatic `.pr/` cleanup. Remove PR-only artifacts manually before merging; preserve commit-pinned links for review.
 - The live reporting scripts live beside the live tests under `tests/e2e/live/scripts/`: `run-live-e2e.mjs`, `extract-live-e2e-media.mjs`, `render-live-e2e-report.mjs`, and `upsert-pr-comment.mjs`. Keep report/comment/local-runner logic there rather than in top-level `scripts/`, because these scripts are part of the live E2E framework.
-- When changing any part of this framework — live workflow triggers, artifact publishing, `.pr` cleanup, live Playwright config, live test file layout, helper locations, local runner behavior, or report/comment scripts — update this `AGENTS.md` section in the same PR so future agents have the current operating model.
+- When changing any part of this framework — live workflow triggers, artifact publishing, `.pr` cleanup, live Playwright config, live test file layout, helper locations, local runner behavior, or report/comment scripts — update this owning guide and affected docs in the same PR so future agents have the current operating model.
 
 ## Mock-LLM E2E Test Framework
 
@@ -77,7 +77,7 @@ The mock-LLM E2E workflows write a structured report to the GitHub Actions workf
 ### 2. Download CI artifacts
 Every failing test run uploads artifacts (`mock-llm-e2e-results` for npm, `mock-llm-docker-e2e-results` for Docker). Download them with:
 ```bash
-gh run download <run_id> --repo Emilio-01-T/Praxis --name mock-llm-e2e-results --dir /tmp/artifacts
+gh run download <run_id> --repo Praxiss-Lab/Praxis --name mock-llm-e2e-results --dir /tmp/artifacts
 ```
 Artifacts contain:
 - `test-results-mock-llm/` — per-test directories with `test-failed-N.png` (screenshot at failure) and `error-context.md` (Playwright page snapshot as YAML accessibility tree + test source with the failing line marked)

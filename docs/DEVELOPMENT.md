@@ -455,3 +455,9 @@ A successful membership response repairs an inaccessible saved selection. A
 transient lookup failure retains a saved selection; 401/403 responses and an
 empty membership list show recovery instead. Background refreshes retain cached
 membership and user identity while the saved selection remains accessible.
+
+## Praxis contributor setup
+
+See [agent operation and setup](AGENT_OPERATIONS.md) for `npm run setup:dev`,
+frontend-only preparation, staged-file hooks, instruction precedence and
+completion criteria. These setup commands do not start application services.

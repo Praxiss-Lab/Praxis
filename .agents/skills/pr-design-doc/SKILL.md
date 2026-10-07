@@ -28,6 +28,13 @@ conveys the **big picture** and the **before → after core difference**, with e
 This is the same craft as a "show me this change" explainer, aimed at one job: making a
 non-trivial PR easy to review.
 
+## Praxis context
+
+Follow [repository-wide instructions](../../../AGENTS.md) and
+[agent operation](../../../docs/AGENT_OPERATIONS.md). Keep technical contracts
+and compatibility identifiers intact; inherited transport or packaging names do
+not imply a centralized cloud or an active publishing/triage service.
+
 ## When to use it
 
 - Opening or updating a **non-trivial** PR: new/changed public API, a new module or

@@ -83,7 +83,7 @@ ARG AGENT_CANVAS_VERSION=dev
 ARG PRAXIS_VERSION=dev
 LABEL org.opencontainers.image.title="agent-canvas"
 LABEL org.opencontainers.image.description="All-in-one agent-canvas: Agent Server + Automation + Frontend"
-LABEL org.opencontainers.image.source="https://github.com/Emilio-01-T/Praxis"
+LABEL org.opencontainers.image.source="https://github.com/Praxiss-Lab/Praxis"
 LABEL org.opencontainers.image.version="${PRAXIS_VERSION}"
 LABEL org.opencontainers.image.revision="${OPENHANDS_BUILD_GIT_SHA}"
 

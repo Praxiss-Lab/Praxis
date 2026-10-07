@@ -7,6 +7,13 @@ description: This skill should be used when the user asks to "change the dev sta
 
 Maintain the shared configuration and launch plumbing across Vite/static development, Agent Server, automation, ingress, the published binary, and the all-in-one Docker image.
 
+## Praxis context
+
+Follow [repository-wide instructions](../../../AGENTS.md) and
+[agent operation](../../../docs/AGENT_OPERATIONS.md). Keep technical contracts
+and compatibility identifiers intact; inherited transport or packaging names do
+not imply a centralized cloud or an active publishing/triage service.
+
 ## Workflow
 
 1. Read `references/guide.md` before changing launchers, runtime service metadata, version pins, Docker composition, auth generation, or process management.

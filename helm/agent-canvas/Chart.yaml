@@ -11,9 +11,9 @@ version: 0.1.0
 # when preparing a release; override image.tag for another published version.
 appVersion: "1.25.0"
 kubeVersion: ">=1.24.0-0"
-home: https://github.com/Emilio-01-T/Praxis
+home: https://github.com/Praxiss-Lab/Praxis
 sources:
-  - https://github.com/Emilio-01-T/Praxis
+  - https://github.com/Praxiss-Lab/Praxis
 keywords:
   - praxis
   - agent

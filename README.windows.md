@@ -55,7 +55,7 @@ Open [http://localhost:8000](http://localhost:8000) after launching the stack.
 With Git installed, clone the repository in PowerShell to obtain its Compose file:
 
 ```powershell
-git clone https://github.com/Emilio-01-T/Praxis.git
+git clone https://github.com/Praxiss-Lab/Praxis.git
 Set-Location Praxis
 $env:PRAXIS_IMAGE = "ghcr.io/emilio-01-t/praxis:1.25.0"
 $bytes = New-Object byte[] 32

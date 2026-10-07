@@ -13,6 +13,7 @@
 - [Visual identity](BRAND.md): logo assets and the agreed dashboard palette.
 
 - [Architecture](architecture.md): frontend, backend and independent personal clouds.
+- [Contributor agents, setup and commands](AGENT_OPERATIONS.md).
 - [Development](DEVELOPMENT.md): local development and verification.
 - [API services](../src/api/README.md): typed clients and connection ownership.
 - [Themes](../src/themes/README.md): interface, editor and terminal palettes.

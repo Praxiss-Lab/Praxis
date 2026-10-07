@@ -6,7 +6,7 @@ Recorded: 2026-10-06
 
 | Field | Value |
 | --- | --- |
-| Praxis repository | `Emilio-01-T/Praxis` |
+| Original Praxis repository | `Emilio-01-T/Praxis` |
 | Upstream repository | `OpenHands/OpenHands` |
 | Praxis default branch | `main` |
 | Upstream default branch | `main` |
@@ -23,7 +23,10 @@ At the moment this baseline was recorded, Praxis `main` and upstream
 
 ## Terminology
 
-- **origin**: `Emilio-01-T/Praxis`
+- **origin**: `Praxiss-Lab/Praxis`
 - **upstream**: `OpenHands/OpenHands`
 - **Praxis main**: Praxis source of truth
 - **upstream main**: external source to observe and selectively integrate
+
+The current repository is `Praxiss-Lab/Praxis` after the organization transfer.
+This does not change the recorded baseline commit or the upstream remote.

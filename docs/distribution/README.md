@@ -14,7 +14,7 @@ One image contains all three modes. Selecting frontend mode still downloads the 
 
 ## Select an artifact
 
-Published artifacts are attached to [Praxis releases](https://github.com/Emilio-01-T/Praxis/releases). For Docker:
+Published artifacts are attached to [Praxis releases](https://github.com/Praxiss-Lab/Praxis/releases). For Docker:
 
 ```sh
 export PRAXIS_IMAGE="ghcr.io/emilio-01-t/praxis:1.25.0"

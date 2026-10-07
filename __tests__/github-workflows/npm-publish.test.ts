@@ -20,16 +20,16 @@ describe("Praxis repository and publishing policy", () => {
     const dockerWorkflow = read(".github/workflows/docker.yml");
 
     expect(packageJson.repository.url).toBe(
-      "https://github.com/Emilio-01-T/Praxis",
+      "https://github.com/Praxiss-Lab/Praxis",
     );
     expect(packageJson.homepage).toBe(
-      "https://github.com/Emilio-01-T/Praxis#readme",
+      "https://github.com/Praxiss-Lab/Praxis#readme",
     );
     expect(packageJson.bugs.url).toBe(
-      "https://github.com/Emilio-01-T/Praxis/issues",
+      "https://github.com/Praxiss-Lab/Praxis/issues",
     );
     expect(dockerfile).toContain(
-      'LABEL org.opencontainers.image.source="https://github.com/Emilio-01-T/Praxis"',
+      'LABEL org.opencontainers.image.source="https://github.com/Praxiss-Lab/Praxis"',
     );
     expect(dockerWorkflow).toContain("ghcr.io/emilio-01-t/praxis");
     expect(dockerWorkflow).toContain("ghcr.io/emilio-01-t/praxis");

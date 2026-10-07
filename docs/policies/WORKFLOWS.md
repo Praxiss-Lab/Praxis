@@ -36,5 +36,6 @@ manual desktop process. [Issue triage](ISSUES.md) explains the retained label ch
 
 This inventory concerns repository configuration. It does not claim that desktop
 installers, Kubernetes deployment, laptop or VM runtime tests have been performed.
-The next configuration task is the full `AGENTS.md` policy rewrite; this cleanup
-only corrected its obsolete release-please instruction.
+The contributor policy and setup are documented in
+[agent operation](../AGENT_OPERATIONS.md) and root `AGENTS.md`. Telemetry evaluation
+is separate and pending.

@@ -27,7 +27,7 @@ Run everything on your computer, put the backend on a VM, or connect the same fr
 Install Git, Node.js 24 or later, npm and `uv` / `uvx`. On Windows, use [WSL 2](README.windows.md).
 
 ```sh
-git clone https://github.com/Emilio-01-T/Praxis.git
+git clone https://github.com/Praxiss-Lab/Praxis.git
 cd Praxis
 npm ci
 npm run dev
@@ -46,11 +46,11 @@ See the [development guide](docs/DEVELOPMENT.md) for mock mode, tests and builds
 
 ## Install a published release without Docker
 
-Install Node.js 24+, npm and `uv` / `uvx`, then download the Praxis archive from its [GitHub release](https://github.com/Emilio-01-T/Praxis/releases/tag/v1.25.0):
+Install Node.js 24+, npm and `uv` / `uvx`, then download the Praxis archive from its [GitHub release](https://github.com/Praxiss-Lab/Praxis/releases/tag/v1.25.0):
 
 ```sh
 curl -fL --output praxis-1.25.0.tgz \
-  https://github.com/Emilio-01-T/Praxis/releases/download/v1.25.0/openhands-agent-canvas-1.25.0.tgz
+  https://github.com/Praxiss-Lab/Praxis/releases/download/v1.25.0/openhands-agent-canvas-1.25.0.tgz
 npm install -g ./praxis-1.25.0.tgz
 agent-canvas
 ```

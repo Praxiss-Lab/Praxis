@@ -8,7 +8,7 @@ Supported deployment environment variables:
 - `VITE_ENABLE_BROWSER_TOOLS=false` — start the agent-server with the browser tool set off (`OH_ENABLE_BROWSER=false`).
 - `VITE_BASE_PATH` — serve the SPA under a subpath such as `/canvas`; pair it with `scripts/static-server.mjs --base-path` at runtime.
 
-GitHub automation includes `.github/workflows/ci.yml` for `npm ci`, `npm test`, and `npm run build`, plus `.github/dependabot.yml` with weekly npm and GitHub Actions updates gated by a seven-day cooldown.
+Automatic core verification uses `.github/workflows/praxis-ci.yml`; `ci.yml` is a manual compatibility check, plus `.github/dependabot.yml` with weekly npm and GitHub Actions updates gated by a seven-day cooldown.
 
 
 ## Runtime Services in Dev Stacks
@@ -122,3 +122,16 @@ you are running inside of — NOT the automation backend.
 - Praxis Docker image: `docker/Dockerfile` preserves the upstream bundle. `PRAXIS_MODE=all|backend|frontend` selects running services; backend includes Agent Server and Automation, frontend starts only static serving/proxy. `PRAXIS_BACKEND_URL` forwards APIs/WebSockets to a unified remote backend; `PRAXIS_EDITOR_PATH` optionally forwards its editor. Only `praxis-release.yml` calls reusable `docker.yml` to publish versioned multi-architecture images in `ghcr.io/emilio-01-t/praxis`. Its amd64/arm64 matrix uses native runners with architecture-specific BuildKit cache scopes; the merge job consumes this run's digest artifacts and preserves provenance/SBOM when publishing the combined version tag. `docker-check.yml` builds and tests locally in CI without registry publication. Upstream dependency pins stay in `config/defaults.json`; product labels/tags use `PRAXIS_VERSION`. Authentication, secret-key persistence and all-mode behavior remain upstream-compatible. See `docs/distribution/README.md` for commands and credentials.
 
 - Spec files live under `specs/`. Spec IDs are stable — never renumber. Mark deprecated specs with ~~strikethrough~~. Tag implementation code and tests with `// @spec BM-002 — Short title` comments so specs are grep-able across the codebase (`grep -rn '@spec BM-' src/ __tests__/`). Place the comment on the line immediately above the relevant code block or test. When multiple tests cover the same spec, use `it.each` if the test structure is identical.
+
+## Praxis setup and split modes
+
+`.openhands/setup.sh` delegates to `scripts/praxis/setup.sh`; `--frontend-only`
+skips the uvx prerequisite. Setup runs npm ci, preserves existing env values,
+adds a missing workspace default and regenerates i18n. It does not start services
+or install uv automatically. See `docs/AGENT_OPERATIONS.md` for hooks and commands.
+
+Preserve native `--backend-only` / `--frontend-only` and Docker `PRAXIS_MODE`
+all/backend/frontend behavior, state mounts, auth and runtime metadata. All means
+one image with the complete stack, not separate published images. Each personal
+VM owns its state. Check processes and readiness for each affected mode; frontend
+proxy mode and direct backend selection are different network paths.

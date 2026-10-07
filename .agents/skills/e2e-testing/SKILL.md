@@ -7,6 +7,13 @@ description: This skill should be used when the user asks to "add an E2E test", 
 
 Use the correct test layer and preserve the security and production-fidelity boundaries between ordinary browser tests, mock-LLM suites, Docker image tests, and live LLM-backed QA.
 
+## Praxis context
+
+Follow [repository-wide instructions](../../../AGENTS.md) and
+[agent operation](../../../docs/AGENT_OPERATIONS.md). Keep technical contracts
+and compatibility identifiers intact; inherited transport or packaging names do
+not imply a centralized cloud or an active publishing/triage service.
+
 ## Workflow
 
 1. Read `references/guide.md` before changing any E2E framework file or debugging an E2E failure.

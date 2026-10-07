@@ -7,6 +7,13 @@ description: This skill should be used when the user asks to "change the desktop
 
 Preserve desktop startup reliability and packaging invariants across development, installed single-architecture builds, and universal macOS builds.
 
+## Praxis context
+
+Follow [repository-wide instructions](../../../AGENTS.md) and
+[agent operation](../../../docs/AGENT_OPERATIONS.md). Keep technical contracts
+and compatibility identifiers intact; inherited transport or packaging names do
+not imply a centralized cloud or an active publishing/triage service.
+
 ## Workflow
 
 1. Read `references/guide.md` before changing Electron startup, branding, packaging hooks, runtime resources, or desktop CI.

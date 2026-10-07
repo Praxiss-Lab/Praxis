@@ -1,14 +1,14 @@
 ---
 name: custom-codereview-guide
-description: Repository-specific triage and review rules for the OpenHands Agent Canvas frontend.
+description: Repository-specific triage and review rules for Praxis.
 triggers:
   - /codereview
 ---
 
-# OpenHands Agent Canvas Code Review Guidelines
+# Praxis Code Review Guidelines
 
 This guide supplements the public `code-review` skill with rules specific to
-`OpenHands/OpenHands`, the Agent Canvas frontend. Read `AGENTS.md` first; it is
+`Praxiss-Lab/Praxis`, the independently maintained interface and distribution. Read `AGENTS.md` first; it is
 the detailed source of truth for current architecture and test conventions.
 
 ## Repository and Product Scope
@@ -79,7 +79,8 @@ Review the current PR head in this order:
 3. Apply every relevant blocking checkpoint in this guide.
 4. Inspect tests and production-facing evidence for the behavior changed.
 
-Submit exactly one review:
+When the user authorizes submitting a GitHub review, submit one review. Otherwise
+provide findings in the requested channel without posting externally:
 
 - **APPROVE** when every applicable checkpoint passes and there are no material
   correctness, security, compatibility, architecture, or evidence gaps.
@@ -90,9 +91,7 @@ Submit exactly one review:
 For changes that can affect agent or benchmark behavior—prompts, tool selection,
 conversation payloads, terminal behavior, planning, memory, or evaluation
 paths—state the eval risk in the review. Missing optional eval evidence is not a
-material code finding: when the current head otherwise passes review, APPROVE so
-the automation can request a human maintainer to choose the appropriate
-lightweight evaluation. Use COMMENT when an acceptance criterion or required
+material code finding: when the current head otherwise passes review, APPROVE and state any useful evaluation follow-up. No review automation is implied. Use COMMENT when an acceptance criterion or required
 check calls for specific eval evidence and that evidence is missing or failing,
 or when available results show a regression.
 
@@ -110,7 +109,7 @@ maintainability.
 
 | Repository                     | Owns                                                                                                            |
 | ------------------------------ | --------------------------------------------------------------------------------------------------------------- |
-| `OpenHands/OpenHands`          | Agent Canvas UI, frontend state, backend selection, frontend service integration, and local-stack orchestration |
+| `Praxiss-Lab/Praxis`           | Agent Canvas UI, frontend state, backend selection, frontend service integration, and local-stack orchestration |
 | `OpenHands/software-agent-sdk` | Agent Server, SDK, canonical server API, and browser-compatible client in `clients/typescript/`                 |
 | `OpenHands/extensions`         | Reusable skills, plugins, and integrations                                                                      |
 | `OpenHands/automation`         | Scheduling, webhooks, run history, and automation dispatch                                                      |
@@ -300,9 +299,10 @@ correctness, security, compatibility, or architecture defect.
   relevant commands and output; docs-only changes need no runtime tests or media.
 - Check rendering in Canvas. Token, class-name, and source-string assertions do
   not prove computed styling, isolation, layout, or readability, or replace captures.
-- Every functional change needs screenshots or video of the running Canvas
+- UI/runtime product changes need screenshots or video of the running app
   exercising the changed behavior, including backend integration, launcher,
-  API, and lifecycle changes. Logs, commands, and tests supplement—not replace—
+  API, and lifecycle changes. Setup and hook changes use real terminal verification
+  of their affected boundary; docs-only changes do not need application media. Logs, commands, and tests supplement—not replace—
   that demonstration. Bug fixes must show failure before and success after;
   new features must demonstrate the working behavior.
 - Authentic evidence comes from the real Agent Canvas app, browser, OS dialog,
@@ -350,10 +350,10 @@ Praxis uses manual review of functional-change evidence; there is no automated
 PR-description media gate. Enforce the evidence requirements above without
 fabricating artifacts or relabeling functional work as a chore.
 
-Follow the test routing in `AGENTS.md`. Mock-LLM, Docker mock-LLM, and live
-LLM-backed E2E suites run after changes reach `main`, not from PR labels. For
-risky pre-merge changes, recommend manually dispatching the relevant workflow
-against the PR branch. Never broaden secret exposure for convenience.
+Follow the test routing in `AGENTS.md` and the workflow inventory. Mock E2E runs
+on eligible main pushes or manual dispatch; Docker E2E is manual against a
+published image; live LLM tests are local and separately authorized. Do not expose
+credentials to untrusted branches or claim a live workflow exists.
 
 ## Final Context and Comment Discipline
 

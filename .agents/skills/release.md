@@ -48,8 +48,8 @@ Inspect the completed run and its exact commit. Check the release tag, attached
 archive, `image.txt`, image index and recorded digest. For example:
 
 ```bash
-gh run list --repo Emilio-01-T/Praxis --workflow praxis-release.yml --limit 3
-gh release view v<version> --repo Emilio-01-T/Praxis
+gh run list --repo Praxiss-Lab/Praxis --workflow praxis-release.yml --limit 3
+gh release view v<version> --repo Praxiss-Lab/Praxis
 docker buildx imagetools inspect ghcr.io/emilio-01-t/praxis:<version>
 ```
 

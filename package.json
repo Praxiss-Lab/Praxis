@@ -7,11 +7,11 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Emilio-01-T/Praxis"
+    "url": "https://github.com/Praxiss-Lab/Praxis"
   },
-  "homepage": "https://github.com/Emilio-01-T/Praxis#readme",
+  "homepage": "https://github.com/Praxiss-Lab/Praxis#readme",
   "bugs": {
-    "url": "https://github.com/Emilio-01-T/Praxis/issues"
+    "url": "https://github.com/Praxiss-Lab/Praxis/issues"
   },
   "bin": {
     "agent-canvas": "bin/agent-canvas.mjs"
@@ -96,7 +96,7 @@
     "prelint": "npm run make-i18n",
     "lint": "eslint src && prettier --check src/**/*.{ts,tsx}",
     "lint:fix": "eslint src --fix && prettier --write src/**/*.{ts,tsx}",
-    "postinstall": "node -e \"if (process.env.npm_config_global === 'true') { console.log('\\n\\x1b[32m\\x1b[1m\\u2713 @openhands/agent-canvas installed!\\x1b[0m\\n\\nTo start Agent Canvas, run:\\n\\n  \\x1b[36m\\x1b[1magent-canvas\\x1b[0m\\n\\nThis launches the full stack at \\x1b[36mhttp://localhost:8000\\x1b[0m.\\n\\nDocs: https://docs.openhands.dev/openhands/usage/agent-canvas/setup\\n') }\"",
+    "postinstall": "node -e \"if (process.env.npm_config_global === 'true') console.log('Praxis installed. Run agent-canvas to start the stack. Docs: https://github.com/Praxiss-Lab/Praxis');\"",
     "prepare": "husky",
     "typecheck": "react-router typegen && tsc",
     "typecheck:staged": "react-router typegen && npx tsc --noEmit --skipLibCheck",
@@ -111,7 +111,8 @@
     "build:desktop:universal": "npm run build:app && cross-env ELECTRON_ARCH=universal node scripts/download-uv.mjs && cross-env ELECTRON_ARCH=universal node scripts/download-node.mjs && cross-env ELECTRON_ARCH=universal electron-builder --config electron-builder.config.mjs --publish never",
     "download-uv": "node scripts/download-uv.mjs",
     "download-node": "node scripts/download-node.mjs",
-    "generate-icons": "node scripts/generate-icons.mjs"
+    "generate-icons": "node scripts/generate-icons.mjs",
+    "setup:dev": "bash .openhands/setup.sh"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,js}": [

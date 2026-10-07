@@ -7,6 +7,13 @@ description: This skill should be used when the user asks to "add UI copy", "add
 
 Apply Canvas-specific React, TypeScript, internationalization, state ownership, mock-mode, and bundle-performance conventions.
 
+## Praxis context
+
+Follow [repository-wide instructions](../../../AGENTS.md) and
+[agent operation](../../../docs/AGENT_OPERATIONS.md). Keep technical contracts
+and compatibility identifiers intact; inherited transport or packaging names do
+not imply a centralized cloud or an active publishing/triage service.
+
 ## Workflow
 
 1. Read `references/guide.md` before making broad or shared frontend changes.

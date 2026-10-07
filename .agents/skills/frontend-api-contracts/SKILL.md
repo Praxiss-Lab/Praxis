@@ -7,6 +7,13 @@ description: This skill should be used when the user asks to "add an API call", 
 
 Keep Canvas as a typed consumer of Agent Server and Cloud contracts. Preserve repository ownership, compatibility floors, transport boundaries, authentication modes, and durable state invariants.
 
+## Praxis context
+
+Follow [repository-wide instructions](../../../AGENTS.md) and
+[agent operation](../../../docs/AGENT_OPERATIONS.md). Keep technical contracts
+and compatibility identifiers intact; inherited transport or packaging names do
+not imply a centralized cloud or an active publishing/triage service.
+
 ## Workflow
 
 1. Read `references/guide.md` before modifying frontend API access, backend selection, settings, secrets, Agent Server compatibility, or Cloud runtime behavior.
