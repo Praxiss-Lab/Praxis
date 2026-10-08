@@ -8,7 +8,7 @@ Run Praxis with Docker Desktop, or directly inside WSL 2. The frontend and backe
 folder to mount into Praxis.
 
 ```powershell
-$env:PRAXIS_IMAGE = "ghcr.io/emilio-01-t/praxis:1.25.0"
+$env:PRAXIS_IMAGE = "ghcr.io/praxiss-lab/praxis:1.25.0"
 $env:PROJECTS_PATH = Join-Path $env:USERPROFILE "projects"
 New-Item -ItemType Directory -Force -Path $env:PROJECTS_PATH, (Join-Path $env:USERPROFILE ".openhands") | Out-Null
 docker pull "${env:PRAXIS_IMAGE}"
@@ -57,7 +57,7 @@ With Git installed, clone the repository in PowerShell to obtain its Compose fil
 ```powershell
 git clone https://github.com/Praxiss-Lab/Praxis.git
 Set-Location Praxis
-$env:PRAXIS_IMAGE = "ghcr.io/emilio-01-t/praxis:1.25.0"
+$env:PRAXIS_IMAGE = "ghcr.io/praxiss-lab/praxis:1.25.0"
 $bytes = New-Object byte[] 32
 [System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($bytes)
 $env:PRAXIS_SESSION_API_KEY = [BitConverter]::ToString($bytes).Replace("-", "").ToLowerInvariant()

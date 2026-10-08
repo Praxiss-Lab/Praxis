@@ -9,7 +9,7 @@ Use a Praxis checkout, Helm, a configured Kubernetes context and a cluster with 
 ```sh
 helm upgrade --install praxis ./helm/agent-canvas \
   --set fullnameOverride=praxis \
-  --set image.repository=ghcr.io/emilio-01-t/praxis \
+  --set image.repository=ghcr.io/praxiss-lab/praxis \
   --set image.tag=1.25.0
 kubectl port-forward service/praxis 8000:8000
 ```

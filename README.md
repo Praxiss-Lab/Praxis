@@ -62,7 +62,7 @@ Open [http://localhost:8000/canvas/](http://localhost:8000/canvas/). Use the arc
 Install Docker, choose your project directory, and start the released image:
 
 ```sh
-export PRAXIS_IMAGE="ghcr.io/emilio-01-t/praxis:1.25.0"
+export PRAXIS_IMAGE="ghcr.io/praxiss-lab/praxis:1.25.0"
 export PROJECTS_PATH="$HOME/projects"
 mkdir -p "$PROJECTS_PATH" "$HOME/.openhands"
 docker pull "$PRAXIS_IMAGE"

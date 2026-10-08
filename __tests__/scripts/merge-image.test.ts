@@ -11,7 +11,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 
-const image = "ghcr.io/emilio-01-t/praxis";
+const image = "ghcr.io/praxiss-lab/praxis";
 const digest = (character: string) => `sha256:${character.repeat(64)}`;
 const script = path.resolve("scripts/praxis/merge-image.mjs");
 

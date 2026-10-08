@@ -130,7 +130,7 @@ jobs:
           tag="v$PRAXIS_RELEASE_VERSION"
           flags=()
           if [[ "$PRAXIS_RELEASE_VERSION" == *-* ]]; then flags+=(--prerelease); fi
-          printf 'Praxis %s\nCommit: %s\nImage: ghcr.io/emilio-01-t/praxis:%s\nDigest: %s\n' \
+          printf 'Praxis %s\nCommit: %s\nImage: ghcr.io/praxiss-lab/praxis:%s\nDigest: %s\n' \
             "$PRAXIS_RELEASE_VERSION" "$RELEASE_SHA" "$PRAXIS_RELEASE_VERSION" "$IMAGE_DIGEST" \
             > release-assets/image.txt
           gh release create "$tag" release-assets/* --target "$RELEASE_SHA" \

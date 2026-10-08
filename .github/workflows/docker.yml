@@ -69,7 +69,7 @@ jobs:
           context: .
           file: docker/Dockerfile
           platforms: ${{ matrix.platform }}
-          outputs: type=image,name=ghcr.io/emilio-01-t/praxis,push-by-digest=true,name-canonical=true,push=true
+          outputs: type=image,name=ghcr.io/praxiss-lab/praxis,push-by-digest=true,name-canonical=true,push=true
           build-args: |
             AGENT_SERVER_IMAGE=${{ steps.config.outputs.base_image }}
             AGENT_SERVER_VERSION=${{ steps.config.outputs.agent_version }}

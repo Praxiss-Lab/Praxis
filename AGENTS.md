@@ -63,8 +63,8 @@ merge into `main`; update the review checkpoint only after completing the interv
 `PRAXIS_VERSION` is the product version. Keep its package/lock/config surfaces
 aligned; Agent Server and Automation versions are independent. Follow
 [release policy](docs/policies/RELEASE.md) and the release skill. Ordinary pushes
-and upstream updates do not authorize publication. The existing GHCR namespace
-remains `ghcr.io/emilio-01-t/praxis` until a separate package migration.
+and upstream updates do not authorize publication. The GHCR image is published under the organization at
+`ghcr.io/praxiss-lab/praxis`.
 
 ## Verification and completion
 

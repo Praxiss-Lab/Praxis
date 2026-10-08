@@ -10,7 +10,7 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/emilio-01-t/praxis
+  repository: ghcr.io/praxiss-lab/praxis
   # Image tag is pinned to the chart's appVersion. Override with
   # `--set image.tag=<version>` to select another published Praxis release.
   # PR and branch builds do not publish registry image tags.

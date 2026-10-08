@@ -34,7 +34,7 @@ The workflow checks out the selected commit, validates inputs, runs repository
 checks, typecheck, lint, tests and builds, creates the native archive, and checks
 Docker launch modes. It then calls `docker.yml` directly. Native amd64 and arm64
 jobs use separate caches and produce digests; the merge job publishes one image
-index at `ghcr.io/emilio-01-t/praxis:<version>`. Stable versions also update
+index at `ghcr.io/praxiss-lab/praxis:<version>`. Stable versions also update
 `latest`. Finally, the workflow creates `v<version>` and the GitHub release with
 the native `.tgz` archive and `image.txt`.
 
@@ -50,7 +50,7 @@ archive, `image.txt`, image index and recorded digest. For example:
 ```bash
 gh run list --repo Praxiss-Lab/Praxis --workflow praxis-release.yml --limit 3
 gh release view v<version> --repo Praxiss-Lab/Praxis
-docker buildx imagetools inspect ghcr.io/emilio-01-t/praxis:<version>
+docker buildx imagetools inspect ghcr.io/praxiss-lab/praxis:<version>
 ```
 
 Treat `<version>` as a placeholder. Check both linux/amd64 and linux/arm64;

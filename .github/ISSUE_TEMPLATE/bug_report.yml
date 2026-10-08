@@ -26,7 +26,7 @@ body:
       description: How did you install / run Praxis?
       options:
         - Native release archive (`agent-canvas`)
-        - Docker (`ghcr.io/emilio-01-t/praxis`)
+        - Docker (`ghcr.io/praxiss-lab/praxis`)
         - From source (`npm run dev` / `npm run dev:minimal`)
         - Other
     validations:
@@ -60,7 +60,7 @@ body:
         these supported methods:
           - `agent-canvas` installed from a Praxis release archive
           - `npm run dev` / `npm run dev:minimal` (from a source checkout)
-          - Docker using `ghcr.io/emilio-01-t/praxis:<version>`
+          - Docker using `ghcr.io/praxiss-lab/praxis:<version>`
           - The desktop application (include platform and artifact version)
         Specify complete / backend-only / frontend-only mode, and whether the
         backend is on the same device or a personal VM. Do not include API keys.

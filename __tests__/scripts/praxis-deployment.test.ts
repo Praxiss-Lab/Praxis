@@ -17,8 +17,8 @@ describe("Praxis target deployment safety contract", () => {
   it("requires an immutable Praxis image and recreates only the application service", () => {
     const script = read("scripts/praxis/deploy-compose.sh");
 
-    expect(script).toContain("ghcr.io/emilio-01-t/praxis:sha-*");
-    expect(script).toContain("ghcr.io/emilio-01-t/praxis@sha256:*");
+    expect(script).toContain("ghcr.io/praxiss-lab/praxis:sha-*");
+    expect(script).toContain("ghcr.io/praxiss-lab/praxis@sha256:*");
     expect(script).toContain("--no-deps --force-recreate");
     expect(script).toContain("OLD_IMAGE_REF");
     expect(script).toContain("OLD_IMAGE_ID");

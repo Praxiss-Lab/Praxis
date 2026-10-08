@@ -50,7 +50,16 @@ After verification, the release workflow calls the reusable Docker workflow
 directly for the same exact commit. Image publication completes before GitHub
 Release creation; no tag-event cascade is required. The registry target is:
 
-`ghcr.io/emilio-01-t/praxis`
+`ghcr.io/praxiss-lab/praxis`
+
+The image belongs to `Praxiss-Lab`, matching the repository owner. Both native
+build jobs and the manifest job authenticate with the repository `GITHUB_TOKEN`
+and `packages: write`; no personal publishing token is required. The previous
+`ghcr.io/emilio-01-t/praxis` package is a legacy distribution and is not updated
+by this workflow. Existing installations must explicitly switch image addresses.
+Keep the old package until the organization image has been published and tested.
+The historical `vm-verify-runtime.sh` baseline remains pinned to the original
+image and digest; it is not the verification procedure for new releases.
 
 ## Upstream relationship
 

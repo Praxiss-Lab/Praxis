@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 
-const image = "ghcr.io/emilio-01-t/praxis";
+const image = "ghcr.io/praxiss-lab/praxis";
 const version = process.env.RELEASE_VERSION;
 if (version !== fs.readFileSync("PRAXIS_VERSION", "utf8").trim())
   throw new Error("Manifest version differs from the checked-out release");

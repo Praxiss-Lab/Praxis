@@ -8,11 +8,11 @@ COMPOSE_FILE="${PRAXIS_COMPOSE_FILE:-docker-compose.yml}"
 STATE_DIR="${PRAXIS_DEPLOY_STATE_DIR:-/var/lib/praxis-deployments}"
 
 if [[ -z "$TARGET_IMAGE" ]]; then
-  echo "usage: $0 ghcr.io/emilio-01-t/praxis:sha-<commit>" >&2
+  echo "usage: $0 ghcr.io/praxiss-lab/praxis:sha-<commit>" >&2
   exit 2
 fi
 
-if [[ "$TARGET_IMAGE" != ghcr.io/emilio-01-t/praxis:sha-* && "$TARGET_IMAGE" != ghcr.io/emilio-01-t/praxis@sha256:* ]]; then
+if [[ "$TARGET_IMAGE" != ghcr.io/praxiss-lab/praxis:sha-* && "$TARGET_IMAGE" != ghcr.io/praxiss-lab/praxis@sha256:* ]]; then
   echo "error: Deployment requires an immutable Praxis sha tag or digest" >&2
   exit 2
 fi

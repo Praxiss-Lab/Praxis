@@ -17,7 +17,7 @@ One image contains all three modes. Selecting frontend mode still downloads the 
 Published artifacts are attached to [Praxis releases](https://github.com/Praxiss-Lab/Praxis/releases). For Docker:
 
 ```sh
-export PRAXIS_IMAGE="ghcr.io/emilio-01-t/praxis:1.25.0"
+export PRAXIS_IMAGE="ghcr.io/praxiss-lab/praxis:1.25.0"
 docker pull "$PRAXIS_IMAGE"
 ```
 
@@ -64,7 +64,7 @@ State and projects use named volumes. `docker compose -f docker/compose.split.ym
 On the backend machine, select the released image, create and retain a strong session API key, and launch:
 
 ```sh
-export PRAXIS_IMAGE="ghcr.io/emilio-01-t/praxis:1.25.0"
+export PRAXIS_IMAGE="ghcr.io/praxiss-lab/praxis:1.25.0"
 export PRAXIS_SESSION_API_KEY="$(openssl rand -hex 32)"
 docker run -d --name praxis-backend --restart unless-stopped \
   -p 127.0.0.1:8000:8000 \

@@ -31,8 +31,16 @@ describe("Praxis repository and publishing policy", () => {
     expect(dockerfile).toContain(
       'LABEL org.opencontainers.image.source="https://github.com/Praxiss-Lab/Praxis"',
     );
-    expect(dockerWorkflow).toContain("ghcr.io/emilio-01-t/praxis");
-    expect(dockerWorkflow).toContain("ghcr.io/emilio-01-t/praxis");
+    expect(dockerWorkflow).toContain("ghcr.io/praxiss-lab/praxis");
+    expect(JSON.parse(read("config/defaults.json")).images.agentCanvas).toBe(
+      "ghcr.io/praxiss-lab/praxis",
+    );
+    expect(read("scripts/praxis/merge-image.mjs")).toContain(
+      'const image = "ghcr.io/praxiss-lab/praxis"',
+    );
+    expect(read(".github/workflows/praxis-release.yml")).toContain(
+      "Image: ghcr.io/praxiss-lab/praxis:%s",
+    );
   });
 
   it("does not let electron-builder auto-publish during desktop builds", () => {
