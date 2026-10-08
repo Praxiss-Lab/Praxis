@@ -19,13 +19,17 @@ vi.mock("posthog-js", () => ({
 }));
 
 import { useTelemetry } from "#/hooks/use-telemetry";
-import { setTelemetryConsent } from "#/services/telemetry";
+import { configureTelemetry, setTelemetryConsent } from "#/services/telemetry";
 
 describe("useTelemetry", () => {
   beforeEach(() => {
     localStorage.clear();
     sessionStorage.clear();
     vi.clearAllMocks();
+    configureTelemetry({
+      apiKey: "test-project",
+      apiHost: "https://analytics.example",
+    });
   });
 
   afterEach(() => {

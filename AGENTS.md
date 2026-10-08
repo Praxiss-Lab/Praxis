@@ -94,9 +94,9 @@ section; never edit human-authored approvals or manufacture statements for them.
 ## UI, translations and specifications
 
 Use [the brand guide](docs/BRAND.md) for approved logos and palette. Do not redesign
-branding as an incidental code change. Telemetry configuration and its skill are
-currently deferred for a separate decision; do not change consent or destinations
-as part of instruction/setup maintenance.
+branding as an incidental code change. Analytics destinations belong to the Praxis owner; do not restore upstream
+project keys or proxy fallbacks. Read [telemetry configuration](docs/TELEMETRY.md).
+The owner project is pending; preserve existing events, consent and log behavior.
 
 After editing `src/i18n/translation.json`, run `npm run make-i18n` and
 `npm run check-translation-completeness`. Remove deleted keys from relevant test
@@ -132,4 +132,4 @@ the owning guide and update that guide when code changes its invariant.
 | [E2E](.agents/skills/e2e-testing/SKILL.md) | Mock, Docker and live verification boundaries. |
 | [Release](.agents/skills/release.md) | Explicit Praxis publication and recovery. |
 | [PR design](.agents/skills/pr-design-doc/SKILL.md) | Proportionate, temporary design context. |
-| [Telemetry](.agents/skills/telemetry-analytics/SKILL.md) | Existing tracking/consent rules; separate pending evaluation. |
+| [Telemetry](.agents/skills/telemetry-analytics/SKILL.md) | Owner project configuration, existing tracking/consent contracts. |

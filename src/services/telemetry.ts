@@ -1,34 +1,7 @@
 /**
- * Telemetry service for tracking library usage.
- *
- * This module handles anonymous telemetry for the @openhands/agent-canvas package
- * using the PostHog SDK for reliable event delivery with batching, retry logic,
- * and offline support.
- *
- * TRACKING PHILOSOPHY:
- * - Install event (canvas_install): Sent immediately on first use, regardless of consent.
- *   This is anonymous and contains no PII - just basic browser info and a random ID.
- * - Session/custom events: Only sent after user grants consent via the consent modal.
- * - Users can opt out of all future tracking by declining consent.
- *
- * AD BLOCKER BYPASS:
- * By default, telemetry is routed through OpenHands' reverse proxy (z.openhands.dev)
- * to avoid being blocked by ad blockers. Library consumers can override this with:
- * - VITE_POSTHOG_HOST: Custom proxy URL or direct PostHog URL
- * - VITE_POSTHOG_UI_HOST: PostHog UI host (defaults to https://us.posthog.com)
- *
- * IMPORTANT: By default, telemetry is sent to the OpenHands PostHog project.
- * Source builds can override this with VITE_POSTHOG_API_KEY. Precompiled
- * library consumers can pass the same settings to configureTelemetry().
- *
- * Users can disable all telemetry (including install tracking) via:
- * - Setting VITE_DO_NOT_TRACK=1 environment variable
- * - Browser's Do Not Track setting
- * - Injecting window.__AGENT_CANVAS_DO_NOT_TRACK__ = true at runtime, which the
- *   static server does from AGENT_CANVAS_DISABLE_TELEMETRY=1 (or the equivalent
- *   --disable-telemetry flag) so a precompiled bundle can opt out without
- *   VITE_DO_NOT_TRACK baked into the image. Under this flag the PostHog client
- *   is never initialized, so consent mirrored from a backend cannot opt it in.
+ * Product analytics uses an explicitly configured project and ingestion host.
+ * Praxis supplies no upstream key or proxy. Event, consent and identity
+ * behavior is retained; see docs/TELEMETRY.md for configuration ownership.
  */
 
 import type { BootstrapConfig, CaptureResult, PostHog } from "posthog-js";
@@ -63,17 +36,12 @@ const POSTHOG_BOOTSTRAP_STORAGE_PREFIX = "posthog_bootstrap";
 const POSTHOG_INSTANCE_NAME = "agent-canvas";
 const POSTHOG_PAGEVIEW_CAPTURE_MODE = "history_change";
 
-// Unconfigured source builds use staging. Production release workflows pass
-// VITE_POSTHOG_API_KEY explicitly for both the app and library artifacts.
+// Project configuration comes from the owner; shared defaults are empty.
 const DEFAULT_POSTHOG_API_KEY: string =
   (import.meta.env.VITE_POSTHOG_API_KEY as string | undefined) ||
   defaults.telemetry.posthogApiKey;
-
-// Default to OpenHands' reverse proxy to bypass ad blockers.
-// The proxy at z.openhands.dev routes to PostHog's US region.
-// Library consumers can override this with their own proxy or direct PostHog URL.
 const DEFAULT_POSTHOG_HOST =
-  import.meta.env.VITE_POSTHOG_HOST || "https://z.openhands.dev";
+  import.meta.env.VITE_POSTHOG_HOST || defaults.telemetry.posthogHost;
 
 // UI host is needed for PostHog features like toolbar to work correctly
 // when using a reverse proxy. Defaults to US region.
@@ -309,10 +277,13 @@ export function configureTelemetry(config: TelemetryConfiguration): void {
 
 function getResolvedTelemetryConfig(): Required<TelemetryConfig> | null {
   if (isTelemetryHardDisabled()) return null;
+  const apiKey = telemetryConfig.apiKey || DEFAULT_POSTHOG_API_KEY;
+  const apiHost = telemetryConfig.apiHost || DEFAULT_POSTHOG_HOST;
+  if (!apiKey || !apiHost) return null;
 
   return {
-    apiKey: telemetryConfig.apiKey || DEFAULT_POSTHOG_API_KEY,
-    apiHost: telemetryConfig.apiHost || DEFAULT_POSTHOG_HOST,
+    apiKey,
+    apiHost,
     uiHost: telemetryConfig.uiHost || DEFAULT_POSTHOG_UI_HOST,
   };
 }

@@ -405,13 +405,8 @@ describe("buildAgentServerTelemetryEnv", () => {
     canvasToolsDir: "/tmp/tools",
   };
 
-  it("configures PostHog telemetry by default without seeding consent", () => {
-    expect(buildAgentServerTelemetryEnv({})).toEqual({
-      OH_TELEMETRY_EXPORTER: "posthog",
-      OH_TELEMETRY_POSTHOG_API_KEY:
-        "phc_kBtz5nKmxVRRQ7HtPwr2QX9eMC5j65zE86QKocVNwb4U",
-      OH_TELEMETRY_POSTHOG_HOST: "https://us.i.posthog.com",
-    });
+  it("does not supply an upstream analytics project", () => {
+    expect(buildAgentServerTelemetryEnv({})).toEqual({});
   });
 
   it("prefers explicit agent-server telemetry settings", () => {
@@ -451,11 +446,12 @@ describe("buildAgentServerTelemetryEnv", () => {
     });
   });
 
-  it("includes telemetry defaults in the full agent-server environment", () => {
+  it("keeps the full agent-server environment free of an unconfigured analytics project", () => {
     const env = buildAgentServerEnv(agentServerConfig, { env: {} });
+    expect(env).not.toHaveProperty("OH_TELEMETRY_EXPORTER");
+    expect(env).not.toHaveProperty("DO_NOT_TRACK");
 
     expect(env).toMatchObject({
-      OH_TELEMETRY_EXPORTER: "posthog",
       OH_SESSION_API_KEYS_0: "session",
     });
   });

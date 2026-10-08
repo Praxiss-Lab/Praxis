@@ -118,6 +118,7 @@ and formatting for changed tests, Bash syntax, guide links and documented npm
 commands. The local lint-staged executable resolves successfully. No GitHub
 Actions, release, desktop installer, application or VM run was started.
 
-Telemetry configuration, consent logic, destinations, telemetry skill and
-analytics defaults remain unchanged. Their evaluation is explicitly deferred
-until this documentation and configuration work is complete.
+A subsequent configuration change removes the upstream analytics project key
+and proxy fallback. Owner project configuration is pending; event/consent logic,
+backend launchers and software logs remain intact. See
+[telemetry configuration and maintenance](TELEMETRY.md).

@@ -85,6 +85,10 @@ describe("Telemetry Service", () => {
     mockPosthog.get_distinct_id.mockImplementation(
       () => identifiedUserId ?? anonymousDistinctId,
     );
+    configureTelemetry({
+      apiKey: "test-project",
+      apiHost: "https://analytics.example",
+    });
     await setTelemetryIdentity(null);
     setTelemetryBackendContext({});
     setTelemetryWebsiteAttribution(undefined);

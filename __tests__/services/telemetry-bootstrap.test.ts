@@ -38,6 +38,10 @@ async function loadTelemetryWithLegacyUser() {
   }));
 
   const telemetry = await import("#/services/telemetry");
+  telemetry.configureTelemetry({
+    apiKey: "test-project",
+    apiHost: "https://analytics.example",
+  });
   return { telemetry, mockPosthog };
 }
 

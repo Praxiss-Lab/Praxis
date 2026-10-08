@@ -1,8 +1,9 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import posthog from "posthog-js";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   clearTelemetryData,
+  configureTelemetry,
   initializePostHogClient,
   setTelemetryConsent,
   trackInstall,
@@ -14,6 +15,12 @@ vi.mock("#/hooks/query/use-settings", () => ({
 }));
 
 describe("Canvas telemetry delivery", () => {
+  beforeEach(() =>
+    configureTelemetry({
+      apiKey: "test-project",
+      apiHost: "https://analytics.example",
+    }),
+  );
   afterEach(async () => {
     await clearTelemetryData();
   });

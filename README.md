@@ -115,6 +115,12 @@ OH_CONVERSATION_RUNTIME=docker agent-canvas
 
 This isolates conversation execution while the frontend and Automation remain on the host. On Windows, run this mode inside WSL 2 with Docker integration enabled. See [self-hosting](docs/SELF_HOSTING.md) for runtime and workspace details.
 
+## Telemetry configuration
+
+The upstream analytics project is disconnected. Configure your own PostHog
+project following [telemetry configuration and maintenance](docs/TELEMETRY.md).
+Software logs are independent.
+
 ## Documentation
 
 - [Documentation index](docs/README.md)

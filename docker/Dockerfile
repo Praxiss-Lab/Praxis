@@ -38,12 +38,16 @@ COPY . .
 
 # Build the static frontend.
 # VITE_POSTHOG_API_KEY is a public client key baked into the bundle. CI passes
-# production for tagged releases and staging for PR/main images.
+# the owner's explicitly configured Praxis project key and region hosts.
 # VITE_BASE_PATH is baked into React Router/Vite so the Docker image serves
 # Canvas under the Cloud subpath instead of a dedicated hostname.
 ARG VITE_POSTHOG_API_KEY=""
+ARG VITE_POSTHOG_HOST=""
+ARG VITE_POSTHOG_UI_HOST=""
 ARG VITE_BASE_PATH="/canvas"
 ENV VITE_POSTHOG_API_KEY=${VITE_POSTHOG_API_KEY}
+ENV VITE_POSTHOG_HOST=${VITE_POSTHOG_HOST}
+ENV VITE_POSTHOG_UI_HOST=${VITE_POSTHOG_UI_HOST}
 ENV VITE_BASE_PATH=${VITE_BASE_PATH}
 RUN npm run build
 
@@ -78,6 +82,8 @@ ARG OPENHANDS_BUILD_GIT_SHA=unknown
 ARG OPENHANDS_BUILD_GIT_REF=unknown
 ARG VITE_BASE_PATH="/canvas"
 ARG VITE_POSTHOG_API_KEY=""
+ARG VITE_POSTHOG_HOST=""
+ARG VITE_POSTHOG_UI_HOST=""
 
 ARG AGENT_CANVAS_VERSION=dev
 ARG PRAXIS_VERSION=dev
@@ -91,6 +97,8 @@ ENV AGENT_CANVAS_BUILD_GIT_SHA=${OPENHANDS_BUILD_GIT_SHA}
 ENV AGENT_CANVAS_BUILD_GIT_REF=${OPENHANDS_BUILD_GIT_REF}
 ENV AGENT_CANVAS_BASE_PATH=${VITE_BASE_PATH}
 ENV VITE_POSTHOG_API_KEY=${VITE_POSTHOG_API_KEY}
+ENV VITE_POSTHOG_HOST=${VITE_POSTHOG_HOST}
+ENV VITE_POSTHOG_UI_HOST=${VITE_POSTHOG_UI_HOST}
 
 USER root
 

@@ -55,7 +55,7 @@ describe("Praxis repository and publishing policy", () => {
     const dockerfile = read("docker/Dockerfile");
 
     expect(workflow).toContain(
-      "VITE_POSTHOG_API_KEY=${{ vars.POSTHOG_PROD_KEY }}",
+      "VITE_POSTHOG_API_KEY=${{ vars.PRAXIS_POSTHOG_API_KEY }}",
     );
     expect(workflow).not.toContain("VITE_POSTHOG_CLIENT_KEY");
     expect(workflow).not.toContain("vite_app_env");
@@ -64,5 +64,18 @@ describe("Praxis repository and publishing policy", () => {
       "ENV VITE_POSTHOG_API_KEY=${VITE_POSTHOG_API_KEY}",
     );
     expect(dockerfile).not.toContain("VITE_APP_ENV");
+  });
+  it.each([
+    "docker.yml",
+    "desktop-linux.yml",
+    "desktop-macos.yml",
+    "desktop-windows.yml",
+  ])("%s uses only owner project variables", (file) => {
+    const workflow = read(`.github/workflows/${file}`);
+    for (const field of ["API_KEY", "HOST", "UI_HOST"]) {
+      expect(workflow).toContain(`vars.PRAXIS_POSTHOG_${field}`);
+    }
+    expect(workflow).not.toContain("vars.POSTHOG_PROD_KEY");
+    expect(workflow).not.toContain("vars.POSTHOG_STAGING_KEY");
   });
 });
