@@ -31,7 +31,8 @@
     "workspace": "openhands-workspace"
   },
   "telemetry": {
-    "posthogApiKey": "",
-    "posthogHost": ""
+    "posthogApiKey": "phc_xQbJhtBoepVNQhhMkmXqShEQx8Uc5GNo6233BR4vmUrX",
+    "posthogHost": "https://eu.i.posthog.com",
+    "posthogUiHost": "https://eu.posthog.com"
   }
 }

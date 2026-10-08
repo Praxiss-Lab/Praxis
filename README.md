@@ -117,8 +117,9 @@ This isolates conversation execution while the frontend and Automation remain on
 
 ## Telemetry configuration
 
-The upstream analytics project is disconnected. Configure your own PostHog
-project following [telemetry configuration and maintenance](docs/TELEMETRY.md).
+Praxis uses the owner's EU PostHog project configured in `config/defaults.json`.
+Development and release builds share these settings; see
+[telemetry configuration and maintenance](docs/TELEMETRY.md).
 Software logs are independent.
 
 ## Documentation

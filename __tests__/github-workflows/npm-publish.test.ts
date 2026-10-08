@@ -50,13 +50,11 @@ describe("Praxis repository and publishing policy", () => {
     ).toBe(false);
   });
 
-  it("passes the selected PostHog key through Docker's supported build arg", () => {
+  it("keeps explicit custom Docker build arguments optional", () => {
     const workflow = read(".github/workflows/docker.yml");
     const dockerfile = read("docker/Dockerfile");
 
-    expect(workflow).toContain(
-      "VITE_POSTHOG_API_KEY=${{ vars.PRAXIS_POSTHOG_API_KEY }}",
-    );
+    expect(workflow).not.toContain("VITE_POSTHOG_API_KEY=");
     expect(workflow).not.toContain("VITE_POSTHOG_CLIENT_KEY");
     expect(workflow).not.toContain("vite_app_env");
     expect(dockerfile).toContain('ARG VITE_POSTHOG_API_KEY=""');
@@ -70,10 +68,10 @@ describe("Praxis repository and publishing policy", () => {
     "desktop-linux.yml",
     "desktop-macos.yml",
     "desktop-windows.yml",
-  ])("%s uses only owner project variables", (file) => {
+  ])("%s uses JSON analytics defaults without repository variables", (file) => {
     const workflow = read(`.github/workflows/${file}`);
     for (const field of ["API_KEY", "HOST", "UI_HOST"]) {
-      expect(workflow).toContain(`vars.PRAXIS_POSTHOG_${field}`);
+      expect(workflow).not.toContain(`vars.PRAXIS_POSTHOG_${field}`);
     }
     expect(workflow).not.toContain("vars.POSTHOG_PROD_KEY");
     expect(workflow).not.toContain("vars.POSTHOG_STAGING_KEY");

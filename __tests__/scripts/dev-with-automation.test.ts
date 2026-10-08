@@ -5,6 +5,7 @@
 // file:// base URLs (it falls back to its document base, e.g.
 // http://localhost:3000/), breaking that resolution; the Node environment
 // has the standard WHATWG URL behavior that honors the file:// base.
+import defaults from "../../config/defaults.json";
 import net from "node:net";
 import { spawn } from "node:child_process";
 import { once } from "node:events";
@@ -247,8 +248,11 @@ describe("buildAgentServerAutomationEnv", () => {
 });
 
 describe("buildAutomationTelemetryEnv", () => {
-  it("does not supply an upstream analytics project", () => {
-    expect(buildAutomationTelemetryEnv({})).toEqual({});
+  it("uses the JSON project for native automation telemetry", () => {
+    expect(buildAutomationTelemetryEnv({})).toEqual({
+      AUTOMATION_POSTHOG_API_KEY: defaults.telemetry.posthogApiKey,
+      AUTOMATION_POSTHOG_HOST: defaults.telemetry.posthogHost,
+    });
   });
 
   it("prefers explicit automation telemetry settings", () => {

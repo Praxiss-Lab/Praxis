@@ -79,9 +79,6 @@ jobs:
             OPENHANDS_BUILD_GIT_SHA=${{ inputs.commit_sha }}
             OPENHANDS_BUILD_GIT_REF=refs/tags/v${{ inputs.version }}
             VITE_BASE_PATH=${{ steps.config.outputs.canvas_path }}
-            VITE_POSTHOG_API_KEY=${{ vars.PRAXIS_POSTHOG_API_KEY }}
-            VITE_POSTHOG_HOST=${{ vars.PRAXIS_POSTHOG_HOST }}
-            VITE_POSTHOG_UI_HOST=${{ vars.PRAXIS_POSTHOG_UI_HOST }}
           cache-from: type=gha,scope=praxis-release-${{ matrix.arch }}
           cache-to: type=gha,scope=praxis-release-${{ matrix.arch }},mode=max
           provenance: true

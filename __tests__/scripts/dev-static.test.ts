@@ -1,3 +1,4 @@
+import defaults from "../../config/defaults.json";
 import { describe, expect, it } from "vitest";
 
 import {
@@ -33,6 +34,8 @@ describe("dev-static", () => {
       AUTOMATION_AGENT_SERVER_URL: "http://127.0.0.1:18000",
       AUTOMATION_AGENT_SERVER_API_KEY: "shared-session-key",
       AUTOMATION_LOCAL_API_KEY: "shared-session-key",
+      AUTOMATION_POSTHOG_API_KEY: defaults.telemetry.posthogApiKey,
+      AUTOMATION_POSTHOG_HOST: defaults.telemetry.posthogHost,
     });
   });
 

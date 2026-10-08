@@ -119,6 +119,8 @@ commands. The local lint-staged executable resolves successfully. No GitHub
 Actions, release, desktop installer, application or VM run was started.
 
 A subsequent configuration change removes the upstream analytics project key
-and proxy fallback. Owner project configuration is pending; event/consent logic,
-backend launchers and software logs remain intact. See
+and proxy fallback. The owner's EU project is now configured in `config/defaults.json`, shared by
+native development and release builds. Workflows no longer consume PostHog
+repository variables. Event/consent logic, backend launchers and logs remain
+intact. See
 [telemetry configuration and maintenance](TELEMETRY.md).

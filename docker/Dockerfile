@@ -37,8 +37,8 @@ RUN npm ci
 COPY . .
 
 # Build the static frontend.
-# VITE_POSTHOG_API_KEY is a public client key baked into the bundle. CI passes
-# the owner's explicitly configured Praxis project key and region hosts.
+# PostHog project and region defaults come from config/defaults.json.
+# Optional build arguments remain available for explicit custom builds.
 # VITE_BASE_PATH is baked into React Router/Vite so the Docker image serves
 # Canvas under the Cloud subpath instead of a dedicated hostname.
 ARG VITE_POSTHOG_API_KEY=""

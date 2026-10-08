@@ -96,7 +96,10 @@ section; never edit human-authored approvals or manufacture statements for them.
 Use [the brand guide](docs/BRAND.md) for approved logos and palette. Do not redesign
 branding as an incidental code change. Analytics destinations belong to the Praxis owner; do not restore upstream
 project keys or proxy fallbacks. Read [telemetry configuration](docs/TELEMETRY.md).
-The owner project is pending; preserve existing events, consent and log behavior.
+The owner project token and EU hosts live in `config/defaults.json`; do not
+replace these with required .env or GitHub variables. The public Project token
+is approved for this shared config; never commit personal/secret API keys.
+Preserve existing events, consent and log behavior.
 
 After editing `src/i18n/translation.json`, run `npm run make-i18n` and
 `npm run check-translation-completeness`. Remove deleted keys from relevant test

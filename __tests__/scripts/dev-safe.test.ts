@@ -5,6 +5,7 @@
 // document base, e.g. http://localhost:3000/), breaking that resolution;
 // the Node environment has the standard WHATWG URL behavior that honors
 // the file:// base.
+import defaults from "../../config/defaults.json";
 import net from "node:net";
 import { spawn } from "node:child_process";
 import { once } from "node:events";
@@ -405,8 +406,12 @@ describe("buildAgentServerTelemetryEnv", () => {
     canvasToolsDir: "/tmp/tools",
   };
 
-  it("does not supply an upstream analytics project", () => {
-    expect(buildAgentServerTelemetryEnv({})).toEqual({});
+  it("uses the JSON project for native agent-server telemetry", () => {
+    expect(buildAgentServerTelemetryEnv({})).toEqual({
+      OH_TELEMETRY_EXPORTER: "posthog",
+      OH_TELEMETRY_POSTHOG_API_KEY: defaults.telemetry.posthogApiKey,
+      OH_TELEMETRY_POSTHOG_HOST: defaults.telemetry.posthogHost,
+    });
   });
 
   it("prefers explicit agent-server telemetry settings", () => {
@@ -446,9 +451,13 @@ describe("buildAgentServerTelemetryEnv", () => {
     });
   });
 
-  it("keeps the full agent-server environment free of an unconfigured analytics project", () => {
+  it("uses the JSON project in the full agent-server environment", () => {
     const env = buildAgentServerEnv(agentServerConfig, { env: {} });
-    expect(env).not.toHaveProperty("OH_TELEMETRY_EXPORTER");
+    expect(env.OH_TELEMETRY_EXPORTER).toBe("posthog");
+    expect(env.OH_TELEMETRY_POSTHOG_API_KEY).toBe(
+      defaults.telemetry.posthogApiKey,
+    );
+    expect(env.OH_TELEMETRY_POSTHOG_HOST).toBe(defaults.telemetry.posthogHost);
     expect(env).not.toHaveProperty("DO_NOT_TRACK");
 
     expect(env).toMatchObject({

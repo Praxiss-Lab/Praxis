@@ -1,5 +1,5 @@
 /**
- * Product analytics uses an explicitly configured project and ingestion host.
+ * Product analytics defaults to the owner project in config/defaults.json.
  * Praxis supplies no upstream key or proxy. Event, consent and identity
  * behavior is retained; see docs/TELEMETRY.md for configuration ownership.
  */
@@ -36,7 +36,7 @@ const POSTHOG_BOOTSTRAP_STORAGE_PREFIX = "posthog_bootstrap";
 const POSTHOG_INSTANCE_NAME = "agent-canvas";
 const POSTHOG_PAGEVIEW_CAPTURE_MODE = "history_change";
 
-// Project configuration comes from the owner; shared defaults are empty.
+// Shared JSON defaults apply to native development and distributed builds.
 const DEFAULT_POSTHOG_API_KEY: string =
   (import.meta.env.VITE_POSTHOG_API_KEY as string | undefined) ||
   defaults.telemetry.posthogApiKey;
@@ -44,9 +44,9 @@ const DEFAULT_POSTHOG_HOST =
   import.meta.env.VITE_POSTHOG_HOST || defaults.telemetry.posthogHost;
 
 // UI host is needed for PostHog features like toolbar to work correctly
-// when using a reverse proxy. Defaults to US region.
+// when using a reverse proxy. Defaults to the project region in shared JSON.
 const DEFAULT_POSTHOG_UI_HOST =
-  import.meta.env.VITE_POSTHOG_UI_HOST || "https://us.posthog.com";
+  import.meta.env.VITE_POSTHOG_UI_HOST || defaults.telemetry.posthogUiHost;
 
 export interface TelemetryConfig {
   /** PostHog project key. Useful for precompiled library consumers. */
