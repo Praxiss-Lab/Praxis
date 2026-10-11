@@ -513,51 +513,53 @@ describe("buildAgentServerTelemetryEnv", () => {
 });
 
 describe("buildAgentServerCommand", () => {
-  it("uses released PyPI version by default with all packages pinned", () => {
+  it("uses owned source revision for all packages by default", () => {
     const cmd = buildAgentServerCommand({});
 
     expect(cmd.command).toBe("uvx");
     // Defaults to the released PyPI version with all SDK packages pinned to same version
     expect(cmd.args).toEqual([
+      "--reinstall",
       "--from",
-      "openhands-agent-server==1.53.0",
+      `git+${defaults.sources.sdk.repository}@${defaults.sources.sdk.ref}#subdirectory=openhands-agent-server`,
       "--with",
-      "openhands-sdk==1.53.0",
+      `git+${defaults.sources.sdk.repository}@${defaults.sources.sdk.ref}#subdirectory=openhands-sdk`,
       "--with",
-      "openhands-tools==1.53.0",
+      `git+${defaults.sources.sdk.repository}@${defaults.sources.sdk.ref}#subdirectory=openhands-tools`,
       "--with",
-      "openhands-workspace==1.53.0",
+      `git+${defaults.sources.sdk.repository}@${defaults.sources.sdk.ref}#subdirectory=openhands-workspace`,
       "--with",
-      "posthog>=6,<7",
+      "posthog>=7,<8",
       "agent-server",
       "--import-modules",
       "canvas_ui_tool",
     ]);
-    expect(cmd.source).toBe("PyPI (1.53.0, default)");
+    expect(cmd.source).toBe(`git (${defaults.sources.sdk.ref})`);
   });
 
-  it("uses specific PyPI version when OH_AGENT_SERVER_VERSION is set with all packages pinned", () => {
+  it("uses an owned Git tag when OH_AGENT_SERVER_VERSION is set with all packages pinned", () => {
     const cmd = buildAgentServerCommand({ OH_AGENT_SERVER_VERSION: "1.18.0" });
 
     expect(cmd.command).toBe("uvx");
     // Uses --from syntax because executable name (agent-server) differs from package name (openhands-agent-server)
     // All SDK packages are pinned to the same version
     expect(cmd.args).toEqual([
+      "--reinstall",
       "--from",
-      "openhands-agent-server==1.18.0",
+      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=openhands-agent-server`,
       "--with",
-      "openhands-sdk==1.18.0",
+      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=openhands-sdk`,
       "--with",
-      "openhands-tools==1.18.0",
+      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=openhands-tools`,
       "--with",
-      "openhands-workspace==1.18.0",
+      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=openhands-workspace`,
       "--with",
-      "posthog>=6,<7",
+      "posthog>=7,<8",
       "agent-server",
       "--import-modules",
       "canvas_ui_tool",
     ]);
-    expect(cmd.source).toBe("PyPI (1.18.0)");
+    expect(cmd.source).toBe("git (v1.18.0)");
   });
 
   it("uses git ref with subdirectory syntax for monorepo", () => {
@@ -569,15 +571,15 @@ describe("buildAgentServerCommand", () => {
     expect(cmd.args).toEqual([
       "--reinstall",
       "--from",
-      "git+https://github.com/OpenHands/software-agent-sdk@feature-branch#subdirectory=openhands-agent-server",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=openhands-agent-server",
       "--with",
-      "git+https://github.com/OpenHands/software-agent-sdk@feature-branch#subdirectory=openhands-sdk",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=openhands-sdk",
       "--with",
-      "git+https://github.com/OpenHands/software-agent-sdk@feature-branch#subdirectory=openhands-tools",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=openhands-tools",
       "--with",
-      "git+https://github.com/OpenHands/software-agent-sdk@feature-branch#subdirectory=openhands-workspace",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=openhands-workspace",
       "--with",
-      "posthog>=6,<7",
+      "posthog>=7,<8",
       "agent-server",
       "--import-modules",
       "canvas_ui_tool",
@@ -592,15 +594,15 @@ describe("buildAgentServerCommand", () => {
     expect(cmd.args).toEqual([
       "--reinstall",
       "--from",
-      "git+https://github.com/OpenHands/software-agent-sdk@abc1234#subdirectory=openhands-agent-server",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@abc1234#subdirectory=openhands-agent-server",
       "--with",
-      "git+https://github.com/OpenHands/software-agent-sdk@abc1234#subdirectory=openhands-sdk",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@abc1234#subdirectory=openhands-sdk",
       "--with",
-      "git+https://github.com/OpenHands/software-agent-sdk@abc1234#subdirectory=openhands-tools",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@abc1234#subdirectory=openhands-tools",
       "--with",
-      "git+https://github.com/OpenHands/software-agent-sdk@abc1234#subdirectory=openhands-workspace",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@abc1234#subdirectory=openhands-workspace",
       "--with",
-      "posthog>=6,<7",
+      "posthog>=7,<8",
       "agent-server",
       "--import-modules",
       "canvas_ui_tool",
@@ -617,9 +619,11 @@ describe("buildAgentServerCommand", () => {
     expect(cmd.command).toBe("uvx");
     expect(cmd.args).toContain("--from");
     expect(cmd.args).toContain(
-      "git+https://github.com/OpenHands/software-agent-sdk@feature-branch#subdirectory=openhands-agent-server",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=openhands-agent-server",
     );
-    expect(cmd.args).not.toContain("openhands-agent-server==1.18.0");
+    expect(cmd.args).not.toContain(
+      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=openhands-agent-server`,
+    );
   });
 
   it("uses local path with editable workspace packages when OH_AGENT_SERVER_LOCAL_PATH is set", () => {
@@ -638,7 +642,7 @@ describe("buildAgentServerCommand", () => {
       "--with-editable",
       path.join(sdk, "openhands-workspace"),
       "--with",
-      "posthog>=6,<7",
+      "posthog>=7,<8",
       "agent-server",
       "--import-modules",
       "canvas_ui_tool",
@@ -657,9 +661,11 @@ describe("buildAgentServerCommand", () => {
     expect(cmd.source).toBe(`local (${sdk})`);
     expect(cmd.args).toContain(path.join(sdk, "openhands-agent-server"));
     expect(cmd.args).not.toContain(
-      "git+https://github.com/OpenHands/software-agent-sdk@feature-branch#subdirectory=openhands-agent-server",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=openhands-agent-server",
     );
-    expect(cmd.args).not.toContain("openhands-agent-server==1.18.0");
+    expect(cmd.args).not.toContain(
+      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=openhands-agent-server`,
+    );
   });
 
   it("passes --import-modules to the agent-server, after the executable, in every source mode", () => {

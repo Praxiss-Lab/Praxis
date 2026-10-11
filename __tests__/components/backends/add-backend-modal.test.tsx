@@ -135,7 +135,7 @@ describe("AddBackendModal – connection chooser", () => {
       screen.getByTestId("add-backend-deployment-options-link"),
     ).toHaveAttribute(
       "href",
-      "https://docs.openhands.dev/overview/introduction",
+      "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/SDK_INDEPENDENCE.md",
     );
     // Short inline link so the description reads as one flowing sentence.
     expect(
@@ -154,6 +154,10 @@ describe("AddBackendModal – connection chooser", () => {
 
     expect(screen.getByTestId("add-backend-advanced-toggle")).toBeVisible();
 
+    await user.type(
+      screen.getByTestId("add-backend-cloud-host"),
+      "https://cloud.example.com",
+    );
     await user.click(screen.getByTestId("add-backend-login-button"));
 
     expect(
@@ -428,18 +432,10 @@ describe("AddBackendModal – connection chooser", () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("hides advanced host settings until expanded while preserving what was typed", async () => {
+  it("shows required host settings and preserves input across collapse", async () => {
     const user = userEvent.setup();
     renderWithProviders(<AddBackendModal onClose={vi.fn()} />);
 
-    // Collapsed: mounted so state survives, but collapsed to zero height and
-    // kept out of the tab order.
-    expect(screen.getByTestId("add-backend-advanced-panel")).toHaveAttribute(
-      "aria-hidden",
-      "true",
-    );
-
-    await user.click(screen.getByTestId("add-backend-advanced-toggle"));
     expect(screen.getByTestId("add-backend-advanced-toggle")).toHaveAttribute(
       "aria-expanded",
       "true",

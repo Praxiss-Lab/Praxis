@@ -50,18 +50,42 @@ jobs:
           node --input-type=module <<'JS' >> "$GITHUB_OUTPUT"
           import fs from 'node:fs';
           const c = JSON.parse(fs.readFileSync('config/defaults.json', 'utf8'));
-          console.log('base_image=' + c.images.agentServer + ':' + c.versions.agentServer + '-python');
+          console.log('base_image=' + c.images.agentServer + ':sha-' + c.sources.sdk.ref + '-python');
           console.log('agent_version=' + c.versions.agentServer);
+          console.log('sdk_ref=' + c.sources.sdk.ref);
           console.log('automation_version=' + c.versions.automation);
           console.log('canvas_version=' + c.versions.agentCanvas);
           console.log('canvas_path=' + c.paths.canvasBasePath);
           JS
+      - name: Checkout frozen Praxis SDK
+        uses: actions/checkout@v7
+        with:
+          repository: Praxiss-Lab/praxis-sdk
+          ref: ${{ steps.config.outputs.sdk_ref }}
+          path: .praxis-sdk-source
+          token: ${{ secrets.PRAXIS_SDK_READ_TOKEN || github.token }}
+          persist-credentials: false
       - uses: docker/setup-buildx-action@v4
       - uses: docker/login-action@v4.6.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build SDK source context for this platform
+        id: sdk_base
+        uses: docker/build-push-action@v7
+        with:
+          context: .praxis-sdk-source
+          file: .praxis-sdk-source/openhands-agent-server/openhands/agent_server/docker/Dockerfile
+          target: source
+          platforms: ${{ matrix.platform }}
+          outputs: type=oci,dest=${{ runner.temp }}/praxis-sdk-base.tar
+          cache-from: type=gha,scope=praxis-sdk-${{ matrix.arch }}
+          cache-to: type=gha,scope=praxis-sdk-${{ matrix.arch }},mode=max
+      - name: Unpack SDK OCI context
+        run: |
+          mkdir -p "${{ runner.temp }}/praxis-sdk-layout"
+          tar -xf "${{ runner.temp }}/praxis-sdk-base.tar" -C "${{ runner.temp }}/praxis-sdk-layout"
       - name: Build and push native image by digest
         id: build
         uses: docker/build-push-action@v7
@@ -70,8 +94,10 @@ jobs:
           file: docker/Dockerfile
           platforms: ${{ matrix.platform }}
           outputs: type=image,name=ghcr.io/praxiss-lab/praxis,push-by-digest=true,name-canonical=true,push=true
+          build-contexts: |
+            praxis-sdk-base=oci-layout://${{ runner.temp }}/praxis-sdk-layout@${{ steps.sdk_base.outputs.digest }}
           build-args: |
-            AGENT_SERVER_IMAGE=${{ steps.config.outputs.base_image }}
+            AGENT_SERVER_IMAGE=praxis-sdk-base
             AGENT_SERVER_VERSION=${{ steps.config.outputs.agent_version }}
             AUTOMATION_VERSION=${{ steps.config.outputs.automation_version }}
             AGENT_CANVAS_VERSION=${{ steps.config.outputs.canvas_version }}

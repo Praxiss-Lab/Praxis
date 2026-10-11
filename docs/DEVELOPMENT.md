@@ -14,9 +14,9 @@ Docker.
 
 This repository contains the Agent Canvas frontend and local-stack orchestration. Use the sibling repositories for their owned layers:
 
-- [`OpenHands/software-agent-sdk`](https://github.com/OpenHands/software-agent-sdk) owns the Python SDK, Agent Server, agent/tool behavior, conversations, workspaces, events, and server API.
-- [`software-agent-sdk/clients/typescript`](https://github.com/OpenHands/software-agent-sdk/tree/main/clients/typescript) owns browser-compatible typed access to that Agent Server API. Add client methods there rather than reimplementing API calls in Canvas.
-- [`OpenHands/extensions`](https://github.com/OpenHands/extensions) owns reusable skills, plugins, automations, and integrations; [`OpenHands/automation`](https://github.com/OpenHands/automation) owns automation definitions, scheduling, webhooks, run history, and dispatching; Agent Server/SDK code executes the dispatched conversations.
+- [`Praxiss-Lab/praxis-sdk`](https://github.com/Praxiss-Lab/praxis-sdk) owns the Python SDK, Agent Server, agent/tool behavior, conversations, workspaces, events, and server API.
+- [`software-agent-sdk/clients/typescript`](https://github.com/Praxiss-Lab/praxis-sdk/tree/main/clients/typescript) owns browser-compatible typed access to that Agent Server API. Add client methods there rather than reimplementing API calls in Canvas.
+- [`Praxis/vendor`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor) owns reusable skills, plugins, automations, and integrations; [`Praxis/vendor/automation`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor/automation) owns automation definitions, scheduling, webhooks, run history, and dispatching; Agent Server/SDK code executes the dispatched conversations.
 
 When a feature crosses repositories, implement the backend contract in the SDK first, expose it through `typescript-client`, and consume it in Canvas. Coordinate automation lifecycle changes in `automation`. Version pins, local-stack overrides, and PR ordering are in [Cross-repository version compatibility](#cross-repository-version-compatibility). See the repository [contributor notes](../AGENTS.md) and follow the [custom code-review guide](../.agents/skills/custom-codereview-guide.md) for every pull request.
 
@@ -83,16 +83,16 @@ unsupported and often looks like a product bug.
 Owning repositories:
 
 - [`OpenHands/OpenHands`](https://github.com/OpenHands/OpenHands) (this repo) — Agent Canvas
-- [`OpenHands/software-agent-sdk`](https://github.com/OpenHands/software-agent-sdk) — Python SDK and Agent Server
-- [`software-agent-sdk/clients/typescript`](https://github.com/OpenHands/software-agent-sdk/tree/main/clients/typescript) — `@openhands/typescript-client`
-- [`OpenHands/automation`](https://github.com/OpenHands/automation) — scheduling, webhooks, run history
-- [`OpenHands/extensions`](https://github.com/OpenHands/extensions) — `@openhands/extensions` skills and integrations
+- [`Praxiss-Lab/praxis-sdk`](https://github.com/Praxiss-Lab/praxis-sdk) — Python SDK and Agent Server
+- [`software-agent-sdk/clients/typescript`](https://github.com/Praxiss-Lab/praxis-sdk/tree/main/clients/typescript) — `@openhands/typescript-client`
+- [`Praxis/vendor/automation`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor/automation) — scheduling, webhooks, run history
+- [`Praxis/vendor`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor) — `@openhands/extensions` skills and integrations
 
 #### Source of truth
 
 | Surface                                    | Supported version lives in                                                    |
 | ------------------------------------------ | ----------------------------------------------------------------------------- |
-| Bundled Agent Server / SDK PyPI pin        | [`config/defaults.json`](../config/defaults.json) `versions.agentServer`      |
+| Frozen Agent Server / SDK source revision        | [`config/defaults.json`](../config/defaults.json) `sources.sdk.ref`      |
 | Bundled automation PyPI pin                | `config/defaults.json` `versions.automation`                                  |
 | Oldest Agent Server this frontend accepts  | `config/defaults.json` `compatibility.minimumAgentServer`                     |
 | `@openhands/typescript-client`             | [`package.json`](../package.json) (exact npm pin)                             |
@@ -127,7 +127,7 @@ contract pin is independent of Canvas `versions.agentServer`.
 automation. Leaving an override unset means "use the pin above", not Git
 `main`.
 
-**Agent Server** ([`software-agent-sdk`](https://github.com/OpenHands/software-agent-sdk)):
+**Agent Server** ([`software-agent-sdk`](https://github.com/Praxiss-Lab/praxis-sdk)):
 
 1. `OH_AGENT_SERVER_LOCAL_PATH` — absolute path to a checkout that contains
    `openhands-agent-server`, `openhands-sdk`, `openhands-tools`, and
@@ -138,8 +138,8 @@ automation. Leaving an override unset means "use the pin above", not Git
    packages are installed from that same ref so inter-package APIs stay in
    sync. The launcher passes `uvx --reinstall` so a cached PyPI wheel with
    the same version string is not reused.
-3. `OH_AGENT_SERVER_VERSION` — a specific PyPI version of those four packages.
-4. Default: `versions.agentServer` from `config/defaults.json`.
+3. `OH_AGENT_SERVER_VERSION` — a version tag in the owned SDK repository.
+4. Default: `sources.sdk.ref` from `config/defaults.json`.
 
 ```sh
 OH_AGENT_SERVER_LOCAL_PATH=/abs/path/to/software-agent-sdk npm run dev
@@ -147,19 +147,18 @@ OH_AGENT_SERVER_GIT_REF=<branch-or-sha> npm run dev
 OH_AGENT_SERVER_VERSION=<versions.agentServer> npm run dev
 ```
 
-**Automation** ([`automation`](https://github.com/OpenHands/automation)):
+**Automation** ([`automation`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor/automation)):
 
 1. `OH_AUTOMATION_LOCAL_PATH` — absolute path to a checkout with
    `pyproject.toml`. `--automation-ref` on the launcher outranks this local
    path.
 2. `OH_AUTOMATION_GIT_REF` (or `--automation-ref`) — branch, tag, or commit.
    `OH_AUTOMATION_REPO` only applies when a git ref is selected.
-3. `OH_AUTOMATION_VERSION` — a specific PyPI version of `openhands-automation`.
-4. Default: `versions.automation` from `config/defaults.json`.
+3. `OH_AUTOMATION_VERSION` — must match the bundled Automation version; incompatible registry overrides are rejected.
+4. Default: bundled source in `vendor/automation` (version recorded in `config/defaults.json`).
 
-Released `openhands-automation` is checked against `versions.agentServer`.
-CI runs `scripts/check-sdk-version-sync.mjs` on the **published** automation
-package, not on a local checkout or Git `main`.
+Bundled Automation dependencies are checked against `versions.agentServer`.
+CI runs `scripts/check-sdk-version-sync.mjs` against the controlled source and client lock metadata without fetching upstream package metadata by default.
 
 **TypeScript client and extensions:** Canvas does not provide Git-ref or
 local-path launcher variables for `@openhands/typescript-client` or
@@ -171,7 +170,7 @@ Contributor notes require a **published** TypeScript client before Canvas
 bumps that pin. Do not point this repository at an unpublished commit SHA.
 
 Iterate on unreleased client work in `software-agent-sdk/clients/typescript`
-and extensions work in `OpenHands/extensions`, then
+and extensions work in `Praxis/vendor`, then
 bump the Canvas pin after the package exists on the registry.
 
 #### Cross-repository change checklist
@@ -192,7 +191,7 @@ bump the Canvas pin after the package exists on the registry.
 6. If public skills or integrations change, publish `@openhands/extensions`
    and then bump that dependency.
 7. If a Canvas PR needs an unreleased Agent Server, link the
-   `OpenHands/software-agent-sdk` pull request and record the local-path or
+   `Praxiss-Lab/praxis-sdk` pull request and record the local-path or
    Git-ref verification in the Canvas PR body. E2E workflows run after
    changes reach `main`; for risky pre-merge changes, ask a maintainer to
    manually dispatch the relevant workflow against the PR branch. Do not
@@ -461,3 +460,5 @@ membership and user identity while the saved selection remains accessible.
 See [agent operation and setup](AGENT_OPERATIONS.md) for `npm run setup:dev`,
 frontend-only preparation, staged-file hooks, instruction precedence and
 completion criteria. These setup commands do not start application services.
+
+See [SDK independence](SDK_INDEPENDENCE.md) for source archives, private repository access and CI requirements.

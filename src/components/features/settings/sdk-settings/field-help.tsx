@@ -23,7 +23,7 @@ export const FIELD_HELP_LINKS: Record<
   "llm.api_key": {
     textKey: "SCHEMA$LLM$API_KEY$HELP_TEXT",
     linkTextKey: "SCHEMA$LLM$API_KEY$HELP_LINK_TEXT",
-    href: "https://docs.openhands.dev/usage/local-setup#getting-an-api-key",
+    href: "https://github.com/Praxiss-Lab/praxis-sdk/blob/main/docs/independent-deployment.md",
   },
   // Mirror the hint shown under the LLM provider's API key field when
   // OpenHands is selected as the active provider; the SDK reuses that active
@@ -32,7 +32,7 @@ export const FIELD_HELP_LINKS: Record<
     textKey: "SCHEMA$VERIFICATION$CRITIC_API_KEY$HELP_TEXT",
     linkTextKey: "SETTINGS$OPENHANDS_API_KEY_HELP_LINK",
     suffixKey: "SCHEMA$VERIFICATION$CRITIC_API_KEY$HELP_SUFFIX",
-    href: "https://app.all-hands.dev/settings/api-keys",
+    href: "https://github.com/Praxiss-Lab/praxis-sdk/blob/main/docs/independent-deployment.md",
     hideDescription: true,
   },
 };

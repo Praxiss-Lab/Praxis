@@ -37,3 +37,8 @@ Thumbs.db
 artifacts/
 *.tgz
 *.log
+
+# Controlled runtime artifacts are required by npm ci.
+!vendor/*.tgz
+
+.praxis-sdk-source/

@@ -131,3 +131,7 @@ Software logs are independent.
 - [Release policy](docs/policies/RELEASE.md) and [versioning](docs/policies/VERSIONING.md)
 
 Licensing and attribution are recorded in [LICENSE](LICENSE) and [NOTICE](NOTICE).
+
+## Controlled SDK source
+
+Praxis uses [Praxis SDK](https://github.com/Praxiss-Lab/praxis-sdk) at a frozen commit, with bundled Automation and local client/extensions archives. See [SDK independence](docs/SDK_INDEPENDENCE.md) for private Git authentication, CI access and deployment requirements.

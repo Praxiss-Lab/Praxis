@@ -95,6 +95,8 @@ async function start(mode, extra = []) {
     "PRAXIS_MODE=" + mode,
     "-e",
     "VITE_DO_NOT_TRACK=1",
+    "-e",
+    "AGENT_CANVAS_DISABLE_TELEMETRY=1",
     ...(mode === "frontend" ? [] : ["-e", "OH_SESSION_API_KEYS_0=" + key]),
     ...extra,
     image,

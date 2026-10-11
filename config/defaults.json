@@ -1,15 +1,15 @@
 {
   "_comment": "Single source of truth for version pins, ports, paths, and defaults shared across the npm and Docker install paths. Read by scripts/dev-safe.mjs, scripts/dev-with-automation.mjs, docker/entrypoint.sh (via generated defaults.env), and .github/workflows/docker.yml.",
   "versions": {
-    "agentServer": "1.53.0",
+    "agentServer": "1.54.0",
     "agentCanvas": "1.25.0",
-    "automation": "1.19.0"
+    "automation": "1.19.3"
   },
   "compatibility": {
     "minimumAgentServer": "1.51.0"
   },
   "images": {
-    "agentServer": "ghcr.io/openhands/agent-server",
+    "agentServer": "ghcr.io/praxiss-lab/praxis-agent-server",
     "agentCanvas": "ghcr.io/praxiss-lab/praxis"
   },
   "ports": {
@@ -34,5 +34,24 @@
     "posthogApiKey": "phc_xQbJhtBoepVNQhhMkmXqShEQx8Uc5GNo6233BR4vmUrX",
     "posthogHost": "https://eu.i.posthog.com",
     "posthogUiHost": "https://eu.posthog.com"
+  },
+  "sources": {
+    "sdk": {
+      "repository": "https://github.com/Praxiss-Lab/praxis-sdk",
+      "ref": "30e562b050cddb2deb651b06168cefd35b4fb9c2"
+    },
+    "automation": {
+      "path": "vendor/automation",
+      "repository": "https://github.com/Praxiss-Lab/Praxis",
+      "subdirectory": "vendor/automation"
+    },
+    "typescriptClient": {
+      "path": "vendor/praxis-typescript-client-1.54.0.tgz",
+      "version": "1.54.0"
+    },
+    "extensions": {
+      "path": "vendor/praxis-extensions-0.29.0.tgz",
+      "version": "0.29.0"
+    }
   }
 }

@@ -144,14 +144,14 @@ function isValidHostUrl(host: string): boolean {
   }
 }
 
-const DEFAULT_OPENHANDS_CLOUD_HOST = "https://app.all-hands.dev";
+const DEFAULT_OPENHANDS_CLOUD_HOST = "";
 const LOCAL_BACKEND_COMMAND = "agent-canvas --backend-only --port 8001";
 const LOCAL_AGENT_SERVER_DOCS_URL =
-  "https://github.com/OpenHands/OpenHands/blob/main/docs/DEVELOPMENT.md#alternative-development-workflows";
+  "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/DEVELOPMENT.md#alternative-development-workflows";
 const REMOTE_AGENT_SERVER_DOCS_URL =
-  "https://github.com/OpenHands/OpenHands/blob/main/docs/SELF_HOSTING.md";
+  "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/SELF_HOSTING.md";
 const DEPLOYMENT_OPTIONS_URL =
-  "https://docs.openhands.dev/overview/introduction";
+  "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/SDK_INDEPENDENCE.md";
 export type BackendConnectionMethod = "manual" | "cloud_login";
 
 export type BackendAddedSource = CloudConnectionSource;
@@ -963,7 +963,7 @@ function CloudLoginColumn({
 }: CloudLoginColumnProps) {
   const { t } = useTranslation("openhands");
 
-  const [advancedOpen, setAdvancedOpen] = React.useState(false);
+  const [advancedOpen, setAdvancedOpen] = React.useState(true);
   const [customHost, setCustomHost] = React.useState("");
   const advancedPanelId = `${testIdRoot}-advanced-panel`;
 
@@ -1004,6 +1004,7 @@ function CloudLoginColumn({
 
       <DeviceFlowAuth
         host={effectiveHost}
+        isDisabled={!isValidHostUrl(effectiveHost)}
         onSuccess={handleLoginSuccess}
         testIdRoot={testIdRoot}
         analyticsSource={analyticsSource}

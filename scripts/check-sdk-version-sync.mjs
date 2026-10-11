@@ -1,47 +1,7 @@
 #!/usr/bin/env node
 
-/**
- * Check SDK Version Sync
- *
- * Verifies two things against versions.agentServer in config/defaults.json:
- *
- * 1. The local @openhands/typescript-client pin in package.json. Canvas renders
- *    the ACP provider picker from that generated registry mirror but launches
- *    the adapter through the agent-server image, so a skew ships a picker
- *    offering models and launch commands agent-server does not implement.
- *
- * 2. That the released automation package (openhands-automation on PyPI)
- *    uses the SDK version expected for that automation release for all agent SDK libraries:
- *   - openhands-sdk
- *   - openhands-tools
- *   - openhands-workspace
- *   - openhands-agent-server
- *
- * This script checks the RELEASED PyPI version of openhands-automation (as specified
- * by versions.automation in config/defaults.json), not the main branch.
- * The expected SDK dependency version is versions.agentServer — the two must
- * always match, so this script catches any drift.
- *
- * This script is run in CI to catch version drift between projects.
- *
- * Usage:
- *   node scripts/check-sdk-version-sync.mjs
- *   EXPECTED_SDK_VERSION=1.53.0 node scripts/check-sdk-version-sync.mjs
- *   node scripts/check-sdk-version-sync.mjs --check-pypi
- *
- * Environment variables:
- *   EXPECTED_SDK_VERSION      - Override the expected version (instead of reading from config/defaults.json)
- *   AUTOMATION_PACKAGE_NAME   - Override the automation package name (default: openhands-automation)
- *   AUTOMATION_PACKAGE_VERSION - Override the automation package version (instead of reading from config/defaults.json)
- *
- * Options:
- *   --check-pypi    Also check the latest SDK version on PyPI
- *   --help          Show help
- *
- * Exit codes:
- *   0 - All SDK versions match
- *   1 - Version mismatch detected or error occurred
- */
+/** Validate the local client archive and bundled Automation SDK versions.
+ * Registry comparison is opt-in through --check-pypi. */
 
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -60,11 +20,14 @@ if (showHelp) {
   console.log(`
 SDK Version Sync Check
 
-Verifies that the released openhands-automation package on PyPI uses the
+Verifies that the bundled automation source uses the
 SDK version expected for that automation release.
 
 The automation version is read from config/defaults.json (versions.automation).
 The expected SDK dependency version is read from versions.agentServer.
+
+Example:
+  EXPECTED_SDK_VERSION=1.54.0 node scripts/check-sdk-version-sync.mjs
 
 Usage:
   node scripts/check-sdk-version-sync.mjs [options]
@@ -84,8 +47,8 @@ Triggering from other repos:
   curl -X POST \\
     -H "Authorization: token \$GITHUB_TOKEN" \\
     -H "Accept: application/vnd.github.v3+json" \\
-    https://api.github.com/repos/OpenHands/OpenHands/dispatches \\
-    -d '{"event_type": "sdk-version-check", "client_payload": {"version": "1.53.0"}}'
+    https://api.github.com/repos/Praxiss-Lab/Praxis/dispatches \\
+    -d '{"event_type": "sdk-version-check", "client_payload": {"version": "1.54.0"}}'
 `);
   process.exit(0);
 }
@@ -114,7 +77,8 @@ const SDK_PACKAGES = [
 const CLIENT_PACKAGE_NAME = "@openhands/typescript-client";
 
 // Configurable automation package (can be overridden via env)
-const AUTOMATION_PACKAGE_NAME = process.env.AUTOMATION_PACKAGE_NAME || "openhands-automation";
+const AUTOMATION_PACKAGE_NAME =
+  process.env.AUTOMATION_PACKAGE_NAME || "openhands-automation";
 
 // Default retry configuration
 const RETRY_COUNT = 3;
@@ -126,16 +90,16 @@ const RETRY_DELAY_MS = 1000;
  */
 function normalizeVersion(version) {
   if (!version) return null;
-  
+
   // Remove any pre-release or build metadata for base comparison
   const baseVersion = version.split(/[-+]/)[0];
-  
+
   // Split into parts and pad to 3 parts (major.minor.patch)
   const parts = baseVersion.split(".").map((p) => parseInt(p, 10) || 0);
   while (parts.length < 3) {
     parts.push(0);
   }
-  
+
   return parts.slice(0, 3).join(".");
 }
 
@@ -163,8 +127,12 @@ try {
     throw new Error("missing required field: versions.agentServer");
   }
 } catch (err) {
-  console.error(`${colors.red}Failed to load config/defaults.json: ${err.message}${colors.reset}`);
-  console.error("Ensure the file exists and contains valid JSON with required fields.");
+  console.error(
+    `${colors.red}Failed to load config/defaults.json: ${err.message}${colors.reset}`,
+  );
+  console.error(
+    "Ensure the file exists and contains valid JSON with required fields.",
+  );
   process.exit(1);
 }
 
@@ -176,7 +144,10 @@ function getExpectedVersion() {
   // Allow override via environment variable (useful for CI triggers).
   const envVersion = process.env.EXPECTED_SDK_VERSION;
   if (envVersion && envVersion.trim()) {
-    return { version: envVersion.trim(), source: "EXPECTED_SDK_VERSION env var" };
+    return {
+      version: envVersion.trim(),
+      source: "EXPECTED_SDK_VERSION env var",
+    };
   }
 
   return {
@@ -191,16 +162,28 @@ function getExpectedVersion() {
  */
 function findClientPinMismatch(pinnedVersion, expectedVersion) {
   if (!pinnedVersion) {
-    return { package: CLIENT_PACKAGE_NAME, expected: expectedVersion, actual: null };
+    return {
+      package: CLIENT_PACKAGE_NAME,
+      expected: expectedVersion,
+      actual: null,
+    };
   }
   // A range would reintroduce the skew this check exists to catch.
   if (!/^[0-9]/.test(pinnedVersion)) {
-    return { package: CLIENT_PACKAGE_NAME, expected: expectedVersion, actual: pinnedVersion };
+    return {
+      package: CLIENT_PACKAGE_NAME,
+      expected: expectedVersion,
+      actual: pinnedVersion,
+    };
   }
   if (versionsEqual(pinnedVersion, expectedVersion)) {
     return null;
   }
-  return { package: CLIENT_PACKAGE_NAME, expected: expectedVersion, actual: pinnedVersion };
+  return {
+    package: CLIENT_PACKAGE_NAME,
+    expected: expectedVersion,
+    actual: pinnedVersion,
+  };
 }
 
 /**
@@ -210,7 +193,16 @@ function readClientPin() {
   const pkg = JSON.parse(
     readFileSync(join(projectRoot, "package.json"), "utf-8"),
   );
-  return pkg.dependencies?.[CLIENT_PACKAGE_NAME] ?? null;
+  const declared = pkg.dependencies?.[CLIENT_PACKAGE_NAME];
+  if (declared === `file:${SHARED_DEFAULTS.sources.typescriptClient.path}`) {
+    const lock = JSON.parse(
+      readFileSync(join(projectRoot, "package-lock.json"), "utf-8"),
+    );
+    return (
+      lock.packages?.[`node_modules/${CLIENT_PACKAGE_NAME}`]?.version ?? null
+    );
+  }
+  return declared ?? null;
 }
 
 /**
@@ -237,7 +229,10 @@ function getAutomationVersion() {
   // Allow override via environment variable
   const envVersion = process.env.AUTOMATION_PACKAGE_VERSION;
   if (envVersion && envVersion.trim()) {
-    return { version: envVersion.trim(), source: "AUTOMATION_PACKAGE_VERSION env var" };
+    return {
+      version: envVersion.trim(),
+      source: "AUTOMATION_PACKAGE_VERSION env var",
+    };
   }
 
   return {
@@ -258,30 +253,30 @@ async function fetchPyPIDependencies(packageName, version) {
   for (let attempt = 0; attempt < RETRY_COUNT; attempt++) {
     try {
       const response = await fetch(url);
-      
+
       // 404 is a config issue, don't retry
       if (response.status === 404) {
         throw new Error(
           `Package ${packageName}==${version} not found on PyPI (404). Check the package name and version.`,
         );
       }
-      
+
       if (!response.ok) {
         throw new Error(
           `Failed to fetch ${packageName}==${version} from PyPI: ${response.status} ${response.statusText}`,
         );
       }
-      
+
       const data = await response.json();
       return data.info?.requires_dist || [];
     } catch (err) {
       lastError = err;
-      
+
       // Don't retry on 404 (config issue)
       if (err.message.includes("not found on PyPI (404)")) {
         throw err;
       }
-      
+
       // Retry on other errors (network issues, 5xx, etc.)
       if (attempt < RETRY_COUNT - 1) {
         const delay = RETRY_DELAY_MS * (attempt + 1);
@@ -292,7 +287,7 @@ async function fetchPyPIDependencies(packageName, version) {
       }
     }
   }
-  
+
   throw lastError;
 }
 
@@ -300,9 +295,9 @@ async function fetchPyPIDependencies(packageName, version) {
  * Parse PyPI requires_dist array and extract SDK package versions
  *
  * PyPI returns dependencies in PEP 508 format like:
- *   "openhands-sdk>=1.53.0,<2.0.0"
- *   "openhands-tools==1.53.0"
- *   "openhands-workspace (>=1.53.0)"
+ *   "openhands-sdk>=1.54.0,<2.0.0"
+ *   "openhands-tools==1.54.0"
+ *   "openhands-workspace (>=1.54.0)"
  */
 function parseSdkVersionsFromRequiresDist(requiresDist) {
   const versions = {};
@@ -316,7 +311,7 @@ function parseSdkVersionsFromRequiresDist(requiresDist) {
       }
 
       // Extract the version number - look for patterns like:
-      // ">=1.53.0", "==1.53.0", "(>=1.53.0)", "~=1.53.0"
+      // ">=1.54.0", "==1.54.0", "(>=1.54.0)", "~=1.54.0"
       // After the package name and before any comma or closing paren
       const versionPattern = /[><=~!]+\s*([0-9]+(?:\.[0-9]+)*)/;
       const match = dep.match(versionPattern);
@@ -335,21 +330,23 @@ function parseSdkVersionsFromRequiresDist(requiresDist) {
  */
 async function main() {
   console.log("");
-  console.log(
-    `${colors.cyan}SDK Version Sync Check${colors.reset}`,
-  );
+  console.log(`${colors.cyan}SDK Version Sync Check${colors.reset}`);
   console.log("─".repeat(50));
   console.log("");
 
   try {
     // Get expected version from env var or config/defaults.json
-    const { version: expectedVersion, source: versionSource } = getExpectedVersion();
+    const { version: expectedVersion, source: versionSource } =
+      getExpectedVersion();
     console.log(
       `Expected automation SDK version: ${colors.green}${expectedVersion}${colors.reset} (from ${versionSource})`,
     );
 
     // Offline, so it runs first and fails fast without the PyPI round trip.
-    const clientMismatch = findClientPinMismatch(readClientPin(), expectedVersion);
+    const clientMismatch = findClientPinMismatch(
+      readClientPin(),
+      expectedVersion,
+    );
     if (clientMismatch) {
       console.log("");
       console.log(
@@ -364,10 +361,14 @@ async function main() {
       console.log(
         `ACP picker from, but the adapter is launched by agent-server ${expectedVersion}. A skew ships a`,
       );
-      console.log("picker offering models and launch commands that agent-server does not implement.");
+      console.log(
+        "picker offering models and launch commands that agent-server does not implement.",
+      );
       console.log("");
       console.log("To fix, update one of the following:");
-      console.log(`  1. Pin ${CLIENT_PACKAGE_NAME} to ${expectedVersion} in package.json`);
+      console.log(
+        `  1. Pin ${CLIENT_PACKAGE_NAME} to ${expectedVersion} in package.json`,
+      );
       console.log("  2. Update versions.agentServer in config/defaults.json");
       console.log("");
       process.exit(1);
@@ -377,7 +378,8 @@ async function main() {
     );
 
     // Get automation version from env var or config/defaults.json
-    const { version: automationVersion, source: automationSource } = getAutomationVersion();
+    const { version: automationVersion, source: automationSource } =
+      getAutomationVersion();
     console.log(
       `Automation package: ${colors.cyan}${AUTOMATION_PACKAGE_NAME}==${automationVersion}${colors.reset} (from ${automationSource})`,
     );
@@ -392,17 +394,38 @@ async function main() {
           const status = versionsEqual(pypiVersion, expectedVersion)
             ? colors.green
             : colors.yellow;
-          console.log(`  ${pkg.padEnd(25)} ${status}${pypiVersion}${colors.reset}`);
+          console.log(
+            `  ${pkg.padEnd(25)} ${status}${pypiVersion}${colors.reset}`,
+          );
         } else {
-          console.log(`  ${pkg.padEnd(25)} ${colors.dim}(not found on PyPI)${colors.reset}`);
+          console.log(
+            `  ${pkg.padEnd(25)} ${colors.dim}(not found on PyPI)${colors.reset}`,
+          );
         }
       }
     }
 
     console.log("");
 
-    // Fetch automation package dependencies from PyPI
-    const requiresDist = await fetchPyPIDependencies(AUTOMATION_PACKAGE_NAME, automationVersion);
+    // Read dependencies from the controlled automation snapshot.
+    const bundled = readFileSync(
+      join(
+        projectRoot,
+        SHARED_DEFAULTS.sources.automation.path,
+        "pyproject.toml",
+      ),
+      "utf-8",
+    );
+    const bundledVersion = bundled.match(/^version\s*=\s*"([^"]+)"/m)?.[1];
+    if (bundledVersion !== automationVersion)
+      throw new Error(
+        "Bundled automation version does not match configuration",
+      );
+    const requiresDist = [
+      ...bundled.matchAll(
+        /"(openhands-(?:sdk|tools|workspace|agent-server)==[^"\n]+)"/g,
+      ),
+    ].map((match) => match[1]);
     const automationVersions = parseSdkVersionsFromRequiresDist(requiresDist);
 
     // Check each SDK package
@@ -410,7 +433,9 @@ async function main() {
     let foundAny = false;
     const mismatches = [];
 
-    console.log(`Checking ${AUTOMATION_PACKAGE_NAME}==${automationVersion} SDK dependencies:`);
+    console.log(
+      `Checking ${AUTOMATION_PACKAGE_NAME}==${automationVersion} SDK dependencies:`,
+    );
     console.log("");
 
     for (const pkg of SDK_PACKAGES) {
@@ -447,17 +472,19 @@ async function main() {
       console.log(
         `${colors.yellow}Warning: No SDK packages found in ${AUTOMATION_PACKAGE_NAME}==${automationVersion} dependencies${colors.reset}`,
       );
-      console.log("This might indicate a parsing issue or the package is not yet published.");
+      console.log(
+        "This might indicate a parsing issue or the package is not yet published.",
+      );
       console.log("");
       process.exit(1);
     }
 
     if (hasErrors) {
-      console.log(
-        `${colors.red}Version mismatch detected!${colors.reset}`,
-      );
+      console.log(`${colors.red}Version mismatch detected!${colors.reset}`);
       console.log("");
-      console.log(`The released ${AUTOMATION_PACKAGE_NAME}==${automationVersion} uses different SDK versions than expected for that automation release.`);
+      console.log(
+        `The released ${AUTOMATION_PACKAGE_NAME}==${automationVersion} uses different SDK versions than expected for that automation release.`,
+      );
       console.log("");
       console.log("Mismatched packages:");
       for (const m of mismatches) {
@@ -475,9 +502,7 @@ async function main() {
       process.exit(1);
     }
 
-    console.log(
-      `${colors.green}All SDK versions are in sync!${colors.reset}`,
-    );
+    console.log(`${colors.green}All SDK versions are in sync!${colors.reset}`);
     console.log("");
   } catch (error) {
     console.error(`${colors.red}Error: ${error.message}${colors.reset}`);

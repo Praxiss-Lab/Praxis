@@ -55,6 +55,7 @@ import process from "node:process";
 import {
   assertPortsFree,
   buildAgentServerCommand,
+  buildSdkRequirements,
   buildSafeDevConfig,
   buildAgentServerEnv,
   buildNpmScriptCommand,
@@ -86,7 +87,7 @@ const SHARED_DEFAULTS = JSON.parse(
   readFileSync(join(projectRoot, "config", "defaults.json"), "utf-8"),
 );
 
-const DEFAULT_AUTOMATION_REPO = "https://github.com/OpenHands/automation";
+const DEFAULT_AUTOMATION_REPO = SHARED_DEFAULTS.sources.automation.repository;
 const DEFAULT_AUTOMATION_PACKAGE = SHARED_DEFAULTS.packages.automation;
 const DEFAULT_AUTOMATION_VERSION = SHARED_DEFAULTS.versions.automation;
 const DEFAULT_AUTOMATION_SDK_VERSION = SHARED_DEFAULTS.versions.agentServer;
@@ -327,63 +328,61 @@ function buildAutomationCommand(env = process.env) {
   const version = env.OH_AUTOMATION_VERSION;
   const repoUrl = env.OH_AUTOMATION_REPO || DEFAULT_AUTOMATION_REPO;
 
-  const uvxArgs = [];
-  let source = "";
-
+  const sdkArgs = buildSdkRequirements(env).flatMap((requirement) => [
+    "--with",
+    requirement,
+  ]);
   if (localPath) {
-    // Run straight from a local checkout via `uv run --project`, so
-    // uncommitted working-tree changes are picked up. Outranks the other
-    // automation env vars, mirroring OH_AGENT_SERVER_LOCAL_PATH for the
-    // agent-server SDK; buildConfig drops it when --automation-git-ref asks
-    // for a specific ref.
     return {
       command: "uv",
       args: [
         "run",
         "--project",
         localPath,
+        ...sdkArgs,
         "uvicorn",
         "openhands.automation.app:app",
       ],
       source: `local (${localPath})`,
     };
   }
-
   if (gitRef) {
-    // Use git ref - refresh to ensure latest commit is fetched
-    const gitUrl = `git+${repoUrl}@${gitRef}`;
-    uvxArgs.push(
-      "--refresh",
-      "--from",
-      gitUrl,
-      "uvicorn",
-      "openhands.automation.app:app",
-    );
-    source = `git (${gitRef})`;
-  } else if (version) {
-    // Use specific PyPI version
-    uvxArgs.push(
-      "--from",
-      `${DEFAULT_AUTOMATION_PACKAGE}==${version}`,
-      "uvicorn",
-      "openhands.automation.app:app",
-    );
-    source = `PyPI (${version})`;
-  } else {
-    // Default to released PyPI version
-    uvxArgs.push(
-      "--from",
-      `${DEFAULT_AUTOMATION_PACKAGE}==${DEFAULT_AUTOMATION_VERSION}`,
-      "uvicorn",
-      "openhands.automation.app:app",
-    );
-    source = `PyPI (${DEFAULT_AUTOMATION_VERSION}, default)`;
+    const subdirectory = env.OH_AUTOMATION_REPO
+      ? ""
+      : `#subdirectory=${SHARED_DEFAULTS.sources.automation.subdirectory}`;
+    return {
+      command: "uvx",
+      args: [
+        "--refresh",
+        "--from",
+        `git+${repoUrl}@${gitRef}${subdirectory}`,
+        ...sdkArgs,
+        "uvicorn",
+        "openhands.automation.app:app",
+      ],
+      source: `git (${gitRef})`,
+    };
   }
-
+  if (version && version !== DEFAULT_AUTOMATION_VERSION) {
+    throw new Error(
+      "OH_AUTOMATION_VERSION must match the bundled Praxis Automation snapshot. Use OH_AUTOMATION_LOCAL_PATH or OH_AUTOMATION_GIT_REF to change source.",
+    );
+  }
+  const bundledPath = join(
+    __dirname,
+    "..",
+    SHARED_DEFAULTS.sources.automation.path,
+  );
   return {
     command: "uvx",
-    args: uvxArgs,
-    source,
+    args: [
+      "--from",
+      bundledPath,
+      ...sdkArgs,
+      "uvicorn",
+      "openhands.automation.app:app",
+    ],
+    source: `bundled (${DEFAULT_AUTOMATION_VERSION})`,
   };
 }
 

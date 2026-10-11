@@ -59,7 +59,7 @@ describe("resolveResponderDeploymentOption", () => {
       url: OPENHANDS_CLOUD_INTEGRATIONS_URL,
     });
     expect(OPENHANDS_CLOUD_INTEGRATIONS_URL).toBe(
-      "https://app.all-hands.dev/settings/integrations",
+      "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/SDK_INDEPENDENCE.md",
     );
     expect(() => resolveResponderDeploymentOption("user-cloud")).toThrow();
   });

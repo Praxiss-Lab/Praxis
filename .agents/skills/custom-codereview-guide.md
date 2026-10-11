@@ -20,11 +20,11 @@ SDK and automation capabilities.
 Out of scope here, because another repository owns it:
 
 - reusable agent-server, runtime, SDK, and client contracts
-  (`OpenHands/software-agent-sdk`);
+  (`Praxiss-Lab/praxis-sdk`);
 - generic automation scheduling, state, dispatch, and profile machinery
-  (`OpenHands/automation`); and
+  (`Praxis/vendor/automation`); and
 - reusable extensions, skills, plugins, and automation bundles
-  (`OpenHands/extensions`).
+  (`Praxis/vendor`).
 
 Cross-repository work is acceptable when the PR contains only the Canvas-owned
 integration and depends on public interfaces from the owning repository. When a
@@ -110,9 +110,9 @@ maintainability.
 | Repository                     | Owns                                                                                                            |
 | ------------------------------ | --------------------------------------------------------------------------------------------------------------- |
 | `Praxiss-Lab/Praxis`           | Agent Canvas UI, frontend state, backend selection, frontend service integration, and local-stack orchestration |
-| `OpenHands/software-agent-sdk` | Agent Server, SDK, canonical server API, and browser-compatible client in `clients/typescript/`                 |
-| `OpenHands/extensions`         | Reusable skills, plugins, and integrations                                                                      |
-| `OpenHands/automation`         | Scheduling, webhooks, run history, and automation dispatch                                                      |
+| `Praxiss-Lab/praxis-sdk` | Agent Server, SDK, canonical server API, and browser-compatible client in `clients/typescript/`                 |
+| `Praxis/vendor`         | Reusable skills, plugins, and integrations                                                                      |
+| `Praxis/vendor/automation`         | Scheduling, webhooks, run history, and automation dispatch                                                      |
 
 The normal dependency direction is Agent Server contract → TypeScript client →
 Canvas. Submit **COMMENT** for raw endpoint reimplementations, Canvas-local copies

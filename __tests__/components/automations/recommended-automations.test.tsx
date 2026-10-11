@@ -1296,7 +1296,7 @@ describe("recommended automations", () => {
     );
 
     expect(openSpy).toHaveBeenCalledWith(
-      "https://app.all-hands.dev/settings/integrations",
+      "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/SDK_INDEPENDENCE.md",
       "_blank",
       "noopener,noreferrer",
     );

@@ -108,6 +108,7 @@ export const isMobileDevice = (): boolean => {
  * @returns True if the current domain matches the production URL
  */
 export const isProductionDomain = (): boolean =>
+  Boolean(PRODUCT_URL.PRODUCTION) &&
   window.location.origin === PRODUCT_URL.PRODUCTION;
 
 interface EventActionHistory {

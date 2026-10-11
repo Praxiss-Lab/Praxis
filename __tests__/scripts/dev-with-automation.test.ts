@@ -37,6 +37,7 @@ import {
 } from "../../scripts/dev-with-automation.mjs";
 import {
   buildAgentServerEnv,
+  buildSdkRequirements,
   buildSafeDevConfig,
   resetPersistedSessionApiKeyCache,
 } from "../../scripts/dev-safe.mjs";
@@ -90,17 +91,17 @@ describe("buildAutomationRuntimeServicesInfo", () => {
 });
 
 describe("buildAutomationCommand", () => {
-  it("uses released PyPI version by default", () => {
+  it("uses bundled source by default", () => {
     const cmd = buildAutomationCommand({});
 
     expect(cmd.command).toBe("uvx");
     expect(cmd.args).toContain("--from");
     expect(cmd.args).toContain(
-      `${DEFAULT_AUTOMATION_PACKAGE}==${DEFAULT_AUTOMATION_VERSION}`,
+      path.join(repoRoot, defaults.sources.automation.path),
     );
     expect(cmd.args).toContain("uvicorn");
     expect(cmd.args).toContain("openhands.automation.app:app");
-    expect(cmd.source).toBe(`PyPI (${DEFAULT_AUTOMATION_VERSION}, default)`);
+    expect(cmd.source).toBe(`bundled (${DEFAULT_AUTOMATION_VERSION})`);
   });
 
   it("uses custom git ref from OH_AUTOMATION_GIT_REF", () => {
@@ -111,7 +112,7 @@ describe("buildAutomationCommand", () => {
     expect(cmd.command).toBe("uvx");
     expect(cmd.args).toContain("--from");
     expect(cmd.args).toContain(
-      `git+${DEFAULT_AUTOMATION_REPO}@feat/my-feature`,
+      `git+${DEFAULT_AUTOMATION_REPO}@feat/my-feature#subdirectory=vendor/automation`,
     );
     expect(cmd.source).toBe("git (feat/my-feature)");
   });
@@ -147,18 +148,16 @@ describe("buildAutomationCommand", () => {
     });
 
     expect(cmd.command).toBe("uvx");
-    expect(cmd.args).toContain(`git+${DEFAULT_AUTOMATION_REPO}@abc123def456`);
+    expect(cmd.args).toContain(
+      `git+${DEFAULT_AUTOMATION_REPO}@abc123def456#subdirectory=vendor/automation`,
+    );
     expect(cmd.source).toBe("git (abc123def456)");
   });
 
-  it("uses specific PyPI version when OH_AUTOMATION_VERSION is set", () => {
-    const cmd = buildAutomationCommand({
-      OH_AUTOMATION_VERSION: "1.0.0",
-    });
-
-    expect(cmd.command).toBe("uvx");
-    expect(cmd.args).toContain(`${DEFAULT_AUTOMATION_PACKAGE}==1.0.0`);
-    expect(cmd.source).toBe("PyPI (1.0.0)");
+  it("rejects a registry version override incompatible with bundled source", () => {
+    expect(() =>
+      buildAutomationCommand({ OH_AUTOMATION_VERSION: "1.0.0" }),
+    ).toThrow();
   });
 
   it("git ref takes precedence over version", () => {
@@ -168,7 +167,9 @@ describe("buildAutomationCommand", () => {
     });
 
     expect(cmd.command).toBe("uvx");
-    expect(cmd.args).toContain(`git+${DEFAULT_AUTOMATION_REPO}@main`);
+    expect(cmd.args).toContain(
+      `git+${DEFAULT_AUTOMATION_REPO}@main#subdirectory=vendor/automation`,
+    );
     expect(cmd.args).not.toContain(`${DEFAULT_AUTOMATION_PACKAGE}==1.0.0`);
     expect(cmd.source).toBe("git (main)");
   });
@@ -181,14 +182,27 @@ describe("buildAutomationCommand", () => {
     });
 
     expect(cmd.command).toBe("uv");
-    expect(cmd.args).toEqual([
+    expect(cmd.args.slice(0, 3)).toEqual([
       "run",
       "--project",
       "/checkouts/automation",
-      "uvicorn",
-      "openhands.automation.app:app",
     ]);
     expect(cmd.source).toBe("local (/checkouts/automation)");
+  });
+});
+
+describe("shared SDK source", () => {
+  it("gives Automation the same four owned SDK sources as Agent Server", () => {
+    const command = buildAutomationCommand({
+      OH_AGENT_SERVER_GIT_REF: "owned-revision",
+    });
+    for (const source of buildSdkRequirements({
+      OH_AGENT_SERVER_GIT_REF: "owned-revision",
+    })) {
+      expect(command.args).toContain(source);
+      expect(source).toContain(defaults.sources.sdk.repository);
+      expect(source).toContain("@owned-revision#");
+    }
   });
 });
 

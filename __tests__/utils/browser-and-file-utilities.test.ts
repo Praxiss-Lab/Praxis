@@ -49,8 +49,7 @@ const useWindowCapabilities = ({
       if (property === "matchMedia") {
         if (finePointer === undefined) return undefined;
         return vi.fn((query: string) => ({
-          matches:
-            query === "(pointer: fine)" ? finePointer : !finePointer,
+          matches: query === "(pointer: fine)" ? finePointer : !finePointer,
         }));
       }
       return Reflect.get(target, property, receiver);
@@ -165,7 +164,7 @@ describe("mobile environment detection", () => {
 
 describe("deployment domain detection", () => {
   it.each([
-    ["https://app.all-hands.dev", true],
+    ["https://app.all-hands.dev", false],
     ["http://localhost:3000", false],
   ])("reports whether %s is the production origin", (origin, expected) => {
     vi.stubGlobal("window", { location: { origin } });
