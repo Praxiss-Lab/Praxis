@@ -15,23 +15,22 @@ The already-copied `v1.25.0` tag points to
 `16f93ab2e8bebe409add8fc3ed654accedd8dcc6`.
 Native PR identities and Actions execution histories are not copied.
 
-## Release restoration
+## Release restoration completed
 
-Review and merge the release restoration PR, then run **Praxis Migration Restore**
-from `main` with confirmation `RESTORE` while the source repository exists.
-The workflow verifies the replacement repository ID and existing tag, downloads
-both recorded assets, validates their sizes and SHA-256 digests, copies the source
-release description with destination links, uploads a draft, verifies the uploaded
-assets, then publishes. No image is rebuilt or pushed. Conflicting tags or assets
-are rejected; a matching partial draft can resume and an identical published
-release is a no-op.
+Release `v1.25.0` is published on the replacement repository. Both uploaded assets
+have the same sizes and SHA-256 digests as the source:
 
-After publication, verify both asset digests, the release tag and download links.
-Then remove `.github/workflows/praxis-migration.yml`,
-`scripts/praxis/migration-release.json`,
-`scripts/praxis/restore-migration-release.mjs` and its dedicated test file through
-a cleanup PR. Update the release guide, policy and workflow inventory in that PR.
-Retain the normal release workflow and its release-notes renderer/template.
+| Asset | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `image.txt` | 184 | `b669133c8c072e7954414c3158e5690952c15a302f9c1c1d9c2d1826678f706e` |
+| `openhands-agent-canvas-1.25.0.tgz` | 18106048 | `29884ed98adeee408edcfbeb3b62905092368b3133274ce6a8449e9668c3aa61` |
+
+The source release description was copied with destination/archive links adjusted.
+No image was rebuilt or pushed. The temporary migration workflow, manifest,
+restoration script and dedicated tests are removed after verification. Keep the
+normal release workflow and its release-notes renderer/template. Historical tool
+versions remain recoverable from Git; deleted workflows can retain Actions run
+history without remaining active on main.
 
 ## Administrative cutover
 
@@ -49,9 +48,7 @@ repository be deleted and the replacement renamed to `Praxis`. Keep the temporar
 `praxis-2` name unused so links redirect after rename. Recheck repository ID,
 package connection, team access and links; update local Git remotes.
 
-The current connector does not expose workflow dispatch, release writes,
-repository administration or branch deletion. A maintainer dispatches the
-restoration workflow and performs administrative operations. Do not delete the
-source before restoration succeeds. Existing application test failures remain
+The current connector does not expose repository administration or branch deletion. A maintainer performs the
+remaining administrative operations after verifying package access and settings. Existing application test failures remain
 separate from migration content checks; restoration is not a new build or runtime
 verification.
