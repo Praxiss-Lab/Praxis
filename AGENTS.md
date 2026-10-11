@@ -46,29 +46,6 @@ paths and environment variables until an explicit migration changes them.
   authorization persists within its scope. Never fabricate human approval.
 - Do not bypass failed checks, remove guards, or fabricate evidence to claim success.
 
-## Branches and merge authorization
-
-`main` is the stable integration branch. Do not edit, commit or push changes
-directly to `main`. Start each documentation, development, fix or configuration
-task on a dedicated branch from the current remote `main`, using a descriptive
-name such as `docs/*`, `feature/*`, `fix/*` or `chore/*`.
-
-Commit and verify the changes on that branch, then present the diff and check
-results for review through a pull request. Implementing or publishing a branch
-does not authorize merging it. Merge into `main` only after explicit maintainer
-authorization for that change; never merge automatically or enable auto-merge.
-Passing CI alone is not approval. Apply this rule to agents and dependency or
-upstream update pull requests as well.
-
-Create working branches when needed. After an authorized merge, a completed
-branch may be deleted once its useful changes are preserved in `main` and no
-remaining work depends on it; obtain authorization for the deletion.
-
-The current release Action publishes from `main` after explicit release
-authorization. It does not need a permanent `release/*` branch and does not
-create, update or merge one. Prepare any source or version changes on a working
-branch and integrate them with approval before starting the release Action.
-
 ## Dependencies, versions and upstream
 
 Use Node.js 24+ and `npm ci`. Direct npm dependencies remain exact-pinned; update
