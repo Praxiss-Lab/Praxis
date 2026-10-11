@@ -2,17 +2,9 @@
 
 Choose Docker or a native installation. Both support complete, backend-only and frontend-only modes. The backend includes Agent Server and Automation.
 
-### Docker: download and start
+### Docker: download and start on your laptop
 
 Install Docker Engine on Linux, or Docker Desktop on macOS/Windows (with WSL 2 integration on Windows). The image supports Linux `amd64` and `arm64`; Docker selects the matching architecture.
-
-To download only the image, use this direct command:
-
-```sh
-docker pull ghcr.io/praxiss-lab/praxis:{{VERSION}}
-```
-
-To download and start the complete application, use:
 
 ```sh
 export PRAXIS_IMAGE="ghcr.io/praxiss-lab/praxis:{{VERSION}}"
