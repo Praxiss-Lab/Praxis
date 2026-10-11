@@ -90,3 +90,5 @@ conversation execution while Canvas and Automation run in the WSL environment.
 ## Personal clouds
 
 Run a backend on each VM you control and add its Agent Server address and API key in the frontend backend selector. Each installation has independent storage and credentials. The browser must reach the backend for direct connections; a configured frontend proxy must reach it from its container. See the [distribution guide](docs/distribution/README.md#backend-on-your-vm) for commands.
+
+See [SDK independence](docs/SDK_INDEPENDENCE.md) for the owned SDK source and private Git authentication.

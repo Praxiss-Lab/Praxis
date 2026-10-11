@@ -79,3 +79,11 @@ in the compiled frontend. No Actions, release or full container build was run.
 A single direct API connection probe (`praxis_configuration_test`) using these
 JSON values timed out from this environment. Event reception is not confirmed;
 this probe is separate from the mocked SDK and launcher checks above.
+
+## Test and mock isolation
+
+MSW intercepts analytics requests to all PostHog regions and asset hosts,
+including legacy reverse-proxy routes. Handler regression tests run on
+in-memory Requests without network transport. Docker mode smoke checks set
+`AGENT_CANVAS_DISABLE_TELEMETRY=1` to suppress frontend telemetry before
+consent and retain `VITE_DO_NOT_TRACK=1` for the backend services.

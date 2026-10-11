@@ -4,8 +4,8 @@
 # agent-canvas all-in-one Docker image
 #
 # Combines three services into a single image:
-#   1. Agent Server  — from ghcr.io/openhands/agent-server (upstream SDK image)
-#   2. Automation    — installed via pip from openhands-automation
+#   1. Agent Server  — from Praxis SDK source image
+#   2. Automation    — installed from the bundled Praxis snapshot
 #   3. Frontend      — agent-canvas static build served by Node.js
 #
 # The entrypoint starts all three services and an ingress proxy that unifies
@@ -31,6 +31,7 @@ WORKDIR /build
 
 # Cache-friendly: package files first
 COPY package.json package-lock.json ./
+COPY vendor/*.tgz ./vendor/
 RUN npm ci
 
 # Copy everything needed for the build
@@ -77,7 +78,6 @@ FROM ${AGENT_SERVER_IMAGE} AS final
 
 ARG AUTOMATION_VERSION
 ARG AGENT_SERVER_VERSION
-ARG AGENT_SERVER_SDK_GIT_REF=""
 ARG OPENHANDS_BUILD_GIT_SHA=unknown
 ARG OPENHANDS_BUILD_GIT_REF=unknown
 ARG VITE_BASE_PATH="/canvas"
@@ -106,42 +106,20 @@ USER root
 # (asyncpg needs libpq, which the agent-server base image may not include).
 # Refresh inherited packages after adding dependencies so the final image
 # includes available security fixes.
-ARG DEBIAN_SNAPSHOT=20260913T000000Z
+# Inherit the SDK image repositories so installed libraries and headers agree.
 RUN if command -v apt-get >/dev/null 2>&1; then \
-      printf '%s\n' \
-        'Types: deb' \
-        "URIs: http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}/" \
-        'Suites: trixie' \
-        'Components: main' \
-        'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
-        'Check-Valid-Until: no' \
-        '' \
-        'Types: deb' \
-        "URIs: http://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}/" \
-        'Suites: trixie-security' \
-        'Components: main' \
-        'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
-        'Check-Valid-Until: no' \
-        > /etc/apt/sources.list.d/debian.sources && \
       apt-get update && \
       apt-get install -y --no-install-recommends libpq-dev && \
       apt-get upgrade -y --no-install-recommends && \
       rm -rf /var/lib/apt/lists/*; \
     fi
 
-# Install automation server and the tool models its SDK clients deserialize.
-# Match openhands-tools to the SDK already provided by the agent-server image,
-# just as the local Canvas launcher does.
-RUN uv pip install --system "openhands-automation==${AUTOMATION_VERSION}" "openhands-tools==${AGENT_SERVER_VERSION}" 2>/dev/null \
-    || pip install --no-cache-dir "openhands-automation==${AUTOMATION_VERSION}" "openhands-tools==${AGENT_SERVER_VERSION}"
-
-RUN if [ -n "${AGENT_SERVER_SDK_GIT_REF}" ]; then \
-      BASE_GIT_URL="git+https://github.com/OpenHands/software-agent-sdk@${AGENT_SERVER_SDK_GIT_REF}" && \
-      uv pip install --system --force-reinstall \
-        "${BASE_GIT_URL}#subdirectory=openhands-sdk" \
-        "${BASE_GIT_URL}#subdirectory=openhands-tools" \
-        "${BASE_GIT_URL}#subdirectory=openhands-workspace"; \
-    fi
+ENV PATH="/agent-server/.venv/bin:${PATH}"
+COPY vendor/automation /opt/praxis/automation
+RUN uv pip install --python /agent-server/.venv/bin/python \
+      /opt/praxis/automation \
+      /agent-server/openhands-sdk /agent-server/openhands-tools \
+      /agent-server/openhands-workspace /agent-server/openhands-agent-server
 
 # Copy the frontend build output.
 # react-router.config.ts unpacks build/client/ into build/ for non-Vercel builds.

@@ -309,3 +309,17 @@ describe("BackendFormModal – edit mode (BackendForm entry point)", () => {
     ).not.toBeInTheDocument();
   });
 });
+
+describe("explicit compatible cloud host", () => {
+  it("requires a host before allowing cloud login", async () => {
+    renderWithProviders(<BackendFormModal mode="add" onClose={vi.fn()} />);
+    const user = userEvent.setup();
+    await user.click(screen.getByTestId("add-backend-option-cloud"));
+    const host = screen.getByTestId("add-backend-cloud-host");
+    expect(host).toHaveValue("");
+    const login = screen.getByTestId("add-backend-login-button");
+    expect(login).toBeDisabled();
+    await user.type(host, "https://cloud.example.com");
+    expect(login).not.toBeDisabled();
+  });
+});

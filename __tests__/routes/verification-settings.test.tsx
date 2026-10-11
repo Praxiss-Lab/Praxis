@@ -91,7 +91,7 @@ describe("VerificationSettingsScreen", () => {
     expect(helpLink).toBeInTheDocument();
     expect(
       helpLink.querySelector(
-        'a[href="https://app.all-hands.dev/settings/api-keys"]',
+        'a[href="https://github.com/Praxiss-Lab/praxis-sdk/blob/main/docs/independent-deployment.md"]',
       ),
     ).not.toBeNull();
 

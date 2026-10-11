@@ -42,20 +42,18 @@ export const VSCODE_BASE_PATH = "/vscode";
 const VSCODE_ENABLED_ENV = "OH_CANVAS_ENABLE_VSCODE";
 const DEFAULT_VITE_PORT = 3001;
 const DEFAULT_WAIT_TIMEOUT_MS = 30_000;
-const DEFAULT_AGENT_SERVER_PACKAGE = SHARED_DEFAULTS.packages.agentServer;
-const AGENT_SERVER_GIT_REPO = "https://github.com/OpenHands/software-agent-sdk";
+const AGENT_SERVER_GIT_REPO = SHARED_DEFAULTS.sources.sdk.repository;
 const LOCAL_AGENT_SERVER_SUBDIRS = [
   "openhands-agent-server",
   "openhands-sdk",
   "openhands-tools",
   "openhands-workspace",
 ];
-const DEFAULT_AGENT_SERVER_VERSION = SHARED_DEFAULTS.versions.agentServer;
 const DEFAULT_AGENT_SERVER_TELEMETRY_POSTHOG_API_KEY =
   SHARED_DEFAULTS.telemetry.posthogApiKey;
 const DEFAULT_AGENT_SERVER_TELEMETRY_POSTHOG_HOST =
   SHARED_DEFAULTS.telemetry.posthogHost;
-const AGENT_SERVER_POSTHOG_CONSTRAINT = "posthog>=6,<7";
+const AGENT_SERVER_POSTHOG_CONSTRAINT = "posthog>=7,<8";
 const FRONTEND_REQUIRED_BINS = ["cross-env", "react-router"];
 
 /**
@@ -414,19 +412,19 @@ export const AGENT_SERVER_IMPORT_MODULES = "canvas_ui_tool";
  *   edits are picked up without a manual reinstall. The agent-server itself
  *   is rebuilt from local source on each invocation (--reinstall).
  * - OH_AGENT_SERVER_GIT_REF: Git commit SHA or branch name
- * - OH_AGENT_SERVER_VERSION: Specific PyPI version (e.g., "1.53.0")
+ * - OH_AGENT_SERVER_VERSION: Version tag in the owned SDK repository (e.g., "1.54.0")
  *
- * If none are set, defaults to the released version specified by
- * DEFAULT_AGENT_SERVER_VERSION. Set OH_AGENT_SERVER_GIT_REF to use a
- * git branch or commit instead.
+ * If none are set, uses the frozen owned SDK revision in config/defaults.json.
  *
  * @param {Record<string, string | undefined>} env
  * @returns {{ command: string, args: string[], source: string }}
  */
 export function buildAgentServerCommand(env = process.env) {
   const localPath = env.OH_AGENT_SERVER_LOCAL_PATH;
-  const gitRef = env.OH_AGENT_SERVER_GIT_REF;
   const version = env.OH_AGENT_SERVER_VERSION;
+  const gitRef =
+    env.OH_AGENT_SERVER_GIT_REF ||
+    (version ? `v${version}` : SHARED_DEFAULTS.sources.sdk.ref);
 
   const uvxArgs = [];
   let source = "";
@@ -478,41 +476,7 @@ export function buildAgentServerCommand(env = process.env) {
       "agent-server",
     );
     source = `git (${gitRef})`;
-  } else if (version) {
-    // Use specific PyPI version: uvx --from openhands-agent-server==version agent-server
-    // The package name differs from the executable name, so we need --from syntax
-    // Pin all SDK packages to the same version for consistency
-    uvxArgs.push(
-      "--from",
-      `${DEFAULT_AGENT_SERVER_PACKAGE}==${version}`,
-      "--with",
-      `openhands-sdk==${version}`,
-      "--with",
-      `openhands-tools==${version}`,
-      "--with",
-      `openhands-workspace==${version}`,
-    );
-    uvxArgs.push("--with", AGENT_SERVER_POSTHOG_CONSTRAINT);
-    uvxArgs.push("agent-server");
-    source = `PyPI (${version})`;
-  } else {
-    // Default to released PyPI version
-    // Pin all SDK packages to the same version for consistency
-    uvxArgs.push(
-      "--from",
-      `${DEFAULT_AGENT_SERVER_PACKAGE}==${DEFAULT_AGENT_SERVER_VERSION}`,
-      "--with",
-      `openhands-sdk==${DEFAULT_AGENT_SERVER_VERSION}`,
-      "--with",
-      `openhands-tools==${DEFAULT_AGENT_SERVER_VERSION}`,
-      "--with",
-      `openhands-workspace==${DEFAULT_AGENT_SERVER_VERSION}`,
-    );
-    uvxArgs.push("--with", AGENT_SERVER_POSTHOG_CONSTRAINT);
-    uvxArgs.push("agent-server");
-    source = `PyPI (${DEFAULT_AGENT_SERVER_VERSION}, default)`;
   }
-
   // Everything after the executable name is an agent-server CLI argument.
   // Import the registration module before any conversation is created.
   uvxArgs.push("--import-modules", AGENT_SERVER_IMPORT_MODULES);
@@ -522,6 +486,20 @@ export function buildAgentServerCommand(env = process.env) {
     args: uvxArgs,
     source,
   };
+}
+
+export function buildSdkRequirements(env = process.env) {
+  const localPath = env.OH_AGENT_SERVER_LOCAL_PATH;
+  const ref =
+    env.OH_AGENT_SERVER_GIT_REF ||
+    (env.OH_AGENT_SERVER_VERSION
+      ? `v${env.OH_AGENT_SERVER_VERSION}`
+      : SHARED_DEFAULTS.sources.sdk.ref);
+  return LOCAL_AGENT_SERVER_SUBDIRS.map((packageName) =>
+    localPath
+      ? path.join(localPath, packageName)
+      : `git+${AGENT_SERVER_GIT_REPO}@${ref}#subdirectory=${packageName}`,
+  );
 }
 
 function parsePort(value, fallback) {

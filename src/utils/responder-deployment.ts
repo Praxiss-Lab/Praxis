@@ -4,8 +4,10 @@ import { getResponderIntegrationIds } from "#/manifests/automation-interface";
 import { getRequiredIntegrationIds } from "#/utils/automation-catalog";
 import { PRODUCT_URL } from "#/utils/constants";
 
-/** OpenHands Cloud integrations page — where always-on responders are set up. */
-export const OPENHANDS_CLOUD_INTEGRATIONS_URL = `${PRODUCT_URL.PRODUCTION}/settings/integrations`;
+/** Configured deployment integrations, or deployment guidance before setup. */
+export const OPENHANDS_CLOUD_INTEGRATIONS_URL = PRODUCT_URL.PRODUCTION
+  ? `${PRODUCT_URL.PRODUCTION}/settings/integrations`
+  : "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/SDK_INDEPENDENCE.md";
 
 /**
  * Single source of truth for "does this automation get the deployment-choice

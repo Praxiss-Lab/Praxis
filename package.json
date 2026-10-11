@@ -3,7 +3,7 @@
   "version": "1.25.0",
   "description": "Praxis AI-driven development interface, independently maintained from the OpenHands Agent Canvas codebase",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "type": "module",
   "repository": {
     "type": "git",
@@ -23,8 +23,8 @@
     "@heroui/react": "2.8.10",
     "@microlink/react-json-view": "1.31.25",
     "@monaco-editor/react": "4.7.0",
-    "@openhands/extensions": "0.29.0",
-    "@openhands/typescript-client": "1.53.0",
+    "@openhands/extensions": "file:vendor/praxis-extensions-0.29.0.tgz",
+    "@openhands/typescript-client": "file:vendor/praxis-typescript-client-1.54.0.tgz",
     "@react-router/node": "7.18.2",
     "@react-router/serve": "7.18.2",
     "@tailwindcss/vite": "4.3.3",
@@ -202,7 +202,8 @@
     "build",
     "config",
     "scripts",
-    "tools"
+    "tools",
+    "vendor"
   ],
   "exports": {
     ".": {
@@ -251,5 +252,9 @@
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-router": "7.18.2"
-  }
+  },
+  "bundleDependencies": [
+    "@openhands/typescript-client",
+    "@openhands/extensions"
+  ]
 }

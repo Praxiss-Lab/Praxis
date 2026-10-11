@@ -668,11 +668,11 @@ describe("LlmSettingsScreen - OpenHands provider on cloud", () => {
     expect(helpLinks).toHaveLength(2);
     expect(helpLinks[0]).toHaveAttribute(
       "href",
-      "https://app.all-hands.dev/settings/api-keys",
+      "https://github.com/Praxiss-Lab/praxis-sdk/blob/main/docs/independent-deployment.md",
     );
     expect(helpLinks[1]).toHaveAttribute(
       "href",
-      "https://docs.openhands.dev/usage/local-setup#getting-an-api-key",
+      "https://github.com/Praxiss-Lab/praxis-sdk/blob/main/docs/independent-deployment.md",
     );
   });
 

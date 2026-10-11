@@ -35,10 +35,10 @@ describe("docs/example references stay in sync with config/defaults.json", () =>
       ".agents/skills/local-stack-runtime/references/guide.md",
     );
     expect(localStackGuide).toContain(
-      `\`OH_AGENT_SERVER_VERSION\` — specific PyPI version (e.g., "${agentServerVersion}")`,
+      `\`OH_AGENT_SERVER_VERSION\` — version tag in the owned SDK repository (e.g., "${agentServerVersion}")`,
     );
     expect(localStackGuide).toContain(
-      `Default: released PyPI version \`${agentServerVersion}\` for agent-server SDK libraries`,
+      "Default: frozen `sources.sdk.ref` in `config/defaults.json` for all four SDK libraries",
     );
   });
 
@@ -58,7 +58,7 @@ describe("docs/example references stay in sync with config/defaults.json", () =>
   it("scripts/dev-safe.mjs JSDoc example matches the current default", () => {
     const devSafe = read("scripts/dev-safe.mjs");
     expect(devSafe).toContain(
-      `OH_AGENT_SERVER_VERSION: Specific PyPI version (e.g., "${agentServerVersion}")`,
+      `OH_AGENT_SERVER_VERSION: Version tag in the owned SDK repository (e.g., "${agentServerVersion}")`,
     );
   });
 

@@ -48,7 +48,20 @@ jobs:
         with:
           node-version: "24.15"
       - uses: docker/setup-buildx-action@v4
+      - name: Read frozen Praxis SDK revision
+        id: sdk
+        run: echo "ref=$(node -p 'require("./config/defaults.json").sources.sdk.ref')" >> "$GITHUB_OUTPUT"
+      - name: Checkout Praxis SDK
+        uses: actions/checkout@v7
+        with:
+          repository: Praxiss-Lab/praxis-sdk
+          ref: ${{ steps.sdk.outputs.ref }}
+          path: .praxis-sdk-source
+          token: ${{ secrets.PRAXIS_SDK_READ_TOKEN || github.token }}
+          persist-credentials: false
       - name: Build local image
+        env:
+          PRAXIS_SDK_LOCAL_PATH: ${{ github.workspace }}/.praxis-sdk-source
         run: node scripts/docker-build.mjs --tag praxis:check
       - name: Install browser evidence dependencies
         run: |

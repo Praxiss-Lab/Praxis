@@ -372,6 +372,7 @@ const config = {
     // canvas_ui_tool at runtime. The path is computed as ../tools relative to
     // scripts/dev-safe.mjs, which resolves correctly in both dev and packaged mode.
     { from: "../tools", to: "tools" },
+    { from: "../vendor/automation", to: "vendor/automation" },
   ],
 
   // Bundled prerequisites — placed in <Resources>/ so Electron can put
@@ -427,9 +428,7 @@ const config = {
     target: [
       {
         target: "dmg",
-        arch: [
-          ELECTRON_ARCH ?? (process.arch === "arm64" ? "arm64" : "x64"),
-        ],
+        arch: [ELECTRON_ARCH ?? (process.arch === "arm64" ? "arm64" : "x64")],
       },
     ],
     // Universal merge whitelist: the per-arch uv/node runtime binaries are

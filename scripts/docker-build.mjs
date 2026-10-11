@@ -11,10 +11,11 @@
  *   node scripts/docker-build.mjs --tag my-tag          # custom tag
  *   node scripts/docker-build.mjs -- --no-cache         # extra docker args
  */
-import { readFileSync } from "node:fs";
+import { readFileSync, mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, "..");
@@ -27,7 +28,7 @@ const praxisVersion = readFileSync(
   join(projectRoot, "PRAXIS_VERSION"),
   "utf8",
 ).trim();
-const agentServerImage = `${config.images.agentServer}:${config.versions.agentServer}-python`;
+const agentServerImage = `${config.images.agentServer}:sha-${config.sources.sdk.ref}-python`;
 const agentServerVersion = config.versions.agentServer;
 const automationVersion = config.versions.automation;
 const canvasBasePath = config.paths.canvasBasePath;
@@ -76,11 +77,57 @@ console.log(`Canvas base path        : ${canvasBasePath}`);
 console.log(`Tag                     : ${tag}`);
 console.log(`\n$ ${cmd.join(" ")}\n`);
 
+let temporaryCheckout;
 try {
+  let sdkRoot = process.env.PRAXIS_SDK_LOCAL_PATH;
+  if (!sdkRoot) {
+    temporaryCheckout = mkdtempSync(join(tmpdir(), "praxis-sdk-build-"));
+    sdkRoot = temporaryCheckout;
+    execFileSync(
+      "git",
+      ["clone", "--no-checkout", config.sources.sdk.repository, sdkRoot],
+      { stdio: "inherit" },
+    );
+    execFileSync("git", ["checkout", "--detach", config.sources.sdk.ref], {
+      cwd: sdkRoot,
+      stdio: "inherit",
+    });
+  }
+  sdkRoot = resolve(sdkRoot);
+  const actualRef = execFileSync("git", ["rev-parse", "HEAD"], {
+    cwd: sdkRoot,
+    encoding: "utf8",
+  }).trim();
+  if (actualRef !== config.sources.sdk.ref) {
+    throw new Error(
+      `Praxis SDK checkout must be at ${config.sources.sdk.ref}; found ${actualRef}`,
+    );
+  }
+  execFileSync(
+    "docker",
+    [
+      "build",
+      "--target",
+      "source",
+      "-f",
+      join(
+        sdkRoot,
+        "openhands-agent-server/openhands/agent_server/docker/Dockerfile",
+      ),
+      "-t",
+      agentServerImage,
+      sdkRoot,
+    ],
+    { stdio: "inherit" },
+  );
   execFileSync(cmd[0], cmd.slice(1), {
     cwd: projectRoot,
     stdio: "inherit",
   });
 } catch (err) {
-  process.exit(err.status || 1);
+  console.error(err.message);
+  process.exitCode = err.status || 1;
+} finally {
+  if (temporaryCheckout)
+    rmSync(temporaryCheckout, { recursive: true, force: true });
 }
