@@ -4,16 +4,16 @@ import { mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { renderInstallationNotes } from "./release-notes.mjs";
 
 const manifestUrl = new URL("./migration-release.json", import.meta.url);
 
 export function validateManifest(manifest) {
   if (
-    manifest.targetRepositoryId !== 1413862562 ||
-    manifest.originalRepositoryId !== 1407000350 ||
+    manifest.targetRepositoryId !== 1414005964 ||
+    manifest.originalRepositoryId !== 1413862562 ||
     manifest.tag !== "v1.25.0" ||
     manifest.title !== "Praxis 1.25.0" ||
+    typeof manifest.notes !== "string" || !manifest.notes.trim() ||
     !/^[a-f0-9]{40}$/.test(manifest.originalTagCommit) ||
     !/^[a-f0-9]{40}$/.test(manifest.targetCommit) ||
     !/^[a-f0-9]{40}$/.test(manifest.targetTree) ||
@@ -127,8 +127,7 @@ export async function restore(manifest, dependencies = {}) {
     assertDestination(manifest, repository, commit, tag);
   }
   if (!release) {
-    const notes = renderInstallationNotes({ version: "1.25.0", repository: repositoryName, archive: manifest.assets[0].name }) +
-      `\n## Migration provenance\n\nOriginal published assets were copied without rebuilding and verified against recorded SHA-256 digests. The tag uses the preserved original source tree with independent Git history.\n\nOriginal tag commit: \`${manifest.originalTagCommit}\`. Restored snapshot: \`${manifest.targetCommit}\`. \`image.txt\` records the original image build, not a new build. GHCR remains \`ghcr.io/praxiss-lab/praxis:1.25.0\`.\n\nHistorical pull requests and release metadata: [migration archive](https://github.com/${repositoryName}/tree/migration/history-archive/.migration).\n`;
+    const notes = manifest.notes;
     const notesPath = path.join(directory, "release-notes.md");
     await writeFile(notesPath, notes);
     releaseCommand(["create", manifest.tag, "--repo", repositoryName, "--verify-tag", "--draft", "--title", manifest.title, "--notes-file", notesPath]);

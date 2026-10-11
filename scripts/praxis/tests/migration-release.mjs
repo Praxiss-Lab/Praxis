@@ -23,7 +23,7 @@ test("blocks restoration into the original repository or a changed snapshot", ()
   assert.throws(() => assertDestination(manifest, repository, { ...commit, tree: { sha: "0".repeat(40) } }, tag), /snapshot/);
 });
 test("never moves an existing tag to the imported snapshot", () => {
-  assert.throws(() => assertDestination(manifest, repository, commit, { object: { type: "commit", sha: manifest.originalTagCommit } }), /refusing to move/);
+  assert.throws(() => assertDestination(manifest, repository, commit, { object: { type: "commit", sha: "0".repeat(40) } }), /refusing to move/);
 });
 test("detects changed bytes even when the byte length matches", () => {
   const bytes = Buffer.from("original");
