@@ -15,19 +15,6 @@ on:
       - ".github/workflows/docker*.yml"
       - ".github/workflows/praxis-release.yml"
       - "__tests__/scripts/docker-*.test.ts"
-  push:
-    branches: [main]
-    paths:
-      - "docker/**"
-      - "scripts/**"
-      - "config/**"
-      - "src/**"
-      - "public/**"
-      - "tools/**"
-      - "package*.json"
-      - "*config*"
-      - ".github/workflows/docker*.yml"
-      - ".github/workflows/praxis-release.yml"
   workflow_dispatch:
 
 permissions:
