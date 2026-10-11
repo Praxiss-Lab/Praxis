@@ -9,6 +9,12 @@ Read [the release policy](../../docs/policies/RELEASE.md) and
 [distribution instructions](../../docs/distribution/README.md) before preparing a
 release. Use `.github/workflows/praxis-release.yml` as the executable workflow.
 
+For the one-time replacement-repository restoration, follow
+[repository cutover](../../docs/REPOSITORY_CUTOVER.md) and use
+`.github/workflows/praxis-migration.yml` instead. It verifies and copies the
+already-published original assets; the normal release workflow would rebuild
+and publish the image, which is outside that restoration.
+
 ## Prepare the release commit
 
 1. Choose the product version deliberately. The first Praxis release is 1.25.0;

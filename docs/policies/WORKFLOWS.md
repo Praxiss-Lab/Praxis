@@ -10,6 +10,7 @@
 | `mock-llm-docker-e2e.yml` | Manual E2E against an explicitly selected published image. |
 | `ci.yml` | Manual Upstream Compatibility CI; use the selected integration branch when needed. Overlaps core checks intentionally as an optional run. |
 | `praxis-release.yml` | Explicitly authorized manual publication from `main`; verifies before publishing image and GitHub artifacts. |
+| `praxis-migration.yml` | PR safeguard tests and explicitly confirmed restoration of original 1.25.0 assets into the replacement repository; no image build or publication. |
 | `docker.yml` | Reusable image publication called directly by Praxis Release; native amd64/arm64 builds and digest merge. |
 | `desktop-linux.yml` | Paths-filtered PR build, manual build, or externally triggered release build. |
 | `desktop-windows.yml` | Paths-filtered PR build, manual build, or externally triggered release build. |

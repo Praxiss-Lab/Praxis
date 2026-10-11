@@ -5,6 +5,19 @@ Status: active
 Praxis continues the Agent Canvas version line, starting at `1.25.0`.
 Release publication remains independent from OpenHands.
 
+## Repository migration restoration
+
+The one-time `Praxis Migration Restore` workflow preserves the original 1.25.0
+release assets without rebuilding. It is restricted to replacement repository
+ID `1413862562`, its preserved release snapshot and recorded asset SHA-256
+digests. Run it manually on `main` with `RESTORE`, while the original repository
+still exists. It refuses conflicting tags/assets and verifies uploads before
+publishing; a partial matching draft can resume. This is a restoration of an
+existing release, not verification or publication of a new application build.
+Do not use the normal release workflow for this operation, because that would
+rebuild and publish images. See [repository cutover](../REPOSITORY_CUTOVER.md)
+for GHCR permissions and the deletion/rename order.
+
 ## Source of version truth
 
 The Praxis product version is stored in:
