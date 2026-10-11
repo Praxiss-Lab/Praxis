@@ -1,0 +1,56 @@
+name: Praxis Migration Restore
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/praxis-migration.yml
+      - scripts/praxis/migration-release.json
+      - scripts/praxis/restore-migration-release.mjs
+      - scripts/praxis/tests/migration-release.mjs
+      - scripts/praxis/release-notes.mjs
+      - .github/release-installation.md
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: "Type RESTORE to copy the original 1.25.0 assets and publish its preserved snapshot"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: praxis-migration-restore
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24.15"
+      - name: Verify restoration safeguards
+        run: node --test scripts/praxis/tests/migration-release.mjs
+
+  restore:
+    needs: validate
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.confirm == 'RESTORE' && github.repository_id == '1413862562'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24.15"
+      - name: Restore original release without rebuilding or publishing images
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          GITHUB_REF: ${{ github.ref }}
+          MIGRATION_CONFIRM: ${{ inputs.confirm }}
+        run: node scripts/praxis/restore-migration-release.mjs --restore

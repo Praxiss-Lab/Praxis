@@ -1,0 +1,23 @@
+{
+  "targetRepositoryId": 1413862562,
+  "tag": "v1.25.0",
+  "title": "Praxis 1.25.0",
+  "targetCommit": "d637a5accd855588260207922fa25c0490350504",
+  "targetTree": "16f93ab2e8bebe409add8fc3ed654accedd8dcc6",
+  "originalRepositoryId": 1407000350,
+  "originalTagCommit": "9708b350aaf618fcc3cc1bfcaf87d8ec0c4abeac",
+  "assets": [
+    {
+      "name": "openhands-agent-canvas-1.25.0.tgz",
+      "size": 18106048,
+      "sha256": "29884ed98adeee408edcfbeb3b62905092368b3133274ce6a8449e9668c3aa61",
+      "url": "https://github.com/Praxiss-Lab/Praxis/releases/download/v1.25.0/openhands-agent-canvas-1.25.0.tgz"
+    },
+    {
+      "name": "image.txt",
+      "size": 184,
+      "sha256": "b669133c8c072e7954414c3158e5690952c15a302f9c1c1d9c2d1826678f706e",
+      "url": "https://github.com/Praxiss-Lab/Praxis/releases/download/v1.25.0/image.txt"
+    }
+  ]
+}
