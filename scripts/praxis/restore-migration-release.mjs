@@ -75,6 +75,17 @@ function ghRelease(args) {
   if (result.status !== 0) throw new Error("GitHub release operation failed; inspect the draft before retrying");
 }
 
+function findRelease(api, base, tag) {
+  // The tag endpoint is for published releases. List with the authenticated
+  // token as a fallback so interrupted draft uploads can be resumed reliably.
+  const published = api(`${base}/releases/tags/${tag}`, [], true);
+  if (published) return published;
+  const pages = api(`${base}/releases?per_page=100`, ["--paginate", "--slurp"]);
+  const matches = pages.flat().filter(release => release.tag_name === tag);
+  if (matches.length > 1) throw new Error("Multiple releases use this tag; manual review is required");
+  return matches[0] ?? null;
+}
+
 async function downloadAssets(manifest, assets = manifest.assets) {
   const directory = await mkdtemp(path.join(tmpdir(), "praxis-release-migration-"));
   const files = new Map();
@@ -102,7 +113,7 @@ export async function restore(manifest, dependencies = {}) {
   const commit = api(`${base}/git/commits/${manifest.targetCommit}`);
   let tag = api(`${base}/git/ref/tags/${manifest.tag}`, [], true);
   assertDestination(manifest, repository, commit, tag);
-  let release = api(`${base}/releases/tags/${manifest.tag}`, [], true);
+  let release = findRelease(api, base, manifest.tag);
   if (release && !tag) throw new Error("A release exists without its expected tag; manual review is required");
   const state = inspectRelease(manifest, release);
   if (state.complete) {
@@ -124,11 +135,11 @@ export async function restore(manifest, dependencies = {}) {
   }
   for (const filename of files.values())
     releaseCommand(["upload", manifest.tag, filename, "--repo", repositoryName]);
-  release = api(`${base}/releases/tags/${manifest.tag}`);
+  release = findRelease(api, base, manifest.tag);
   const checked = inspectRelease(manifest, release);
   if (checked.missing.length) throw new Error("Release assets are incomplete; keeping the draft");
   releaseCommand(["edit", manifest.tag, "--repo", repositoryName, "--draft=false"]);
-  release = api(`${base}/releases/tags/${manifest.tag}`);
+  release = findRelease(api, base, manifest.tag);
   if (!inspectRelease(manifest, release).complete) throw new Error("Release publication is not complete");
   console.log(`Original release restored: ${release.html_url}`);
 }

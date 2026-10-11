@@ -62,8 +62,10 @@ test("restoration verifies downloads before writes and uploads before publicatio
     let uploaded = false;
     let published = false;
     const resumeApi = route => {
-      if (!route.includes("/releases/tags/")) return api(route);
-      return { ...release, draft: !published, assets: uploaded ? assets : [assets[0]] };
+      const current = { ...release, draft: !published, assets: uploaded ? assets : [assets[0]] };
+      if (route.includes("/releases?")) return [[current]];
+      if (route.includes("/releases/tags/")) return published ? current : null;
+      return api(route);
     };
     const commands = [];
     await restore(manifest, {
