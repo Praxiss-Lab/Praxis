@@ -2,10 +2,10 @@
 
 | File | Role and trigger |
 | --- | --- |
-| `praxis-ci.yml` | Core static checks, tests and builds on eligible PRs to `main`, pushes to `main`, or manual dispatch. |
-| `praxis-smoke.yml` | Frontend runtime smoke checks on eligible PRs/pushes or manual dispatch. |
-| `docker-check.yml` | Local Docker build and mode verification on matching runtime/configuration paths or manual dispatch; no registry publication. |
-| `sdk-version-sync.yml` | Dependency-version consistency on matching paths or manual dispatch with an optional expected SDK version. |
+| `praxis-ci.yml` | Core static checks, tests and builds on eligible PRs to `main` or manual dispatch. |
+| `praxis-smoke.yml` | Frontend runtime smoke checks on eligible PRs to `main` or manual dispatch. |
+| `docker-check.yml` | Local Docker build and mode verification on PRs with matching runtime/configuration paths or manual dispatch; no registry publication. |
+| `sdk-version-sync.yml` | Dependency-version consistency on PRs with matching paths or manual dispatch with an optional expected SDK version. |
 | `mock-llm-e2e.yml` | Full scripted-model E2E suite after eligible pushes to `main` or manual dispatch. |
 | `mock-llm-docker-e2e.yml` | Manual E2E against an explicitly selected published image. |
 | `ci.yml` | Manual Upstream Compatibility CI; use the selected integration branch when needed. Overlaps core checks intentionally as an optional run. |
@@ -16,6 +16,26 @@
 | `desktop-windows.yml` | Paths-filtered PR build, manual build, or externally triggered release build. |
 | `desktop-macos.yml` | Native PR builds, manual builds including universal DMG, or externally triggered universal release build. |
 | `issue-readiness-check.yml` | Permission check when `ready-for-dev` is applied to an open issue. |
+
+## Avoid duplicate verification
+
+Core CI, frontend Smoke, Docker Check and SDK Version Sync run on applicable
+pull requests, not again on the merge push to `main`. Their existing concurrency
+settings cancel superseded PR runs. The full Mock-LLM E2E suite remains on
+eligible `main` pushes because it is not run on PRs. No validation workflow runs
+on ordinary feature-branch pushes without a PR.
+
+Maintainers should require applicable successful PR checks and an up-to-date PR
+base before merging, and restrict direct pushes to `main` using GitHub branch
+rules. These administrative rules are not installed by workflow YAML; direct
+pushes do not receive the four PR-only checks. Path-filtered workflows do not run
+for every PR, so do not require an absent filtered check indiscriminately. A
+future merge queue needs explicit `merge_group` support before it is enabled.
+
+Manual compatibility/build dispatches are explicit additional runs. Release
+verification is retained because it checks the exact authorized publishing
+commit; it does not publish on a PR, ordinary push or tag. Desktop builds retain
+their distinct PR/manual/release triggers and have no `main` push trigger.
 
 [Dependabot](../../.github/dependabot.yml) remains configured for weekly npm and
 GitHub Actions dependency updates. Its PRs follow the same applicable checks.
