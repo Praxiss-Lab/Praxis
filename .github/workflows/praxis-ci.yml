@@ -1,0 +1,63 @@
+name: Praxis CI
+
+on:
+  pull_request:
+    branches: [main]
+    paths-ignore: ['.pr/**', 'docs/**', '**/*.md', 'LICENSE', 'NOTICE']
+  push:
+    branches: [main]
+    paths-ignore: ['.pr/**', 'docs/**', '**/*.md', 'LICENSE', 'NOTICE']
+  workflow_dispatch:
+
+concurrency:
+  group: praxis-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  core:
+    name: Praxis Core Verification
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Verify repository invariants
+        run: bash scripts/praxis/repository-check.sh
+
+      - name: Validate Praxis shell helpers
+        run: bash -n scripts/praxis/*.sh
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24.15"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate i18n declarations
+        run: npm run make-i18n
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build app
+        run: npm run build
+
+      - name: Build library
+        run: npm run build:lib
+
+      - name: Verify package contents
+        run: npm pack --dry-run

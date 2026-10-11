@@ -1,0 +1,147 @@
+name: Praxis Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Praxis version to release (must match PRAXIS_VERSION)"
+        required: true
+        type: string
+      confirm:
+        description: "Type RELEASE to confirm tag and GitHub Release creation"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: praxis-release
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Verify release commit
+    if: inputs.confirm == 'RELEASE' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      sha: ${{ steps.version.outputs.sha }}
+
+    steps:
+      - name: Checkout dispatched commit
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Verify requested version
+        id: version
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: node scripts/praxis/release-inputs.mjs
+
+      - name: Verify repository invariants
+        run: bash scripts/praxis/repository-check.sh
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24.15"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate i18n declarations
+        run: npm run make-i18n
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build app
+        run: npm run build
+
+      - name: Ensure tag does not already exist
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="v$PRAXIS_RELEASE_VERSION"
+          if git rev-parse "$tag" >/dev/null 2>&1 || git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null 2>&1; then
+            echo "::error::Release tag $tag already exists."
+            exit 1
+          fi
+
+      - name: Build native package
+        run: |
+          npm run build:lib
+          mkdir -p release-assets
+          npm pack --pack-destination release-assets
+      - uses: actions/upload-artifact@v7
+        with:
+          name: praxis-native-package
+          path: release-assets/*.tgz
+          retention-days: 7
+      - uses: docker/setup-buildx-action@v4
+      - name: Verify Docker launch modes before publication
+        run: |
+          node scripts/docker-build.mjs --tag praxis:release-check
+          node scripts/praxis/docker-modes-smoke.mjs praxis:release-check
+
+  image:
+    needs: verify
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/docker.yml
+    with:
+      version: ${{ needs.verify.outputs.version }}
+      commit_sha: ${{ needs.verify.outputs.sha }}
+
+  release:
+    needs: [verify, image]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - name: Checkout verified release commit for installation notes
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.verify.outputs.sha }}
+      - name: Set up Node.js for installation notes
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24.15"
+      - uses: actions/download-artifact@v8
+        with:
+          name: praxis-native-package
+          path: release-assets
+      - name: Create GitHub release after image publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PRAXIS_RELEASE_VERSION: ${{ needs.verify.outputs.version }}
+          RELEASE_SHA: ${{ needs.verify.outputs.sha }}
+          IMAGE_DIGEST: ${{ needs.image.outputs.digest }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$IMAGE_DIGEST"
+          tag="v$PRAXIS_RELEASE_VERSION"
+          flags=()
+          if [[ "$PRAXIS_RELEASE_VERSION" == *-* ]]; then flags+=(--prerelease); fi
+          printf 'Praxis %s\nCommit: %s\nImage: ghcr.io/praxiss-lab/praxis:%s\nDigest: %s\n' \
+            "$PRAXIS_RELEASE_VERSION" "$RELEASE_SHA" "$PRAXIS_RELEASE_VERSION" "$IMAGE_DIGEST" \
+            > release-assets/image.txt
+          node scripts/praxis/release-notes.mjs release-assets > release-notes.md
+          gh release create "$tag" release-assets/* --target "$RELEASE_SHA" \
+            --title "Praxis $PRAXIS_RELEASE_VERSION" --notes-file release-notes.md \
+            --generate-notes "${flags[@]}"

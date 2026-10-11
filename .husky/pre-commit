@@ -1,0 +1,2 @@
+# Keep checks local; never install missing tools from the network here.
+npx --no-install lint-staged

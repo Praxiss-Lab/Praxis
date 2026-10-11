@@ -1,0 +1,38 @@
+{
+  "_comment": "Single source of truth for version pins, ports, paths, and defaults shared across the npm and Docker install paths. Read by scripts/dev-safe.mjs, scripts/dev-with-automation.mjs, docker/entrypoint.sh (via generated defaults.env), and .github/workflows/docker.yml.",
+  "versions": {
+    "agentServer": "1.53.0",
+    "agentCanvas": "1.25.0",
+    "automation": "1.19.0"
+  },
+  "compatibility": {
+    "minimumAgentServer": "1.51.0"
+  },
+  "images": {
+    "agentServer": "ghcr.io/openhands/agent-server",
+    "agentCanvas": "ghcr.io/praxiss-lab/praxis"
+  },
+  "ports": {
+    "agentServer": 18000,
+    "automation": 18001,
+    "proxy": 8000
+  },
+  "paths": {
+    "stateSubdir": "agent-canvas",
+    "conversations": "agent-canvas/conversations",
+    "bashEvents": "agent-canvas/bash_events",
+    "automationDb": "automation/automations.db",
+    "canvasBasePath": "/canvas"
+  },
+  "packages": {
+    "agentServer": "openhands-agent-server",
+    "automation": "openhands-automation",
+    "tools": "openhands-tools",
+    "workspace": "openhands-workspace"
+  },
+  "telemetry": {
+    "posthogApiKey": "phc_xQbJhtBoepVNQhhMkmXqShEQx8Uc5GNo6233BR4vmUrX",
+    "posthogHost": "https://eu.i.posthog.com",
+    "posthogUiHost": "https://eu.posthog.com"
+  }
+}

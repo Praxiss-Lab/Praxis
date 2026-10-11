@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1100" viewBox="0 0 1400 1100" role="img" aria-labelledby="title desc">
+<title id="title">Praxis — your personal cloud architecture</title>
+<desc id="desc">Two independent virtual machines above a user's laptop. Each VM contains Agent Server, Automation and persistent storage. The laptop contains the Praxis Canvas frontend and an optional local backend. Canvas connects to a selected VM or the local backend through authenticated HTTP and WebSocket.</desc>
+<defs>
+<linearGradient id="brand-blue" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#2563EB"/><stop offset="1" stop-color="#16C8EE"/></linearGradient>
+<linearGradient id="bg" x2="1" y2="1"><stop stop-color="#080d1b"/><stop offset="1" stop-color="#121b32"/></linearGradient>
+<linearGradient id="glass" x2="0.8" y2="1"><stop stop-color="#192b45"/><stop offset="1" stop-color="#101a2d"/></linearGradient>
+<linearGradient id="cyan" x2="1" y2="0"><stop stop-color="#4de0df"/><stop offset="1" stop-color="#73a9ff"/></linearGradient>
+<linearGradient id="violet" x2="1" y2="0"><stop stop-color="#b093ff"/><stop offset="1" stop-color="#79adff"/></linearGradient>
+<pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0V44" fill="none" stroke="#7891bd" stroke-opacity=".07"/></pattern>
+<radialGradient id="halo"><stop stop-color="#287986" stop-opacity=".19"/><stop offset="1" stop-color="#287986" stop-opacity="0"/></radialGradient>
+<marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto-start-reverse"><path d="M0 0L8 4L0 8" fill="none" stroke="#75c9ef" stroke-width="1.4"/></marker>
+</defs>
+<rect width="1400" height="1100" rx="28" fill="url(#bg)"/>
+<rect width="1400" height="1100" rx="28" fill="url(#grid)"/>
+<ellipse cx="700" cy="320" rx="690" ry="480" fill="url(#halo)"/>
+<g font-family="DejaVu Sans, sans-serif" fill="#f0f5ff">
+<g transform="translate(64 48) scale(.30)"><path d="M52 0L160 62L104 90L0 30Z" fill="#F8FAFC"/><path d="M0 145L160 62V120L0 204Z" fill="url(#brand-blue)"/><path d="M0 216L60 184V249Z" fill="#F8FAFC"/></g>
+<text x="122" y="99" font-size="43" font-weight="700" letter-spacing="-1">Praxis</text>
+<text x="64" y="147" font-size="20" fill="#a7bad5">Your infrastructure. Your agents. Your personal clouds.</text>
+<rect x="1074" y="70" width="262" height="38" rx="19" fill="#102b35" stroke="#2d727d"/>
+<circle cx="1097" cy="89" r="4" fill="#5be0c5"/><text x="1112" y="95" font-size="13" letter-spacing="1.5" fill="#9cebdd">INDEPENDENT BACKENDS</text>
+
+<rect x="64" y="194" width="612" height="348" rx="22" fill="url(#glass)" stroke="#314765"/>
+<rect x="65" y="194" width="610" height="3" rx="2" fill="url(#cyan)"/>
+<g fill="none" stroke="#66ddd9" stroke-width="1.8"><rect x="92" y="226" width="36" height="15" rx="3"/><rect x="92" y="246" width="36" height="15" rx="3"/><path d="M99 234H113M99 254H113"/></g>
+<text x="146" y="243" font-size="24" font-weight="700">Personal cloud 01</text>
+<text x="146" y="272" font-size="15" fill="#a7bad5">Your virtual machine</text>
+<rect x="92" y="304" width="266" height="103" rx="13" fill="#123044" stroke="#2d637a"/>
+<text x="110" y="341" font-size="18" font-weight="700" fill="#8ddaf0">Agent Server</text>
+<text x="110" y="369" font-size="13" fill="#a7bad5">Execution · conversations</text>
+<text x="110" y="389" font-size="13" fill="#a7bad5">Workspace APIs · events</text>
+<rect x="374" y="304" width="274" height="103" rx="13" fill="#292341" stroke="#574775"/>
+<text x="392" y="341" font-size="18" font-weight="700" fill="#c5b0ff">Automation</text>
+<text x="392" y="369" font-size="13" fill="#bcb1d6">Schedules · triggers</text>
+<text x="392" y="389" font-size="13" fill="#bcb1d6">Agent-run dispatch</text>
+<path d="M92 435H648" stroke="#314765"/>
+<text x="92" y="471" font-size="15" fill="#d5e2f5">Own workspaces, state and credentials</text>
+<text x="92" y="503" font-size="13" fill="#8198b9">Persistent storage · authenticated backend endpoint</text>
+<rect x="724" y="194" width="612" height="348" rx="22" fill="url(#glass)" stroke="#314765"/>
+<rect x="725" y="194" width="610" height="3" rx="2" fill="url(#violet)"/>
+<g fill="none" stroke="#b097fa" stroke-width="1.8"><rect x="752" y="226" width="36" height="15" rx="3"/><rect x="752" y="246" width="36" height="15" rx="3"/><path d="M759 234H773M759 254H773"/></g>
+<text x="806" y="243" font-size="24" font-weight="700">Personal cloud 02</text>
+<text x="806" y="272" font-size="15" fill="#a7bad5">Your virtual machine</text>
+<rect x="752" y="304" width="266" height="103" rx="13" fill="#123044" stroke="#2d637a"/>
+<text x="770" y="341" font-size="18" font-weight="700" fill="#8ddaf0">Agent Server</text>
+<text x="770" y="369" font-size="13" fill="#a7bad5">Execution · conversations</text>
+<text x="770" y="389" font-size="13" fill="#a7bad5">Workspace APIs · events</text>
+<rect x="1034" y="304" width="274" height="103" rx="13" fill="#292341" stroke="#574775"/>
+<text x="1052" y="341" font-size="18" font-weight="700" fill="#c5b0ff">Automation</text>
+<text x="1052" y="369" font-size="13" fill="#bcb1d6">Schedules · triggers</text>
+<text x="1052" y="389" font-size="13" fill="#bcb1d6">Agent-run dispatch</text>
+<path d="M752 435H1308" stroke="#314765"/>
+<text x="752" y="471" font-size="15" fill="#d5e2f5">Own workspaces, state and credentials</text>
+<text x="752" y="503" font-size="13" fill="#8198b9">Persistent storage · authenticated backend endpoint</text>
+
+<rect x="64" y="626" width="1272" height="388" rx="23" fill="url(#glass)" stroke="#3c526f"/>
+<g fill="none" stroke="#9eb6d7" stroke-width="1.8"><rect x="92" y="658" width="36" height="25" rx="3"/><path d="M86 689H134L128 683H92Z"/></g>
+<text x="147" y="679" font-size="25" font-weight="700">Your computer</text>
+<text x="147" y="705" font-size="14" fill="#a7bad5">Frontend and optional local backend</text>
+<g fill="none" stroke="#75c9ef" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"><path d="M370 554V579H480V731"/><path d="M1030 554V579H620V731"/></g>
+<rect x="442" y="567" width="484" height="37" rx="18" fill="#0b1425" stroke="#314765"/>
+<text x="684" y="591" text-anchor="middle" font-size="13" fill="#a7bad5">HTTP + WebSocket · each backend's own API key</text>
+<rect x="92" y="748" width="560" height="219" rx="15" fill="#0a1324" stroke="#426687"/>
+<path d="M107 782H637" stroke="#283b55"/>
+<g fill="#526786"><circle cx="114" cy="766" r="3"/><circle cx="127" cy="766" r="3"/><circle cx="140" cy="766" r="3"/></g>
+<text x="167" y="771" font-size="11" fill="#8198b9">PRAXIS / CANVAS</text>
+<text x="124" y="827" font-size="27" font-weight="700">Praxis frontend</text>
+<text x="124" y="858" font-size="15" fill="#a7bad5">Conversations · files · terminal · browser</text>
+<rect x="124" y="889" width="245" height="45" rx="10" fill="#153845" stroke="#356879"/>
+<text x="246" y="917" text-anchor="middle" font-size="14" fill="#a5e8ed">Select your backend</text>
+<text x="392" y="917" font-size="12" fill="#8198b9">Local / VM 01 / VM 02</text>
+<g fill="none" stroke="#75c9ef" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"><path d="M668 853H726"/></g>
+<rect x="744" y="748" width="564" height="219" rx="15" fill="#111d30" stroke="#314765"/>
+<text x="768" y="787" font-size="21" font-weight="700">Local backend</text>
+<text x="1262" y="786" text-anchor="end" font-size="12" fill="#8198b9">OPTIONAL</text>
+<rect x="768" y="808" width="240" height="66" rx="10" fill="#123044" stroke="#2d637a"/>
+<text x="888" y="848" text-anchor="middle" font-size="17" fill="#8ddaf0">Agent Server</text>
+<rect x="1024" y="808" width="260" height="66" rx="10" fill="#292341" stroke="#574775"/>
+<text x="1154" y="848" text-anchor="middle" font-size="17" fill="#c5b0ff">Automation</text>
+<text x="768" y="908" font-size="14" fill="#a7bad5">Local workspaces, state and credentials</text>
+<text x="768" y="938" font-size="12" fill="#8198b9">Native processes or Docker containers</text>
+<text x="700" y="1062" text-anchor="middle" font-size="15" fill="#8198b9">Each cloud is yours. Each backend stays independent.</text>
+</g></svg>

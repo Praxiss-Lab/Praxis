@@ -1,0 +1,25 @@
+services:
+  backend:
+    image: ${PRAXIS_IMAGE:?Set PRAXIS_IMAGE to a local build or published release}
+    environment:
+      PRAXIS_MODE: backend
+      OH_SESSION_API_KEYS_0: ${PRAXIS_SESSION_API_KEY:?Set PRAXIS_SESSION_API_KEY}
+    ports:
+      - "127.0.0.1:18081:8000"
+    volumes:
+      - praxis-state:/home/openhands/.openhands
+      - praxis-projects:/projects
+    restart: unless-stopped
+  frontend:
+    image: ${PRAXIS_IMAGE:?Set PRAXIS_IMAGE to a local build or published release}
+    environment:
+      PRAXIS_MODE: frontend
+      PRAXIS_BACKEND_URL: http://backend:8000
+    ports:
+      - "127.0.0.1:18080:8000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+volumes:
+  praxis-state:
+  praxis-projects:

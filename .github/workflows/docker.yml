@@ -1,0 +1,130 @@
+name: Docker Release Image
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+      commit_sha:
+        required: true
+        type: string
+    outputs:
+      digest:
+        description: Published multi-architecture image digest
+        value: ${{ jobs.merge.outputs.digest }}
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    name: Build native ${{ matrix.arch }} image
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            platform: linux/amd64
+            runner: ubuntu-24.04
+          - arch: arm64
+            platform: linux/arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.commit_sha }}
+      - name: Validate release inputs and prepare build
+        id: config
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+          RELEASE_SHA: ${{ inputs.commit_sha }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$RELEASE_SHA"
+          test "$(tr -d '[:space:]' < PRAXIS_VERSION)" = "$RELEASE_VERSION"
+          node --input-type=module <<'JS' >> "$GITHUB_OUTPUT"
+          import fs from 'node:fs';
+          const c = JSON.parse(fs.readFileSync('config/defaults.json', 'utf8'));
+          console.log('base_image=' + c.images.agentServer + ':' + c.versions.agentServer + '-python');
+          console.log('agent_version=' + c.versions.agentServer);
+          console.log('automation_version=' + c.versions.automation);
+          console.log('canvas_version=' + c.versions.agentCanvas);
+          console.log('canvas_path=' + c.paths.canvasBasePath);
+          JS
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push native image by digest
+        id: build
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: ${{ matrix.platform }}
+          outputs: type=image,name=ghcr.io/praxiss-lab/praxis,push-by-digest=true,name-canonical=true,push=true
+          build-args: |
+            AGENT_SERVER_IMAGE=${{ steps.config.outputs.base_image }}
+            AGENT_SERVER_VERSION=${{ steps.config.outputs.agent_version }}
+            AUTOMATION_VERSION=${{ steps.config.outputs.automation_version }}
+            AGENT_CANVAS_VERSION=${{ steps.config.outputs.canvas_version }}
+            PRAXIS_VERSION=${{ inputs.version }}
+            OPENHANDS_BUILD_GIT_SHA=${{ inputs.commit_sha }}
+            OPENHANDS_BUILD_GIT_REF=refs/tags/v${{ inputs.version }}
+            VITE_BASE_PATH=${{ steps.config.outputs.canvas_path }}
+          cache-from: type=gha,scope=praxis-release-${{ matrix.arch }}
+          cache-to: type=gha,scope=praxis-release-${{ matrix.arch }},mode=max
+          provenance: true
+          sbom: true
+      - name: Export native image digest
+        env:
+          IMAGE_DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          set -euo pipefail
+          mkdir -p "${{ runner.temp }}/image-digests"
+          printf '%s\n' "$IMAGE_DIGEST" > "${{ runner.temp }}/image-digests/${{ matrix.arch }}.txt"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: praxis-image-digest-${{ matrix.arch }}
+          path: ${{ runner.temp }}/image-digests/*.txt
+          if-no-files-found: error
+          retention-days: 7
+
+  merge:
+    name: Publish multiarch version tag
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    outputs:
+      digest: ${{ steps.manifest.outputs.digest }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.commit_sha }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24.15"
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: praxis-image-digest-*
+          path: image-digests
+          merge-multiple: true
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Validate native results and publish manifest
+        id: manifest
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+          RELEASE_SHA: ${{ inputs.commit_sha }}
+        run: node scripts/praxis/merge-image.mjs image-digests

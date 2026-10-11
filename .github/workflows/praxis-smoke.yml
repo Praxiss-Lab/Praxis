@@ -1,0 +1,57 @@
+name: Praxis Smoke
+
+on:
+  pull_request:
+    branches: [main]
+    paths-ignore: ['.pr/**', 'docs/**', '**/*.md', 'LICENSE', 'NOTICE']
+  push:
+    branches: [main]
+    paths-ignore: ['.pr/**', 'docs/**', '**/*.md', 'LICENSE', 'NOTICE']
+  workflow_dispatch:
+
+concurrency:
+  group: praxis-smoke-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  frontend-runtime:
+    name: Praxis Frontend Runtime Smoke
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24.15"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Verify CLI metadata
+        run: |
+          node bin/agent-canvas.mjs --version
+          node bin/agent-canvas.mjs --info
+          node bin/agent-canvas.mjs --help >/dev/null
+
+      - name: Run frontend runtime smoke
+        run: bash scripts/praxis/smoke.sh
+
+      - name: Upload smoke log on failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: praxis-smoke-log
+          if-no-files-found: ignore
+          retention-days: 7
+          path: /tmp/praxis-smoke.log

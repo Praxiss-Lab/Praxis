@@ -1,0 +1,24 @@
+apiVersion: v2
+name: agent-canvas
+description: |
+  Helm chart for running the Praxis all-in-one image
+  (frontend + agent-server + automation) as a StatefulSet with persistent
+  storage, ingress, and optional cluster RBAC.
+type: application
+# Chart-level version. Bump on chart changes.
+version: 0.1.0
+# Default appVersion pins the supported Praxis release. Update it explicitly
+# when preparing a release; override image.tag for another published version.
+appVersion: "1.25.0"
+kubeVersion: ">=1.24.0-0"
+home: https://github.com/Praxiss-Lab/Praxis
+sources:
+  - https://github.com/Praxiss-Lab/Praxis
+keywords:
+  - praxis
+  - agent
+  - ai
+  - agent-canvas
+maintainers:
+  - name: Emilio-01-T
+    url: https://github.com/Emilio-01-T

@@ -1,0 +1,57 @@
+name: SDK Version Sync
+
+on:
+  pull_request:
+    paths:
+      # Only run on PRs that touch version-related files
+      - "config/defaults.json"
+      - "package.json"
+      - "scripts/dev-safe.mjs"
+      - "scripts/dev-with-automation.mjs"
+      - "scripts/check-sdk-version-sync.mjs"
+      - ".github/workflows/sdk-version-sync.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "config/defaults.json"
+      - "package.json"
+      - "scripts/dev-safe.mjs"
+      - "scripts/dev-with-automation.mjs"
+      - "scripts/check-sdk-version-sync.mjs"
+      - ".github/workflows/sdk-version-sync.yml"
+
+  # Maintainers may manually check against an explicitly selected SDK version.
+  workflow_dispatch:
+    inputs:
+      sdk_version:
+        description: "New SDK version to check against (optional)"
+        required: false
+        type: string
+
+concurrency:
+  group: sdk-sync-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check-sdk-versions:
+    name: Check SDK version consistency
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+
+      - name: Check SDK version sync
+        run: node scripts/check-sdk-version-sync.mjs
+        env:
+          EXPECTED_SDK_VERSION: ${{ inputs.sdk_version || '' }}

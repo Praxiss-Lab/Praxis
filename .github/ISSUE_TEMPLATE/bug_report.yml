@@ -1,0 +1,138 @@
+name: Bug Report
+description: Report a bug or unexpected behavior in Praxis.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the sections below so we can reproduce and fix the issue.
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      options:
+        - macOS
+        - Windows
+        - Linux
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install-method
+    attributes:
+      label: Installation Method
+      description: How did you install / run Praxis?
+      options:
+        - Native release archive (`agent-canvas`)
+        - Docker (`ghcr.io/praxiss-lab/praxis`)
+        - From source (`npm run dev` / `npm run dev:minimal`)
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Praxis Version
+      description: "Native: `agent-canvas --version` · Docker: the exact version tag or image digest · Source: the commit SHA"
+      placeholder: "e.g. 1.25.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: What happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: |
+        Step-by-step instructions to reproduce the behavior. To qualify for the
+        `ready-for-dev` label, include how you ran Praxis using one of
+        these supported methods:
+          - `agent-canvas` installed from a Praxis release archive
+          - `npm run dev` / `npm run dev:minimal` (from a source checkout)
+          - Docker using `ghcr.io/praxiss-lab/praxis:<version>`
+          - The desktop application (include platform and artifact version)
+        Specify complete / backend-only / frontend-only mode, and whether the
+        backend is on the same device or a personal VM. Do not include API keys.
+      placeholder: |
+        Run method: `npm run dev`
+
+        1. npm ci && npm run dev
+        2. Open http://localhost:8000
+        3. …
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: |
+        Describe what happened. For functional Praxis bugs, include a screenshot
+        or video of the failure in the running app. Logs, API output, and
+        reproducers can supplement it. Say if you have not reproduced it.
+        Links in comments count; no after-fix evidence is needed for triage.
+      placeholder: |
+        The button moved to the next step unexpectedly.
+
+        The attached screenshot shows the observed error.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Logs
+      description: Paste any error messages or console output. Content is auto-wrapped in a code block.
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      description: |
+        For `ready-for-dev`, list observable fixed outcomes, not PR artifacts.
+        Tests and before/after fix evidence are not needed for triage.
+      placeholder: |
+        - [ ] Following the reproduction steps produces the expected result.
+        - [ ] The affected mode handles the failure without losing user state.
+        - [ ] …
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Drag and drop or paste any screenshots that help explain the issue.
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Anything else that might be helpful (config, workarounds tried, etc.).
+    validations:
+      required: false

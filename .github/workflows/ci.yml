@@ -1,0 +1,51 @@
+name: Upstream Compatibility CI
+
+# Praxis keeps this as an explicit compatibility check against the inherited
+# OpenHands build/test expectations. Praxis CI is the automatic merge gate.
+# Run this workflow manually when evaluating a significant upstream adoption.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  upstream-compat:
+    name: Upstream Compatibility
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24.15"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate i18n declarations
+        run: npm run make-i18n
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build app
+        run: npm run build
+
+      - name: Build library
+        run: npm run build:lib
+
+      - name: Verify package contents
+        run: npm pack --dry-run
