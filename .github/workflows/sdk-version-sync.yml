@@ -10,17 +10,6 @@ on:
       - "scripts/dev-with-automation.mjs"
       - "scripts/check-sdk-version-sync.mjs"
       - ".github/workflows/sdk-version-sync.yml"
-  push:
-    branches:
-      - main
-    paths:
-      - "config/defaults.json"
-      - "package.json"
-      - "scripts/dev-safe.mjs"
-      - "scripts/dev-with-automation.mjs"
-      - "scripts/check-sdk-version-sync.mjs"
-      - ".github/workflows/sdk-version-sync.yml"
-
   # Maintainers may manually check against an explicitly selected SDK version.
   workflow_dispatch:
     inputs:
