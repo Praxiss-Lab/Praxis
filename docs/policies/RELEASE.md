@@ -9,7 +9,7 @@ Release publication remains independent from OpenHands.
 
 The one-time `Praxis Migration Restore` workflow preserves the original 1.25.0
 release assets without rebuilding. It is restricted to replacement repository
-ID `1413862562`, its preserved release snapshot and recorded asset SHA-256
+ID `1414005964`, its preserved release snapshot and recorded asset SHA-256
 digests. Run it manually on `main` with `RESTORE`, while the original repository
 still exists. It refuses conflicting tags/assets and verifies uploads before
 publishing; a partial matching draft can resume. This is a restoration of an
