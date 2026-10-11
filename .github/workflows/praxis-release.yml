@@ -112,14 +112,6 @@ jobs:
       contents: write
       actions: read
     steps:
-      - name: Checkout verified release commit for installation notes
-        uses: actions/checkout@v7
-        with:
-          ref: ${{ needs.verify.outputs.sha }}
-      - name: Set up Node.js for installation notes
-        uses: actions/setup-node@v7
-        with:
-          node-version: "24.15"
       - uses: actions/download-artifact@v8
         with:
           name: praxis-native-package
@@ -141,7 +133,5 @@ jobs:
           printf 'Praxis %s\nCommit: %s\nImage: ghcr.io/praxiss-lab/praxis:%s\nDigest: %s\n' \
             "$PRAXIS_RELEASE_VERSION" "$RELEASE_SHA" "$PRAXIS_RELEASE_VERSION" "$IMAGE_DIGEST" \
             > release-assets/image.txt
-          node scripts/praxis/release-notes.mjs release-assets > release-notes.md
           gh release create "$tag" release-assets/* --target "$RELEASE_SHA" \
-            --title "Praxis $PRAXIS_RELEASE_VERSION" --notes-file release-notes.md \
-            --generate-notes "${flags[@]}"
+            --title "Praxis $PRAXIS_RELEASE_VERSION" --generate-notes "${flags[@]}"

@@ -109,19 +109,3 @@ through GitHub. No additional publishing credential is configured by this policy
 The desktop application's inherited technical names and packaging paths are
 retained until a separate branding migration. They do not change the Docker
 image's Praxis registry namespace or its complete/backend/frontend launch modes.
-
-## Release installation notes
-
-The release description starts with `.github/release-installation.md`, rendered
-by `scripts/praxis/release-notes.mjs` from the verified release commit. The version,
-repository and actual attached archive filename are substituted at publication;
-GitHub's generated changelog follows the installation instructions. Keep Docker,
-native, split-mode, persistence and troubleshooting commands aligned with the
-distribution guide. Instructions and artifacts use the same release version.
-
-For an existing release, update its description without deleting its tag or
-rebuilding its images. Render the installation section locally, prepend it to
-the existing changelog, and edit the GitHub release description. This maintenance
-operation needs release-description authorization and does not dispatch publication.
-The package must be public for the documented anonymous Docker pull to work;
-visibility is an organization/package setting, not inherited from a public repo.
