@@ -12,7 +12,7 @@ const NEO_WHITE_BUTTON_TOKENS: Partial<
 };
 
 export const openhandsNeo: ColorThemeDefinition = {
-  label: "OpenHands-Neo",
+  label: "Praxis-Neo",
   appearance: "dark",
   scale: NEUTRAL_SCALE,
   heroui: NEUTRAL_HEROUI,

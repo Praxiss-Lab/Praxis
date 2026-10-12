@@ -98,7 +98,7 @@ export function createInterfaceManifest(
       detail: { backLabel: "Back to the widgets" },
       edit: { title: "Edit the widget automation" },
     },
-    docsUrl: "https://docs.openhands.dev/widgets",
+    docsUrl: "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md",
     attributes: {
       name: { type: "text", label: "Widget name", required: true },
       timeout: {

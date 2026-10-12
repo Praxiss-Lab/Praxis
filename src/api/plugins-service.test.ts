@@ -2,14 +2,14 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   FileClient,
   PluginsClient,
-} from "@openhands/typescript-client/clients";
+} from "@praxiss-lab/praxis-sdk-client/clients";
 import {
   setActiveSelection,
   setRegisteredBackends,
 } from "./backend-registry/active-store";
 import PluginsService from "./plugins-service";
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   PluginsClient: vi.fn(),
   FileClient: vi.fn(),
 }));

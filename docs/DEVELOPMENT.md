@@ -82,11 +82,11 @@ unsupported and often looks like a product bug.
 
 Owning repositories:
 
-- [`OpenHands/OpenHands`](https://github.com/OpenHands/OpenHands) (this repo) — Agent Canvas
+- [`OpenHands/OpenHands`](https://github.com/Praxiss-Lab/Praxis) (this repo) — Agent Canvas
 - [`Praxiss-Lab/praxis-sdk`](https://github.com/Praxiss-Lab/praxis-sdk) — Python SDK and Agent Server
-- [`software-agent-sdk/clients/typescript`](https://github.com/Praxiss-Lab/praxis-sdk/tree/main/clients/typescript) — `@openhands/typescript-client`
+- [`software-agent-sdk/clients/typescript`](https://github.com/Praxiss-Lab/praxis-sdk/tree/main/clients/typescript) — `@praxiss-lab/praxis-sdk-client`
 - [`Praxis/vendor/automation`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor/automation) — scheduling, webhooks, run history
-- [`Praxis/vendor`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor) — `@openhands/extensions` skills and integrations
+- [`Praxis/vendor`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor) — `@praxiss-lab/praxis-extensions` skills and integrations
 
 #### Source of truth
 
@@ -95,8 +95,8 @@ Owning repositories:
 | Frozen Agent Server / SDK source revision        | [`config/defaults.json`](../config/defaults.json) `sources.sdk.ref`      |
 | Bundled automation PyPI pin                | `config/defaults.json` `versions.automation`                                  |
 | Oldest Agent Server this frontend accepts  | `config/defaults.json` `compatibility.minimumAgentServer`                     |
-| `@openhands/typescript-client`             | [`package.json`](../package.json) (exact npm pin)                             |
-| `@openhands/extensions`                    | `package.json` (exact npm pin)                                                |
+| `@praxiss-lab/praxis-sdk-client`             | [`package.json`](../package.json) (exact npm pin)                             |
+| `@praxiss-lab/praxis-extensions`                    | `package.json` (exact npm pin)                                                |
 | Released automation ↔ SDK dependency match | [`scripts/check-sdk-version-sync.mjs`](../scripts/check-sdk-version-sync.mjs) |
 
 `config/defaults.json` is the source of truth for the Python backend pins used
@@ -111,7 +111,7 @@ version are interchangeable.
 Runtime enforcement for a connected Agent Server is
 `assertAgentServerVersionIsSupported()` in
 [`src/api/agent-server-compatibility.ts`](../src/api/agent-server-compatibility.ts).
-Some UI features have additional floors inside `@openhands/typescript-client`.
+Some UI features have additional floors inside `@praxiss-lab/praxis-sdk-client`.
 Meeting `compatibility.minimumAgentServer` does not mean every Canvas feature
 is available on that backend.
 
@@ -130,8 +130,8 @@ automation. Leaving an override unset means "use the pin above", not Git
 **Agent Server** ([`software-agent-sdk`](https://github.com/Praxiss-Lab/praxis-sdk)):
 
 1. `OH_AGENT_SERVER_LOCAL_PATH` — absolute path to a checkout that contains
-   `openhands-agent-server`, `openhands-sdk`, `openhands-tools`, and
-   `openhands-workspace`. The agent-server package is rebuilt from local
+   `praxis-agent-server`, `praxis-sdk`, `praxis-tools`, and
+   `praxis-workspace`. The agent-server package is rebuilt from local
    source on each start (`uvx --reinstall`); the other workspace packages are
    installed editable.
 2. `OH_AGENT_SERVER_GIT_REF` — branch, tag, or commit. All four workspace
@@ -161,9 +161,9 @@ Bundled Automation dependencies are checked against `versions.agentServer`.
 CI runs `scripts/check-sdk-version-sync.mjs` against the controlled source and client lock metadata without fetching upstream package metadata by default.
 
 **TypeScript client and extensions:** Canvas does not provide Git-ref or
-local-path launcher variables for `@openhands/typescript-client` or
-`@openhands/extensions`. Both are exact npm pins in `package.json`. Public
-skills are loaded from `@openhands/extensions` at **build time**; the Agent
+local-path launcher variables for `@praxiss-lab/praxis-sdk-client` or
+`@praxiss-lab/praxis-extensions`. Both are exact npm pins in `package.json`. Public
+skills are loaded from `@praxiss-lab/praxis-extensions` at **build time**; the Agent
 Server no longer clones the extensions repo or honors `EXTENSIONS_REF`.
 
 Contributor notes require a **published** TypeScript client before Canvas
@@ -183,12 +183,12 @@ bump the Canvas pin after the package exists on the registry.
    `OH_AGENT_SERVER_GIT_REF`; keep the TypeScript client pin until the client
    is published.
 4. Mirror the contract in `software-agent-sdk/clients/typescript` (OpenAPI and handwritten
-   clients). Publish that package, then bump `@openhands/typescript-client`
+   clients). Publish that package, then bump `@praxiss-lab/praxis-sdk-client`
    here.
-5. If automation must run against the new SDK, release `openhands-automation`
+5. If automation must run against the new SDK, release `praxis-automation`
    with matching SDK dependencies, then update `versions.automation` so
    `scripts/check-sdk-version-sync.mjs` still passes.
-6. If public skills or integrations change, publish `@openhands/extensions`
+6. If public skills or integrations change, publish `@praxiss-lab/praxis-extensions`
    and then bump that dependency.
 7. If a Canvas PR needs an unreleased Agent Server, link the
    `Praxiss-Lab/praxis-sdk` pull request and record the local-path or
@@ -206,7 +206,7 @@ Agent Canvas. Automation scheduling flows Canvas → `automation` → Agent
 Server / SDK.
 
 REST deprecation and the removal runway are owned by
-`software-agent-sdk` (`openhands-agent-server/AGENTS.md`). Canvas must not
+`software-agent-sdk` (`praxis-agent-server/AGENTS.md`). Canvas must not
 skip the client release step or consume an unpublished client SHA.
 
 Event wire types follow the same order: SDK Pydantic model, then TypeScript

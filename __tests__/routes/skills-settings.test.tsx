@@ -467,7 +467,7 @@ Full skill body.`,
     const modal = await screen.findByTestId("add-skill-modal");
     expect(modal).toBeInTheDocument();
     expect(screen.getByTestId("add-skill-modal-example")).toHaveTextContent(
-      "/add-skill https://github.com/OpenHands/extensions/tree/main/skills/code-review",
+      "/add-skill https://github.com/Praxiss-Lab/Praxis/tree/main/.agents/skills/local-stack-runtime",
     );
     expect(screen.getByTestId("add-skill-modal-docs-link")).toHaveAttribute(
       "href",
@@ -493,7 +493,7 @@ Full skill body.`,
 
     expect(writeText).toHaveBeenCalledWith(ADD_SKILL_EXAMPLE_COMMAND);
   });
-  // A skill from the bundled `@openhands/extensions` catalog: those are
+  // A skill from the bundled `@praxiss-lab/praxis-extensions` catalog: those are
   // governed by the `enabled_skills` allow-list, not the deny-list.
   const CATALOG_RECOMMENDED = "add-skill";
   const CATALOG_OPTIONAL = "add-javadoc";

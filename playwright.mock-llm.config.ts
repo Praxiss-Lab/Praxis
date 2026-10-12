@@ -2,7 +2,7 @@
  * Playwright config for mock-LLM E2E tests.
  *
  * Starts three processes:
- *   1. Mock LLM server (Python, using openhands-sdk TestLLM)
+ *   1. Mock LLM server (Python, using praxis-sdk TestLLM)
  *   2. Full agent-canvas stack via bin/agent-canvas.mjs (agent-server +
  *      automation backend + static frontend + ingress proxy), matching the
  *      production npm-published binary.
@@ -125,7 +125,7 @@ export default defineConfig({
     },
     // 2. Full agent-canvas stack via bin/agent-canvas.mjs
     //
-    // This mirrors the production `npx @openhands/agent-canvas` path:
+    // This mirrors the production `npx @praxiss-lab/praxis` path:
     //   - Pre-built static frontend served via static-server.mjs
     //   - Agent-server via uvx
     //   - Automation backend via uvx

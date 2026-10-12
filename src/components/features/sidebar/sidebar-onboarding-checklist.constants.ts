@@ -5,7 +5,7 @@ import type {
 } from "#/hooks/use-tracking";
 
 const SCHEDULED_TASKS_DOCS_URL =
-  "https://docs.openhands.dev/openhands/usage/agent-canvas/prebuilt-automations";
+  "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md";
 
 /** Praxis support and community entry point. */
 export const OPENHANDS_SLACK_COMMUNITY_URL =
@@ -136,14 +136,16 @@ export const SIDEBAR_ONBOARDING_CHECKLIST_DOCS_URLS: Record<
   string
 > = {
   "configure-llm":
-    "https://docs.openhands.dev/openhands/usage/settings/llm-settings#llm-profiles",
+    "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md",
   "start-conversation":
-    "https://docs.openhands.dev/openhands/usage/agent-canvas/backends",
+    "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md",
   "schedule-task": SCHEDULED_TASKS_DOCS_URL,
   "customize-agent":
-    "https://docs.openhands.dev/openhands/usage/agent-canvas/customize-and-settings",
-  "connect-mcp": "https://docs.openhands.dev/overview/model-context-protocol",
-  "join-slack": "https://docs.openhands.dev/overview/community",
+    "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md",
+  "connect-mcp":
+    "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md",
+  "join-slack":
+    "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md",
 };
 
 export function isCustomizeChecklistPath(path: string): boolean {

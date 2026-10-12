@@ -1,13 +1,13 @@
 import type {
   MCPAuthCredential,
   MCPOAuthAuthentication,
-} from "@openhands/typescript-client";
+} from "@praxiss-lab/praxis-sdk-client";
 
 export type {
   MCPAuthCredential,
   MCPOAuthAuthentication,
   MCPOAuthState,
-} from "@openhands/typescript-client";
+} from "@praxiss-lab/praxis-sdk-client";
 
 export type MCPAuthenticationConfig = MCPOAuthAuthentication;
 export type MCPOAuthAuthenticationConfig = MCPOAuthAuthentication;

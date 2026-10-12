@@ -23,7 +23,7 @@ import {
   ModalBody,
 } from "#/components/shared/modals/modal-body";
 import { ModalCloseButton } from "#/components/shared/modals/modal-close-button";
-import { useLatestAgentCanvasVersion } from "#/hooks/query/use-latest-agent-canvas-version";
+import { useLatestAgentCanvasRelease } from "#/hooks/query/use-latest-agent-canvas-version";
 import DockerIcon from "#/icons/docker.svg?react";
 import NpmIcon from "#/icons/npm.svg?react";
 import { I18nKey } from "#/i18n/declaration";
@@ -48,15 +48,16 @@ function UpdateCommandTabIcon({ tab }: { tab: UpdateCommandTab }) {
   return <DockerIcon className="size-5 shrink-0" aria-hidden />;
 }
 
-function UpdateCommandTabs() {
+function UpdateCommandTabs({
+  commands,
+}: {
+  commands: { npm: string; docker: string };
+}) {
   const { t } = useTranslation("openhands");
   const [selectedTab, setSelectedTab] = useState<UpdateCommandTab>("npm");
   const [copied, setCopied] = useState(false);
   const copiedTimeoutRef = useRef<number | null>(null);
-  const command =
-    selectedTab === "npm"
-      ? AGENT_CANVAS_UPDATE_COMMANDS.npm
-      : AGENT_CANVAS_UPDATE_COMMANDS.docker;
+  const command = selectedTab === "npm" ? commands.npm : commands.docker;
 
   useEffect(
     () => () => {
@@ -142,6 +143,7 @@ function UpdateCommandTabs() {
 }
 
 interface AgentCanvasUpdateModalProps {
+  commands: { npm: string; docker: string };
   onClose: () => void;
   latestVersion: string | undefined;
   isPending: boolean;
@@ -152,6 +154,7 @@ interface AgentCanvasUpdateModalProps {
 }
 
 function AgentCanvasUpdateModal({
+  commands,
   onClose,
   latestVersion,
   isPending,
@@ -261,7 +264,7 @@ function AgentCanvasUpdateModal({
               <span className="mt-1 mb-4 text-sm text-text-dim">
                 {t(I18nKey.SETTINGS$APP_UPDATE_RUN_COMMANDS)}
               </span>
-              <UpdateCommandTabs />
+              <UpdateCommandTabs commands={commands} />
             </div>
           ) : null}
         </div>
@@ -287,13 +290,13 @@ export function AgentCanvasUpdateCard({
   const { t } = useTranslation("openhands");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isLockedToCloud = getLockedCloudHost() !== null;
-  const latestVersionQuery = useLatestAgentCanvasVersion({
+  const latestVersionQuery = useLatestAgentCanvasRelease({
     enabled: !isLockedToCloud,
   });
 
   if (isLockedToCloud) return null;
 
-  const latestVersion = latestVersionQuery.data;
+  const latestVersion = latestVersionQuery.data?.version;
   const comparison =
     latestVersion !== undefined
       ? compareAgentServerVersions(latestVersion, AGENT_CANVAS_CLIENT_VERSION)
@@ -351,6 +354,9 @@ export function AgentCanvasUpdateCard({
 
       {isModalOpen && (
         <AgentCanvasUpdateModal
+          commands={
+            latestVersionQuery.data?.commands ?? AGENT_CANVAS_UPDATE_COMMANDS
+          }
           onClose={() => setIsModalOpen(false)}
           latestVersion={latestVersion}
           isPending={latestVersionQuery.isPending}

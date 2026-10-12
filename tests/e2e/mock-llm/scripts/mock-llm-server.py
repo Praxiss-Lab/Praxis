@@ -1,4 +1,4 @@
-"""Mock OpenAI-compatible LLM server powered by openhands-sdk TestLLM.
+"""Mock OpenAI-compatible LLM server powered by praxis-sdk TestLLM.
 
 Serves scripted trajectories as OpenAI /v1/chat/completions responses.
 The agent-server's litellm layer talks to this instead of a real LLM provider.
@@ -364,7 +364,7 @@ def _is_preflight_ping(body: dict) -> bool:
     """Match the agent-server's profile pre-flight check.
 
     It is a single user message saying "ping" with ``max_tokens=1`` (see
-    ``profiles_router.validate_profile`` in openhands-agent-server). The text
+    ``profiles_router.validate_profile`` in praxis-agent-server). The text
     arrives either as a plain string or as OpenAI content parts.
     """
     if body.get("max_tokens") != 1:

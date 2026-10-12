@@ -164,7 +164,7 @@ try {
   );
   const frontendProcesses = docker("top", frontend.name, "-eo", "pid,args");
   assert.ok(
-    !/openhands-agent-server|uvicorn openhands\.automation/.test(
+    !/praxis-agent-server|uvicorn openhands\.automation/.test(
       frontendProcesses,
     ),
   );

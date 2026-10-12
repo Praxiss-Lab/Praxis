@@ -27,7 +27,7 @@ vi.mock("#/api/agent-server-client-options", () => ({
   getAgentServerClientOptions: mocks.clientOptions,
 }));
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   AgentProfilesClient: mocks.Client,
 }));
 

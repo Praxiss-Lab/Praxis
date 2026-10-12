@@ -1,12 +1,12 @@
 /**
  * Host-owned shape of an extension-authored setup experience.
  *
- * A catalog entry is declarative data published by `@openhands/extensions`. Its
+ * A catalog entry is declarative data published by `@praxiss-lab/praxis-extensions`. Its
  * optional `setup` block says what to ask a user for; everything derivable from
  * that — the request to send, the route, the review screen, the analytics — is
  * this host's to generate, so none of it appears here.
  *
- * The names mirror `@openhands/extensions/automations`' own declarations, so an
+ * The names mirror `@praxiss-lab/praxis-extensions/automations`' own declarations, so an
  * entry from the published package assigns without an adapter.
  */
 
@@ -269,7 +269,7 @@ export interface ValidateDraftResponse {
 
 /**
  * Host-owned shape of the production Automation interface manifest, published
- * by `@openhands/extensions/automations` as `AUTOMATION_INTERFACE`.
+ * by `@praxiss-lab/praxis-extensions/automations` as `AUTOMATION_INTERFACE`.
  *
  * The catalog states what varies per automation; this states the domain-level
  * facts of the interface itself. As with setup entries, the published data is

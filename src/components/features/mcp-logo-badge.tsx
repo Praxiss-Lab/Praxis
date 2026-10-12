@@ -1,6 +1,6 @@
 import type { ComponentType, ReactNode, SVGProps } from "react";
 import { Bot } from "lucide-react";
-import type { IntegrationCatalogEntry } from "@openhands/extensions/integrations";
+import type { IntegrationCatalogEntry } from "@praxiss-lab/praxis-extensions/integrations";
 import SlackIcon from "#/icons/slack.svg?react";
 import { cn } from "#/utils/utils";
 

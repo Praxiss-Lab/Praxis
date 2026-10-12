@@ -1,4 +1,4 @@
-import type { MCPConfig } from "@openhands/typescript-client";
+import type { MCPConfig } from "@praxiss-lab/praxis-sdk-client";
 import type { MCPServerConfig } from "#/types/mcp-server";
 import { getMcpServerEnabled } from "./mcp-config";
 

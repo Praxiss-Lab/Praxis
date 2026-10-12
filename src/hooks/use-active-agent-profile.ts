@@ -1,4 +1,4 @@
-import type { AgentKind } from "@openhands/typescript-client";
+import type { AgentKind } from "@praxiss-lab/praxis-sdk-client";
 import type { AgentProfileSummary } from "#/api/agent-profiles-service/agent-profiles-service.api";
 import { useAgentProfiles } from "#/hooks/query/use-agent-profiles";
 

@@ -46,7 +46,7 @@ test.describe.configure({ mode: "serial" });
 test.describe("auth mode: fresh install with runtime-injected key", () => {
   // Regression for the bug a user hit on v1.0.0-beta.7:
   //
-  //   `npm install -g @openhands/agent-canvas && agent-canvas`
+  //   `npm install -g @praxiss-lab/praxis && agent-canvas`
   //
   // landed on the Manage Backends modal ("No extra backends added yet.")
   // with no way out, because the prebuilt bundle has no

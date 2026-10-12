@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { SharedClient } from "@openhands/typescript-client/clients";
+import { SharedClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import { getAgentServerClientOptions } from "#/api/agent-server-client-options";
 import { getActiveBackend } from "#/api/backend-registry/active-store";
 import {

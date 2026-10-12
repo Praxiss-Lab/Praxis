@@ -1,4 +1,4 @@
-import { PluginsClient } from "@openhands/typescript-client/clients";
+import { PluginsClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import { getActiveBackend } from "./backend-registry/active-store";
 import { getAgentServerClientOptions } from "./agent-server-client-options";
 import type { PluginBundledSkill } from "./plugins-service";
@@ -34,7 +34,7 @@ export interface InstallPluginRequest {
 
 /**
  * The slice of the typescript-client `PluginsClient` this service drives. The
- * installed `@openhands/typescript-client` package does not yet export these
+ * installed `@praxiss-lab/praxis-sdk-client` package does not yet export these
  * management methods (they ship in typescript-client PRs #222/#223); narrowing
  * to this local interface keeps `vitest` (types stripped) and `eslint` green
  * until the client is republished, at which point the cast below can be dropped.

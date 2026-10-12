@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { AUTOMATION_CATALOG } from "@openhands/extensions/automations";
-import { INTEGRATION_CATALOG } from "@openhands/extensions/integrations";
+import { AUTOMATION_CATALOG } from "@praxiss-lab/praxis-extensions/automations";
+import { INTEGRATION_CATALOG } from "@praxiss-lab/praxis-extensions/integrations";
 import { SETUP_REGISTRY } from "#/manifests/manifest-sources";
 import { getIntegrationIds } from "#/utils/automation-catalog";
 
 describe("OpenHands extensions catalogs", () => {
-  it("loads recommended automations from @openhands/extensions", () => {
+  it("loads recommended automations from @praxiss-lab/praxis-extensions", () => {
     expect(AUTOMATION_CATALOG.length).toBeGreaterThan(0);
 
     const knownMcpIds = new Set(INTEGRATION_CATALOG.map((entry) => entry.id));

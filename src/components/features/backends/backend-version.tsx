@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 
-import { ServerClient } from "@openhands/typescript-client/clients";
+import { ServerClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import { type Backend } from "#/api/backend-registry/types";
 import { getAgentServerClientOptions } from "#/api/agent-server-client-options";
 import { getDisplayAgentServerVersion } from "#/api/agent-server-compatibility";

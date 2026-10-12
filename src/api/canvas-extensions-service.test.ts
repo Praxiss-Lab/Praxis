@@ -1,7 +1,7 @@
 import {
   AgentServerClient,
   CanvasExtensionsClient,
-} from "@openhands/typescript-client/clients";
+} from "@praxiss-lab/praxis-sdk-client/clients";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import CanvasExtensionsService, {
   CanvasExtensionsUnsupportedError,
@@ -14,7 +14,7 @@ import {
 import type { Backend } from "#/api/backend-registry/types";
 import type { InstalledCanvasExtensionInfo } from "#/types/canvas-extension";
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   AgentServerClient: vi.fn(),
   CanvasExtensionsClient: vi.fn(),
 }));

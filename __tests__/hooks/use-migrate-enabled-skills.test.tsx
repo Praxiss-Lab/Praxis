@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { DEFAULT_ENABLED_SKILL_NAMES } from "@openhands/extensions/skills";
+import { DEFAULT_ENABLED_SKILL_NAMES } from "@praxiss-lab/praxis-extensions/skills";
 import { useMigrateEnabledSkills } from "#/hooks/use-migrate-enabled-skills";
 
 const useSettingsMock = vi.fn();

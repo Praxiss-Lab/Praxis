@@ -99,27 +99,27 @@ describe("check-sdk-version-sync helpers", () => {
   describe("parseSdkVersionsFromRequiresDist", () => {
     it("parses standard PEP 508 format with >=", () => {
       const deps = [
-        "openhands-sdk>=1.22.0,<2.0.0",
-        "openhands-workspace>=1.22.0",
+        "praxis-sdk>=1.22.0,<2.0.0",
+        "praxis-workspace>=1.22.0",
       ];
       const versions = parseSdkVersionsFromRequiresDist(deps);
 
-      expect(versions["openhands-sdk"]).toBe("1.22.0");
-      expect(versions["openhands-workspace"]).toBe("1.22.0");
+      expect(versions["praxis-sdk"]).toBe("1.22.0");
+      expect(versions["praxis-workspace"]).toBe("1.22.0");
     });
 
     it("parses exact version pins with ==", () => {
-      const deps = ["openhands-tools==1.21.1"];
+      const deps = ["praxis-tools==1.21.1"];
       const versions = parseSdkVersionsFromRequiresDist(deps);
 
-      expect(versions["openhands-tools"]).toBe("1.21.1");
+      expect(versions["praxis-tools"]).toBe("1.21.1");
     });
 
     it("parses parenthesized format", () => {
-      const deps = ["openhands-sdk (>=1.22.0)"];
+      const deps = ["praxis-sdk (>=1.22.0)"];
       const versions = parseSdkVersionsFromRequiresDist(deps);
 
-      expect(versions["openhands-sdk"]).toBe("1.22.0");
+      expect(versions["praxis-sdk"]).toBe("1.22.0");
     });
 
     it("returns empty object for no matching packages", () => {
@@ -132,27 +132,27 @@ describe("check-sdk-version-sync helpers", () => {
     it("handles mixed dependencies", () => {
       const deps = [
         "requests>=2.0.0",
-        "openhands-sdk>=1.22.0",
+        "praxis-sdk>=1.22.0",
         "flask>=1.0.0",
-        "openhands-workspace (>=1.21.0)",
+        "praxis-workspace (>=1.21.0)",
       ];
       const versions = parseSdkVersionsFromRequiresDist(deps);
 
-      expect(versions["openhands-sdk"]).toBe("1.22.0");
-      expect(versions["openhands-workspace"]).toBe("1.21.0");
+      expect(versions["praxis-sdk"]).toBe("1.22.0");
+      expect(versions["praxis-workspace"]).toBe("1.21.0");
       expect(versions["requests"]).toBeUndefined();
     });
 
     it("handles tilde version specifier", () => {
-      const deps = ["openhands-sdk~=1.22.0"];
+      const deps = ["praxis-sdk~=1.22.0"];
       const versions = parseSdkVersionsFromRequiresDist(deps);
 
-      expect(versions["openhands-sdk"]).toBe("1.22.0");
+      expect(versions["praxis-sdk"]).toBe("1.22.0");
     });
 
     it("handles version with extras", () => {
       // PyPI sometimes includes extras in requires_dist
-      const deps = ["openhands-sdk[all]>=1.22.0"];
+      const deps = ["praxis-sdk[all]>=1.22.0"];
       const versions = parseSdkVersionsFromRequiresDist(deps);
 
       // Current implementation may not handle extras perfectly,
@@ -163,10 +163,10 @@ describe("check-sdk-version-sync helpers", () => {
 
   describe("SDK_PACKAGES", () => {
     it("contains the expected SDK packages", () => {
-      expect(SDK_PACKAGES).toContain("openhands-sdk");
-      expect(SDK_PACKAGES).toContain("openhands-tools");
-      expect(SDK_PACKAGES).toContain("openhands-workspace");
-      expect(SDK_PACKAGES).toContain("openhands-agent-server");
+      expect(SDK_PACKAGES).toContain("praxis-sdk");
+      expect(SDK_PACKAGES).toContain("praxis-tools");
+      expect(SDK_PACKAGES).toContain("praxis-workspace");
+      expect(SDK_PACKAGES).toContain("praxis-agent-server");
       expect(SDK_PACKAGES).toHaveLength(4);
     });
   });

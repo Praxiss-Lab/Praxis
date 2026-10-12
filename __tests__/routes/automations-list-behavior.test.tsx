@@ -1087,7 +1087,7 @@ describe("automations list interactions", () => {
       automations: [makeAutomation()],
       total: 1,
     };
-    window.localStorage.setItem("openhands-automations-view", "list");
+    window.localStorage.setItem("praxis-automations-view", "list");
     const user = userEvent.setup();
 
     renderList();
@@ -1095,7 +1095,7 @@ describe("automations list interactions", () => {
     await user.click(screen.getByTestId("view-toggle"));
 
     expect(screen.getByTestId("view-toggle")).toHaveTextContent("grid");
-    expect(window.localStorage.getItem("openhands-automations-view")).toBe(
+    expect(window.localStorage.getItem("praxis-automations-view")).toBe(
       "grid",
     );
   });

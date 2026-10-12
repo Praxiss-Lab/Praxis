@@ -1,4 +1,4 @@
-import type { RecommendedAutomation } from "@openhands/extensions/automations";
+import type { RecommendedAutomation } from "@praxiss-lab/praxis-extensions/automations";
 import { I18nKey } from "#/i18n/declaration";
 import { getResponderIntegrationIds } from "#/manifests/automation-interface";
 import { getRequiredIntegrationIds } from "#/utils/automation-catalog";

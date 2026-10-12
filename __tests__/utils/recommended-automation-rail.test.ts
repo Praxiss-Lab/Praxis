@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { AUTOMATION_CATALOG } from "@openhands/extensions/automations";
+import { AUTOMATION_CATALOG } from "@praxiss-lab/praxis-extensions/automations";
 import { SETUP_REGISTRY } from "#/manifests/manifest-sources";
 import {
   flattenRecommendedRailGroups,

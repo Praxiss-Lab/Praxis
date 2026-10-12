@@ -58,9 +58,9 @@ fi
 
 echo "[setup] Installing OpenHands SDK from PyPI (version: $SDK_VERSION)"
 uv pip install --python "$VENV_PYTHON" --quiet \
-  "openhands-sdk==${SDK_VERSION}" \
-  "openhands-tools==${SDK_VERSION}" \
-  "openhands-workspace==${SDK_VERSION}"
+  "praxis-sdk==${SDK_VERSION}" \
+  "praxis-tools==${SDK_VERSION}" \
+  "praxis-workspace==${SDK_VERSION}"
 
 if ! "$VENV_PYTHON" -c 'import openhands.sdk, openhands.tools, openhands.workspace'; then
     echo "[setup] ERROR: OpenHands SDK is not importable from .venv" >&2

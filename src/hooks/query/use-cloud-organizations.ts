@@ -1,5 +1,5 @@
 import { useQueries } from "@tanstack/react-query";
-import { HttpError } from "@openhands/typescript-client";
+import { HttpError } from "@praxiss-lab/praxis-sdk-client";
 import axios from "axios";
 import { useActiveBackendContext } from "#/contexts/active-backend-context";
 import {

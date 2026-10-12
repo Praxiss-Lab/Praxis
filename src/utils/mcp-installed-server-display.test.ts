@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { IntegrationCatalogEntry as MarketplaceEntry } from "@openhands/extensions/integrations";
+import type { IntegrationCatalogEntry as MarketplaceEntry } from "@praxiss-lab/praxis-extensions/integrations";
 import type { MCPServerConfig } from "#/types/mcp-server";
 import { getInstalledServerTitle } from "./mcp-installed-server-display";
 

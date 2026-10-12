@@ -1,4 +1,4 @@
-import { LLMMetadataClient } from "@openhands/typescript-client/clients";
+import { LLMMetadataClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import { loadAgentServerInfo } from "../agent-server-compatibility";
 import { getAgentServerClientOptions } from "../agent-server-client-options";
 import { ModelsResponse, WebClientConfig } from "./option.types";

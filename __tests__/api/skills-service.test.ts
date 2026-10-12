@@ -1,4 +1,4 @@
-import { SkillsClient } from "@openhands/typescript-client/clients";
+import { SkillsClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   __resetActiveStoreForTests,
@@ -26,13 +26,13 @@ const { mockGetSkills, MOCK_PUBLIC_CATALOG } = vi.hoisted(() => ({
   ],
 }));
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   SkillsClient: vi.fn(function SkillsClientMock() {
     return { getSkills: mockGetSkills };
   }),
 }));
 
-vi.mock("@openhands/extensions/skills", () => ({
+vi.mock("@praxiss-lab/praxis-extensions/skills", () => ({
   SKILLS_CATALOG: MOCK_PUBLIC_CATALOG,
 }));
 

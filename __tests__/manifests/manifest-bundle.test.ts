@@ -5,9 +5,9 @@ const BUNDLE_FILES: Record<string, Record<string, string>> = {
   "widget-monitor": { "main.py": "print('watching')\n" },
 };
 
-vi.mock("@openhands/extensions/automations", async (importOriginal) => ({
+vi.mock("@praxiss-lab/praxis-extensions/automations", async (importOriginal) => ({
   ...(await importOriginal<
-    typeof import("@openhands/extensions/automations")
+    typeof import("@praxiss-lab/praxis-extensions/automations")
   >()),
   getAutomationBundleFiles: (id: string) => BUNDLE_FILES[id],
 }));

@@ -112,7 +112,7 @@ try {
       "-f",
       join(
         sdkRoot,
-        "openhands-agent-server/openhands/agent_server/docker/Dockerfile",
+        "praxis-agent-server/openhands/agent_server/docker/Dockerfile",
       ),
       "-t",
       agentServerImage,

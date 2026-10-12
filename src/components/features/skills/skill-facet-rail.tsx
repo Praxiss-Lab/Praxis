@@ -1,4 +1,4 @@
-import type { SkillCategoryId } from "@openhands/extensions/skills";
+import type { SkillCategoryId } from "@praxiss-lab/praxis-extensions/skills";
 import type { LucideIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { cn } from "#/utils/utils";

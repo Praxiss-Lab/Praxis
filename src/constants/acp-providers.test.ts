@@ -1,4 +1,4 @@
-import { ACP_PROVIDERS as CLIENT_ACP_PROVIDERS } from "@openhands/typescript-client";
+import { ACP_PROVIDERS as CLIENT_ACP_PROVIDERS } from "@praxiss-lab/praxis-sdk-client";
 import { describe, expect, it } from "vitest";
 import {
   ACP_MANAGED_SENTINEL,

@@ -14,7 +14,7 @@ const RATE_LIMIT_BACKOFF_MULTIPLIER = 2;
 /**
  * True for a 429 from either transport this app talks to a backend with:
  * Axios (agent-server / legacy cloud calls) or the duck-typed `{ status }`
- * shape `@openhands/typescript-client`'s `HttpError` uses for the cloud
+ * shape `@praxiss-lab/praxis-sdk-client`'s `HttpError` uses for the cloud
  * proxy. `HttpError` isn't imported here to keep this usable from any
  * query regardless of which client raised the error.
  */

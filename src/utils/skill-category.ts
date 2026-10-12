@@ -13,7 +13,7 @@ import {
 import {
   SKILL_CATEGORY_IDS,
   type SkillCategoryId,
-} from "@openhands/extensions/skills";
+} from "@praxiss-lab/praxis-extensions/skills";
 import { I18nKey } from "#/i18n/declaration";
 import type { SkillInfo } from "#/types/settings";
 

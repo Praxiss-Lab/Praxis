@@ -1,4 +1,4 @@
-import { RemoteWorkspace } from "@openhands/typescript-client/workspace/remote-workspace";
+import { RemoteWorkspace } from "@praxiss-lab/praxis-sdk-client/workspace/remote-workspace";
 import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
 import {
   __resetActiveStoreForTests,
@@ -15,7 +15,7 @@ const { mockGitChanges, mockGitDiff, mockClientGet } = vi.hoisted(() => ({
   mockClientGet: vi.fn(),
 }));
 
-vi.mock("@openhands/typescript-client/workspace/remote-workspace", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/workspace/remote-workspace", () => ({
   RemoteWorkspace: vi.fn(function RemoteWorkspaceMock() {
     return {
       gitChanges: mockGitChanges,

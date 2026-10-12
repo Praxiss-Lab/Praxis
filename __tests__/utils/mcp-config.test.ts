@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import type {
   MCPConfig,
   MCPServer,
-} from "@openhands/typescript-client";
+} from "@praxiss-lab/praxis-sdk-client";
 
 import {
   allocateMcpSettingsKey,

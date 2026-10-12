@@ -1,4 +1,4 @@
-import { PluginsClient } from "@openhands/typescript-client/clients";
+import { PluginsClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   __resetActiveStoreForTests,
@@ -8,7 +8,7 @@ import {
 import type { Backend } from "#/api/backend-registry/types";
 import PluginsManagementService from "#/api/plugins-management-service";
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   PluginsClient: vi.fn(),
 }));
 

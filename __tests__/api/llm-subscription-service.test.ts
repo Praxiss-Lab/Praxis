@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { AgentServerClient } from "@openhands/typescript-client/clients";
+import { AgentServerClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import LLMSubscriptionService from "#/api/llm-subscription-service";
 import {

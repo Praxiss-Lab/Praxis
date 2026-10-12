@@ -26,6 +26,7 @@ type UpdateCommandTab = "npm" | "docker";
 const UPDATE_COMMAND_TABS: UpdateCommandTab[] = ["npm", "docker"];
 
 interface AgentCanvasVersionModalProps {
+  commands?: { npm: string; docker: string };
   installedVersion: string;
   latestVersion: string | null;
   updateAvailable: boolean;
@@ -48,6 +49,7 @@ function UpdateCommandTabIcon({ tab }: { tab: UpdateCommandTab }) {
 }
 
 export function AgentCanvasVersionModal({
+  commands = AGENT_CANVAS_UPDATE_COMMANDS,
   installedVersion,
   latestVersion,
   updateAvailable,
@@ -59,10 +61,7 @@ export function AgentCanvasVersionModal({
   const [selectedTab, setSelectedTab] = React.useState<UpdateCommandTab>("npm");
   const [copied, setCopied] = React.useState(false);
   const copiedTimeoutRef = React.useRef<number | null>(null);
-  const command =
-    selectedTab === "npm"
-      ? AGENT_CANVAS_UPDATE_COMMANDS.npm
-      : AGENT_CANVAS_UPDATE_COMMANDS.docker;
+  const command = selectedTab === "npm" ? commands.npm : commands.docker;
 
   React.useEffect(
     () => () => {

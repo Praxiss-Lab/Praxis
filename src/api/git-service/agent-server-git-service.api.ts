@@ -1,5 +1,5 @@
 import { isAxiosError } from "axios";
-import { RemoteWorkspace } from "@openhands/typescript-client/workspace/remote-workspace";
+import { RemoteWorkspace } from "@praxiss-lab/praxis-sdk-client/workspace/remote-workspace";
 import { mapAnyGitStatusToClientStatus } from "#/utils/git-status-mapper";
 import type {
   GitChange,

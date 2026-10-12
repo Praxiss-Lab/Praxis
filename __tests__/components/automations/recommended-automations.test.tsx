@@ -36,7 +36,7 @@ import {
 import {
   AUTOMATION_CATALOG,
   type RecommendedAutomation,
-} from "@openhands/extensions/automations";
+} from "@praxiss-lab/praxis-extensions/automations";
 
 const {
   mockCreateConversationMutate,
@@ -453,7 +453,7 @@ describe("recommended automations", () => {
   /**
    * Puts a non-MCP-installable requirement back on `jira-issue-to-pr`.
    *
-   * It declared the HTTP-only `jira` until @openhands/extensions 0.17.0 swapped it
+   * It declared the HTTP-only `jira` until @praxiss-lab/praxis-extensions 0.17.0 swapped it
    * for the MCP `atlassian-rovo`, and no catalog automation declares a non-MCP
    * integration any more. The cases below are about what a card does with one, so
    * the requirement is restored for their duration rather than the assertions

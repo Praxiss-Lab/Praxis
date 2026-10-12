@@ -1,6 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
-import { ConversationClient } from "@openhands/typescript-client/clients";
-import type { StartGoalRequest } from "@openhands/typescript-client";
+import { ConversationClient } from "@praxiss-lab/praxis-sdk-client/clients";
+import type { StartGoalRequest } from "@praxiss-lab/praxis-sdk-client";
 import { getActiveBackend } from "#/api/backend-registry/active-store";
 import { pauseCloudSandbox } from "#/api/cloud/conversation-service.api";
 import { getAgentServerClientOptions } from "#/api/agent-server-client-options";

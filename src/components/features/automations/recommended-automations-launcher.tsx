@@ -10,13 +10,13 @@ import {
   setConversationState,
   setPendingTaskDraft,
 } from "#/utils/conversation-local-storage";
-import type { RecommendedAutomation } from "@openhands/extensions/automations";
+import type { RecommendedAutomation } from "@praxiss-lab/praxis-extensions/automations";
 import { parseMcpConfig } from "#/utils/mcp-config";
 import { flattenMcpConfig } from "#/utils/mcp-installed-servers";
 import {
   INTEGRATION_CATALOG as MCP_MARKETPLACE,
   type IntegrationCatalogEntry as MarketplaceEntry,
-} from "@openhands/extensions/integrations";
+} from "@praxiss-lab/praxis-extensions/integrations";
 import {
   findInstalledEntryMatch,
   getMarketplaceEntryById,

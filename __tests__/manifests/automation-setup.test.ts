@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
-import incidentFixture from "@openhands/extensions/testing/automations/incident-retrospective-drafter.json";
-import prReviewerFixture from "@openhands/extensions/testing/automations/github-pr-reviewer.json";
-import repoMonitorFixture from "@openhands/extensions/testing/automations/github-repo-monitor.json";
+import incidentFixture from "@praxiss-lab/praxis-extensions/testing/automations/incident-retrospective-drafter.json";
+import prReviewerFixture from "@praxiss-lab/praxis-extensions/testing/automations/github-pr-reviewer.json";
+import repoMonitorFixture from "@praxiss-lab/praxis-extensions/testing/automations/github-repo-monitor.json";
 import {
   automationCreateEndpoint,
   buildAssistedMessage,
@@ -36,7 +36,7 @@ vi.mock("#/i18n", () => ({ default: { t: translate } }));
 // packaged skills catalog does; the automation catalog itself is imported for
 // real, because pinning its derivation to the contract fixtures published
 // beside it is this file's point.
-vi.mock("@openhands/extensions/skills", () => ({
+vi.mock("@praxiss-lab/praxis-extensions/skills", () => ({
   SKILLS_CATALOG: [
     {
       name: "incident-retrospective",

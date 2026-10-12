@@ -6,11 +6,11 @@ import {
   useState,
 } from "react";
 import { useTranslation } from "react-i18next";
-import type { RecommendedAutomation } from "@openhands/extensions/automations";
+import type { RecommendedAutomation } from "@praxiss-lab/praxis-extensions/automations";
 import {
   INTEGRATION_CATALOG as MCP_MARKETPLACE,
   type IntegrationCatalogEntry as MarketplaceEntry,
-} from "@openhands/extensions/integrations";
+} from "@praxiss-lab/praxis-extensions/integrations";
 import { I18nKey } from "#/i18n/declaration";
 import { McpLogoBadge } from "#/components/features/mcp-logo-badge";
 import { getMarketplaceEntryById } from "#/utils/mcp-marketplace-utils";

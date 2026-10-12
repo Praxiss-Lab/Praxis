@@ -1,5 +1,5 @@
-import { ToolClient } from "@openhands/typescript-client/clients";
-import type { ToolCatalogEntry } from "@openhands/typescript-client";
+import { ToolClient } from "@praxiss-lab/praxis-sdk-client/clients";
+import type { ToolCatalogEntry } from "@praxiss-lab/praxis-sdk-client";
 
 import { getAgentServerClientOptions } from "../agent-server-client-options";
 

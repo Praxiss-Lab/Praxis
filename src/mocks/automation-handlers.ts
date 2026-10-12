@@ -1,5 +1,5 @@
 import { http, HttpResponse, delay } from "msw";
-import capabilitiesFixture from "@openhands/extensions/testing/automations/capabilities.json";
+import capabilitiesFixture from "@praxiss-lab/praxis-extensions/testing/automations/capabilities.json";
 import type {
   DeploymentCapabilities,
   DraftValidationError,

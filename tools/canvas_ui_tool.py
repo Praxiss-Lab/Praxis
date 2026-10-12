@@ -147,7 +147,7 @@ class CanvasUITool(ToolDefinition[CanvasUIAction, CanvasUIObservation]):
 register_tool("canvas_ui", CanvasUITool)
 
 
-# openhands-automation >= 1.9.0 preset entrypoints build their agent with
+# praxis-automation >= 1.9.0 preset entrypoints build their agent with
 # get_default_agent(finish_tool_response_schema=TaskOutcome). That registers the
 # SDK's builtin FinishTool only inside the entrypoint's own process and
 # advertises it to the agent-server as `openhands.sdk.tool.builtins.finish` — a

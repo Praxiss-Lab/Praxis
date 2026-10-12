@@ -34,7 +34,7 @@ function buildSkill(overrides: Partial<SkillInfo> = {}): SkillInfo {
     version: "1.0.0",
     license: "MIT",
     compatibility: "Requires Deno 1.40+",
-    metadata: { author: "OpenHands" },
+    metadata: { author: "Praxis" },
     allowed_tools: ["bash"],
     is_agentskills_format: true,
     disable_model_invocation: false,
@@ -81,7 +81,7 @@ describe("SkillDetailModal", () => {
       within(modal).getByTestId(
         `skill-modal-pill-${skill.name}-metadata-author`,
       ),
-    ).toHaveTextContent("OpenHands");
+    ).toHaveTextContent("Praxis");
     expect(
       within(modal).getByTestId(`skill-modal-field-content-${skill.name}`),
     ).toHaveValue(skill.content);

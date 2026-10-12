@@ -3,7 +3,7 @@
  *
  * The `slack-standup-digest` skill ships in the public OpenHands extensions
  * repo with `triggers: ["/standup-digest:setup"]`. The frontend bundles
- * public skills from the `@openhands/extensions` npm package and passes
+ * public skills from the `@praxiss-lab/praxis-extensions` npm package and passes
  * them directly in `agent_context.skills` at conversation-start, so the
  * SDK's trigger matching activates them without the agent-server needing
  * to clone the extensions repo (`load_public_skills: false`).

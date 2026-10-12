@@ -1,9 +1,9 @@
-import { SettingsClient } from "@openhands/typescript-client/clients";
+import { SettingsClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import type {
   MCPConfigPatch,
   MCPServer,
   MCPServerPatch,
-} from "@openhands/typescript-client";
+} from "@praxiss-lab/praxis-sdk-client";
 import { DEFAULT_SETTINGS } from "#/services/settings";
 import { Settings, SettingsSchema, SettingsValue } from "#/types/settings";
 import {

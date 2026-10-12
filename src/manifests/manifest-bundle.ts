@@ -2,13 +2,13 @@
  * Packing what a bundle entry ships.
  *
  * A bundle's manifest names its files by the repository path they live at; the
- * contents travel in the published `@openhands/extensions` package, because
+ * contents travel in the published `@praxiss-lab/praxis-extensions` package, because
  * this host has the package and not the repository. That indirection is the
  * whole reason this module exists: everything else about a bundle is derived
  * the same way a prompt entry's request is.
  */
 
-import * as automations from "@openhands/extensions/automations";
+import * as automations from "@praxiss-lab/praxis-extensions/automations";
 import { packTarGzip, type TarFile } from "#/utils/tar-gzip";
 import { buildCreatePayload } from "./automation-setup";
 import { BUNDLE_CONFIG_FILENAME } from "./types";

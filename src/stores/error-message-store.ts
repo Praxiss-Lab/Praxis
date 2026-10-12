@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { ErrorClassification } from "@openhands/typescript-client";
+import type { ErrorClassification } from "@praxiss-lab/praxis-sdk-client";
 
 /**
  * "connection" errors auto-clear once connectivity recovers; "conversation"

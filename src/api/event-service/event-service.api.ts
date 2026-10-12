@@ -1,5 +1,5 @@
-import { ConversationClient } from "@openhands/typescript-client/clients";
-import { RemoteEventsList } from "@openhands/typescript-client/events/remote-events-list";
+import { ConversationClient } from "@praxiss-lab/praxis-sdk-client/clients";
+import { RemoteEventsList } from "@praxiss-lab/praxis-sdk-client/events/remote-events-list";
 import { OpenHandsEvent } from "#/types/agent-server/core";
 import { getActiveBackend } from "../backend-registry/active-store";
 import { callCloudProxy } from "../cloud/proxy";

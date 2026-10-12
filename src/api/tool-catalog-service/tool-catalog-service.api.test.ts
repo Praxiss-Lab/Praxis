@@ -1,4 +1,4 @@
-import { ToolClient } from "@openhands/typescript-client/clients";
+import { ToolClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   __resetActiveStoreForTests,
@@ -10,7 +10,7 @@ import ToolCatalogService, {
   type ToolCatalogEntry,
 } from "#/api/tool-catalog-service/tool-catalog-service.api";
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   ToolClient: vi.fn(),
 }));
 

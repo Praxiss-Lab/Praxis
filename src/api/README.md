@@ -4,7 +4,7 @@ This directory connects the frontend to the selected backend. Services own trans
 
 ## Agent Server access
 
-Use typed clients from `@openhands/typescript-client`. Obtain the selected host, session key and workspace defaults through `getAgentServerClientOptions` or `getAgentServerHttpClientOptions` in `agent-server-client-options.ts`. Do not replace those helpers with hardcoded localhost addresses or a separate credential store.
+Use typed clients from `@praxiss-lab/praxis-sdk-client`. Obtain the selected host, session key and workspace defaults through `getAgentServerClientOptions` or `getAgentServerHttpClientOptions` in `agent-server-client-options.ts`. Do not replace those helpers with hardcoded localhost addresses or a separate credential store.
 
 For a conversation with its own runtime URL/key, pass those conversation overrides through the shared options helper. Runtime requests go directly to that runtime via the typed client. When an endpoint is missing, extend the owning client contract before consuming it here.
 

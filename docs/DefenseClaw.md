@@ -1,6 +1,6 @@
 # Integrating DefenseClaw with Agent Canvas
 
-[DefenseClaw](https://github.com/cisco-ai-defense/defenseclaw) is a security governance layer for agentic AI runtimes — it scans skills and MCP servers before they run, inspects LLM traffic at runtime, and produces durable audit evidence. This guide explains how to run DefenseClaw alongside the [OpenHands Agent Server](https://github.com/OpenHands/software-agent-sdk/tree/main/openhands-agent-server) that powers Agent Canvas, without making any code-level changes to either project.
+[DefenseClaw](https://github.com/cisco-ai-defense/defenseclaw) is a security governance layer for agentic AI runtimes — it scans skills and MCP servers before they run, inspects LLM traffic at runtime, and produces durable audit evidence. This guide explains how to run DefenseClaw alongside the [Praxis Agent Server](https://github.com/Praxiss-Lab/praxis-sdk/tree/main/praxis-agent-server) that powers Agent Canvas, without making any code-level changes to either project.
 
 > **Status:** DefenseClaw is purpose-built around the OpenClaw runtime and its TypeScript plugin hooks. The integration described here targets the lowest-friction overlap points — skill injection, LLM proxying, CLI scanning, and audit export — that work without modifying Agent Canvas or DefenseClaw source code. [Future work](#future-work-code-level-extensions) describes deeper hooks that would require code changes.
 
@@ -11,7 +11,7 @@
 ```mermaid
 flowchart TD
     UI["Agent Canvas (browser)"]
-    AS["OpenHands Agent Server\nlocalhost:18000"]
+    AS["Praxis Agent Server\nlocalhost:18000"]
     GP["DefenseClaw Guardrail Proxy\nlocalhost:4000"]
     LLM["LLM Provider"]
     GW["DefenseClaw Gateway Sidecar\nlocalhost:18970"]
@@ -131,7 +131,7 @@ export OH_LLM__BASE_URL="http://localhost:4000"
 npm run dev
 ```
 
-> Consult the Agent Server [settings schema](https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-agent-server/openhands/agent_server/settings_router.py) for the exact environment variable name used in your deployment.
+> Consult the Agent Server [settings schema](https://github.com/Praxiss-Lab/praxis-sdk/blob/main/praxis-agent-server/openhands/agent_server/settings_router.py) for the exact environment variable name used in your deployment.
 
 **Start the guardrail in observe mode (safe default) or action mode:**
 
@@ -249,7 +249,7 @@ The following integrations would require changes to Agent Canvas, the Agent Serv
 
 ### 1. Native `SecurityAnalyzer` hook
 
-The OpenHands SDK exposes a [`SecurityAnalyzer`](https://docs.openhands.dev/sdk/arch/security.md) interface. A custom implementation could call DefenseClaw's `/api/v1/inspect/tool` endpoint before every tool invocation — mirroring the inspection the OpenClaw TypeScript plugin performs. This would gate bash commands, file writes, and other tool calls through DefenseClaw's four-stage inspection pipeline (regex, Cisco AI Defense cloud rules, LLM judge, OPA policy) before they execute.
+The Praxis SDK exposes a [`SecurityAnalyzer`](https://docs.openhands.dev/sdk/arch/security.md) interface. A custom implementation could call DefenseClaw's `/api/v1/inspect/tool` endpoint before every tool invocation — mirroring the inspection the OpenClaw TypeScript plugin performs. This would gate bash commands, file writes, and other tool calls through DefenseClaw's four-stage inspection pipeline (regex, Cisco AI Defense cloud rules, LLM judge, OPA policy) before they execute.
 
 ```python
 # Sketch — not yet implemented
@@ -267,7 +267,7 @@ class DefenseClawSecurityAnalyzer(SecurityAnalyzer):
 
 ### 2. Skill install pipeline integration
 
-The Agent Server's `skills_service.py` (`service_install_skill`) runs skill validation during install. A pre-install hook that calls `defenseclaw skill scan` and fails the install on HIGH/CRITICAL findings would enforce a mandatory scan gate — no skill reaches the agent without passing DefenseClaw's scanner. This change would live in `openhands-agent-server`.
+The Agent Server's `skills_service.py` (`service_install_skill`) runs skill validation during install. A pre-install hook that calls `defenseclaw skill scan` and fails the install on HIGH/CRITICAL findings would enforce a mandatory scan gate — no skill reaches the agent without passing DefenseClaw's scanner. This change would live in `praxis-agent-server`.
 
 ### 3. Hooks integration
 
@@ -294,8 +294,8 @@ DefenseClaw's registry system (`defenseclaw registry add`) ingests external skil
 - [DefenseClaw API Reference](https://github.com/cisco-ai-defense/defenseclaw/blob/main/docs/API.md)
 - [DefenseClaw Guardrail Architecture](https://github.com/cisco-ai-defense/defenseclaw/blob/main/docs/GUARDRAIL.md)
 - [DefenseClaw CodeGuard Skill](https://github.com/cisco-ai-defense/defenseclaw/blob/main/skills/codeguard/SKILL.md)
-- [OpenHands Agent Server](https://github.com/OpenHands/software-agent-sdk/tree/main/openhands-agent-server)
-- [OpenHands SDK Security Analyzer](https://docs.openhands.dev/sdk/arch/security.md)
+- [Praxis Agent Server](https://github.com/Praxiss-Lab/praxis-sdk/tree/main/praxis-agent-server)
+- [Praxis SDK Security Analyzer](https://docs.openhands.dev/sdk/arch/security.md)
 - [Agent Canvas Self-Hosting](./SELF_HOSTING.md)
 
 ---

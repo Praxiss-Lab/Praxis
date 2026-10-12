@@ -33,7 +33,7 @@ type PendingAction =
   | { type: "uninstall"; extension: InstalledCanvasExtensionInfo };
 
 const CANVAS_EXTENSIONS_DOCS_URL =
-  "https://docs.openhands.dev/openhands/usage/agent-canvas/canvas-extensions";
+  "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md";
 
 export default function CanvasExtensionsScreen() {
   const { t } = useTranslation("openhands");

@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HttpError } from "@openhands/typescript-client";
+import { HttpError } from "@praxiss-lab/praxis-sdk-client";
 import { I18nKey } from "#/i18n/declaration";
 import { ScriptSection } from "#/components/features/automations/detail/script-section";
 import AutomationService from "#/api/automation-service/automation-service.api";

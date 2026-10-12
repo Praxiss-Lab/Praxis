@@ -15,7 +15,7 @@ const {
   getAgentServerHeadersMock: vi.fn(),
 }));
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   CloudClient: CloudClientMock,
 }));
 

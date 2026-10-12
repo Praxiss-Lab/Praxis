@@ -51,7 +51,7 @@ const normalizeBasePath = (value?: string) => {
 // resolve bundled skill resources like scripts/ and references/).
 const _require = createRequire(import.meta.url);
 const EXTENSIONS_SKILLS_DIR = resolve(
-  dirname(_require.resolve("@openhands/extensions/package.json")),
+  dirname(_require.resolve("@praxiss-lab/praxis-extensions/package.json")),
   "skills",
 );
 const PUBLIC_LOCALES_DIR = resolve(process.cwd(), "public", "locales");
@@ -314,12 +314,12 @@ export default defineConfig(({ mode }) => {
         "@xterm/xterm",
         "@xterm/xterm/css/xterm.css",
         // OpenHands typescript client
-        "@openhands/typescript-client",
-        "@openhands/typescript-client/client/http-client",
-        "@openhands/typescript-client/client/device-flow-client",
-        "@openhands/typescript-client/clients",
-        "@openhands/typescript-client/events/remote-events-list",
-        "@openhands/typescript-client/workspace/remote-workspace",
+        "@praxiss-lab/praxis-sdk-client",
+        "@praxiss-lab/praxis-sdk-client/client/http-client",
+        "@praxiss-lab/praxis-sdk-client/client/device-flow-client",
+        "@praxiss-lab/praxis-sdk-client/clients",
+        "@praxiss-lab/praxis-sdk-client/events/remote-events-list",
+        "@praxiss-lab/praxis-sdk-client/workspace/remote-workspace",
         // Additional dependencies discovered at runtime
         "class-variance-authority",
         "downshift",
@@ -521,7 +521,7 @@ export default defineConfig(({ mode }) => {
       hookTimeout: 30000,
       server: {
         deps: {
-          inline: ["@openhands/typescript-client"],
+          inline: ["@praxiss-lab/praxis-sdk-client"],
         },
       },
       coverage: {

@@ -61,7 +61,7 @@ describe("SidebarOnboardingChecklistItemPreview", () => {
       screen.getByTestId("sidebar-onboarding-checklist-preview-docs-configure-llm"),
     ).toHaveAttribute(
       "href",
-      "https://docs.openhands.dev/openhands/usage/settings/llm-settings#llm-profiles",
+      "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md",
     );
     expect(
       screen.getByText(I18nKey.SIDEBAR$ONBOARDING_CHECKLIST_DOCS_LINK),
@@ -85,6 +85,6 @@ describe("SidebarOnboardingChecklistItemPreview", () => {
     ).toHaveAttribute("target", "_blank");
     expect(
       screen.getByTestId("sidebar-onboarding-checklist-preview-docs-join-slack"),
-    ).toHaveAttribute("href", "https://docs.openhands.dev/overview/community");
+    ).toHaveAttribute("href", "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md");
   });
 });

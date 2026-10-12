@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useIsMutating } from "@tanstack/react-query";
-import type { ProfileInfo } from "@openhands/typescript-client";
+import type { ProfileInfo } from "@praxiss-lab/praxis-sdk-client";
 import { useOptionalConversationId } from "#/hooks/use-conversation-id";
 import { useActiveConversation } from "#/hooks/query/use-active-conversation";
 import { useLlmProfiles } from "#/hooks/query/use-llm-profiles";

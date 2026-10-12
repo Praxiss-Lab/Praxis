@@ -3,7 +3,7 @@ import {
   FileClient,
   ProfilesClient,
   SettingsClient,
-} from "@openhands/typescript-client/clients";
+} from "@praxiss-lab/praxis-sdk-client/clients";
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import { __resetActiveStoreForTests } from "#/api/backend-registry/active-store";
 import AgentServerConversationService from "#/api/conversation-service/agent-server-conversation-service.api";
@@ -49,10 +49,10 @@ const {
 const originalFetch = global.fetch;
 const fetchMock = vi.fn();
 
-vi.mock("@openhands/typescript-client/clients", async () => {
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", async () => {
   const actual = await vi.importActual<
-    typeof import("@openhands/typescript-client/clients")
-  >("@openhands/typescript-client/clients");
+    typeof import("@praxiss-lab/praxis-sdk-client/clients")
+  >("@praxiss-lab/praxis-sdk-client/clients");
   return {
     ...actual,
     ConversationClient: vi.fn(function ConversationClientMock() {

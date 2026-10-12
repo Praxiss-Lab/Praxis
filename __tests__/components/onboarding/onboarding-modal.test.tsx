@@ -35,7 +35,7 @@ let captureMock: MockInstance<typeof telemetry.trackEvent>;
 // Both the backend status badge in the embedded edit form and the
 // step-1 health probe ride on `useBackendsHealth`, which resolves
 // server metadata through `ServerClient`.
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   ServerClient: vi.fn(function ServerClientMock(options?: { host?: string }) {
     return {
       getServerInfo: vi.fn(() => getServerInfoMock(options)),

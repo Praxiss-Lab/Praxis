@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { MockInstance } from "vitest";
-import { getAcpProvider as getClientAcpProvider } from "@openhands/typescript-client";
+import { getAcpProvider as getClientAcpProvider } from "@praxiss-lab/praxis-sdk-client";
 import { CANVAS_UI_CLIENT_TOOL_NAME } from "#/constants/canvas-ui";
 import { LAUNCH_CHILD_CONVERSATION_TOOL_NAME } from "#/constants/child-conversation";
 
@@ -23,8 +23,8 @@ import {
   removeStoredConversationMetadata,
   setStoredConversationMetadata,
 } from "#/api/conversation-metadata-store";
-import { HookType } from "@openhands/typescript-client";
-import type { HookConfig } from "@openhands/typescript-client";
+import { HookType } from "@praxiss-lab/praxis-sdk-client";
+import type { HookConfig } from "@praxiss-lab/praxis-sdk-client";
 import { ACP_VERTEX_SAFE_MODEL } from "#/constants/acp-providers";
 import { DEFAULT_SETTINGS } from "#/services/settings";
 import type { SettingsValue } from "#/types/settings";
@@ -65,7 +65,7 @@ const {
   mockListMetaProfiles: vi.fn(),
 }));
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   ServerClient: vi.fn(function ServerClientMock() {
     return {
       getServerInfo: mockGetServerInfo,

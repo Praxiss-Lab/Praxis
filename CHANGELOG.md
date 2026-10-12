@@ -11,17 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Initial npm package release of `@openhands/agent-canvas`
-- CLI entry point (`npx @openhands/agent-canvas`) to run full stack locally
+- Initial npm package release of `@praxiss-lab/praxis`
+- CLI entry point (`npx @praxiss-lab/praxis`) to run full stack locally
 - Library build mode with component barrel exports
 - Subpath exports for modular imports:
-  - `@openhands/agent-canvas/browser`
-  - `@openhands/agent-canvas/conversation`
-  - `@openhands/agent-canvas/files`
-  - `@openhands/agent-canvas/settings`
-  - `@openhands/agent-canvas/sidebar`
-  - `@openhands/agent-canvas/terminal`
-  - `@openhands/agent-canvas/i18n`
+  - `@praxiss-lab/praxis/browser`
+  - `@praxiss-lab/praxis/conversation`
+  - `@praxiss-lab/praxis/files`
+  - `@praxiss-lab/praxis/settings`
+  - `@praxiss-lab/praxis/sidebar`
+  - `@praxiss-lab/praxis/terminal`
+  - `@praxiss-lab/praxis/i18n`
 - TypeScript type declarations
 - GitHub Actions workflow for automated npm publishing (OIDC trusted publishing)
 

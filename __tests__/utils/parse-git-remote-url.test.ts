@@ -22,9 +22,9 @@ describe("parseGitRemoteUrl", () => {
 
   it("strips the .git suffix when an HTTPS URL has a trailing slash", () => {
     const result = parseGitRemoteUrl(
-      "https://github.com/OpenHands/OpenHands.git/",
+      "https://github.com/Praxiss-Lab/Praxis.git/",
     );
-    expect(result?.repository).toBe("OpenHands/OpenHands");
+    expect(result?.repository).toBe("Praxiss-Lab/Praxis");
   });
 
   it("parses HTTPS GitHub URLs without a .git suffix", () => {

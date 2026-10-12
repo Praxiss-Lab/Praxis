@@ -1,4 +1,4 @@
-import { HooksClient } from "@openhands/typescript-client/clients";
+import { HooksClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   __resetActiveStoreForTests,
@@ -12,7 +12,7 @@ const { mockLoadHooks } = vi.hoisted(() => ({
   mockLoadHooks: vi.fn(),
 }));
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   HooksClient: vi.fn(function HooksClientMock() {
     return { loadHooks: mockLoadHooks };
   }),

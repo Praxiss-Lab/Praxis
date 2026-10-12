@@ -4,8 +4,8 @@
  * Registry comparison is opt-in through --check-pypi. */
 
 import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import process from "node:process";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -38,7 +38,7 @@ Options:
 
 Environment variables:
   EXPECTED_SDK_VERSION        Override the expected SDK version (instead of reading from config/defaults.json)
-  AUTOMATION_PACKAGE_NAME     Override the automation package name (default: openhands-automation)
+  AUTOMATION_PACKAGE_NAME     Override the automation package name (default: praxis-automation)
   AUTOMATION_PACKAGE_VERSION  Override the automation package version (instead of reading from config/defaults.json)
 
 Triggering from other repos:
@@ -65,20 +65,20 @@ const colors = {
 
 // SDK packages that must have matching versions
 const SDK_PACKAGES = [
-  "openhands-sdk",
-  "openhands-tools",
-  "openhands-workspace",
-  "openhands-agent-server",
+  "praxis-sdk",
+  "praxis-tools",
+  "praxis-workspace",
+  "praxis-agent-server",
 ];
 
 // Mirrors the SDK's ACP provider registry. Must track versions.agentServer:
 // the picker is rendered from this pin but the adapter is launched by that
 // image, so a skew advertises models the running agent-server cannot run.
-const CLIENT_PACKAGE_NAME = "@openhands/typescript-client";
+const CLIENT_PACKAGE_NAME = "@praxiss-lab/praxis-sdk-client";
 
 // Configurable automation package (can be overridden via env)
 const AUTOMATION_PACKAGE_NAME =
-  process.env.AUTOMATION_PACKAGE_NAME || "openhands-automation";
+  process.env.AUTOMATION_PACKAGE_NAME || "praxis-automation";
 
 // Default retry configuration
 const RETRY_COUNT = 3;
@@ -295,9 +295,9 @@ async function fetchPyPIDependencies(packageName, version) {
  * Parse PyPI requires_dist array and extract SDK package versions
  *
  * PyPI returns dependencies in PEP 508 format like:
- *   "openhands-sdk>=1.54.0,<2.0.0"
- *   "openhands-tools==1.54.0"
- *   "openhands-workspace (>=1.54.0)"
+ *   "praxis-sdk>=1.54.0,<2.0.0"
+ *   "praxis-tools==1.54.0"
+ *   "praxis-workspace (>=1.54.0)"
  */
 function parseSdkVersionsFromRequiresDist(requiresDist) {
   const versions = {};
@@ -423,7 +423,7 @@ async function main() {
       );
     const requiresDist = [
       ...bundled.matchAll(
-        /"(openhands-(?:sdk|tools|workspace|agent-server)==[^"\n]+)"/g,
+        /"(praxis-(?:sdk|tools|workspace|agent-server)==[^"\n]+)"/g,
       ),
     ].map((match) => match[1]);
     const automationVersions = parseSdkVersionsFromRequiresDist(requiresDist);
@@ -522,4 +522,6 @@ export {
   AUTOMATION_PACKAGE_NAME,
 };
 
-main();
+if (process.argv[1] && pathToFileURL(resolve(process.argv[1])).href === import.meta.url) {
+  main();
+}

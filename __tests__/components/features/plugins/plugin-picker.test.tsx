@@ -9,7 +9,7 @@ import { PluginPicker } from "#/components/features/plugins/plugin-picker";
 // The catalog hook's service constructs a typescript-client `PluginsClient` at
 // module load; stub it so importing the service never touches the real client.
 // Every test replaces `getPluginsMarketplace` itself, so the client is unused.
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   PluginsClient: vi.fn(),
 }));
 

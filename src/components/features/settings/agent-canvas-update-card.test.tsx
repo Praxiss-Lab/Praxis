@@ -19,7 +19,12 @@ const { fetchLatestVersionMock, getLockedCloudHostMock } = vi.hoisted(() => ({
 
 vi.mock("#/api/agent-canvas-updates", async (importOriginal) => ({
   ...(await importOriginal<typeof import("#/api/agent-canvas-updates")>()),
-  fetchLatestAgentCanvasVersion: fetchLatestVersionMock,
+  fetchLatestAgentCanvasRelease: async (...args: unknown[]) => ({
+    version: await fetchLatestVersionMock(...args),
+    commands: (
+      await importOriginal<typeof import("#/api/agent-canvas-updates")>()
+    ).AGENT_CANVAS_UPDATE_COMMANDS,
+  }),
 }));
 
 vi.mock("#/api/agent-server-config", async (importOriginal) => ({

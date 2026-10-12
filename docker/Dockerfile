@@ -118,8 +118,8 @@ ENV PATH="/agent-server/.venv/bin:${PATH}"
 COPY vendor/automation /opt/praxis/automation
 RUN uv pip install --python /agent-server/.venv/bin/python \
       /opt/praxis/automation \
-      /agent-server/openhands-sdk /agent-server/openhands-tools \
-      /agent-server/openhands-workspace /agent-server/openhands-agent-server
+      /agent-server/praxis-sdk /agent-server/praxis-tools \
+      /agent-server/praxis-workspace /agent-server/praxis-agent-server
 
 # Copy the frontend build output.
 # react-router.config.ts unpacks build/client/ into build/ for non-Vercel builds.

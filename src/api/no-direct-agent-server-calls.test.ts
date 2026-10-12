@@ -30,7 +30,7 @@ function collectSourceFiles(dir: string): string[] {
 }
 
 describe("agent-server API access", () => {
-  it("uses typed @openhands/typescript-client access instead of ad-hoc HTTP", () => {
+  it("uses typed @praxiss-lab/praxis-sdk-client access instead of ad-hoc HTTP", () => {
     const violations = collectSourceFiles(SRC_ROOT).flatMap((relPath) => {
       const source = readFileSync(join(SRC_ROOT, relPath), "utf8");
       const fileViolations: string[] = [];

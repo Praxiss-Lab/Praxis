@@ -137,7 +137,7 @@ Agent Server bridge contract are available:
 
 - `/server_info.capabilities` contains `canvas_app_backend_bridge_v1`;
 - `/server_info.app_backend_ingress_url` is a valid HTTP(S) URL; and
-- the installed `@openhands/typescript-client` exports
+- the installed `@praxiss-lab/praxis-sdk-client` exports
   `CanvasExtensionsClient.createAppBackendSession()` and
   `revokeAppBackendSession()`.
 
@@ -157,7 +157,7 @@ This remains additive to schema 1. Self-contained ESM loading, routed page
 registration, and the native editor are unchanged. There is no generic runtime,
 VS Code app, arbitrary URL proxy, mandatory sidecar, or frontend tarball loader.
 
-The pinned `@openhands/typescript-client` `1.53.0` ships the bridge API
+The pinned `@praxiss-lab/praxis-sdk-client` `1.53.0` ships the bridge API
 (first defined in draft `OpenHands/software-agent-sdk#5272`), so the client
 export requirement above is satisfied by a released client. The helper is
 feature-detected at runtime on the live Agent Server: `server_info.capabilities`
@@ -318,4 +318,4 @@ run `npm run lint`, `npm test`, `npm run build`, and `npm run build:lib`.
 - marketplace ranking or publisher signing
 - conversation tabs, slots, or visualizer replacement in the first vertical
   slice
-- treating `@openhands/extensions` as an installable runtime format
+- treating `@praxiss-lab/praxis-extensions` as an installable runtime format

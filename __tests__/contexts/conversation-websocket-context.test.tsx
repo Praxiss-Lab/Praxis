@@ -102,10 +102,10 @@ vi.mock("#/utils/error-handler", () => ({
 }));
 
 const sendEventMock = vi.hoisted(() => vi.fn());
-vi.mock("@openhands/typescript-client/clients", async () => {
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", async () => {
   const actual = await vi.importActual<
-    typeof import("@openhands/typescript-client/clients")
-  >("@openhands/typescript-client/clients");
+    typeof import("@praxiss-lab/praxis-sdk-client/clients")
+  >("@praxiss-lab/praxis-sdk-client/clients");
   return {
     ...actual,
     ConversationClient: vi.fn(function ConversationClientMock() {

@@ -8,9 +8,9 @@ const { createClient, executeCommand, close } = vi.hoisted(() => ({
   close: vi.fn(),
 }));
 
-vi.mock("@openhands/typescript-client/clients", async (importOriginal) => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", async (importOriginal) => ({
   ...(await importOriginal<
-    typeof import("@openhands/typescript-client/clients")
+    typeof import("@praxiss-lab/praxis-sdk-client/clients")
   >()),
   BashClient: class {
     constructor(options: unknown) {

@@ -1,4 +1,4 @@
-import type { CloudRequestOptions } from "@openhands/typescript-client/clients";
+import type { CloudRequestOptions } from "@praxiss-lab/praxis-sdk-client/clients";
 import type { Backend } from "../backend-registry/types";
 import { assertSelfHostedEndpoint } from "../cloud-endpoint-policy";
 import { createCloudClientForRuntime, createCloudClient } from "./client";

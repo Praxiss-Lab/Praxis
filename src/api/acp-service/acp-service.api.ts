@@ -1,5 +1,5 @@
-import { BashClient } from "@openhands/typescript-client/clients";
-import type { BashOutput } from "@openhands/typescript-client";
+import { BashClient } from "@praxiss-lab/praxis-sdk-client/clients";
+import type { BashOutput } from "@praxiss-lab/praxis-sdk-client";
 import { getAgentServerClientOptions } from "../agent-server-client-options";
 
 export type AcpAuthStatus = "authenticated" | "unauthenticated" | "unknown";

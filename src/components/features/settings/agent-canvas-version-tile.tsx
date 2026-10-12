@@ -4,7 +4,7 @@ import { ArrowUpCircle, CheckCircle2 } from "lucide-react";
 import { compareAgentServerVersions } from "#/api/agent-server-compatibility";
 import { getLockedCloudHost } from "#/api/agent-server-config";
 import { AGENT_CANVAS_CLIENT_VERSION } from "#/api/client-source";
-import { useLatestAgentCanvasVersion } from "#/hooks/query/use-latest-agent-canvas-version";
+import { useLatestAgentCanvasRelease } from "#/hooks/query/use-latest-agent-canvas-version";
 import { I18nKey } from "#/i18n/declaration";
 import { cn } from "#/utils/utils";
 import { AgentCanvasVersionModal } from "./agent-canvas-version-modal";
@@ -27,14 +27,14 @@ export function AgentCanvasVersionTile({
   const { t } = useTranslation("openhands");
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const isLockedToCloud = getLockedCloudHost() !== null;
-  const latestVersionQuery = useLatestAgentCanvasVersion({
+  const latestVersionQuery = useLatestAgentCanvasRelease({
     enabled: !isLockedToCloud,
   });
 
   if (isLockedToCloud) return null;
 
   const installedVersion = AGENT_CANVAS_CLIENT_VERSION;
-  const latestVersion = latestVersionQuery.data ?? null;
+  const latestVersion = latestVersionQuery.data?.version ?? null;
   const comparison =
     latestVersion !== null
       ? compareAgentServerVersions(latestVersion, installedVersion)
@@ -87,6 +87,7 @@ export function AgentCanvasVersionTile({
 
       {isModalOpen ? (
         <AgentCanvasVersionModal
+          commands={latestVersionQuery.data?.commands}
           installedVersion={installedVersion}
           latestVersion={latestVersion}
           updateAvailable={updateAvailable}

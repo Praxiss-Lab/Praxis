@@ -1,5 +1,5 @@
 // @spec WUP-001 — Resolve relative working dirs against /api/file/home
-import { FileClient } from "@openhands/typescript-client/clients";
+import { FileClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import {
   getAgentServerClientOptions,
   type AgentServerClientOverrides,

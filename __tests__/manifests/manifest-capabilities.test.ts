@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import capabilitiesFixture from "@openhands/extensions/testing/automations/capabilities.json";
-import incidentFixture from "@openhands/extensions/testing/automations/incident-retrospective-drafter.json";
-import prReviewerFixture from "@openhands/extensions/testing/automations/github-pr-reviewer.json";
-import repoMonitorFixture from "@openhands/extensions/testing/automations/github-repo-monitor.json";
+import capabilitiesFixture from "@praxiss-lab/praxis-extensions/testing/automations/capabilities.json";
+import incidentFixture from "@praxiss-lab/praxis-extensions/testing/automations/incident-retrospective-drafter.json";
+import prReviewerFixture from "@praxiss-lab/praxis-extensions/testing/automations/github-pr-reviewer.json";
+import repoMonitorFixture from "@praxiss-lab/praxis-extensions/testing/automations/github-repo-monitor.json";
 import { assessCapabilityRequirements } from "#/manifests/manifest-capabilities";
 import { SETUP_REGISTRY } from "#/manifests/manifest-sources";
 import type { DeploymentCapabilities } from "#/manifests/types";

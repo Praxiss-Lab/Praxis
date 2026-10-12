@@ -1,5 +1,5 @@
 import React from "react";
-import { HttpError } from "@openhands/typescript-client";
+import { HttpError } from "@praxiss-lab/praxis-sdk-client";
 import { useCloudCurrentUserId } from "#/hooks/query/use-cloud-current-user-id";
 import { useAllCloudOrganizations } from "#/hooks/query/use-cloud-organizations";
 import {

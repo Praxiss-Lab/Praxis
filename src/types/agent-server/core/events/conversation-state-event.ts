@@ -1,6 +1,6 @@
 import { BaseEvent } from "../base/event";
 import { ExecutionStatus } from "../base/common";
-import type { ConversationErrorEvent } from "@openhands/typescript-client";
+import type { ConversationErrorEvent } from "@praxiss-lab/praxis-sdk-client";
 
 export type { ConversationErrorEvent };
 

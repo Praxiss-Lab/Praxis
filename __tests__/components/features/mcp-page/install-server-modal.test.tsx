@@ -22,7 +22,7 @@ import { InstallServerModal } from "#/components/features/mcp-page/install-serve
 import {
   INTEGRATION_CATALOG as MCP_MARKETPLACE,
   type IntegrationCatalogEntry as MarketplaceEntry,
-} from "@openhands/extensions/integrations";
+} from "@praxiss-lab/praxis-extensions/integrations";
 import { getMcpMarketplaceCatalog } from "#/utils/mcp-marketplace-utils";
 
 function renderWith(ui: React.ReactNode) {

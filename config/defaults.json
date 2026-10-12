@@ -25,10 +25,10 @@
     "canvasBasePath": "/canvas"
   },
   "packages": {
-    "agentServer": "openhands-agent-server",
-    "automation": "openhands-automation",
-    "tools": "openhands-tools",
-    "workspace": "openhands-workspace"
+    "agentServer": "praxis-agent-server",
+    "automation": "praxis-automation",
+    "tools": "praxis-tools",
+    "workspace": "praxis-workspace"
   },
   "telemetry": {
     "posthogApiKey": "phc_xQbJhtBoepVNQhhMkmXqShEQx8Uc5GNo6233BR4vmUrX",
@@ -38,7 +38,7 @@
   "sources": {
     "sdk": {
       "repository": "https://github.com/Praxiss-Lab/praxis-sdk",
-      "ref": "95a6c1a16e9c3f1413c7218aedc0bade88f5bd6b"
+      "ref": "a1d22f96e3581cbe2aead12cfaf18ab5cb90c5ea"
     },
     "automation": {
       "path": "vendor/automation",

@@ -103,7 +103,7 @@ describe("the automation interface seam", () => {
           placeholderEventSource: "widget-import",
         },
       },
-      docsUrl: "https://docs.openhands.dev/widgets",
+      docsUrl: "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md",
       featured: ["github-pr-reviewer"],
       responders: ["github"],
     });

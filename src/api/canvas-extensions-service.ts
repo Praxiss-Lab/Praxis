@@ -1,7 +1,7 @@
 import {
   AgentServerClient,
   CanvasExtensionsClient,
-} from "@openhands/typescript-client/clients";
+} from "@praxiss-lab/praxis-sdk-client/clients";
 import { getAgentServerClientOptions } from "#/api/agent-server-client-options";
 import { isSdkHttpStatusError } from "#/api/agent-server-compatibility";
 import type { CanvasExtensionAppViewSession } from "#/extensions/canvas-extension-app-view";

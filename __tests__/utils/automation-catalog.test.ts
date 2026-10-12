@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { AUTOMATION_CATALOG } from "@openhands/extensions/automations";
+import { AUTOMATION_CATALOG } from "@praxiss-lab/praxis-extensions/automations";
 import { Activity, Bot } from "lucide-react";
 import {
   getAutomationIcon,
@@ -11,9 +11,9 @@ import type { Automation } from "#/types/automation";
 // Entries carrying an `impact` — valid and malformed — and one declaring none
 // are appended to the real catalog, so what a given package release declares
 // never decides these assertions.
-vi.mock("@openhands/extensions/automations", async (importOriginal) => {
+vi.mock("@praxiss-lab/praxis-extensions/automations", async (importOriginal) => {
   const actual =
-    await importOriginal<typeof import("@openhands/extensions/automations")>();
+    await importOriginal<typeof import("@praxiss-lab/praxis-extensions/automations")>();
   const syntheticEntries = [
     { id: "impact-absent" },
     {

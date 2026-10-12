@@ -1,4 +1,4 @@
-import type { MCPTestResponse } from "@openhands/typescript-client";
+import type { MCPTestResponse } from "@praxiss-lab/praxis-sdk-client";
 import { http, HttpResponse } from "msw";
 
 /**

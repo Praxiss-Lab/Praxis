@@ -1,9 +1,9 @@
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { describe, it, expect, beforeAll, afterAll, afterEach } from "vitest";
-import capabilitiesFixture from "@openhands/extensions/testing/automations/capabilities.json";
-import prReviewerFixture from "@openhands/extensions/testing/automations/github-pr-reviewer.json";
-import repoMonitorFixture from "@openhands/extensions/testing/automations/github-repo-monitor.json";
+import capabilitiesFixture from "@praxiss-lab/praxis-extensions/testing/automations/capabilities.json";
+import prReviewerFixture from "@praxiss-lab/praxis-extensions/testing/automations/github-pr-reviewer.json";
+import repoMonitorFixture from "@praxiss-lab/praxis-extensions/testing/automations/github-repo-monitor.json";
 import {
   AUTOMATION_HANDLERS,
   resetAutomationMockData,

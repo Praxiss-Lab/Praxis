@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import type { ACPAgentProfile } from "@openhands/typescript-client";
+import type { ACPAgentProfile } from "@praxiss-lab/praxis-sdk-client";
 import AgentProfilesService from "#/api/agent-profiles-service/agent-profiles-service.api";
 import { useActiveBackend } from "#/contexts/active-backend-context";
 import { useOptionalConversationId } from "#/hooks/use-conversation-id";

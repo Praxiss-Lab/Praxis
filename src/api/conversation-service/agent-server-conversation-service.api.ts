@@ -2,12 +2,12 @@ import {
   ConversationSortOrder,
   type ForkConversationRequest,
   type LLMConfig,
-} from "@openhands/typescript-client";
+} from "@praxiss-lab/praxis-sdk-client";
 import {
   ConversationClient,
   FileClient,
   ProfilesClient,
-} from "@openhands/typescript-client/clients";
+} from "@praxiss-lab/praxis-sdk-client/clients";
 import { v4 as uuidv4 } from "uuid";
 import { AgentKind, Provider } from "#/types/settings";
 import type { ConversationRuntimeContext } from "#/api/conversation-file-upload.api";

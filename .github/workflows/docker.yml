@@ -76,7 +76,7 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: .praxis-sdk-source
-          file: .praxis-sdk-source/openhands-agent-server/openhands/agent_server/docker/Dockerfile
+          file: .praxis-sdk-source/praxis-agent-server/openhands/agent_server/docker/Dockerfile
           target: source
           platforms: ${{ matrix.platform }}
           outputs: type=oci,dest=${{ runner.temp }}/praxis-sdk-base.tar

@@ -1,4 +1,4 @@
-import { SettingsClient } from "@openhands/typescript-client/clients";
+import { SettingsClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import { isSdkHttpStatusError } from "./agent-server-compatibility";
 import { getActiveBackend } from "./backend-registry/active-store";
 import {

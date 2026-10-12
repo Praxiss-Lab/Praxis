@@ -14,7 +14,7 @@ const AVAILABLE = ["minimax", "minimax-m3", "gpt", "deepseek"];
 const CONNECTIONS = [
   {
     id: "conn-openhands",
-    display_name: "OpenHands",
+    display_name: "Praxis",
     provider: "openhands",
     base_url: null,
     created_at: 0,
@@ -60,7 +60,7 @@ describe("MetaProfileEditor", () => {
       DEFAULT_ROUTER_PRO_META_PROFILE_DEFAULT.model_table,
     );
     expect(screen.getByTestId("meta-profile-router-connection")).toHaveValue(
-      "OpenHands (openhands)",
+      "Praxis (openhands)",
     );
 
     await user.click(screen.getByTestId("meta-profile-save"));
@@ -283,7 +283,7 @@ describe("MetaProfileEditor", () => {
 
     rerender(editor(CONNECTIONS));
 
-    expect(picker).toHaveValue("OpenHands (openhands)");
+    expect(picker).toHaveValue("Praxis (openhands)");
     await user.click(screen.getByTestId("meta-profile-save"));
     expect(onSave).toHaveBeenCalledWith(
       DEFAULT_ROUTER_PRO_META_PROFILE_NAME,

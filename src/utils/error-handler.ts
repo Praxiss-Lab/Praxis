@@ -1,5 +1,5 @@
 import { trackEvent } from "#/services/telemetry";
-import type { ErrorClassification } from "@openhands/typescript-client";
+import type { ErrorClassification } from "@praxiss-lab/praxis-sdk-client";
 
 interface ErrorDetails {
   source?: string;

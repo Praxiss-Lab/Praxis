@@ -1,4 +1,4 @@
-import { RemoteEventsList } from "@openhands/typescript-client/events/remote-events-list";
+import { RemoteEventsList } from "@praxiss-lab/praxis-sdk-client/events/remote-events-list";
 import { uploadFilesToConversation } from "#/api/conversation-file-upload.api";
 import {
   GetTrajectoryResponse,
