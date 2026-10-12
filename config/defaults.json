@@ -38,7 +38,7 @@
   "sources": {
     "sdk": {
       "repository": "https://github.com/Praxiss-Lab/praxis-sdk",
-      "ref": "a1d22f96e3581cbe2aead12cfaf18ab5cb90c5ea"
+      "ref": "a2f63b994d3ab376da96fed9c3340a5776f71778"
     },
     "automation": {
       "path": "vendor/automation",
