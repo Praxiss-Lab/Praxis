@@ -249,7 +249,7 @@ The following integrations would require changes to Agent Canvas, the Agent Serv
 
 ### 1. Native `SecurityAnalyzer` hook
 
-The Praxis SDK exposes a [`SecurityAnalyzer`](https://docs.openhands.dev/sdk/arch/security.md) interface. A custom implementation could call DefenseClaw's `/api/v1/inspect/tool` endpoint before every tool invocation — mirroring the inspection the OpenClaw TypeScript plugin performs. This would gate bash commands, file writes, and other tool calls through DefenseClaw's four-stage inspection pipeline (regex, Cisco AI Defense cloud rules, LLM judge, OPA policy) before they execute.
+The Praxis SDK exposes a [`SecurityAnalyzer`](https://github.com/Praxiss-Lab/praxis-sdk/blob/main/praxis-sdk/openhands/sdk/security/analyzer.py) interface. A custom implementation could call DefenseClaw's `/api/v1/inspect/tool` endpoint before every tool invocation — mirroring the inspection the OpenClaw TypeScript plugin performs. This would gate bash commands, file writes, and other tool calls through DefenseClaw's four-stage inspection pipeline (regex, Cisco AI Defense cloud rules, LLM judge, OPA policy) before they execute.
 
 ```python
 # Sketch — not yet implemented
@@ -295,7 +295,7 @@ DefenseClaw's registry system (`defenseclaw registry add`) ingests external skil
 - [DefenseClaw Guardrail Architecture](https://github.com/cisco-ai-defense/defenseclaw/blob/main/docs/GUARDRAIL.md)
 - [DefenseClaw CodeGuard Skill](https://github.com/cisco-ai-defense/defenseclaw/blob/main/skills/codeguard/SKILL.md)
 - [Praxis Agent Server](https://github.com/Praxiss-Lab/praxis-sdk/tree/main/praxis-agent-server)
-- [Praxis SDK Security Analyzer](https://docs.openhands.dev/sdk/arch/security.md)
+- [Praxis SDK Security Analyzer](https://github.com/Praxiss-Lab/praxis-sdk/blob/main/praxis-sdk/openhands/sdk/security/analyzer.py)
 - [Agent Canvas Self-Hosting](./SELF_HOSTING.md)
 
 ---
