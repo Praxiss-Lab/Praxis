@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "@tanstack/react-query";
-import type { MarketplaceField } from "@openhands/extensions/integrations";
+import type { MarketplaceField } from "@praxiss-lab/praxis-extensions/integrations";
 import { SecretsService } from "#/api/secrets-service";
 import { I18nKey } from "#/i18n/declaration";
 import {

@@ -29,7 +29,7 @@ import {
 const MARKUP_PATTERN = /<[A-Za-z/!]/;
 const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 /** The one URL the manifest may state, pinned to the product documentation. */
-const DOCS_URL_PREFIX = "https://docs.openhands.dev/";
+const DOCS_URL_PREFIX = "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/";
 const FILE_KIND_PATTERN = /^[a-z][a-z-]*$/;
 const FILENAME_SUFFIX_PATTERN = /^\.[a-z][a-z.]*json$/;
 const EVENT_SOURCE_PATTERN = /^[a-z0-9][a-z0-9.-]*$/;

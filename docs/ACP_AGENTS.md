@@ -34,7 +34,7 @@ agent choice is stored per backend, so switching backends can switch agents.
 
 The provider list is sourced from the SDK registry
 (`openhands.sdk.settings.acp_providers`, mirrored into
-`@openhands/typescript-client`) and enriched with Canvas UI metadata in
+`@praxiss-lab/praxis-sdk-client`) and enriched with Canvas UI metadata in
 [`src/constants/acp-providers.ts`](../src/constants/acp-providers.ts). Adding or
 changing a provider happens upstream in the SDK, not here.
 
@@ -208,7 +208,7 @@ needed.
 Concurrent same-provider conversations in one container share a HOME, so they can
 race on the CLI's auth/config/lock files. The SDK supports opting into a
 per-conversation data dir (`acp_isolate_data_dir`, software-agent-sdk#3492), but
-the released `@openhands/typescript-client` does not yet expose it on
+the released `@praxiss-lab/praxis-sdk-client` does not yet expose it on
 `ACPAgentSettings`, so Canvas can't send it without risking a validation error on
 older servers. This is tracked as a follow-up (agent-canvas#1019); cloud
 grouping isolation is separate (agent-canvas#1016).

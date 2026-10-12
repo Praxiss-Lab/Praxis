@@ -49,7 +49,7 @@ async function seedWorkspaceMetadata(
 ) {
   await page.addInitScript(
     ({ convId, wsPath }) => {
-      const STORAGE_KEY = "openhands-agent-server-conversation-metadata";
+      const STORAGE_KEY = "praxis-agent-server-conversation-metadata";
       const raw = window.localStorage.getItem(STORAGE_KEY);
       const all = raw ? JSON.parse(raw) : {};
       all[convId] = {

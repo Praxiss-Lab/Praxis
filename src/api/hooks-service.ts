@@ -1,5 +1,5 @@
-import { HooksClient } from "@openhands/typescript-client/clients";
-import type { HookConfig } from "@openhands/typescript-client";
+import { HooksClient } from "@praxiss-lab/praxis-sdk-client/clients";
+import type { HookConfig } from "@praxiss-lab/praxis-sdk-client";
 import { getAgentServerWorkingDir } from "./agent-server-config";
 import { getEffectiveLocalBackend } from "./backend-registry/active-store";
 import { getAgentServerClientOptions } from "./agent-server-client-options";

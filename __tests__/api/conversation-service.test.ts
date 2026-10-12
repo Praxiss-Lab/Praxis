@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
-import { RemoteWorkspace } from "@openhands/typescript-client/workspace/remote-workspace";
+import { RemoteWorkspace } from "@praxiss-lab/praxis-sdk-client/workspace/remote-workspace";
 
 import ConversationService from "#/api/conversation-service/conversation-service.api";
 import { clearAgentServerHomeDirCache } from "#/api/agent-server-home";
@@ -9,13 +9,13 @@ const { fileUploadMock, getHomeMock } = vi.hoisted(() => ({
   getHomeMock: vi.fn(),
 }));
 
-vi.mock("@openhands/typescript-client/workspace/remote-workspace", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/workspace/remote-workspace", () => ({
   RemoteWorkspace: vi.fn(function RemoteWorkspaceMock() {
     return { fileUpload: fileUploadMock };
   }),
 }));
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   FileClient: vi.fn(function FileClientMock() {
     return { getHome: getHomeMock };
   }),

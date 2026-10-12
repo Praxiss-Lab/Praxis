@@ -3,7 +3,7 @@ import type {
   WorkspaceItem,
   WorkspaceParentItem,
   WorkspacesListResponse,
-} from "@openhands/typescript-client/clients";
+} from "@praxiss-lab/praxis-sdk-client/clients";
 
 /**
  * MSW handlers for the agent-server's `/api/workspaces` and
@@ -39,7 +39,7 @@ export const WORKSPACES_HANDLERS = [
 
   http.post("*/api/workspaces", async ({ request }) => {
     // `workspaces` is the top-level key used by WorkspacesClient.addWorkspaces()
-    // in @openhands/typescript-client — aligns with the agent-server SDK contract.
+    // in @praxiss-lab/praxis-sdk-client — aligns with the agent-server SDK contract.
     const body = (await request.json()) as { workspaces?: WorkspaceItem[] };
     for (const incoming of body.workspaces ?? []) {
       const existingIndex = workspaces.findIndex(

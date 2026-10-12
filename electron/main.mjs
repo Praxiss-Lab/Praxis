@@ -59,6 +59,10 @@ import { resolveBundledRuntimeDir } from "./lib/bundled-runtime-dir.mjs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// Preserve Chromium sessions from an existing installation after renaming.
+const legacyUserData = join(app.getPath("appData"), "OpenHands Agent Canvas");
+if (existsSync(legacyUserData)) app.setPath("userData", legacyUserData);
+
 // ── Path resolution ───────────────────────────────────────────────────────────
 // Packaged (directories.app: 'electron'): scripts/config/build are SIBLINGS of
 // main.mjs inside Resources/app/, so projectRoot === __dirname.
@@ -90,7 +94,7 @@ const appIconPath = join(
 // icon. Must match appId in electron-builder.config.mjs, and must be set
 // before any BrowserWindow is created.
 if (process.platform === "win32") {
-  app.setAppUserModelId("dev.openhands.agent-canvas");
+  app.setAppUserModelId("dev.praxiss-lab.praxis");
 }
 
 // ── Bundled uv ────────────────────────────────────────────────────────────────
@@ -278,7 +282,7 @@ async function waitForUrl(url, timeoutMs = 120_000, intervalMs = 600) {
  * serving requests, not just that the ingress proxy is up.
  *
  * On first launch, `uvx` has to download a Python toolchain and install
- * `openhands-agent-server` and its workspace deps from PyPI, which can
+ * `praxis-agent-server` and its workspace deps from PyPI, which can
  * easily take a few minutes on a slow network. We poll the route end-to-end
  * (through ingress on port 8000, so a missing or restarted ingress is also
  * caught) instead of just probing the static-server fallback that

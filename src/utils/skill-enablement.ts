@@ -1,9 +1,9 @@
 import {
   DEFAULT_ENABLED_SKILL_NAMES,
   SKILLS_CATALOG,
-} from "@openhands/extensions/skills";
+} from "@praxiss-lab/praxis-extensions/skills";
 
-/** Every skill bundled from `@openhands/extensions`, in catalog order. */
+/** Every skill bundled from `@praxiss-lab/praxis-extensions`, in catalog order. */
 export const CATALOG_SKILL_NAMES: readonly string[] = SKILLS_CATALOG.map(
   (entry) => entry.name,
 );

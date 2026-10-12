@@ -101,7 +101,7 @@ export const SETUP_QUERY_KEYS = {
 } as const;
 
 export const APP_UPDATE_QUERY_KEYS = {
-  /** Latest published @openhands/agent-canvas version (npm `latest` dist-tag). */
+  /** Latest published @praxiss-lab/praxis version (npm `latest` dist-tag). */
   latestVersion: ["agent-canvas-latest-version"] as const,
 } as const;
 

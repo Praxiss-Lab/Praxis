@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useQueries } from "@tanstack/react-query";
-import { HttpError } from "@openhands/typescript-client";
+import { HttpError } from "@praxiss-lab/praxis-sdk-client";
 import {
   getCloudOrganizations,
   getCurrentCloudApiKey,

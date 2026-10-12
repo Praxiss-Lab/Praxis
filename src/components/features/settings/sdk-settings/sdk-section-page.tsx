@@ -115,7 +115,7 @@ const getSchemaUnavailableMessage = (
   }
 
   if (error.response?.status === 404) {
-    return `${fallbackMessage} This backend does not expose /api/settings/* schema endpoints. Upgrade to a recent openhands-agent-server release.`;
+    return `${fallbackMessage} This backend does not expose /api/settings/* schema endpoints. Upgrade to a recent praxis-agent-server release.`;
   }
 
   return fallbackMessage;

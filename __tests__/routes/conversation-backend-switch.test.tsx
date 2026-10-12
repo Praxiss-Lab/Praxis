@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router";
-import type { SharedConversation } from "@openhands/typescript-client";
+import type { SharedConversation } from "@praxiss-lab/praxis-sdk-client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import AgentServerConversationService from "#/api/conversation-service/agent-server-conversation-service.api";

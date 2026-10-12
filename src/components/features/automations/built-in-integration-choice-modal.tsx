@@ -7,7 +7,7 @@ import {
   Settings,
   SlidersHorizontal,
 } from "lucide-react";
-import type { IntegrationCatalogEntry } from "@openhands/extensions/integrations";
+import type { IntegrationCatalogEntry } from "@praxiss-lab/praxis-extensions/integrations";
 import { ModalBackdrop } from "#/components/shared/modals/modal-backdrop";
 import { ModalCloseButton } from "#/components/shared/modals/modal-close-button";
 import { BrandButton } from "#/components/features/settings/brand-button";

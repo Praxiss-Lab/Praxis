@@ -2,7 +2,7 @@
 
 Praxis uses `Praxiss-Lab/praxis-sdk` at the exact revision in `config/defaults.json`. All four Python SDK packages are taken from the same source revision, including the packages used by bundled Automation. Python import names and npm package names remain compatible during this initial migration.
 
-The TypeScript client and extensions are controlled local archives in `vendor/`. Automation is a controlled source snapshot at `vendor/automation`. Installation no longer selects published OpenHands SDK, Automation or extensions releases by default. Unrelated third-party dependencies still use their configured registries.
+The TypeScript client and extensions are controlled local archives in `vendor/`. Automation is a controlled source snapshot at `vendor/automation`. Installation no longer selects published Praxis SDK, Automation or extensions releases by default. Unrelated third-party dependencies still use their configured registries.
 
 For private repositories, authenticate Git using your owner account with access to the organization. Do not put tokens in repository URLs or configuration files. Cross-repository CI needs the `PRAXIS_SDK_READ_TOKEN` secret with read access to the private SDK; the ordinary Praxis workflow token cannot read another private repository. No credential is committed here.
 

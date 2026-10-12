@@ -1,7 +1,7 @@
 /**
  * The one place that decides which manifests this host is offered.
  *
- * Setup manifests are published by `@openhands/extensions` as an optional
+ * Setup manifests are published by `@praxiss-lab/praxis-extensions` as an optional
  * `setup` block on a catalog entry, so the catalog is the whole source. Entries
  * without one are skipped, which means the pinned package deciding to ship them
  * is the only step left — there is no wiring to add here.
@@ -11,8 +11,8 @@
  * types that shipped beside it.
  */
 
-import * as automationsModule from "@openhands/extensions/automations";
-import { AUTOMATION_CATALOG } from "@openhands/extensions/automations";
+import * as automationsModule from "@praxiss-lab/praxis-extensions/automations";
+import { AUTOMATION_CATALOG } from "@praxiss-lab/praxis-extensions/automations";
 import { createSetupRegistry, type SetupRegistry } from "./manifest-registry";
 
 export const SETUP_REGISTRY: SetupRegistry = createSetupRegistry(

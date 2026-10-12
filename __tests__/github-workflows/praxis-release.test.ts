@@ -28,7 +28,7 @@ describe("Praxis release workflow", () => {
     expect(workflow).toContain('gh release create "$tag"');
     expect(workflow).toContain('--title "Praxis $PRAXIS_RELEASE_VERSION"');
     expect(workflow).not.toContain("OpenHands/release-actions");
-    expect(workflow).not.toContain("@openhands/agent-canvas");
+    expect(workflow).not.toContain("@praxiss-lab/praxis");
     expect(workflow).not.toContain("npm publish");
   });
 

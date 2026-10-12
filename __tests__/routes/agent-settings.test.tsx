@@ -3,7 +3,7 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { getAcpProvider as getClientAcpProvider } from "@openhands/typescript-client";
+import { getAcpProvider as getClientAcpProvider } from "@praxiss-lab/praxis-sdk-client";
 import {
   AgentSettingsScreen,
   type AgentSettingsSaveControl,

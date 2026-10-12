@@ -1,5 +1,5 @@
 {
-  "name": "@openhands/agent-canvas",
+  "name": "@praxiss-lab/praxis",
   "version": "1.25.0",
   "description": "Praxis AI-driven development interface, independently maintained from the OpenHands Agent Canvas codebase",
   "license": "MIT",
@@ -23,8 +23,8 @@
     "@heroui/react": "2.8.10",
     "@microlink/react-json-view": "1.31.39",
     "@monaco-editor/react": "4.7.0",
-    "@openhands/extensions": "file:vendor/praxis-extensions-0.29.0.tgz",
-    "@openhands/typescript-client": "file:vendor/praxis-typescript-client-1.54.0.tgz",
+    "@praxiss-lab/praxis-extensions": "file:vendor/praxis-extensions-0.29.0.tgz",
+    "@praxiss-lab/praxis-sdk-client": "file:vendor/praxis-typescript-client-1.54.0.tgz",
     "@react-router/node": "7.18.2",
     "@react-router/serve": "7.18.2",
     "@tailwindcss/vite": "4.3.3",
@@ -80,13 +80,13 @@
     "build": "npm run build:app",
     "build:mock": "npm run make-i18n && cross-env VITE_MOCK_API=true react-router build",
     "start": "npx sirv-cli build/ --single",
-    "test": "npm run make-i18n && vitest run",
+    "test": "npm run make-i18n && node --import ./scripts/test-network-policy.mjs ./node_modules/vitest/vitest.mjs run",
     "test:e2e": "playwright test --pass-with-no-tests",
     "test:e2e:live": "node --env-file-if-exists=.env tests/e2e/live/scripts/run-live-e2e.mjs",
     "test:e2e:mock-llm": "playwright test --config=playwright.mock-llm.config.ts",
     "test:e2e:mock-llm:docker": "playwright test --config=playwright.mock-llm-docker.config.ts",
     "test:e2e:bind-policy": "playwright test --config=playwright.bind-policy.config.ts",
-    "test:coverage": "npm run make-i18n && vitest run --coverage",
+    "test:coverage": "npm run make-i18n && node --import ./scripts/test-network-policy.mjs ./node_modules/vitest/vitest.mjs run --coverage",
     "test:mutation": "npm run make-i18n && stryker run",
     "test:mutation:diff": "npm run make-i18n && node scripts/stryker-diff.mjs",
     "test:mutation:incremental": "npm run make-i18n && stryker run --incremental",
@@ -254,7 +254,7 @@
     "react-router": "7.18.2"
   },
   "bundleDependencies": [
-    "@openhands/typescript-client",
-    "@openhands/extensions"
+    "@praxiss-lab/praxis-sdk-client",
+    "@praxiss-lab/praxis-extensions"
   ]
 }

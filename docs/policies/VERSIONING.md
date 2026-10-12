@@ -2,7 +2,7 @@
 
 Status: active
 
-Praxis continues the OpenHands Agent Canvas version line, starting at `1.25.0`.
+Praxis continues the Praxis version line, starting at `1.25.0`.
 Its release schedule remains independently maintained.
 
 ## Two version axes

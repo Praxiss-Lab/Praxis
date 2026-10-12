@@ -40,7 +40,7 @@ function buildExtension(
     name: "demo-page",
     version: "0.1.0",
     enabled: true,
-    source: "https://github.com/OpenHands/OpenHands",
+    source: "https://github.com/Praxiss-Lab/Praxis",
     repo_path: "src/fixtures/canvas-extensions/demo-page",
     installed_at: "2026-10-01T00:00:00Z",
     install_path: "/home/.openhands/canvas-extensions/installed/demo-page",

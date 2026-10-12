@@ -111,7 +111,7 @@ vi.mock("#/api/agent-server-client-options", () => ({
   getAgentServerClientOptions: () => ({ baseUrl: "http://agent-server.test" }),
 }));
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   ConversationClient: class ConversationClient {
     sendEvent(...args: unknown[]) {
       return socketCapture.queueMessage(...args);

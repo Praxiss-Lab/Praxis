@@ -34,7 +34,7 @@ The `runtime_services` value is a JSON object of:
   "mode": "dev:automation",
   "services": {
     "agent_server": {
-      "description": "The OpenHands Agent Server this agent is running inside. ...",
+      "description": "The Praxis Agent Server this agent is running inside. ...",
       "url_from_agent": "http://localhost:18000"
     },
     "ingress": {
@@ -69,7 +69,7 @@ The following services are reachable from your sandbox. URLs are written
 from your point of view (i.e., as you should curl/fetch them).
 
 * Agent Server (you): http://localhost:18000
-    The OpenHands Agent Server this agent is running inside. Tool calls (terminal, file_editor, browser, etc.) execute here.
+    The Praxis Agent Server this agent is running inside. Tool calls (terminal, file_editor, browser, etc.) execute here.
 * Ingress: http://localhost:8000
     Unified entry point. Routes /api/automation/* to the automation backend, /api/* and /sockets to the agent-server, and /* to the frontend.
 * Frontend: http://localhost:3001
@@ -87,10 +87,10 @@ you are running inside of — NOT the automation backend.
 ```
 
 
-- README expectation: keep the first section as a concrete, chronological from-scratch quickstart for running this frontend against a real `openhands-agent-server` (clone, install prerequisites, optional `.env`, run `npm run dev`).
+- README expectation: keep the first section as a concrete, chronological from-scratch quickstart for running this frontend against a real `praxis-agent-server` (clone, install prerequisites, optional `.env`, run `npm run dev`).
 - Windows-specific command syntax (PowerShell) lives in `README.windows.md`. When changing install / Docker sandbox instructions in `README.md`, update `README.windows.md` in the same PR to keep them in sync.
 - `scripts/dev-safe.mjs` uses `uvx` for temporary agent-server installation — no permanent `uv tool install` needed. Environment variables (highest precedence first):
-  - `OH_AGENT_SERVER_LOCAL_PATH` — absolute path to a local `software-agent-sdk` checkout. Runs the local checkout via `uvx` with `--with-editable` for `openhands-sdk`/`openhands-tools`/`openhands-workspace` and `--reinstall` for `openhands-agent-server`, so SDK edits are picked up on restart. Highest precedence.
+  - `OH_AGENT_SERVER_LOCAL_PATH` — absolute path to a local `software-agent-sdk` checkout. Runs the local checkout via `uvx` with `--with-editable` for `praxis-sdk`/`praxis-tools`/`praxis-workspace` and `--reinstall` for `praxis-agent-server`, so SDK edits are picked up on restart. Highest precedence.
   - `OH_AGENT_SERVER_GIT_REF` — git commit SHA or branch name (takes precedence over version)
   - `OH_AGENT_SERVER_VERSION` — version tag in the owned SDK repository (e.g., "1.54.0")
   - `OH_SECRET_KEY` — secret key for settings encryption; auto-generated and persisted to `~/.openhands/agent-canvas/secret-key.txt` on first run (same file Docker uses), ensuring dev mode and Docker share the same key when both mount the same `~/.openhands` directory. Override with the env var to pin a specific key.
@@ -99,7 +99,7 @@ you are running inside of — NOT the automation backend.
 
 - Security: launchers generate and persist a 64-character session API key at `~/.openhands/agent-canvas/session-api-key.txt` unless overridden. The agent-server and automation backend share that session key. `OH_SECRET_KEY` protects settings encryption and is persisted separately at `~/.openhands/agent-canvas/secret-key.txt`.
 - `scripts/dev-safe.mjs` should fail fast if `uvx` cannot be spawned (for example missing PATH entries).
-- `tools/` holds Python modules the agent-server can import: `buildAgentServerEnv` exposes the directory through `OH_EXTRA_PYTHON_PATH` (Docker: `/opt/agent-canvas/tools`, see `docker/entrypoint.sh`). `tools/canvas_ui_tool.py` is imported at startup via `--import-modules canvas_ui_tool` (appended by `buildAgentServerCommand` and by both launch lines in `docker/entrypoint.sh`), not only lazily from persisted conversation metadata: besides the legacy `canvas_ui` registration it registers the SDK's builtin `FinishTool`, so `openhands-automation` ≥ 1.9.0 presets — which dispatch remote conversations with `finish_tool_response_schema=TaskOutcome` and advertise the tool as the non-self-registering `openhands.sdk.tool.builtins.finish` — do not fail every run with `ToolDefinition 'FinishTool' is not registered`. Remove that registration once the SDK registers builtins for remote conversations.
+- `tools/` holds Python modules the agent-server can import: `buildAgentServerEnv` exposes the directory through `OH_EXTRA_PYTHON_PATH` (Docker: `/opt/agent-canvas/tools`, see `docker/entrypoint.sh`). `tools/canvas_ui_tool.py` is imported at startup via `--import-modules canvas_ui_tool` (appended by `buildAgentServerCommand` and by both launch lines in `docker/entrypoint.sh`), not only lazily from persisted conversation metadata: besides the legacy `canvas_ui` registration it registers the SDK's builtin `FinishTool`, so `praxis-automation` ≥ 1.9.0 presets — which dispatch remote conversations with `finish_tool_response_schema=TaskOutcome` and advertise the tool as the non-self-registering `openhands.sdk.tool.builtins.finish` — do not fail every run with `ToolDefinition 'FinishTool' is not registered`. Remove that registration once the SDK registers builtins for remote conversations.
 - `npm run dev` runs the full local stack via `uvx` (agent-server + automation backend + Vite dev server + ingress proxy) with no Docker dependency. `npm run dev:static` does the same but serves a production build of the frontend instead of the Vite dev server.
 - `scripts/dev-with-automation.mjs` runs the full stack: agent-server, automation backend (both via uvx), frontend server, and ingress proxy. It defaults to Vite when run directly, supports `--static` for an existing build, and supports `--dynamic` so wrappers that default static can opt back into Vite. Uses a standalone ingress proxy (`scripts/ingress.mjs`) to route traffic:
   - Keep `SIGINT`, `SIGTERM`, and `SIGHUP` wired through the coordinated shutdown handler. Services run in detached process groups on POSIX, so cleanup must use `signalProcessTree()` rather than signaling only the direct child; regression coverage lives in `__tests__/scripts/dev-with-automation.test.ts`.
@@ -107,7 +107,7 @@ you are running inside of — NOT the automation backend.
   - `/api/*`, `/sockets`, etc. → agent server (:18000)
   - `/*` (default) → frontend server (:3001), either Vite or static depending on launcher mode
   - Environment variables: `PORT` (ingress port, default from `config/defaults.json`), `OH_AUTOMATION_GIT_REF` (git ref, overrides default version), and `OH_AUTOMATION_VERSION` (defaults to `versions.automation` in `config/defaults.json`)
-  - `scripts/check-sdk-version-sync.mjs` checks the released `openhands-automation` package against `versions.agentServer` in `config/defaults.json`; these must always match — if the automation package's SDK dependencies differ from `agentServer`, the check fails.
+  - `scripts/check-sdk-version-sync.mjs` checks the released `praxis-automation` package against `versions.agentServer` in `config/defaults.json`; these must always match — if the automation package's SDK dependencies differ from `agentServer`, the check fails.
   - Access points: `http://localhost:8000/` (main UI), `http://localhost:8000/api/automation/docs` (API docs)
   - Security: the automation backend receives the same session key as the agent-server through `AUTOMATION_LOCAL_API_KEY`; the frontend does not bake a separate automation API key.
 - `scripts/ingress.mjs` is a standalone HTTP reverse proxy that can be used independently to route traffic to multiple backends based on URL path prefix.

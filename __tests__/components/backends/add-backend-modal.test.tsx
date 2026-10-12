@@ -33,7 +33,7 @@ vi.mock("#/api/device-flow-client", async (importOriginal) => {
   };
 });
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   ServerClient: vi.fn(function ServerClientMock() {
     return {
       getServerInfo: getServerInfoMock,

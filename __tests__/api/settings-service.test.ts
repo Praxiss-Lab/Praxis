@@ -337,7 +337,7 @@ describe("SettingsService", () => {
     // the PAT layer, getSettings must not resurrect those stale tokens into
     // provider_tokens_set — that would re-enable the removed flow.
     window.localStorage.setItem(
-      "openhands-agent-server-git-provider-tokens",
+      "praxis-agent-server-git-provider-tokens",
       JSON.stringify({
         github: { token: "ghp_stale_xyz", host: "github.com" },
         gitlab: { token: "glpat_stale_xyz", host: null },

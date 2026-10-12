@@ -6,7 +6,7 @@
  * bin/agent-canvas.mjs + uvx.
  *
  * Starts two processes:
- *   1. Mock LLM server (Python on the host, using openhands-sdk TestLLM)
+ *   1. Mock LLM server (Python on the host, using praxis-sdk TestLLM)
  *   2. Docker container running the agent-canvas all-in-one image
  *      (agent-server + automation backend + static frontend + proxy)
  *      The container also starts a second static-server instance on
@@ -125,7 +125,7 @@ const MOCK_ACP_HOST_PATH = resolve(
 );
 const MOCK_ACP_CONTAINER_PATH = "/opt/mock-acp-server.py";
 
-// The agent-server image ships Python 3 via the openhands-sdk base.
+// The agent-server image ships Python 3 via the praxis-sdk base.
 process.env.MOCK_ACP_CONTAINER_PYTHON = "python3";
 process.env.MOCK_ACP_CONTAINER_SCRIPT = MOCK_ACP_CONTAINER_PATH;
 

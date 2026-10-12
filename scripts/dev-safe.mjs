@@ -44,10 +44,10 @@ const DEFAULT_VITE_PORT = 3001;
 const DEFAULT_WAIT_TIMEOUT_MS = 30_000;
 const AGENT_SERVER_GIT_REPO = SHARED_DEFAULTS.sources.sdk.repository;
 const LOCAL_AGENT_SERVER_SUBDIRS = [
-  "openhands-agent-server",
-  "openhands-sdk",
-  "openhands-tools",
-  "openhands-workspace",
+  "praxis-agent-server",
+  "praxis-sdk",
+  "praxis-tools",
+  "praxis-workspace",
 ];
 const DEFAULT_AGENT_SERVER_TELEMETRY_POSTHOG_API_KEY =
   SHARED_DEFAULTS.telemetry.posthogApiKey;
@@ -396,7 +396,7 @@ export function validateFrontendDependencies(
  * Modules the agent-server imports at startup (`--import-modules`). They are
  * resolved from `tools/`, which `buildAgentServerEnv` exposes through
  * OH_EXTRA_PYTHON_PATH. Importing `canvas_ui_tool` eagerly registers the SDK's
- * builtin FinishTool so automation presets (openhands-automation >= 1.9.0) can
+ * builtin FinishTool so automation presets (praxis-automation >= 1.9.0) can
  * resolve it on the remote conversations they dispatch — see the note at the
  * bottom of tools/canvas_ui_tool.py.
  */
@@ -408,7 +408,7 @@ export const AGENT_SERVER_IMPORT_MODULES = "canvas_ui_tool";
  * Environment variables (highest precedence first):
  * - OH_AGENT_SERVER_LOCAL_PATH: Absolute path to a software-agent-sdk checkout.
  *   Runs the local checkout via uvx with editable installs of the workspace
- *   packages (openhands-sdk, openhands-tools, openhands-workspace) so source
+ *   packages (praxis-sdk, praxis-tools, praxis-workspace) so source
  *   edits are picked up without a manual reinstall. The agent-server itself
  *   is rebuilt from local source on each invocation (--reinstall).
  * - OH_AGENT_SERVER_GIT_REF: Git commit SHA or branch name
@@ -438,13 +438,13 @@ export function buildAgentServerCommand(env = process.env) {
     uvxArgs.push(
       "--reinstall",
       "--from",
-      path.join(localPath, "openhands-agent-server"),
+      path.join(localPath, "praxis-agent-server"),
       "--with-editable",
-      path.join(localPath, "openhands-sdk"),
+      path.join(localPath, "praxis-sdk"),
       "--with-editable",
-      path.join(localPath, "openhands-tools"),
+      path.join(localPath, "praxis-tools"),
       "--with-editable",
-      path.join(localPath, "openhands-workspace"),
+      path.join(localPath, "praxis-workspace"),
       "--with",
       AGENT_SERVER_POSTHOG_CONSTRAINT,
       "agent-server",
@@ -453,7 +453,7 @@ export function buildAgentServerCommand(env = process.env) {
   } else if (gitRef) {
     // Use git ref with subdirectory syntax for uv workspace monorepo.
     // The software-agent-sdk repo has packages in subdirectories:
-    // openhands-agent-server/, openhands-sdk/, openhands-tools/, openhands-workspace/
+    // praxis-agent-server/, praxis-sdk/, praxis-tools/, praxis-workspace/
     // All four must come from the same ref so inter-package APIs stay in sync.
     //
     // --reinstall is required because the git branch may carry the same version
@@ -464,13 +464,13 @@ export function buildAgentServerCommand(env = process.env) {
     uvxArgs.push(
       "--reinstall",
       "--from",
-      `${baseGitUrl}#subdirectory=openhands-agent-server`,
+      `${baseGitUrl}#subdirectory=praxis-agent-server`,
       "--with",
-      `${baseGitUrl}#subdirectory=openhands-sdk`,
+      `${baseGitUrl}#subdirectory=praxis-sdk`,
       "--with",
-      `${baseGitUrl}#subdirectory=openhands-tools`,
+      `${baseGitUrl}#subdirectory=praxis-tools`,
       "--with",
-      `${baseGitUrl}#subdirectory=openhands-workspace`,
+      `${baseGitUrl}#subdirectory=praxis-workspace`,
       "--with",
       AGENT_SERVER_POSTHOG_CONSTRAINT,
       "agent-server",

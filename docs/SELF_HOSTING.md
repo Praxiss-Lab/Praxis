@@ -99,7 +99,7 @@ in step 4.
 > origin. `OH_CANVAS_ENABLE_VSCODE=true` enables the legacy bundled editor only
 > for compatibility testing. That legacy route shares the Canvas browser origin
 > (`/vscode` by default), so it does not provide the App bridge's origin
-> isolation. Tracked in [#16492](https://github.com/OpenHands/OpenHands/issues/16492).
+> isolation. Tracked in [#16492](https://github.com/Praxiss-Lab/Praxis/issues/16492).
 
 ## 3. Run Agent Canvas
 

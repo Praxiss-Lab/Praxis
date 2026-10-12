@@ -11,7 +11,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AxiosError, AxiosHeaders } from "axios";
-import { HttpError } from "@openhands/typescript-client";
+import { HttpError } from "@praxiss-lab/praxis-sdk-client";
 import type { AppConversation } from "#/api/conversation-service/agent-server-conversation-service.types";
 import { useBashCommandLogs } from "#/hooks/query/use-bash-command-logs";
 

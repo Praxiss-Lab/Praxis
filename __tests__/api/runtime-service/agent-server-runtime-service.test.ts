@@ -1,5 +1,5 @@
-import { FileClient } from "@openhands/typescript-client/clients";
-import { RemoteWorkspace } from "@openhands/typescript-client/workspace/remote-workspace";
+import { FileClient } from "@praxiss-lab/praxis-sdk-client/clients";
+import { RemoteWorkspace } from "@praxiss-lab/praxis-sdk-client/workspace/remote-workspace";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   __resetActiveStoreForTests,
@@ -18,13 +18,13 @@ const { executeCommandMock, downloadFileMock } = vi.hoisted(() => ({
   downloadFileMock: vi.fn(),
 }));
 
-vi.mock("@openhands/typescript-client/workspace/remote-workspace", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/workspace/remote-workspace", () => ({
   RemoteWorkspace: vi.fn(function RemoteWorkspaceMock() {
     return { executeCommand: executeCommandMock };
   }),
 }));
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   FileClient: vi.fn(function FileClientMock() {
     return { downloadFile: downloadFileMock };
   }),

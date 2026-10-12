@@ -3,7 +3,7 @@ import {
   FileClient,
   ProfilesClient,
   SettingsClient,
-} from "@openhands/typescript-client/clients";
+} from "@praxiss-lab/praxis-sdk-client/clients";
 import { http, HttpResponse } from "msw";
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import { server } from "#/mocks/node";
@@ -68,10 +68,10 @@ const {
   mockListProfiles: vi.fn(),
 }));
 
-vi.mock("@openhands/typescript-client/clients", async () => {
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", async () => {
   const actual = await vi.importActual<
-    typeof import("@openhands/typescript-client/clients")
-  >("@openhands/typescript-client/clients");
+    typeof import("@praxiss-lab/praxis-sdk-client/clients")
+  >("@praxiss-lab/praxis-sdk-client/clients");
   return {
     ...actual,
     ConversationClient: vi.fn(function ConversationClientMock() {
@@ -2400,7 +2400,7 @@ describe("AgentServerConversationService", () => {
   });
 
   describe("mutation-strengthened conversation contracts", () => {
-    const metadataStorageKey = "openhands-agent-server-conversation-metadata";
+    const metadataStorageKey = "praxis-agent-server-conversation-metadata";
     const invalidResponseMessage =
       "Unable to load conversations because the selected agent server returned " +
       "data this UI does not understand. Check the backend URL/session key and " +

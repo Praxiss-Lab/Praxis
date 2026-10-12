@@ -1,4 +1,4 @@
-import type { SkillCategoryId } from "@openhands/extensions/skills";
+import type { SkillCategoryId } from "@praxiss-lab/praxis-extensions/skills";
 import { I18nKey } from "#/i18n/declaration";
 import type { SkillInfo, SkillType } from "#/types/settings";
 import {

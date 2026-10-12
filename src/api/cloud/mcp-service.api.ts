@@ -1,4 +1,4 @@
-import type { AgentServerMCPTestRequest } from "@openhands/typescript-client";
+import type { AgentServerMCPTestRequest } from "@praxiss-lab/praxis-sdk-client";
 import { getActiveBackend } from "../backend-registry/active-store";
 import type { Backend } from "../backend-registry/types";
 import type {

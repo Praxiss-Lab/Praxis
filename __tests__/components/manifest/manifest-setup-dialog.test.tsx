@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AUTOMATION_CATALOG } from "@openhands/extensions/automations";
+import { AUTOMATION_CATALOG } from "@praxiss-lab/praxis-extensions/automations";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";

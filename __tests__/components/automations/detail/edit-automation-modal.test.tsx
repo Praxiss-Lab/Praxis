@@ -48,7 +48,7 @@ vi.mock("#/utils/custom-toast-handlers", () => ({
 // The form is the interface manifest's, so these tests run against the
 // manifest the pinned package publishes — the one a user meets.
 vi.mock("#/manifests/manifest-sources", async (importOriginal) => {
-  const extensions = await import("@openhands/extensions/automations");
+  const extensions = await import("@praxiss-lab/praxis-extensions/automations");
   return {
     ...(await importOriginal<typeof import("#/manifests/manifest-sources")>()),
     AUTOMATION_INTERFACE_CANDIDATE: (

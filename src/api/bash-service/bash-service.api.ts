@@ -1,9 +1,9 @@
-import { BashClient } from "@openhands/typescript-client/clients";
+import { BashClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import type {
   BashEvent,
   BashEventPage,
   BashOutput,
-} from "@openhands/typescript-client";
+} from "@praxiss-lab/praxis-sdk-client";
 import { getActiveBackend } from "../backend-registry/active-store";
 import { getAgentServerClientOptions } from "../agent-server-client-options";
 

@@ -8,7 +8,7 @@
  *   route as a fallback) via the org-scoped cloud proxy.
  * This mirrors how SettingsService branches to fetchCloudSettings().
  *
- * Uses ProfilesClient from @openhands/typescript-client v0.2.0+.
+ * Uses ProfilesClient from @praxiss-lab/praxis-sdk-client v0.2.0+.
  * All types are re-exported from the SDK for consumer convenience.
  *
  * Note: Unlike some SDK clients, we don't call client.close() here for
@@ -19,7 +19,7 @@
 import {
   ProfilesClient,
   type GetProfileOptions,
-} from "@openhands/typescript-client/clients";
+} from "@praxiss-lab/praxis-sdk-client/clients";
 import type {
   ProfileInfo as ClientProfileInfo,
   ProfileListResponse as ClientProfileListResponse,
@@ -29,7 +29,7 @@ import type {
   SaveProfileRequest,
   ExposeSecretsMode,
   ValidateProfileResponse,
-} from "@openhands/typescript-client";
+} from "@praxiss-lab/praxis-sdk-client";
 import { getAgentServerClientOptions } from "../agent-server-client-options";
 import { getActiveBackend } from "../backend-registry/active-store";
 import {
@@ -43,7 +43,7 @@ import {
 
 /**
  * Profile summaries carry an optional `provider_connection_id` (the shared
- * provider connection a profile links to), but `@openhands/typescript-client`
+ * provider connection a profile links to), but `@praxiss-lab/praxis-sdk-client`
  * predates that field. Widen the client types here so consumers can read it; it
  * stays optional, so a client response without the field is still assignable.
  */

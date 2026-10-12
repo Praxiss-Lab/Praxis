@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import {
   INTEGRATION_CATALOG as MCP_MARKETPLACE,
   type IntegrationCatalogEntry as MarketplaceEntry,
-} from "@openhands/extensions/integrations";
+} from "@praxiss-lab/praxis-extensions/integrations";
 import {
   findInstalledEntryMatch,
   getMarketplaceEntryById,

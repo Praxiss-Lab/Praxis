@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { SKILLS_CATALOG } from "@openhands/extensions/skills";
+import { readFileSync } from "node:fs";
 import {
   ADD_SKILL_EXAMPLE_COMMAND,
   ADD_SKILL_SKILL_NAME,
@@ -13,10 +13,16 @@ describe("getSkillChatLaunchMessage", () => {
     );
   });
 
-  it("points the add-skill example at a skill in the bundled extensions catalog", () => {
-    const skillName = ADD_SKILL_EXAMPLE_COMMAND.split("/skills/").at(-1);
-
-    expect(SKILLS_CATALOG.map((entry) => entry.name)).toContain(skillName);
+  it("points the add-skill example at an existing owned skill source", () => {
+    const source = new URL(ADD_SKILL_EXAMPLE_COMMAND.split(" ")[1]);
+    expect(source.origin).toBe("https://github.com");
+    expect(source.pathname).toMatch(
+      /^\/Praxiss-Lab\/Praxis\/tree\/main\/\.agents\/skills\//,
+    );
+    const skillPath = source.pathname.split("/tree/main/")[1];
+    expect(
+      readFileSync(`${process.cwd()}/${skillPath}/SKILL.md`, "utf8").length,
+    ).toBeGreaterThan(100);
   });
 
   it("returns a slash-command prefix for other skills", () => {

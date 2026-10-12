@@ -639,7 +639,7 @@ const MOCK_VERIFIED_MODELS_BY_PROVIDER = MOCK_MODELS.reduce<
   return acc;
 }, {});
 
-// Matches the pinned `@openhands/typescript-client`, so mock mode models a
+// Matches the pinned `@praxiss-lab/praxis-sdk-client`, so mock mode models a
 // server that actually ships this schema.
 const MOCK_AGENT_SERVER_VERSION = "1.53.0";
 

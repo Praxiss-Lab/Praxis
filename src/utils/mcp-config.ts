@@ -4,7 +4,7 @@ import type {
   MCPConfigPatch,
   MCPServer,
   MCPServerPatch,
-} from "@openhands/typescript-client";
+} from "@praxiss-lab/praxis-sdk-client";
 import { isMcpAuthCredential } from "#/types/mcp-auth";
 import type { MCPServerConfig } from "#/types/mcp-server";
 import { toMcpServerName } from "#/utils/mcp-server-name";

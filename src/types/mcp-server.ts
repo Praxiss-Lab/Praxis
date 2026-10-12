@@ -5,7 +5,7 @@ import type {
   AgentServerMCPToolCall,
   AgentServerMCPToolCallResult,
   MCPTestFailureKind,
-} from "@openhands/typescript-client";
+} from "@praxiss-lab/praxis-sdk-client";
 import type { MCPAuthCredential, MCPOAuthState } from "./mcp-auth";
 
 export type MCPServerType = "sse" | "stdio" | "shttp";

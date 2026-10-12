@@ -39,7 +39,7 @@ const deviceFlowMocks = vi.hoisted(() => ({
 const getServerInfoMock = vi.fn().mockResolvedValue({ version: "1.52.0" });
 const getSettingsMock = vi.fn().mockResolvedValue({});
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   ServerClient: vi.fn(function ServerClientMock() {
     return { getServerInfo: getServerInfoMock };
   }),

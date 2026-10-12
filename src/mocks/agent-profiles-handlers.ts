@@ -3,7 +3,7 @@ import type {
   AgentProfile,
   AgentProfileSaveInput,
   AgentProfileSummary,
-} from "@openhands/typescript-client";
+} from "@praxiss-lab/praxis-sdk-client";
 import type { ToolCatalogEntry } from "#/api/tool-catalog-service/tool-catalog-service.api";
 
 /**

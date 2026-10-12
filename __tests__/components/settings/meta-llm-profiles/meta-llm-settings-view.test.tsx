@@ -1,7 +1,7 @@
 import { describe, expect, it, vi, beforeEach, type Mock } from "vitest";
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { HttpError } from "@openhands/typescript-client";
+import { HttpError } from "@praxiss-lab/praxis-sdk-client";
 import { renderWithProviders } from "test-utils";
 import { MetaLlmSettingsView } from "#/components/features/settings/meta-llm-profiles";
 import * as useMetaProfilesHook from "#/hooks/query/use-meta-profiles";
@@ -63,7 +63,7 @@ const mockLlmProfiles = [
 const mockProviderConnections = [
   {
     id: "conn-openhands",
-    display_name: "OpenHands",
+    display_name: "Praxis",
     provider: "openhands",
     base_url: null,
     created_at: 0,
@@ -265,7 +265,7 @@ describe("MetaLlmSettingsView", () => {
     // The built-in templates pre-select the first provider connection so the
     // router's LLM profiles are created on save.
     expect(screen.getByTestId("meta-profile-router-connection")).toHaveValue(
-      "OpenHands (openhands)",
+      "Praxis (openhands)",
     );
   });
 
@@ -283,7 +283,7 @@ describe("MetaLlmSettingsView", () => {
     // Custom profiles default to "don't create profiles".
     expect(
       screen.getByTestId("meta-profile-router-connection"),
-    ).not.toHaveValue("OpenHands (openhands)");
+    ).not.toHaveValue("Praxis (openhands)");
   });
 
   it("creates missing router LLM profiles linked to the selected provider connection", async () => {

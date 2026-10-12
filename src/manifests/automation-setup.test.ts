@@ -1,5 +1,5 @@
-import { AUTOMATION_CATALOG } from "@openhands/extensions/automations";
-import customAutomationFixture from "@openhands/extensions/testing/automations/custom-automation.json";
+import { AUTOMATION_CATALOG } from "@praxiss-lab/praxis-extensions/automations";
+import customAutomationFixture from "@praxiss-lab/praxis-extensions/testing/automations/custom-automation.json";
 import { describe, expect, it } from "vitest";
 import {
   buildCreatePayload,

@@ -4,7 +4,7 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
-import { HttpError } from "@openhands/typescript-client";
+import { HttpError } from "@praxiss-lab/praxis-sdk-client";
 
 import { I18nKey } from "#/i18n/declaration";
 
@@ -296,7 +296,7 @@ describe("AutomationsList — view mode toggle", () => {
     expect(
       screen.getByTestId("automation-list-row-auto-1"),
     ).toBeInTheDocument();
-    expect(window.localStorage.getItem("openhands-automations-view")).toBe(
+    expect(window.localStorage.getItem("praxis-automations-view")).toBe(
       "list",
     );
   });
@@ -409,7 +409,7 @@ describe("AutomationsList — Run now toasts", () => {
   it("does not dispatch when Run now is clicked on a disabled automation (list view)", async () => {
     // Arrange — pre-seed the stored view mode so the page mounts in list view,
     // then return a single disabled automation.
-    window.localStorage.setItem("openhands-automations-view", "list");
+    window.localStorage.setItem("praxis-automations-view", "list");
     const disabledAutomation: Automation = { ...automation, enabled: false };
     vi.mocked(AutomationService.getAutomations).mockResolvedValue({
       automations: [disabledAutomation],

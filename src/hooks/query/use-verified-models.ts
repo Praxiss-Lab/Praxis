@@ -1,4 +1,4 @@
-import { LLMMetadataClient } from "@openhands/typescript-client/clients";
+import { LLMMetadataClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import { getAgentServerClientOptions } from "#/api/agent-server-client-options";
 import { getActiveBackend } from "#/api/backend-registry/active-store";
 

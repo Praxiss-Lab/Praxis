@@ -1,4 +1,4 @@
-import { CloudClient } from "@openhands/typescript-client/clients";
+import { CloudClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import {
   getAgentServerBaseUrl,
   getAgentServerHeaders,

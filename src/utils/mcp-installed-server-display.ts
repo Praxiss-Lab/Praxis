@@ -1,4 +1,4 @@
-import type { IntegrationCatalogEntry as MarketplaceEntry } from "@openhands/extensions/integrations";
+import type { IntegrationCatalogEntry as MarketplaceEntry } from "@praxiss-lab/praxis-extensions/integrations";
 import type { MCPServerConfig } from "#/types/mcp-server";
 
 function configuredServerName(server: MCPServerConfig): string | undefined {

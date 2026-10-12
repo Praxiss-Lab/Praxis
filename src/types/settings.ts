@@ -1,6 +1,6 @@
-import type { MCPConfig } from "@openhands/typescript-client";
-export type { MCPConfig } from "@openhands/typescript-client";
-import type { SkillCategoryId } from "@openhands/extensions/skills";
+import type { MCPConfig } from "@praxiss-lab/praxis-sdk-client";
+export type { MCPConfig } from "@praxiss-lab/praxis-sdk-client";
+import type { SkillCategoryId } from "@praxiss-lab/praxis-extensions/skills";
 import type { WorkspaceFileDiscovery } from "#/utils/workspace-file-discovery";
 
 export const ProviderOptions = {
@@ -79,7 +79,7 @@ export type SkillInfo = {
   description?: string | null;
   triggers?: string[];
   /**
-   * Topical category from the bundled `@openhands/extensions` catalog.
+   * Topical category from the bundled `@praxiss-lab/praxis-extensions` catalog.
    * Always absent for user/project skills: the agent-server's `/api/skills` response drops SKILL.md frontmatter metadata, so a local `category` cannot reach us.
    */
   category?: SkillCategoryId | null;
@@ -151,7 +151,7 @@ export type Settings = {
   /** Deny-list over user- and project-authored skills. */
   disabled_skills?: string[];
   /**
-   * Allow-list over the bundled `@openhands/extensions` catalog. `undefined`
+   * Allow-list over the bundled `@praxiss-lab/praxis-extensions` catalog. `undefined`
    * means "never migrated", the only signal `migrateSkillEnablement` has, so
    * it is deliberately absent from `DEFAULT_SETTINGS`.
    */

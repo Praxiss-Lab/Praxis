@@ -1,5 +1,5 @@
-import { MCPClient } from "@openhands/typescript-client/clients";
-import type { AgentServerMCPTestRequest } from "@openhands/typescript-client";
+import { MCPClient } from "@praxiss-lab/praxis-sdk-client/clients";
+import type { AgentServerMCPTestRequest } from "@praxiss-lab/praxis-sdk-client";
 import { getAgentServerClientOptions } from "../agent-server-client-options";
 import {
   getActiveBackend,

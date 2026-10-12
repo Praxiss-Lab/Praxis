@@ -1,4 +1,4 @@
-import { getAcpProvider as getClientAcpProvider } from "@openhands/typescript-client";
+import { getAcpProvider as getClientAcpProvider } from "@praxiss-lab/praxis-sdk-client";
 import { I18nKey } from "#/i18n/declaration";
 
 export type ACPProviderIcon =
@@ -67,7 +67,7 @@ export function resolveEffectiveAcpModel(inputs: {
 /**
  * Shape of a built-in ACP (Agent Client Protocol) provider as Canvas consumes
  * it. The data fields (display name, launch command, model picker + default)
- * are sourced at module load from ``@openhands/typescript-client``'s ACP
+ * are sourced at module load from ``@praxiss-lab/praxis-sdk-client``'s ACP
  * registry — the generated mirror of the Python source of truth
  * ``openhands.sdk.settings.acp_providers``. This config only adds the
  * Canvas-specific UI fields ({@link ACPProviderConfig.icon} +
@@ -161,7 +161,7 @@ export const SURFACED_ACP_PROVIDERS: readonly string[] =
   Object.keys(ACP_PROVIDER_UI);
 
 // Built-in ACP providers Canvas surfaces, built by enriching each upstream
-// registry record (``@openhands/typescript-client`` → Python SDK) with the
+// registry record (``@praxiss-lab/praxis-sdk-client`` → Python SDK) with the
 // Canvas UI metadata above.
 export const ACP_PROVIDERS: ACPProviderConfig[] = Object.entries(
   ACP_PROVIDER_UI,
@@ -224,7 +224,7 @@ export interface ACPProviderSecretField {
  *
  * The blob *names* (``CODEX_AUTH_JSON`` / ``GOOGLE_APPLICATION_CREDENTIALS_JSON``)
  * duplicate the SDK registry's ``file_secrets`` specs; derive them from the
- * client registry once the pinned ``@openhands/typescript-client`` mirrors that
+ * client registry once the pinned ``@praxiss-lab/praxis-sdk-client`` mirrors that
  * field (same bump that unblocks ``acp_isolate_data_dir``, see #1019).
  */
 const ACP_RESERVED_CREDENTIALS: Record<string, ACPProviderSecretField[]> = {
@@ -344,7 +344,7 @@ export function getAcpPreferredDefaultModel(
  * List the credentials Canvas should prompt for when onboarding the given ACP
  * provider. The API-key and base-URL field *names* track the SDK registry's
  * ``api_key_env_var`` / ``base_url_env_var`` (mirrored via
- * ``@openhands/typescript-client``) so they can't drift as providers are added
+ * ``@praxiss-lab/praxis-sdk-client``) so they can't drift as providers are added
  * or renamed; the per-provider container credentials (subscription / Vertex
  * blobs) come from {@link ACP_RESERVED_CREDENTIALS}, since those are a
  * containerized-deployment concern with no model-registry entry. Each field

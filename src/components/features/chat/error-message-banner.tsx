@@ -6,7 +6,7 @@ import { I18nKey } from "#/i18n/declaration";
 import { displayErrorToast } from "#/utils/custom-toast-handlers";
 import { getAcpErrorHeaderKey } from "#/utils/acp-error-codes";
 import { cn } from "#/utils/utils";
-import type { ErrorClassification } from "@openhands/typescript-client";
+import type { ErrorClassification } from "@praxiss-lab/praxis-sdk-client";
 
 interface ErrorMessageBannerProps {
   message: string;

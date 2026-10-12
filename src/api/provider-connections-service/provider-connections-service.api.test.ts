@@ -4,7 +4,7 @@ import {
   setRegisteredBackends,
 } from "#/api/backend-registry/active-store";
 import type { Backend } from "#/api/backend-registry/types";
-import { AgentServerClient } from "@openhands/typescript-client/clients";
+import { AgentServerClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import ProviderConnectionsService from "./provider-connections-service.api";
 
 const getMock = vi.hoisted(() => vi.fn());
@@ -13,7 +13,7 @@ const patchMock = vi.hoisted(() => vi.fn());
 const deleteMock = vi.hoisted(() => vi.fn());
 const closeMock = vi.hoisted(() => vi.fn());
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   AgentServerClient: vi.fn(function AgentServerClientMock() {
     return {
       get: getMock,

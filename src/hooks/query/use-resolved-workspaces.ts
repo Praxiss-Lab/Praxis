@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useQueries } from "@tanstack/react-query";
-import { isAgentServerVersionError } from "@openhands/typescript-client/clients";
+import { isAgentServerVersionError } from "@praxiss-lab/praxis-sdk-client/clients";
 
 import { useLocalWorkspaces } from "#/hooks/query/use-local-workspaces";
 import { searchAllSubdirectories } from "#/hooks/query/use-search-subdirs";

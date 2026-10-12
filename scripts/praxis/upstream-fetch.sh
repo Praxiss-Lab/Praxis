@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-UPSTREAM_URL="${UPSTREAM_URL:-https://github.com/OpenHands/OpenHands.git}"
+UPSTREAM_URL="${UPSTREAM_URL:-https://github.com/Praxiss-Lab/Praxis.git}"
 git rev-parse --is-inside-work-tree >/dev/null
 if [ "$(git rev-parse --is-shallow-repository)" = true ]; then
   echo "error: upstream review requires full history; run git fetch --unshallow origin first" >&2

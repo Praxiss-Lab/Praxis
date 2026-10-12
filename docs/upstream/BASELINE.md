@@ -11,7 +11,7 @@ Recorded: 2026-10-06
 | Praxis default branch | `main` |
 | Upstream default branch | `main` |
 | Baseline commit | `81e83760a196ba6374ad2c3d38d577262c79ca2d` |
-| Agent Canvas package | `@openhands/agent-canvas` |
+| Agent Canvas package | `@praxiss-lab/praxis` |
 | Upstream package version | `1.25.0` |
 | OpenHands TypeScript client | `1.53.0` |
 | OpenHands extensions | `0.29.0` |

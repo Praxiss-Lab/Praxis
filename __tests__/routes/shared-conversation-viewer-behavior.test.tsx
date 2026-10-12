@@ -2,7 +2,7 @@ import { createRef } from "react";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { SharedConversation as SharedConversationData } from "@openhands/typescript-client";
+import type { SharedConversation as SharedConversationData } from "@praxiss-lab/praxis-sdk-client";
 
 import SharedConversation from "#/routes/shared-conversation";
 import { I18nKey } from "#/i18n/declaration";

@@ -9,7 +9,7 @@ import type {
   IntegrationConnectionOption,
   IntegrationOAuthConfig,
   IntegrationTransport,
-} from "@openhands/extensions/integrations";
+} from "@praxiss-lab/praxis-extensions/integrations";
 
 export type { MarketplaceEntry };
 

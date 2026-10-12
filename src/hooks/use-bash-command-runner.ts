@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { BashClient } from "@openhands/typescript-client/clients";
+import { BashClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import type { CommandResult } from "#/api/runtime-service/agent-server-runtime-service";
 import { getAgentServerClientOptions } from "#/api/agent-server-client-options";
 

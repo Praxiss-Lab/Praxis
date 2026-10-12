@@ -1,10 +1,10 @@
-import { ACP_SETTINGS_KEYS } from "@openhands/typescript-client";
+import { ACP_SETTINGS_KEYS } from "@praxiss-lab/praxis-sdk-client";
 import type {
   ConversationRuntimeInfo,
   HookConfig,
-} from "@openhands/typescript-client";
-import { ServerClient } from "@openhands/typescript-client/clients";
-import { SKILLS_CATALOG } from "@openhands/extensions/skills";
+} from "@praxiss-lab/praxis-sdk-client";
+import { ServerClient } from "@praxiss-lab/praxis-sdk-client/clients";
+import { SKILLS_CATALOG } from "@praxiss-lab/praxis-extensions/skills";
 import { DEFAULT_SETTINGS } from "#/services/settings";
 import { ExecutionStatus } from "#/types/agent-server/core";
 import { AgentKind, Settings, SettingsValue } from "#/types/settings";
@@ -300,7 +300,7 @@ export function buildRuntimeServicesSystemSuffix(
   if (automation?.url_from_agent) {
     lines.push(
       `* Automation backend: ${automation.url_from_agent}`,
-      `    ${automation.description ?? "OpenHands Automations service."}`,
+      `    ${automation.description ?? "Praxis Automations service."}`,
     );
     if (automation.docs_url) {
       lines.push(`    Docs:    ${automation.docs_url}`);
@@ -310,7 +310,7 @@ export function buildRuntimeServicesSystemSuffix(
     }
     if (automation.auth_env_var) {
       // X-Session-API-Key is the local convention shared by the agent-server
-      // and automation backend (see openhands-automation auth.py).
+      // and automation backend (see praxis-automation auth.py).
       lines.push(
         `    Auth:    header 'X-Session-API-Key: $${automation.auth_env_var}'`,
       );
@@ -895,7 +895,7 @@ function buildAgentContext(
 
   return {
     ...existingContext,
-    // Public skills are bundled at build time from the @openhands/extensions
+    // Public skills are bundled at build time from the @praxiss-lab/praxis-extensions
     // npm package and passed directly in agent_context.skills. Setting
     // load_public_skills to false tells the agent-server SDK to skip its own
     // extensions-repo clone — the frontend is the sole source of public
@@ -978,7 +978,7 @@ function buildConfiguredAcpAgentSettings(
   // TODO(#1019): set ``acp_isolate_data_dir: true`` here for a containerized
   // backend so concurrent same-provider conversations don't race on a shared
   // HOME. The SDK supports it (software-agent-sdk#3492), but the released
-  // ``@openhands/typescript-client`` (1.24.3) doesn't surface it on
+  // ``@praxiss-lab/praxis-sdk-client`` (1.24.3) doesn't surface it on
   // ``ACPAgentSettings`` yet, so sending it risks a validation error on older
   // servers. Cloud grouping isolation is separate (agent-canvas#1016).
 
@@ -1510,7 +1510,7 @@ export function buildStartPlanningConversationRequest(options: {
       // mirrors how the frontend builds every agent, so the local planner is
       // not context-starved relative to the code agent.
       agent_context: agentContext,
-      // Mirror the SDK planning preset's condenser (openhands-tools preset
+      // Mirror the SDK planning preset's condenser (praxis-tools preset
       // `get_planning_condenser`): a larger rolling window and more pinned
       // initial context than the default, with its own usage_id so its
       // summarization LLM calls are attributed separately. The planning

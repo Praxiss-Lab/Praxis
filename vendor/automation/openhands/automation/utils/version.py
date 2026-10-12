@@ -6,7 +6,7 @@ from typing import TypedDict
 from openhands.automation import __version__
 
 
-SDK_PACKAGE_NAME = "openhands-sdk"
+SDK_PACKAGE_NAME = "praxis-sdk"
 
 
 class ServerVersionInfo(TypedDict):

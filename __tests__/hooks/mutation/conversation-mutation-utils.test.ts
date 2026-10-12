@@ -1,5 +1,5 @@
-import type { StartGoalRequest } from "@openhands/typescript-client";
-import { ConversationClient } from "@openhands/typescript-client/clients";
+import type { StartGoalRequest } from "@praxiss-lab/praxis-sdk-client";
+import { ConversationClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import { QueryClient } from "@tanstack/react-query";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { AppConversation } from "#/api/conversation-service/agent-server-conversation-service.types";
@@ -28,7 +28,7 @@ const mocks = vi.hoisted(() => ({
   stopGoal: vi.fn(),
 }));
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   ConversationClient: vi.fn(function ConversationClientMock() {
     return {
       askAgent: mocks.askAgent,

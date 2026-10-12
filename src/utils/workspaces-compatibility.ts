@@ -1,5 +1,5 @@
 import type { TFunction } from "i18next";
-import { isAgentServerVersionError } from "@openhands/typescript-client/clients";
+import { isAgentServerVersionError } from "@praxiss-lab/praxis-sdk-client/clients";
 
 import { I18nKey } from "#/i18n/declaration";
 

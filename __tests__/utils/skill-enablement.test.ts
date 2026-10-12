@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   DEFAULT_ENABLED_SKILL_NAMES,
   SKILLS_CATALOG,
-} from "@openhands/extensions/skills";
+} from "@praxiss-lab/praxis-extensions/skills";
 import {
   buildSkillEnablementFilter,
   findInvokedCatalogSkill,

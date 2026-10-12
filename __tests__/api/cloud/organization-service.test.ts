@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { HttpError } from "@openhands/typescript-client";
+import { HttpError } from "@praxiss-lab/praxis-sdk-client";
 import {
   __resetActiveStoreForTests,
   setRegisteredBackends,

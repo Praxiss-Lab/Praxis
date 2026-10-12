@@ -9,14 +9,14 @@
  * - local agent-server: the `/api/llm/provider-connections` CRUD endpoints via
  *   the generic `AgentServerClient` verb helpers (the same approach
  *   `LLMBalanceService` uses; there is no generated client for these routes in
- *   `@openhands/typescript-client` yet);
+ *   `@praxiss-lab/praxis-sdk-client` yet);
  * - cloud app-server: `src/api/cloud/provider-connections-service.api.ts` (the
  *   org-gated `/api/organizations/{orgId}/provider-connections` routes) via the
  *   org-scoped cloud proxy.
  *
  * This mirrors how `ProfilesService` branches to the cloud profile service.
  */
-import { AgentServerClient } from "@openhands/typescript-client/clients";
+import { AgentServerClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import { getAgentServerClientOptions } from "../agent-server-client-options";
 import { getActiveBackend } from "../backend-registry/active-store";
 import {

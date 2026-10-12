@@ -13,7 +13,7 @@ import { I18nKey } from "#/i18n/declaration";
 import type {
   IntegrationCatalogEntry as MarketplaceEntry,
   MarketplaceField,
-} from "@openhands/extensions/integrations";
+} from "@praxiss-lab/praxis-extensions/integrations";
 import { McpLogoBadge } from "#/components/features/mcp-logo-badge";
 import { MCPServerConfig } from "#/types/mcp-server";
 import type { MCPAuthCredential } from "#/types/mcp-auth";

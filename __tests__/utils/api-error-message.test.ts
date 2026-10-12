@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { AxiosError } from "axios";
-import { HttpError } from "@openhands/typescript-client";
+import { HttpError } from "@praxiss-lab/praxis-sdk-client";
 import {
   getApiErrorMessage,
   getApiOrConnectionErrorMessage,

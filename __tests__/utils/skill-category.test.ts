@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { SKILL_CATEGORY_IDS } from "@openhands/extensions/skills";
+import { SKILL_CATEGORY_IDS } from "@praxiss-lab/praxis-extensions/skills";
 import type { SkillInfo } from "#/types/settings";
 import {
   getSkillCategory,

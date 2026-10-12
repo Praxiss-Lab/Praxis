@@ -4,7 +4,7 @@
  * Every automation-specific datum the host's surfaces render — navigation and
  * page copy, the settable attributes, the import/export envelope, endpoint
  * paths, the featured and responder id lists, the sub-page surface — is served
- * from the interface manifest the pinned `@openhands/extensions` publishes.
+ * from the interface manifest the pinned `@praxiss-lab/praxis-extensions` publishes.
  * The host holds none of it. When the package publishes no manifest, or the
  * published one fails admission, there is nothing to serve: the nav entries do
  * not render and the routes 404. `hasAutomationInterface()` is that gate, and
@@ -16,7 +16,7 @@
  * resolving to the page it named.
  */
 
-import { AUTOMATION_CATALOG } from "@openhands/extensions/automations";
+import { AUTOMATION_CATALOG } from "@praxiss-lab/praxis-extensions/automations";
 import { validateInterfaceManifest } from "./interface-validation";
 import { AUTOMATION_INTERFACE_CANDIDATE } from "./manifest-sources";
 import type {
@@ -48,7 +48,7 @@ const MOUNTED_ROUTES = {
  * `importExport` block has no docs field.
  */
 export const AUTOMATION_FILE_FORMAT_DOCS_URL =
-  "https://docs.openhands.dev/openhands/usage/agent-canvas/managing-automations#exported-file-format";
+  "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);

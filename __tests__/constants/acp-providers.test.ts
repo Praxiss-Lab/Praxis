@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getAcpProvider as getClientAcpProvider } from "@openhands/typescript-client";
+import { getAcpProvider as getClientAcpProvider } from "@praxiss-lab/praxis-sdk-client";
 import {
   ACP_CUSTOM_PRESET_KEY,
   ACP_PROVIDERS,
@@ -43,7 +43,7 @@ describe("getAcpProviderDisplayName", () => {
 describe("ACP provider registry", () => {
   it("sources display_name / default_command / models from the SDK, not a local mirror", () => {
     // Core invariant of agent-canvas#678: the registry data fields must come
-    // straight from @openhands/typescript-client's getAcpProvider(), so the
+    // straight from @praxiss-lab/praxis-sdk-client's getAcpProvider(), so the
     // Python SDK stays the single source of truth. Only the UI-only overlay
     // (icon + description_key) is layered on locally.
     for (const provider of ACP_PROVIDERS) {

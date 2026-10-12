@@ -21,7 +21,7 @@ vi.mock("#/api/backend-registry/active-store", () => ({
   getActiveBackend: vi.fn(),
 }));
 
-vi.mock("@openhands/typescript-client/workspace/remote-workspace", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/workspace/remote-workspace", () => ({
   RemoteWorkspace: vi.fn(function RemoteWorkspaceMock() {
     return {
       gitChanges: workspaceMocks.gitChanges,

@@ -1,6 +1,6 @@
 # Praxis Automation
 
-Controlled source snapshot of openhands-automation 1.19.3, maintained within Praxis
+Controlled source snapshot of praxis-automation 1.19.3, maintained within Praxis
 for this first infrastructure migration. Scheduling, webhooks and dispatch remain
 in this component; execution belongs to Praxis SDK.
 

@@ -14,7 +14,7 @@
 import {
   AgentProfilesClient,
   type GetAgentProfileOptions,
-} from "@openhands/typescript-client/clients";
+} from "@praxiss-lab/praxis-sdk-client/clients";
 import type {
   AgentProfile,
   AgentProfileSummary,
@@ -24,7 +24,7 @@ import type {
   AgentProfileMutationResponse,
   ActivateAgentProfileResponse,
   ExposeSecretsMode,
-} from "@openhands/typescript-client";
+} from "@praxiss-lab/praxis-sdk-client";
 import { getAgentServerClientOptions } from "../agent-server-client-options";
 import { getActiveBackend } from "../backend-registry/active-store";
 import {

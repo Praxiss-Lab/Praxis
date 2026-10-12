@@ -3,7 +3,7 @@ import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HttpError } from "@openhands/typescript-client";
+import { HttpError } from "@praxiss-lab/praxis-sdk-client";
 import { RenameProfileModal } from "#/components/features/settings/llm-profiles/rename-profile-modal";
 import { ProfileInfo } from "#/api/profiles-service/profiles-service.api";
 import ProfilesService from "#/api/profiles-service/profiles-service.api";

@@ -43,9 +43,9 @@ vi.mock("#/hooks/use-automation-permissions", () => ({
 
 // The pinned package predates the `impact` field, so an entry carrying one is
 // appended to the real catalog.
-vi.mock("@openhands/extensions/automations", async (importOriginal) => {
+vi.mock("@praxiss-lab/praxis-extensions/automations", async (importOriginal) => {
   const actual =
-    await importOriginal<typeof import("@openhands/extensions/automations")>();
+    await importOriginal<typeof import("@praxiss-lab/praxis-extensions/automations")>();
   return {
     ...actual,
     AUTOMATION_CATALOG: [

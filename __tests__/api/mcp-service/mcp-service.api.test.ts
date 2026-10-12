@@ -14,7 +14,7 @@ const { mockTestServer, mockTestCloudServer } = vi.hoisted(() => ({
   mockTestCloudServer: vi.fn(),
 }));
 
-vi.mock("@openhands/typescript-client/clients", () => ({
+vi.mock("@praxiss-lab/praxis-sdk-client/clients", () => ({
   // Real class so `new MCPClient(...)` works; testServer delegates to the
   // shared spy so each test can configure the return value independently.
   MCPClient: class {

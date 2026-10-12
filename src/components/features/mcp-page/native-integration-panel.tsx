@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { CircleCheck } from "lucide-react";
-import type { IntegrationCatalogEntry as MarketplaceEntry } from "@openhands/extensions/integrations";
+import type { IntegrationCatalogEntry as MarketplaceEntry } from "@praxiss-lab/praxis-extensions/integrations";
 import { BrandButton } from "#/components/features/settings/brand-button";
 import { BrandBadge } from "#/components/shared/badge";
 import { useActiveBackend } from "#/contexts/active-backend-context";

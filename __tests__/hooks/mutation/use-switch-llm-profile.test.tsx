@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AxiosError, AxiosHeaders } from "axios";
-import { HttpError } from "@openhands/typescript-client";
+import { HttpError } from "@praxiss-lab/praxis-sdk-client";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { useSwitchLlmProfile } from "#/hooks/mutation/use-switch-llm-profile";
 import AgentServerConversationService from "#/api/conversation-service/agent-server-conversation-service.api";

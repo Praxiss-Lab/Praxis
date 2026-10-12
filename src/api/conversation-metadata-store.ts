@@ -1,7 +1,7 @@
 import { Provider } from "#/types/settings";
 import type { PluginSpec } from "#/api/conversation-service/agent-server-conversation-service.types";
 
-const STORAGE_KEY = "openhands-agent-server-conversation-metadata";
+const STORAGE_KEY = "praxis-agent-server-conversation-metadata";
 
 export type WorkspaceMode = "local_repo" | "new_worktree";
 

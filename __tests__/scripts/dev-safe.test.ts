@@ -521,13 +521,13 @@ describe("buildAgentServerCommand", () => {
     expect(cmd.args).toEqual([
       "--reinstall",
       "--from",
-      `git+${defaults.sources.sdk.repository}@${defaults.sources.sdk.ref}#subdirectory=openhands-agent-server`,
+      `git+${defaults.sources.sdk.repository}@${defaults.sources.sdk.ref}#subdirectory=praxis-agent-server`,
       "--with",
-      `git+${defaults.sources.sdk.repository}@${defaults.sources.sdk.ref}#subdirectory=openhands-sdk`,
+      `git+${defaults.sources.sdk.repository}@${defaults.sources.sdk.ref}#subdirectory=praxis-sdk`,
       "--with",
-      `git+${defaults.sources.sdk.repository}@${defaults.sources.sdk.ref}#subdirectory=openhands-tools`,
+      `git+${defaults.sources.sdk.repository}@${defaults.sources.sdk.ref}#subdirectory=praxis-tools`,
       "--with",
-      `git+${defaults.sources.sdk.repository}@${defaults.sources.sdk.ref}#subdirectory=openhands-workspace`,
+      `git+${defaults.sources.sdk.repository}@${defaults.sources.sdk.ref}#subdirectory=praxis-workspace`,
       "--with",
       "posthog>=7,<8",
       "agent-server",
@@ -541,18 +541,18 @@ describe("buildAgentServerCommand", () => {
     const cmd = buildAgentServerCommand({ OH_AGENT_SERVER_VERSION: "1.18.0" });
 
     expect(cmd.command).toBe("uvx");
-    // Uses --from syntax because executable name (agent-server) differs from package name (openhands-agent-server)
+    // Uses --from syntax because executable name (agent-server) differs from package name (praxis-agent-server)
     // All SDK packages are pinned to the same version
     expect(cmd.args).toEqual([
       "--reinstall",
       "--from",
-      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=openhands-agent-server`,
+      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=praxis-agent-server`,
       "--with",
-      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=openhands-sdk`,
+      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=praxis-sdk`,
       "--with",
-      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=openhands-tools`,
+      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=praxis-tools`,
       "--with",
-      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=openhands-workspace`,
+      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=praxis-workspace`,
       "--with",
       "posthog>=7,<8",
       "agent-server",
@@ -571,13 +571,13 @@ describe("buildAgentServerCommand", () => {
     expect(cmd.args).toEqual([
       "--reinstall",
       "--from",
-      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=openhands-agent-server",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=praxis-agent-server",
       "--with",
-      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=openhands-sdk",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=praxis-sdk",
       "--with",
-      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=openhands-tools",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=praxis-tools",
       "--with",
-      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=openhands-workspace",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=praxis-workspace",
       "--with",
       "posthog>=7,<8",
       "agent-server",
@@ -594,13 +594,13 @@ describe("buildAgentServerCommand", () => {
     expect(cmd.args).toEqual([
       "--reinstall",
       "--from",
-      "git+https://github.com/Praxiss-Lab/praxis-sdk@abc1234#subdirectory=openhands-agent-server",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@abc1234#subdirectory=praxis-agent-server",
       "--with",
-      "git+https://github.com/Praxiss-Lab/praxis-sdk@abc1234#subdirectory=openhands-sdk",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@abc1234#subdirectory=praxis-sdk",
       "--with",
-      "git+https://github.com/Praxiss-Lab/praxis-sdk@abc1234#subdirectory=openhands-tools",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@abc1234#subdirectory=praxis-tools",
       "--with",
-      "git+https://github.com/Praxiss-Lab/praxis-sdk@abc1234#subdirectory=openhands-workspace",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@abc1234#subdirectory=praxis-workspace",
       "--with",
       "posthog>=7,<8",
       "agent-server",
@@ -619,10 +619,10 @@ describe("buildAgentServerCommand", () => {
     expect(cmd.command).toBe("uvx");
     expect(cmd.args).toContain("--from");
     expect(cmd.args).toContain(
-      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=openhands-agent-server",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=praxis-agent-server",
     );
     expect(cmd.args).not.toContain(
-      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=openhands-agent-server`,
+      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=praxis-agent-server`,
     );
   });
 
@@ -634,13 +634,13 @@ describe("buildAgentServerCommand", () => {
     expect(cmd.args).toEqual([
       "--reinstall",
       "--from",
-      path.join(sdk, "openhands-agent-server"),
+      path.join(sdk, "praxis-agent-server"),
       "--with-editable",
-      path.join(sdk, "openhands-sdk"),
+      path.join(sdk, "praxis-sdk"),
       "--with-editable",
-      path.join(sdk, "openhands-tools"),
+      path.join(sdk, "praxis-tools"),
       "--with-editable",
-      path.join(sdk, "openhands-workspace"),
+      path.join(sdk, "praxis-workspace"),
       "--with",
       "posthog>=7,<8",
       "agent-server",
@@ -659,12 +659,12 @@ describe("buildAgentServerCommand", () => {
     });
 
     expect(cmd.source).toBe(`local (${sdk})`);
-    expect(cmd.args).toContain(path.join(sdk, "openhands-agent-server"));
+    expect(cmd.args).toContain(path.join(sdk, "praxis-agent-server"));
     expect(cmd.args).not.toContain(
-      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=openhands-agent-server",
+      "git+https://github.com/Praxiss-Lab/praxis-sdk@feature-branch#subdirectory=praxis-agent-server",
     );
     expect(cmd.args).not.toContain(
-      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=openhands-agent-server`,
+      `git+${defaults.sources.sdk.repository}@v1.18.0#subdirectory=praxis-agent-server`,
     );
   });
 
@@ -703,10 +703,10 @@ describe("validateLocalAgentServerPath", () => {
     const tmp = mkdtempSync(path.join(tmpdir(), "sdk-"));
     try {
       for (const subdir of [
-        "openhands-agent-server",
-        "openhands-sdk",
-        "openhands-tools",
-        "openhands-workspace",
+        "praxis-agent-server",
+        "praxis-sdk",
+        "praxis-tools",
+        "praxis-workspace",
       ]) {
         mkdirSync(path.join(tmp, subdir));
       }
@@ -725,12 +725,12 @@ describe("validateLocalAgentServerPath", () => {
   it("throws when a workspace package subdirectory is missing", () => {
     const tmp = mkdtempSync(path.join(tmpdir(), "sdk-"));
     try {
-      mkdirSync(path.join(tmp, "openhands-agent-server"));
-      mkdirSync(path.join(tmp, "openhands-sdk"));
-      mkdirSync(path.join(tmp, "openhands-tools"));
-      // openhands-workspace is intentionally absent
+      mkdirSync(path.join(tmp, "praxis-agent-server"));
+      mkdirSync(path.join(tmp, "praxis-sdk"));
+      mkdirSync(path.join(tmp, "praxis-tools"));
+      // praxis-workspace is intentionally absent
       expect(() => validateLocalAgentServerPath(tmp)).toThrow(
-        /openhands-workspace/,
+        /praxis-workspace/,
       );
     } finally {
       rmSync(tmp, { recursive: true, force: true });

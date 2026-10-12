@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { FileClient } from "@openhands/typescript-client/clients";
+import { FileClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import { getAgentServerClientOptions } from "#/api/agent-server-client-options";
 import { useActiveBackend } from "#/contexts/active-backend-context";
 

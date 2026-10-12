@@ -163,7 +163,7 @@ interface AutomationRunRecord {
   error_detail?: string | null;
 }
 
-/** Statuses a run never leaves (see RunStatus in openhands-automation). */
+/** Statuses a run never leaves (see RunStatus in praxis-automation). */
 const TERMINAL_RUN_STATUSES = new Set([
   "COMPLETED",
   "FAILED",
@@ -434,11 +434,11 @@ test.describe("mock-LLM automation lifecycle", () => {
     ].join(" ");
 
     // ⚠️  Padding response (index 0):
-    // Public skills are bundled from @openhands/extensions at build time.
+    // Public skills are bundled from @praxiss-lab/praxis-extensions at build time.
     // The agent-server's skill-activation pipeline makes one internal LLM
     // call to decide which skills to inject before the agent loop starts.
     // Our user message mentions "automation", which matches the
-    // openhands-automation skill, triggering this internal call.
+    // praxis-automation skill, triggering this internal call.
     // The conversation test does NOT need padding because its prompt
     // ("run this bash command") does not match any skill trigger.
     //
@@ -451,7 +451,7 @@ test.describe("mock-LLM automation lifecycle", () => {
     // After the main conversation finishes (responses 0-3),the dispatched
     // automation run spawns a NEW conversation on the same agent-server.
 
-    // That conversation also calls the mock LLM. Recent openhands-automation
+    // That conversation also calls the mock LLM. Recent praxis-automation
     // versions (>= 1.10.0, PR openhands/automation#405) require
     // preset automation conversations to call the `finish` tool before the
     // run reaches COMPLETED — so we script one blank internal call followed
@@ -486,7 +486,7 @@ test.describe("mock-LLM automation lifecycle", () => {
       // run reaches COMPLETED.
       { text: "" }, // 4: possible internal/condenser call
       {
-        // 5: openhands-automation >= 1.10.0 (openhands/automation#405)
+        // 5: praxis-automation >= 1.10.0 (openhands/automation#405)
         // requires preset automation conversations to finish via the
         // `finish` tool — a hook waits for `finish_tool_used` before the
         // run reaches COMPLETED. Blank turns alone would just loop and exhaust

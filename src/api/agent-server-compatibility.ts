@@ -1,8 +1,8 @@
 import {
   ServerClient,
   SettingsClient,
-} from "@openhands/typescript-client/clients";
-import type { ServerInfo as BaseServerInfo } from "@openhands/typescript-client";
+} from "@praxiss-lab/praxis-sdk-client/clients";
+import type { ServerInfo as BaseServerInfo } from "@praxiss-lab/praxis-sdk-client";
 import { getAgentServerClientOptions } from "#/api/agent-server-client-options";
 import { isAuthRequired } from "#/api/agent-server-config";
 import {

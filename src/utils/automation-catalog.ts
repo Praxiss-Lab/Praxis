@@ -1,11 +1,11 @@
 import {
   AUTOMATION_CATALOG,
   type RecommendedAutomation,
-} from "@openhands/extensions/automations";
+} from "@praxiss-lab/praxis-extensions/automations";
 import {
   SKILLS_CATALOG,
   type SkillCatalogEntry,
-} from "@openhands/extensions/skills";
+} from "@praxiss-lab/praxis-extensions/skills";
 import type { LucideIcon } from "lucide-react";
 import { MANIFEST_ICON_BY_SLUG } from "#/components/features/manifest/manifest-icons";
 import { interpolateValues } from "#/manifests/manifest-template";

@@ -81,7 +81,7 @@ final step; this document does not claim they were executed.
 
 Repository contributor guides, user/project skills and public skill catalogs
 have different loading mechanisms and provenance. The frontend incorporates
-`@openhands/extensions` catalogs at build time; backend project/user skills are
+`@praxiss-lab/praxis-extensions` catalogs at build time; backend project/user skills are
 retrieved through typed clients for the selected workspace/backend. Editing a
 local contributor skill does not update the public catalog or register a job.
 

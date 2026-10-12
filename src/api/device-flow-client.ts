@@ -1,19 +1,19 @@
 import {
   pollForToken as sdkPollForToken,
   startDeviceFlow as sdkStartDeviceFlow,
-} from "@openhands/typescript-client/client/device-flow-client";
+} from "@praxiss-lab/praxis-sdk-client/client/device-flow-client";
 import type {
   DeviceAuthorizationResponse,
   DeviceTokenResponse,
   PollDeviceTokenOptions,
-} from "@openhands/typescript-client/client/device-flow-client";
+} from "@praxiss-lab/praxis-sdk-client/client/device-flow-client";
 import { AGENT_CANVAS_CLIENT_HEADERS } from "./client-source";
 import { assertSelfHostedEndpoint } from "./cloud-endpoint-policy";
 
 export {
   DeviceFlowError,
   isOpenHandsCloudHost,
-} from "@openhands/typescript-client/client/device-flow-client";
+} from "@praxiss-lab/praxis-sdk-client/client/device-flow-client";
 
 export async function startDeviceFlow(
   host: string,
@@ -43,4 +43,4 @@ export type {
   DeviceAuthorizationResponse,
   DeviceTokenResponse,
   PollDeviceTokenOptions as PollOptions,
-} from "@openhands/typescript-client/client/device-flow-client";
+} from "@praxiss-lab/praxis-sdk-client/client/device-flow-client";

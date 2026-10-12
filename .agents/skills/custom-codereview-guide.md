@@ -126,7 +126,7 @@ Apply this checkpoint when a change calls or models an Agent Server, Cloud, or
 runtime-sandbox API.
 
 - `src/api/no-direct-agent-server-calls.test.ts` is the executable source of
-  truth. Agent Server access must use `@openhands/typescript-client` with options
+  truth. Agent Server access must use `@praxiss-lab/praxis-sdk-client` with options
   from `src/api/agent-server-client-options.ts`.
 - Cloud **App-API** requests must use `callCloudProxy` (now a direct browser
   call, since the SaaS permits CORS for API-key-authenticated requests). Per-

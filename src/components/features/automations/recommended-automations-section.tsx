@@ -5,11 +5,11 @@ import { I18nKey } from "#/i18n/declaration";
 import {
   AUTOMATION_CATALOG,
   type RecommendedAutomation,
-} from "@openhands/extensions/automations";
+} from "@praxiss-lab/praxis-extensions/automations";
 import {
   INTEGRATION_CATALOG as MCP_MARKETPLACE,
   type IntegrationCatalogEntry as MarketplaceEntry,
-} from "@openhands/extensions/integrations";
+} from "@praxiss-lab/praxis-extensions/integrations";
 import { McpLogoStackBadge } from "#/components/features/mcp-page/mcp-logo-stack-badge";
 import { McpLogoBadge } from "#/components/features/mcp-logo-badge";
 import {

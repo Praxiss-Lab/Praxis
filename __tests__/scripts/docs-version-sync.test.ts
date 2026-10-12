@@ -66,9 +66,9 @@ describe("docs/example references stay in sync with config/defaults.json", () =>
     const src = read("scripts/check-sdk-version-sync.mjs");
     expect(src).toContain(`EXPECTED_SDK_VERSION=${agentServerVersion}`);
     expect(src).toContain(`"version": "${agentServerVersion}"`);
-    expect(src).toContain(`"openhands-sdk>=${agentServerVersion},<2.0.0"`);
-    expect(src).toContain(`"openhands-tools==${agentServerVersion}"`);
-    expect(src).toContain(`"openhands-workspace (>=${agentServerVersion})"`);
+    expect(src).toContain(`"praxis-sdk>=${agentServerVersion},<2.0.0"`);
+    expect(src).toContain(`"praxis-tools==${agentServerVersion}"`);
+    expect(src).toContain(`"praxis-workspace (>=${agentServerVersion})"`);
     expect(src).toContain(
       `">=${agentServerVersion}", "==${agentServerVersion}", "(>=${agentServerVersion})", "~=${agentServerVersion}"`,
     );

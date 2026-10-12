@@ -11,7 +11,7 @@
  *
  * Types are re-exported from the SDK for consumer convenience.
  */
-import { MetaProfilesClient } from "@openhands/typescript-client/clients";
+import { MetaProfilesClient } from "@praxiss-lab/praxis-sdk-client/clients";
 import type {
   ActivateMetaProfileResponse,
   MetaProfile,
@@ -20,7 +20,7 @@ import type {
   MetaProfileInfo,
   MetaProfileListResponse,
   MetaProfileMutationResponse,
-} from "@openhands/typescript-client";
+} from "@praxiss-lab/praxis-sdk-client";
 import { getAgentServerClientOptions } from "../agent-server-client-options";
 import { getActiveBackend } from "../backend-registry/active-store";
 import {

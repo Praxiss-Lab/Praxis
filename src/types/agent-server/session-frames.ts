@@ -6,7 +6,7 @@ import { OpenHandsEvent } from "./core";
  * durable record rides inside it untouched, and protocol fields live on the
  * envelope. The URL is the protocol version — there is no handshake.
  * Local mirror of software-agent-sdk #4807/#4822; replace with the
- * `@openhands/typescript-client` types once published (software-agent-sdk#4763).
+ * `@praxiss-lab/praxis-sdk-client` types once published (software-agent-sdk#4763).
  *
  * Unknown frame types must be ignored: the envelope is allowed to grow.
  */
