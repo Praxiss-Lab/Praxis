@@ -34,7 +34,7 @@ vi.mock("#/api/cloud/conversation-service.api", () => ({
 const cloudBackend: Backend = {
   id: "cloud-1",
   name: "Cloud",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "cloud-token",
   kind: "cloud",
 };

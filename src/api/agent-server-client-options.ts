@@ -1,4 +1,5 @@
 import { buildHttpBaseUrl } from "#/utils/websocket-url";
+import { assertSelfHostedEndpoint } from "./cloud-endpoint-policy";
 import { getAgentServerWorkingDir } from "./agent-server-config";
 import { getEffectiveLocalBackend } from "./backend-registry/active-store";
 import type { Backend } from "./backend-registry/types";
@@ -38,6 +39,7 @@ export const isNoBackendAvailableError = (
     error.name === "NoBackendAvailableError");
 
 function normalizeHost(host: string): string {
+  assertSelfHostedEndpoint(host);
   return host.replace(/\/+$/, "");
 }
 

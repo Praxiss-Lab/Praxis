@@ -6,4 +6,5 @@ export const ANALYTICS_HANDLERS = [
     HttpResponse.json({}),
   ),
   http.all("https://z.openhands.dev/*", () => HttpResponse.json({})),
+  http.all("https://analytics.example/*", () => HttpResponse.json({})),
 ];

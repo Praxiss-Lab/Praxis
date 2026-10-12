@@ -23,6 +23,7 @@ from openhands.automation.backends.base import ExecutionBackend, ExecutionContex
 from openhands.automation.config import get_config
 from openhands.automation.exceptions import ConcurrencyLimitReachedError
 from openhands.automation.models import AutomationRun
+from openhands.sdk.utils.cloud_endpoint import validate_self_hosted_endpoint
 from openhands.automation.utils.api_key import get_api_key_for_automation_run
 from openhands.automation.utils.sandbox import (
     cleanup_sandbox,
@@ -92,6 +93,7 @@ class CloudSandboxBackend(ExecutionBackend):
             api_url: OpenHands Cloud API URL (e.g., "https://app.all-hands.dev")
             run: The automation run (used to extract user info for API key)
         """
+        validate_self_hosted_endpoint(api_url)
         self.api_url = api_url.rstrip("/")
         self._run = run
         self._api_key: str | None = None  # Lazily minted

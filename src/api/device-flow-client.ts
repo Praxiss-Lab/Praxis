@@ -8,23 +8,31 @@ import type {
   PollDeviceTokenOptions,
 } from "@openhands/typescript-client/client/device-flow-client";
 import { AGENT_CANVAS_CLIENT_HEADERS } from "./client-source";
+import { assertSelfHostedEndpoint } from "./cloud-endpoint-policy";
 
 export {
   DeviceFlowError,
   isOpenHandsCloudHost,
 } from "@openhands/typescript-client/client/device-flow-client";
 
-export function startDeviceFlow(
+export async function startDeviceFlow(
   host: string,
 ): Promise<DeviceAuthorizationResponse> {
-  return sdkStartDeviceFlow(host, { headers: AGENT_CANVAS_CLIENT_HEADERS });
+  assertSelfHostedEndpoint(host);
+  const response = await sdkStartDeviceFlow(host, {
+    headers: AGENT_CANVAS_CLIENT_HEADERS,
+  });
+  assertSelfHostedEndpoint(response.verification_uri);
+  assertSelfHostedEndpoint(response.verification_uri_complete);
+  return response;
 }
 
-export function pollForToken(
+export async function pollForToken(
   host: string,
   deviceCode: string,
   options: PollDeviceTokenOptions,
 ): Promise<DeviceTokenResponse> {
+  assertSelfHostedEndpoint(host);
   return sdkPollForToken(host, deviceCode, {
     ...options,
     headers: AGENT_CANVAS_CLIENT_HEADERS,

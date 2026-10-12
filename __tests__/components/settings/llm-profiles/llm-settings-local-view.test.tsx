@@ -19,7 +19,7 @@ import type { Backend } from "#/api/backend-registry/types";
 const mockCloudBackend: Backend = {
   id: "cloud-1",
   name: "Cloud Backend",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "test-key",
   kind: "cloud",
 };
@@ -915,7 +915,7 @@ describe("LlmSettingsLocalView", () => {
         config: {
           model: "litellm_proxy/claude-opus-4-8",
           api_key: "gAAAA_encrypted_key",
-          base_url: "https://llm-proxy.app.all-hands.dev/",
+          base_url: "https://llm-proxy.app.praxis.example.test/",
         },
       });
       mockSaveMutateAsync.mockResolvedValueOnce({ success: true });
@@ -948,7 +948,7 @@ describe("LlmSettingsLocalView", () => {
       await waitFor(() => expect(mockSaveMutateAsync).toHaveBeenCalled());
       const savedLlm = mockSaveMutateAsync.mock.calls[0][0].request.llm;
       expect(savedLlm.model).toBe("litellm_proxy/claude-opus-4-8");
-      expect(savedLlm.base_url).toBe("https://llm-proxy.app.all-hands.dev/");
+      expect(savedLlm.base_url).toBe("https://llm-proxy.app.praxis.example.test/");
     });
 
     it("drops hidden base_url when the Basic view model changes", async () => {

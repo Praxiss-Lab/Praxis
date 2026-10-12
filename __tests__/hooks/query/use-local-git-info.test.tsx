@@ -50,7 +50,7 @@ const makeBackend = (kind: "local" | "cloud") => ({
     id: "backend-id",
     name: kind === "local" ? "Local" : "Production",
     host:
-      kind === "local" ? "http://127.0.0.1:8000" : "https://app.all-hands.dev",
+      kind === "local" ? "http://127.0.0.1:8000" : "https://app.praxis.example.test",
     apiKey: "test-key",
     kind,
   },

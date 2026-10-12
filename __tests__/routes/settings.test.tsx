@@ -279,7 +279,7 @@ describe("settings route", () => {
               name: backendKind,
               host:
                 backendKind === "cloud"
-                  ? "https://app.all-hands.dev"
+                  ? "https://app.praxis.example.test"
                   : "http://localhost:9000",
               apiKey: "key",
               kind: backendKind,

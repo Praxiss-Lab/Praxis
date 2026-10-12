@@ -15,7 +15,7 @@ import {
 const cloudBackend: Backend = {
   id: "prod",
   name: "Production",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "bearer-token",
   kind: "cloud",
 };
@@ -74,7 +74,7 @@ describe("AgentServerConversationService.getRuntimeConversation", () => {
       // Arrange
       fetchMock.mockResolvedValue(mockJsonResponse(runtimeResponse));
       const conversationUrl =
-        "http://abc123.runtime.all-hands.dev/api/conversations/conv-abc";
+        "http://abc123.runtime.praxis.example.test/api/conversations/conv-abc";
 
       // Act
       const result =
@@ -88,7 +88,7 @@ describe("AgentServerConversationService.getRuntimeConversation", () => {
       // /api/cloud-proxy (which was removed from the agent-server).
       expect(fetchMock).toHaveBeenCalledOnce();
       const [url, init] = getFetchCall(fetchMock);
-      expect(url).toContain("abc123.runtime.all-hands.dev");
+      expect(url).toContain("abc123.runtime.praxis.example.test");
       expect(url).toContain("/api/conversations/conv-abc");
       expect(url).not.toMatch(/\/api\/cloud-proxy$/);
       expect(init.headers).toMatchObject({

@@ -44,7 +44,7 @@ describe("backend-registry storage", () => {
       {
         id: "xyz",
         name: "Production",
-        host: "https://app.all-hands.dev",
+        host: "https://app.praxis.example.test",
         apiKey: "bearer-2",
         kind: "cloud",
       },
@@ -107,7 +107,7 @@ describe("backend-registry storage", () => {
     expect(result).toEqual([
       {
         id: "locked-cloud",
-        name: "OpenHands Cloud",
+        name: "self-hosted backend",
         host: window.location.origin,
         apiKey: "",
         kind: "cloud",
@@ -120,17 +120,17 @@ describe("backend-registry storage", () => {
     });
   });
 
-  it("seeds the cookie-auth Cloud backend on the current origin when the locked host is an equivalent transition domain", () => {
-    mockWindowLocation("https://pr-254.staging.openhands.dev/canvas");
+  it("seeds the cookie-auth Cloud backend on the current origin when locked to the same self-hosted origin", () => {
+    mockWindowLocation("https://pr-254.staging.praxis.example.test/canvas");
     (
       window as unknown as Record<string, unknown>
-    ).__AGENT_CANVAS_LOCK_TO_CLOUD__ = "https://pr-254.staging.all-hands.dev";
+    ).__AGENT_CANVAS_LOCK_TO_CLOUD__ = "https://pr-254.staging.praxis.example.test";
 
     expect(readStoredBackends()).toEqual([
       {
         id: "locked-cloud",
-        name: "OpenHands Cloud",
-        host: "https://pr-254.staging.openhands.dev",
+        name: "self-hosted backend",
+        host: "https://pr-254.staging.praxis.example.test",
         apiKey: "",
         kind: "cloud",
         authMode: "cookie",
@@ -154,7 +154,7 @@ describe("backend-registry storage", () => {
   it("does not seed a cookie-auth Cloud backend when locked cross-origin", () => {
     (
       window as unknown as Record<string, unknown>
-    ).__AGENT_CANVAS_LOCK_TO_CLOUD__ = "https://app.all-hands.dev";
+    ).__AGENT_CANVAS_LOCK_TO_CLOUD__ = "https://app.praxis.example.test";
     vi.stubEnv("VITE_SESSION_API_KEY", "");
 
     expect(readStoredBackends()).toEqual([]);

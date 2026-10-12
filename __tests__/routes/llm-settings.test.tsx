@@ -94,7 +94,7 @@ const mockLocalBackend: Backend = {
 const mockCloudBackend: Backend = {
   id: "cloud-1",
   name: "Cloud Backend",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "test-key",
   kind: "cloud",
 };

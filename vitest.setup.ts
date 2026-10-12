@@ -196,7 +196,19 @@ vi.mock("zustand");
 
 // Mock requests during tests
 beforeAll(() => {
-  server.listen({ onUnhandledRequest: "bypass" });
+  server.listen({
+    onUnhandledRequest(request, print) {
+      const { hostname } = new URL(request.url);
+      if (["localhost", "127.0.0.1", "[::1]"].includes(hostname)) return;
+      print.error();
+    },
+  });
+  if (typeof navigator !== "undefined") {
+    Object.defineProperty(navigator, "sendBeacon", {
+      configurable: true,
+      value: vi.fn(() => true),
+    });
+  }
   vi.stubGlobal("ResizeObserver", MockResizeObserver);
 });
 

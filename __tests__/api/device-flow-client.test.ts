@@ -7,7 +7,7 @@ import {
 } from "../../src/api/device-flow-client";
 import { AGENT_CANVAS_CLIENT_HEADERS } from "../../src/api/client-source";
 
-const TEST_HOST_URL = "https://app.all-hands.dev";
+const TEST_HOST_URL = "https://app.praxis.example.test";
 
 describe("device-flow-client", () => {
   beforeEach(() => {

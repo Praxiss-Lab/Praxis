@@ -50,7 +50,8 @@ from pathlib import Path
 from typing import Literal
 from urllib.parse import urlparse
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
+from openhands.sdk.utils.cloud_endpoint import validate_self_hosted_endpoint
 from pydantic_settings import BaseSettings
 
 
@@ -622,6 +623,13 @@ class ServiceSettings(BaseSettings):
     # OpenHands SaaS API
     openhands_api_base_url: str = ""
 
+    @field_validator("openhands_api_base_url", "base_url")
+    @classmethod
+    def validate_operator_endpoint(cls, value: str) -> str:
+        validate_self_hosted_endpoint(value)
+        return value
+
+
     # Background workers
     scheduler_interval_seconds: int = 60
     scheduler_batch_size: int = 50
@@ -668,7 +676,7 @@ class ServiceSettings(BaseSettings):
     service_key: str = ""
 
     # Public base URL where this service is reachable (without /api/automation).
-    # Example: https://app.all-hands.dev or https://domain/acmecorp
+    # Example: https://app.example.test or https://domain/acmecorp
     # The /api/automation path is appended automatically by resolved_base_url.
     # If empty, falls back to http://localhost:{server_port} (dev only).
     base_url: str = ""

@@ -18,7 +18,7 @@ vi.mock("react-i18next", () => ({
     return {
       t: (key: string) =>
         ({
-          BACKEND$LOGIN_WITH_OPENHANDS: "Login with OpenHands Cloud",
+          BACKEND$LOGIN_WITH_OPENHANDS: "Login with self-hosted backend",
           BACKEND$AUTH_STARTING: "Starting authorization",
           BACKEND$AUTH_AWAITING: "Waiting for authorization",
           BACKEND$AUTH_BROWSER_OPENED: "Complete login in your browser",
@@ -125,8 +125,8 @@ describe("device-flow login", () => {
       "gap-3",
     );
     const button = screen.getByTestId("cloud-login-login-button");
-    expect(button).toHaveAccessibleName("Login with OpenHands Cloud");
-    expect(button).toHaveTextContent("Login with OpenHands Cloud");
+    expect(button).toHaveAccessibleName("Login with self-hosted backend");
+    expect(button).toHaveTextContent("Login with self-hosted backend");
     expect(button).not.toHaveAttribute("aria-label");
     expect(button).toHaveClass("bg-primary");
     expect(button).toBeDisabled();
@@ -580,7 +580,7 @@ describe("device-flow login", () => {
     render(<DeviceFlowAuth {...createProps({ statusDisplay: "modal" })} />);
 
     const dialog = screen.getByRole("dialog", {
-      name: "Login with OpenHands Cloud",
+      name: "Login with self-hosted backend",
     });
     const modal = screen.getByTestId("cloud-login-auth-modal");
     expect(within(modal).getByRole("status")).toHaveTextContent(

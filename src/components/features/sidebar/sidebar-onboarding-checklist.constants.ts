@@ -7,8 +7,9 @@ import type {
 const SCHEDULED_TASKS_DOCS_URL =
   "https://docs.openhands.dev/openhands/usage/agent-canvas/prebuilt-automations";
 
-/** Canonical Slack invite redirect from openhands.dev. */
-export const OPENHANDS_SLACK_COMMUNITY_URL = "https://openhands.dev/joinslack";
+/** Praxis support and community entry point. */
+export const OPENHANDS_SLACK_COMMUNITY_URL =
+  "https://github.com/Praxiss-Lab/Praxis/issues";
 
 export const SIDEBAR_ONBOARDING_CHECKLIST_DISMISSED_STORAGE_KEY =
   "openhands-sidebar-onboarding-checklist-dismissed";

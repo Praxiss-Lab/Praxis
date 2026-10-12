@@ -12,7 +12,7 @@ vi.mock("react-i18next", () => ({
         SCHEMA$VERIFICATION$CRITIC_API_KEY$HELP_TEXT:
           "If OpenHands is selected as your active LLM provider, leave this empty because the Critic API Key is the same as your OpenHands Provider LLM Key, which you can find in the",
         SCHEMA$VERIFICATION$CRITIC_API_KEY$HELP_SUFFIX:
-          "section of OpenHands Cloud; otherwise, enter a Critic API Key from that page.",
+          "section of self-hosted backend; otherwise, enter a Critic API Key from that page.",
         SETTINGS$OPENHANDS_API_KEY_HELP_LINK: "OpenHands LLM Key",
       })[key] ?? key,
   }),

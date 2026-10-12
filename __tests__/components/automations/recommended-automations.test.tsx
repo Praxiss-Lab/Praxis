@@ -93,7 +93,7 @@ const GITHUB_HOSTED_MCP_URL = "https://api.githubcopilot.com/mcp/";
 const cloudBackend: Backend = {
   id: "cloud-backend",
   name: "Cloud",
-  host: "https://staging.all-hands.dev/",
+  host: "https://staging.praxis.example.test/",
   apiKey: "cloud-token",
   kind: "cloud",
 };
@@ -1075,7 +1075,7 @@ describe("recommended automations", () => {
 
     // Assert
     expect(openSpy).toHaveBeenCalledWith(
-      "https://staging.all-hands.dev/settings/integrations",
+      "https://staging.praxis.example.test/settings/integrations",
       "_blank",
       "noopener,noreferrer",
     );
@@ -1283,7 +1283,7 @@ describe("recommended automations", () => {
     );
   });
 
-  it("opens the OpenHands Cloud integrations page without launching when the cloud option is chosen", () => {
+  it("opens the self-hosted backend integrations page without launching when the cloud option is chosen", () => {
     const openSpy = vi.spyOn(window, "open").mockReturnValue(null);
 
     renderLauncher();

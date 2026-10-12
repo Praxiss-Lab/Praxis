@@ -89,7 +89,7 @@ describe("useConversationMetrics", () => {
       () =>
         useConversationMetrics(
           "conv-abc",
-          "https://runtime-abc.prod-runtime.all-hands.dev/api/conversations/conv-abc",
+          "https://runtime-abc.runtime.praxis.example.test/api/conversations/conv-abc",
           "session-key",
           true,
         ),
@@ -102,7 +102,7 @@ describe("useConversationMetrics", () => {
     });
     expect(spy).toHaveBeenCalledWith(
       "conv-abc",
-      "https://runtime-abc.prod-runtime.all-hands.dev/api/conversations/conv-abc",
+      "https://runtime-abc.runtime.praxis.example.test/api/conversations/conv-abc",
       "session-key",
     );
   });

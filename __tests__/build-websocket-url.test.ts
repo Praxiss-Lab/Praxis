@@ -216,7 +216,7 @@ describe("buildWebSocketUrl", () => {
   });
 
   describe("protocol selection for external hosts", () => {
-    it("should use wss:// for HTTPS prod-runtime.all-hands.dev domains", () => {
+    it("should use wss:// for HTTPS runtime.praxis.example.test domains", () => {
       vi.stubGlobal("location", {
         protocol: "http:",
         host: "localhost:8000",
@@ -224,7 +224,7 @@ describe("buildWebSocketUrl", () => {
 
       // Use obviously fake IDs that follow the format pattern
       const fakeConversationId = "00000000deadbeef0000000000000000";
-      const fakeRuntimeHost = "faketesthost.prod-runtime.all-hands.dev";
+      const fakeRuntimeHost = "faketesthost.runtime.praxis.example.test";
 
       const result = buildWebSocketUrl(
         fakeConversationId,

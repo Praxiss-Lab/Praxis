@@ -88,9 +88,9 @@ beforeEach(() => {
   deviceFlowMocks.startDeviceFlow.mockResolvedValue({
     device_code: "device-code",
     user_code: "ABCD-EFGH",
-    verification_uri: "https://app.all-hands.dev/device",
+    verification_uri: "https://app.praxis.example.test/device",
     verification_uri_complete:
-      "https://app.all-hands.dev/device?user_code=ABCD-EFGH",
+      "https://app.praxis.example.test/device?user_code=ABCD-EFGH",
     expires_in: 600,
     interval: 5,
   });
@@ -106,7 +106,7 @@ afterEach(() => {
 });
 
 describe("AddBackendModal – connection chooser", () => {
-  it("renders OpenHands Cloud first with its brand mark", () => {
+  it("renders self-hosted backend first with its brand mark", () => {
     renderWithProviders(<AddBackendModal onClose={vi.fn()} />);
 
     const tabs = screen.getAllByRole("tab");

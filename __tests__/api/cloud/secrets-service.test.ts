@@ -15,7 +15,7 @@ import {
 const cloudBackend: Backend = {
   id: "prod",
   name: "Production",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "bearer-token",
   kind: "cloud",
 };
@@ -69,7 +69,7 @@ describe("SecretsService against cloud backend", () => {
       headers: { Authorization: "Bearer bearer-token" },
     });
     expect(firstUrl).toMatch(
-      /^https:\/\/app\.all-hands\.dev\/api\/v1\/secrets\/search\?/,
+      /^https:\/\/app\.praxis\.example\.test\/api\/v1\/secrets\/search\?/,
     );
     expect(firstUrl).not.toContain("page_id=");
 

@@ -15,7 +15,7 @@ import {
 const cloudBackend: Backend = {
   id: "prod",
   name: "Production",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "bearer-token",
   kind: "cloud",
 };
@@ -190,7 +190,7 @@ describe("AgentServerConversationService cloud branch", () => {
           status: "READY",
           detail: null,
           app_conversation_id: "conv-456",
-          agent_server_url: "https://runtime-456.app.all-hands.dev",
+          agent_server_url: "https://runtime-456.app.praxis.example.test",
           request: {},
           created_at: "2026-05-06T00:00:00Z",
           updated_at: "2026-05-06T00:00:00Z",

@@ -62,7 +62,7 @@ interface BackendFormModalProps {
  * matching (via {@link isOpenHandsCloudHost}) rather than a substring test, so
  * a look-alike host such as `all-hands-testing.dev` isn't misread as cloud.
  *
- * This is only a *default*: a self-hosted OpenHands Cloud/Enterprise instance
+ * This is only a *default*: a self-hosted self-hosted backend/Enterprise instance
  * on a truly custom domain is indistinguishable from a local agent-server by
  * host alone, so the manual add form lets the user override the kind
  * explicitly (see the Type selector in ManualConnectionColumn).
@@ -708,7 +708,7 @@ interface BackendConnectionOptionsProps {
 }
 
 /**
- * Manual agent-server connection plus OpenHands Cloud OAuth login.
+ * Manual agent-server connection plus self-hosted backend OAuth login.
  * Used by both the Add Backend modal and the onboarding backend step so
  * supported backend choices stay consistent across first-run and settings UI.
  */
@@ -794,7 +794,7 @@ interface ManualConnectionColumnProps {
 
 /**
  * Manual connection via Host + API Key. Designed for self-hosted agent servers
- * and self-hosted OpenHands Cloud with API key auth.
+ * and self-hosted self-hosted backend with API key auth.
  */
 function ManualConnectionColumn({
   onConnected,
@@ -950,8 +950,8 @@ interface CloudLoginColumnProps {
 }
 
 /**
- * One-click OAuth login with OpenHands Cloud. Includes an "Advanced"
- * disclosure for users who self-host OpenHands Cloud and need to override the
+ * One-click OAuth login with self-hosted backend. Includes an "Advanced"
+ * disclosure for users who self-host self-hosted backend and need to override the
  * host.
  */
 function CloudLoginColumn({
@@ -973,7 +973,7 @@ function CloudLoginColumn({
   const handleLoginSuccess = (apiKey: string) => {
     onConnected(
       {
-        name: "OpenHands Cloud",
+        name: "self-hosted backend",
         host: normalizeHost(effectiveHost),
         apiKey,
         kind: "cloud",

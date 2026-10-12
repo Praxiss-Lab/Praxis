@@ -17,7 +17,7 @@ export const SEEDED_DEFAULT_BACKEND_ID = "default-local";
 
 export const DEFAULT_LOCAL_BACKEND_NAME = "Local";
 export const LOCKED_CLOUD_BACKEND_ID = "locked-cloud";
-export const LOCKED_CLOUD_BACKEND_NAME = "OpenHands Cloud";
+export const LOCKED_CLOUD_BACKEND_NAME = "self-hosted backend";
 
 export function makeLockedCloudBackend(): Backend | null {
   if (!getLockedCloudHost()) return null;
@@ -43,7 +43,7 @@ export function makeLockedCloudBackend(): Backend | null {
  * if it returns null, onboarding is responsible for collecting backend
  * connection details from the user.
  *
- * Returns null when the deployment is locked to a single OpenHands Cloud
+ * Returns null when the deployment is locked to a single self-hosted backend
  * host (`VITE_LOCK_TO_CLOUD` / `--lock-to-cloud`). In locked mode the user
  * can only authenticate against the configured Cloud URL, so seeding a
  * Local backend from a baked/injected session key would short-circuit the

@@ -130,7 +130,7 @@ const localBackend: Backend = {
 const cloudBackend: Backend = {
   id: "production",
   name: "Production",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "bearer-token",
   kind: "cloud",
 };
@@ -1305,7 +1305,7 @@ describe("AgentServerConversationService", () => {
       const cloudBackend: Backend = {
         id: "prod",
         name: "Production",
-        host: "https://app.all-hands.dev",
+        host: "https://app.praxis.example.test",
         apiKey: "bearer-token",
         kind: "cloud",
       };
@@ -1319,7 +1319,7 @@ describe("AgentServerConversationService", () => {
       const [request] = requests;
       expect(request.method).toBe("POST");
       expect(request.url).toBe(
-        "https://app.all-hands.dev/api/v1/app-conversations/conv-1/switch_profile",
+        "https://app.praxis.example.test/api/v1/app-conversations/conv-1/switch_profile",
       );
       expect(request.body).toEqual({ profile_name: "haiku" });
       // Cloud resolves the swap server-side: no client-side encrypted profile
@@ -1333,7 +1333,7 @@ describe("AgentServerConversationService", () => {
     const cloudBackend: Backend = {
       id: "prod",
       name: "Production",
-      host: "https://app.all-hands.dev",
+      host: "https://app.praxis.example.test",
       apiKey: "bearer-token",
       kind: "cloud",
     };
@@ -1480,7 +1480,7 @@ describe("AgentServerConversationService", () => {
       mockSendEvent.mockResolvedValue(undefined);
       server.use(
         http.get(
-          "https://app.all-hands.dev/api/v1/app-conversations",
+          "https://app.praxis.example.test/api/v1/app-conversations",
           async ({ request }) => {
             requests.push({
               method: request.method,
@@ -1523,7 +1523,7 @@ describe("AgentServerConversationService", () => {
       setActiveSelection({ backendId: cloudBackend.id });
       const proxyRequests = captureRequests(["post"], {});
       server.use(
-        http.get("https://app.all-hands.dev/api/v1/app-conversations", () =>
+        http.get("https://app.praxis.example.test/api/v1/app-conversations", () =>
           HttpResponse.json([]),
         ),
       );
@@ -2200,7 +2200,7 @@ describe("AgentServerConversationService", () => {
       const requests: RecordedRequest[] = [];
       server.use(
         http.get(
-          "https://app.all-hands.dev/api/v1/app-conversations/:id/download",
+          "https://app.praxis.example.test/api/v1/app-conversations/:id/download",
           async ({ request }) => {
             requests.push({
               method: request.method,
@@ -2212,7 +2212,7 @@ describe("AgentServerConversationService", () => {
           },
         ),
         http.delete(
-          "https://app.all-hands.dev/api/v1/app-conversations/:id",
+          "https://app.praxis.example.test/api/v1/app-conversations/:id",
           async ({ request }) => {
             requests.push({
               method: request.method,
@@ -2584,7 +2584,7 @@ describe("AgentServerConversationService", () => {
         mockSendEvent.mockResolvedValue(undefined);
         server.use(
           http.get(
-            "https://app.all-hands.dev/api/v1/app-conversations",
+            "https://app.praxis.example.test/api/v1/app-conversations",
             async ({ request }) => {
               requests.push({
                 method: request.method,
@@ -2647,7 +2647,7 @@ describe("AgentServerConversationService", () => {
         setActiveSelection({ backendId: cloudBackend.id });
         const proxyRequests = captureRequests(["post"], {});
         server.use(
-          http.get("https://app.all-hands.dev/api/v1/app-conversations", () =>
+          http.get("https://app.praxis.example.test/api/v1/app-conversations", () =>
             HttpResponse.json([{ id: "conv-cloud", ...cloudConversation }]),
           ),
         );

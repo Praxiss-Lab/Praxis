@@ -187,9 +187,9 @@ beforeEach(() => {
   deviceFlowMocks.startDeviceFlow.mockResolvedValue({
     device_code: "device-code",
     user_code: "ABCD-EFGH",
-    verification_uri: "https://app.all-hands.dev/device",
+    verification_uri: "https://app.praxis.example.test/device",
     verification_uri_complete:
-      "https://app.all-hands.dev/device?user_code=ABCD-EFGH",
+      "https://app.praxis.example.test/device?user_code=ABCD-EFGH",
     expires_in: 600,
     interval: 5,
   });
@@ -518,13 +518,13 @@ describe("ManageBackendsModal", () => {
         onMount={(ctx) => {
           ctx.addBackend({
             name: "Production",
-            host: "https://app.all-hands.dev",
+            host: "https://app.praxis.example.test",
             apiKey: "key-acme",
             kind: "cloud",
           });
           ctx.addBackend({
             name: "Production",
-            host: "https://app.all-hands.dev",
+            host: "https://app.praxis.example.test",
             apiKey: "key-beta",
             kind: "cloud",
           });
@@ -562,7 +562,7 @@ describe("ManageBackendsModal", () => {
         onMount={(ctx) => {
           ctx.addBackend({
             name: "Production",
-            host: "https://app.all-hands.dev",
+            host: "https://app.praxis.example.test",
             apiKey: "bearer-key",
             kind: "cloud",
           });
@@ -665,7 +665,7 @@ describe("ManageBackendsModal", () => {
     );
   });
   it("uses Cloud reconnect recovery controls when locked to Cloud", async () => {
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     const user = userEvent.setup();
     vi.spyOn(window, "open").mockReturnValue({
       closed: false,
@@ -677,8 +677,8 @@ describe("ManageBackendsModal", () => {
       <TestSeed
         onMount={(ctx) => {
           ctx.addBackend({
-            name: "OpenHands Cloud",
-            host: "https://app.all-hands.dev",
+            name: "self-hosted backend",
+            host: "https://app.praxis.example.test",
             apiKey: "expired-token",
             kind: "cloud",
           });
@@ -702,12 +702,12 @@ describe("ManageBackendsModal", () => {
 
     await user.click(reconnectButton);
     expect(deviceFlowMocks.startDeviceFlow).toHaveBeenCalledWith(
-      "https://app.all-hands.dev",
+      "https://app.praxis.example.test",
     );
   });
 
   it("updates the locked Cloud backend token when reconnect succeeds", async () => {
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     deviceFlowMocks.pollForToken.mockResolvedValue({
       access_token: "fresh-cloud-token",
       token_type: "Bearer",
@@ -723,8 +723,8 @@ describe("ManageBackendsModal", () => {
       <TestSeed
         onMount={(ctx) => {
           ctx.addBackend({
-            name: "OpenHands Cloud",
-            host: "https://app.all-hands.dev",
+            name: "self-hosted backend",
+            host: "https://app.praxis.example.test",
             apiKey: "expired-token",
             kind: "cloud",
           });
@@ -745,7 +745,7 @@ describe("ManageBackendsModal", () => {
       expect(stored).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            name: "OpenHands Cloud",
+            name: "self-hosted backend",
             apiKey: "fresh-cloud-token",
           }),
         ]),
@@ -757,7 +757,7 @@ describe("ManageBackendsModal", () => {
   });
 
   it("keeps locked Cloud recovery open when reconnect authorization fails", async () => {
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     deviceFlowMocks.pollForToken.mockRejectedValue(
       new Error("Authorization request was denied."),
     );
@@ -772,8 +772,8 @@ describe("ManageBackendsModal", () => {
       <TestSeed
         onMount={(ctx) => {
           ctx.addBackend({
-            name: "OpenHands Cloud",
-            host: "https://app.all-hands.dev",
+            name: "self-hosted backend",
+            host: "https://app.praxis.example.test",
             apiKey: "expired-token",
             kind: "cloud",
           });
@@ -796,15 +796,15 @@ describe("ManageBackendsModal", () => {
   it("hides the Cloud reconnect controls when the locked backend uses cookie auth", async () => {
     // Arrange: an OHE-hosted Canvas — locked to Cloud, but the backend is
     // authenticated by the main-app session cookie, not a device-flow key.
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
 
     // Act
     renderWithProviders(
       <TestSeed
         onMount={(ctx) => {
           ctx.addBackend({
-            name: "OpenHands Cloud",
-            host: "https://app.all-hands.dev",
+            name: "self-hosted backend",
+            host: "https://app.praxis.example.test",
             apiKey: "",
             kind: "cloud",
             authMode: "cookie",
@@ -828,7 +828,7 @@ describe("ManageBackendsModal", () => {
   it("does not offer the device-flow login for a logged-out cookie-auth backend", async () => {
     // Arrange: the main-app session cookie has expired, so the Cloud probe
     // reports the backend as logged out.
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     vi.mocked(getCloudOrganizations).mockRejectedValue(
       Object.assign(new Error("Unauthorized"), {
         isAxiosError: true,
@@ -841,8 +841,8 @@ describe("ManageBackendsModal", () => {
       <TestSeed
         onMount={(ctx) => {
           ctx.addBackend({
-            name: "OpenHands Cloud",
-            host: "https://app.all-hands.dev",
+            name: "self-hosted backend",
+            host: "https://app.praxis.example.test",
             apiKey: "",
             kind: "cloud",
             authMode: "cookie",
@@ -856,7 +856,7 @@ describe("ManageBackendsModal", () => {
     // Assert
     await waitFor(() =>
       expect(
-        screen.getByTestId("manage-backends-status-OpenHands Cloud"),
+        screen.getByTestId("manage-backends-status-self-hosted backend"),
       ).toHaveTextContent("BACKEND$LOGGED_OUT"),
     );
     expect(

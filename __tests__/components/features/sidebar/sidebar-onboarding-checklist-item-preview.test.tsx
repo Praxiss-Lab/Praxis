@@ -79,7 +79,7 @@ describe("SidebarOnboardingChecklistItemPreview", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByTestId("sidebar-onboarding-checklist-preview-action-join-slack"),
-    ).toHaveAttribute("href", "https://openhands.dev/joinslack");
+    ).toHaveAttribute("href", "https://github.com/Praxiss-Lab/Praxis/issues");
     expect(
       screen.getByTestId("sidebar-onboarding-checklist-preview-action-join-slack"),
     ).toHaveAttribute("target", "_blank");

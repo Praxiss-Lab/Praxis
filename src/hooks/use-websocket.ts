@@ -1,4 +1,5 @@
 import React from "react";
+import { isHostedCloudEndpoint } from "#/api/cloud-endpoint-policy";
 import { sendWebSocketAuth } from "#/utils/websocket-auth";
 import { startHandshakeWatchdog } from "#/utils/websocket-handshake";
 
@@ -61,6 +62,10 @@ export const useWebSocket = (url: string, options?: WebSocketHookOptions) => {
       wsUrl = `${url}?${params.toString()}`;
     }
 
+    if (isHostedCloudEndpoint(wsUrl)) {
+      setError(new Error("OpenHands Cloud connections are disabled."));
+      return;
+    }
     const ws = new WebSocket(wsUrl);
     wsRef.current = ws;
     // Mark this WebSocket instance as allowed to reconnect

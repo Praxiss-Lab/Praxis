@@ -304,7 +304,7 @@ describe("useWorkspaceFileContent", () => {
         backend: {
           id: "cloud-1",
           kind: "cloud",
-          host: "https://app.all-hands.dev",
+          host: "https://app.praxis.example.test",
         },
         orgId: "org-1",
       });

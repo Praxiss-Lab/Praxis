@@ -24,7 +24,7 @@ function cloudBackend(overrides: Partial<Backend> = {}): Backend {
   return {
     id: "prod",
     name: "Production",
-    host: "https://app.all-hands.dev",
+    host: "https://app.praxis.example.test",
     apiKey: "bearer-token",
     kind: "cloud",
     ...overrides,
