@@ -21,11 +21,11 @@ describe("cloud funnel analytics", () => {
 
   it("emits the device authorization milestones with coarse attribution", () => {
     trackCloudDeviceAuthorizationStarted(
-      "https://app.all-hands.dev",
+      "https://app.praxis.example.test",
       "onboarding",
     );
     trackCloudDeviceAuthorizationSucceeded(
-      "https://app.all-hands.dev",
+      "https://app.praxis.example.test",
       "onboarding",
     );
 

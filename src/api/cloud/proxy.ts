@@ -1,5 +1,6 @@
 import type { CloudRequestOptions } from "@openhands/typescript-client/clients";
 import type { Backend } from "../backend-registry/types";
+import { assertSelfHostedEndpoint } from "../cloud-endpoint-policy";
 import { createCloudClientForRuntime, createCloudClient } from "./client";
 
 export interface CloudProxyRequest {
@@ -18,6 +19,7 @@ export interface CloudProxyRequest {
 export async function callCloudProxy<TResponse = unknown>(
   req: CloudProxyRequest,
 ): Promise<TResponse> {
+  if (req.hostOverride) assertSelfHostedEndpoint(req.hostOverride);
   const client = req.hostOverride
     ? createCloudClientForRuntime(req.backend)
     : createCloudClient(req.backend);

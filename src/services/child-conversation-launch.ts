@@ -394,8 +394,8 @@ async function launchCloudChild(
   const backend = pickCloudBackendForLaunch();
   if (!backend) {
     return failure(
-      "No OpenHands Cloud backend is connected in Agent Canvas.",
-      'Ask the user to connect OpenHands Cloud from the backend picker, then call this tool again — or relaunch now with target="local".',
+      "No self-hosted backend backend is connected in Agent Canvas.",
+      'Ask the user to connect self-hosted backend from the backend picker, then call this tool again — or relaunch now with target="local".',
     );
   }
 
@@ -470,7 +470,7 @@ async function launchCloudChild(
     // Cloud children of a local parent carry no server-side link; see above.
     parent_link: false,
     parent_link_note:
-      "This conversation runs on the local agent server, so OpenHands Cloud has no parent to link the child to.",
+      "This conversation runs on the local agent server, so self-hosted backend has no parent to link the child to.",
   };
 }
 

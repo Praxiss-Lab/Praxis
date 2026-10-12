@@ -153,7 +153,7 @@ describe("TelemetryConsentBanner", () => {
   });
 
   it("does not render in locked Cloud mode", async () => {
-    getLockedCloudHostMock.mockReturnValue("https://app.all-hands.dev");
+    getLockedCloudHostMock.mockReturnValue("https://app.praxis.example.test");
 
     render(<TelemetryConsentBanner />);
 

@@ -154,7 +154,7 @@ describe("useAutomationSdkVersion", () => {
       backend: {
         id: "cloud-1",
         name: "Cloud",
-        host: "https://app.all-hands.dev",
+        host: "https://app.praxis.example.test",
         apiKey: "cloud-key",
         kind: "cloud",
       },

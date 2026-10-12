@@ -30,7 +30,7 @@ vi.mock("#/api/cloud/proxy", () => ({
 const cloudBackend: Backend = {
   id: "cloud-1",
   name: "Production",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "cloud-key",
   kind: "cloud",
 };
@@ -146,7 +146,7 @@ describe("EventService.respondToConfirmation — cloud branch", () => {
 
     await EventService.respondToConfirmation(
       "conv-1",
-      "https://abc123.prod-runtime.all-hands.dev/api/conversations/conv-1",
+      "https://abc123.runtime.praxis.example.test/api/conversations/conv-1",
       { accept: true },
       "session-key",
     );
@@ -165,7 +165,7 @@ describe("EventService.getEventCount — cloud branch", () => {
 
     const count = await EventService.getEventCount(
       "conv-1",
-      "https://abc123.prod-runtime.all-hands.dev/api/conversations/conv-1",
+      "https://abc123.runtime.praxis.example.test/api/conversations/conv-1",
       "session-key",
     );
 

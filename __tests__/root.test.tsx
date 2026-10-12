@@ -109,7 +109,7 @@ const renderApp = (initialEntries: string[] = ["/"]) =>
     ),
   });
 
-const COOKIE_DEPLOYMENT_ORIGIN = "https://pr-254.staging.openhands.dev";
+const COOKIE_DEPLOYMENT_ORIGIN = "https://pr-254.staging.praxis.example.test";
 
 /**
  * Simulate an OHE-hosted Canvas: served from the locked Cloud host itself, so
@@ -123,7 +123,7 @@ function mockLockedCookieDeployment() {
     value: {
       ...ORIGINAL_LOCATION,
       origin: COOKIE_DEPLOYMENT_ORIGIN,
-      hostname: "pr-254.staging.openhands.dev",
+      hostname: "pr-254.staging.praxis.example.test",
       pathname: "/canvas",
       search: "",
       hash: "",
@@ -230,7 +230,7 @@ describe("App root agent-server availability guard", () => {
   });
 
   it("shows first-run onboarding before the recovery modal when locked to Cloud with no backend", async () => {
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     vi.stubEnv("VITE_SESSION_API_KEY", "");
     delete (window as unknown as Record<string, unknown>)
       .__AGENT_CANVAS_SESSION_API_KEY__;
@@ -259,7 +259,7 @@ describe("App root agent-server availability guard", () => {
     // Local backend, which skipped onboarding and landed on the Manage Backends
     // recovery modal. Locked mode must not seed a Local backend, so onboarding
     // still owns the first-run Cloud login.
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     vi.stubEnv("VITE_SESSION_API_KEY", "baked-session-key");
     (
       window as unknown as Record<string, unknown>
@@ -288,7 +288,7 @@ describe("App root agent-server availability guard", () => {
   it("shows first-run onboarding when locked to Cloud with a stale persisted Local backend", async () => {
     // A Local backend persisted from a previous non-locked session must not
     // bypass onboarding once the deployment is locked to Cloud.
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     vi.stubEnv("VITE_SESSION_API_KEY", "");
     delete (window as unknown as Record<string, unknown>)
       .__AGENT_CANVAS_SESSION_API_KEY__;
@@ -328,7 +328,7 @@ describe("App root agent-server availability guard", () => {
     // stale Local backend must not bypass onboarding, even when it happens
     // to report a configured LLM. The user must be routed through the Cloud
     // login / replacement flow instead.
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     vi.stubEnv("VITE_SESSION_API_KEY", "");
     delete (window as unknown as Record<string, unknown>)
       .__AGENT_CANVAS_SESSION_API_KEY__;
@@ -385,7 +385,7 @@ describe("App root agent-server availability guard", () => {
     // host than the locked Cloud host must also be forced through
     // onboarding, even if it reports a configured LLM. `kind === "cloud"`
     // alone is not enough — the host must match the locked host.
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     vi.stubEnv("VITE_SESSION_API_KEY", "");
     delete (window as unknown as Record<string, unknown>)
       .__AGENT_CANVAS_SESSION_API_KEY__;
@@ -442,7 +442,7 @@ describe("App root agent-server availability guard", () => {
     // Cloud login. In locked-to-Cloud mode the completion flag must not
     // bypass onboarding when the active backend is not a connected Cloud
     // backend.
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     vi.stubEnv("VITE_SESSION_API_KEY", "");
     delete (window as unknown as Record<string, unknown>)
       .__AGENT_CANVAS_SESSION_API_KEY__;
@@ -559,8 +559,8 @@ describe("App root agent-server availability guard", () => {
   it("shows the manage-backends recovery modal when the active cloud backend is logged out", async () => {
     const cloudBackend = {
       id: "cloud-expired",
-      name: "OpenHands Cloud",
-      host: "https://app.all-hands.dev",
+      name: "self-hosted backend",
+      host: "https://app.praxis.example.test",
       apiKey: "expired-token",
       kind: "cloud",
     };
@@ -579,7 +579,7 @@ describe("App root agent-server availability guard", () => {
     window.localStorage.setItem(ONBOARDING_COMPLETED_STORAGE_KEY, "1");
     __resetActiveStoreForTests();
     server.use(
-      http.get("https://app.all-hands.dev/api/keys/current", () =>
+      http.get("https://app.praxis.example.test/api/keys/current", () =>
         HttpResponse.json({ detail: "NoCredentialsError" }, { status: 401 }),
       ),
     );
@@ -600,11 +600,11 @@ describe("App root agent-server availability guard", () => {
   });
 
   it("shows locked Cloud reconnect recovery without add-backend controls", async () => {
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     const cloudBackend = {
       id: "cloud-expired",
-      name: "OpenHands Cloud",
-      host: "https://app.all-hands.dev",
+      name: "self-hosted backend",
+      host: "https://app.praxis.example.test",
       apiKey: "expired-token",
       kind: "cloud",
     };
@@ -623,7 +623,7 @@ describe("App root agent-server availability guard", () => {
     window.localStorage.setItem(ONBOARDING_COMPLETED_STORAGE_KEY, "1");
     __resetActiveStoreForTests();
     server.use(
-      http.get("https://app.all-hands.dev/api/keys/current", () =>
+      http.get("https://app.praxis.example.test/api/keys/current", () =>
         HttpResponse.json({ detail: "NoCredentialsError" }, { status: 401 }),
       ),
     );
@@ -700,7 +700,7 @@ describe("App root agent-server availability guard", () => {
   });
 
   it("renders Cloud login directly for a fresh locked-to-Cloud first run", async () => {
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     vi.stubEnv("VITE_SESSION_API_KEY", "");
     delete (window as unknown as Record<string, unknown>)
       .__AGENT_CANVAS_SESSION_API_KEY__;
@@ -736,15 +736,15 @@ describe("App root agent-server availability guard", () => {
       configurable: true,
       value: {
         ...ORIGINAL_LOCATION,
-        origin: "https://pr-254.staging.openhands.dev",
-        hostname: "pr-254.staging.openhands.dev",
+        origin: "https://pr-254.staging.praxis.example.test",
+        hostname: "pr-254.staging.praxis.example.test",
         pathname: "/canvas",
         search: "?tab=home",
         hash: "#top",
         assign,
       },
     });
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://pr-254.staging.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://pr-254.staging.praxis.example.test");
     vi.stubEnv("VITE_SESSION_API_KEY", "");
     delete (window as unknown as Record<string, unknown>)
       .__AGENT_CANVAS_SESSION_API_KEY__;
@@ -844,14 +844,14 @@ describe("App root agent-server availability guard", () => {
     // reporting NO configured LLM, which is exactly the window where
     // the old LLM-readiness gate kept the first-run screen mounted and
     // caused the reopen.
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     vi.stubEnv("VITE_SESSION_API_KEY", "");
     delete (window as unknown as Record<string, unknown>)
       .__AGENT_CANVAS_SESSION_API_KEY__;
     const lockedCloud = {
       id: "locked-cloud",
-      name: "OpenHands Cloud",
-      host: "https://app.all-hands.dev",
+      name: "self-hosted backend",
+      host: "https://app.praxis.example.test",
       apiKey: "cloud-session-key",
       kind: "cloud",
     };
@@ -872,10 +872,10 @@ describe("App root agent-server availability guard", () => {
     // onboarding flag should still hide first-run onboarding once the
     // locked Cloud backend is active.
     server.use(
-      http.get("https://app.all-hands.dev/api/v1/settings", () =>
+      http.get("https://app.praxis.example.test/api/v1/settings", () =>
         HttpResponse.json({ llm_api_key_set: false }),
       ),
-      http.get("https://app.all-hands.dev/api/keys/current", () =>
+      http.get("https://app.praxis.example.test/api/keys/current", () =>
         HttpResponse.json({ org_id: "org-1" }),
       ),
     );

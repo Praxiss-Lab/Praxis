@@ -164,7 +164,7 @@ describe("mobile environment detection", () => {
 
 describe("deployment domain detection", () => {
   it.each([
-    ["https://app.all-hands.dev", false],
+    ["https://app.praxis.example.test", false],
     ["http://localhost:3000", false],
   ])("reports whether %s is the production origin", (origin, expected) => {
     vi.stubGlobal("window", { location: { origin } });

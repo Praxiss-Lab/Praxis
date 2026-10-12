@@ -147,14 +147,14 @@ describe("useWorkspaceSession", () => {
         backend: {
           id: "cloud-1",
           kind: "cloud",
-          host: "https://app.all-hands.dev",
+          host: "https://app.praxis.example.test",
         },
       });
       useActiveConversationMock.mockReturnValue({
         data: {
           id: "conv-cloud",
           conversation_url:
-            "https://abc123.prod-runtime.all-hands.dev/api/conversations/conv-cloud",
+            "https://abc123.runtime.praxis.example.test/api/conversations/conv-cloud",
           session_api_key: "cloud-key-xyz",
         },
       });

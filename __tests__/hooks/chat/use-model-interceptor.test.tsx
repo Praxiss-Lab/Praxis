@@ -41,7 +41,7 @@ const CONVERSATION_ID = "conv-1";
 const cloudBackend: Backend = {
   id: "prod",
   name: "Production",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "bearer-token",
   kind: "cloud",
 };

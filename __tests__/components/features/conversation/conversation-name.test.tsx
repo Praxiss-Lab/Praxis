@@ -27,7 +27,7 @@ const localBackend: Backend = {
 const cloudBackend: Backend = {
   id: "prod",
   name: "Production",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "bearer-token",
   kind: "cloud",
 };
@@ -702,7 +702,7 @@ describe("ConversationName public sharing", () => {
       } as Conversation,
     });
     const expectedUrl =
-      "https://app.all-hands.dev/shared/conversations/test-conversation-id";
+      "https://app.praxis.example.test/shared/conversations/test-conversation-id";
     const user = userEvent.setup();
     renderConversationNameWithRouter();
 

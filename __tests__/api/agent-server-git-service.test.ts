@@ -290,13 +290,13 @@ describe("AgentServerGitService", () => {
     const cloudBackend: Backend = {
       id: "cloud-1",
       name: "Production",
-      host: "https://app.all-hands.dev",
+      host: "https://app.praxis.example.test",
       apiKey: "cloud-key",
       kind: "cloud",
     };
 
     const runtimeConversationUrl =
-      "https://abc123.prod-runtime.all-hands.dev/api/conversations/conv-1";
+      "https://abc123.runtime.praxis.example.test/api/conversations/conv-1";
 
     beforeEach(() => {
       window.localStorage.clear();

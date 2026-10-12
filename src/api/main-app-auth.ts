@@ -1,4 +1,5 @@
 import axios from "axios";
+import { assertSelfHostedEndpoint } from "./cloud-endpoint-policy";
 import { AGENT_CANVAS_CLIENT_VERSION } from "./client-source";
 import { getLockedCloudAuthMode } from "./agent-server-config";
 
@@ -33,6 +34,7 @@ export async function reportCanvasAuthenticated(): Promise<void> {
   if (canvasAuthenticatedReported) return;
   canvasAuthenticatedReported = true;
   try {
+    assertSelfHostedEndpoint(window.location.origin);
     await axios.post(
       MAIN_APP_ANALYTICS_EVENTS_PATH,
       {
@@ -48,6 +50,7 @@ export async function reportCanvasAuthenticated(): Promise<void> {
 
 export async function authenticateWithMainAppCookie(): Promise<boolean> {
   try {
+    assertSelfHostedEndpoint(window.location.origin);
     await axios.post(MAIN_APP_AUTHENTICATE_PATH, null, {
       withCredentials: true,
     });

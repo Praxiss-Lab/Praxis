@@ -78,7 +78,7 @@ describe("ActiveBackendProvider", () => {
     act(() => {
       result.current.addBackend({
         name: "Production",
-        host: "https://app.all-hands.dev",
+        host: "https://app.praxis.example.test",
         apiKey: "bearer-1",
         kind: "cloud",
       });
@@ -105,8 +105,8 @@ describe("ActiveBackendProvider", () => {
     let added: { id: string } | null = null;
     act(() => {
       added = result.current.addBackend({
-        name: "OpenHands Cloud",
-        host: "https://app.all-hands.dev",
+        name: "self-hosted backend",
+        host: "https://app.praxis.example.test",
         apiKey: "bearer-token",
         kind: "cloud",
       });
@@ -158,7 +158,7 @@ describe("ActiveBackendProvider", () => {
     act(() => {
       result.current.addBackend({
         name: "Cloud",
-        host: "https://app.all-hands.dev",
+        host: "https://app.praxis.example.test",
         apiKey: "cloud-key",
         kind: "cloud",
       });
@@ -182,7 +182,7 @@ describe("ActiveBackendProvider", () => {
     act(() => {
       cloudId = result.current.addBackend({
         name: "Cloud",
-        host: "https://app.all-hands.dev",
+        host: "https://app.praxis.example.test",
         apiKey: "cloud-key",
         kind: "cloud",
       }).id;
@@ -206,7 +206,7 @@ describe("ActiveBackendProvider", () => {
     act(() => {
       firstCloudId = result.current.addBackend({
         name: "Cloud 1",
-        host: "https://app.all-hands.dev",
+        host: "https://app.praxis.example.test",
         apiKey: "cloud-key-1",
         kind: "cloud",
       }).id;
@@ -214,7 +214,7 @@ describe("ActiveBackendProvider", () => {
     act(() => {
       result.current.addBackend({
         name: "Cloud 2",
-        host: "https://app.all-hands.dev",
+        host: "https://app.praxis.example.test",
         apiKey: "cloud-key-2",
         kind: "cloud",
       });
@@ -333,7 +333,7 @@ describe("ActiveBackendProvider", () => {
     act(() => {
       id = result.current.addBackend({
         name: "Cloud",
-        host: "https://app.all-hands.dev",
+        host: "https://app.praxis.example.test",
         apiKey: "old-key",
         kind: "cloud",
       }).id;
@@ -356,7 +356,7 @@ describe("ActiveBackendProvider", () => {
     act(() => {
       id = result.current.addBackend({
         name: "Cloud",
-        host: "https://app.all-hands.dev",
+        host: "https://app.praxis.example.test",
         apiKey: "key",
         kind: "cloud",
       }).id;

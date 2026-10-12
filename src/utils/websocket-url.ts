@@ -1,3 +1,5 @@
+import { isHostedCloudEndpoint } from "#/api/cloud-endpoint-policy";
+
 /**
  * Extracts the base host from conversation URL
  * @param conversationUrl The conversation URL containing host/port (e.g., "http://localhost:3000/api/conversations/123")
@@ -110,6 +112,6 @@ export function buildWebSocketUrl(
   const targetIsSecure =
     getConversationUrlProtocol(conversationUrl) === "https:";
   const protocol = pageIsSecure || targetIsSecure ? "wss:" : "ws:";
-
-  return `${protocol}//${baseHost}${pathPrefix}/sockets/session/${conversationId}`;
+  const url = `${protocol}//${baseHost}${pathPrefix}/sockets/session/${conversationId}`;
+  return isHostedCloudEndpoint(url) ? null : url;
 }

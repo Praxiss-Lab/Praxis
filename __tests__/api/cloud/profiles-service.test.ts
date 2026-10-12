@@ -17,14 +17,14 @@ import {
 const cloudBackend: Backend = {
   id: "prod",
   name: "Production",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "bearer-token",
   kind: "cloud",
 };
 
 const ORG_ID = "org-1";
-const ORG_BASE = `https://app.all-hands.dev/api/organizations/${ORG_ID}/profiles`;
-const SETTINGS_BASE = "https://app.all-hands.dev/api/v1/settings/profiles";
+const ORG_BASE = `https://app.praxis.example.test/api/organizations/${ORG_ID}/profiles`;
+const SETTINGS_BASE = "https://app.praxis.example.test/api/v1/settings/profiles";
 const originalFetch = global.fetch;
 const fetchMock = vi.fn();
 

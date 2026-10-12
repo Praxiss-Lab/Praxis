@@ -71,7 +71,7 @@ describe("settings index route", () => {
 
   it("lands on Application when the canvas is locked to a Cloud host", async () => {
     // Arrange — SaaS / self-hosted OHE serve the canvas with `--lock-to-cloud`.
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
 
     // Act
     renderSettingsIndex();

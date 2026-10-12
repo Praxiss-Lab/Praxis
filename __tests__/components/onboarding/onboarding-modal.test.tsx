@@ -101,7 +101,7 @@ vi.mock("#/components/features/backends/device-flow-auth", async () => {
           "data-testid": `${testIdRoot}-login-button`,
           onClick: () => onSuccess("cloud-session-key"),
         },
-        "Login with OpenHands Cloud",
+        "Login with self-hosted backend",
       ),
   };
 });
@@ -179,8 +179,8 @@ async function completeAgentStep(user: ReturnType<typeof userEvent.setup>) {
 function seedCloudBackend() {
   const backend = {
     id: "cloud-backend",
-    name: "OpenHands Cloud",
-    host: "https://app.all-hands.dev",
+    name: "self-hosted backend",
+    host: "https://app.praxis.example.test",
     apiKey: "cloud-session-key",
     kind: "cloud" as const,
   };
@@ -371,7 +371,7 @@ describe("OnboardingModal", () => {
 
   it("dismisses the onboarding modal immediately after Cloud login in locked-to-Cloud mode without showing the next step", async () => {
     // Regression for hieptl's flicker report on PR #1389: after logging
-    // into OpenHands Cloud in locked-to-Cloud mode, the onboarding modal
+    // into self-hosted backend in locked-to-Cloud mode, the onboarding modal
     // used to advance to the Choose Agent slide (the "next window"),
     // then get torn down by the root first-run gate, then briefly
     // remounted by OnboardingHost — producing a visible flicker. Cloud
@@ -381,7 +381,7 @@ describe("OnboardingModal", () => {
     window.localStorage.clear();
     vi.stubEnv("VITE_BACKEND_BASE_URL", "");
     vi.stubEnv("VITE_SESSION_API_KEY", "");
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     delete (window as unknown as Record<string, unknown>)
       .__AGENT_CANVAS_SESSION_API_KEY__;
     __resetActiveStoreForTests();
@@ -408,7 +408,7 @@ describe("OnboardingModal", () => {
     // the backend slide so they can log into the locked Cloud host and
     // replace the stale backend, rather than continuing as Local.
     window.localStorage.clear();
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     const staleLocal = {
       id: "stale-local",
       name: "Local",
@@ -466,7 +466,7 @@ describe("OnboardingModal", () => {
     // must also keep `CheckBackendStep` visible — `kind === "cloud"` alone
     // is not enough; the host must match the locked host (normalized).
     window.localStorage.clear();
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     const otherCloud = {
       id: "other-cloud",
       name: "Other Cloud",
@@ -503,7 +503,7 @@ describe("OnboardingModal", () => {
     // X-Org-Id to the locked Cloud host. After Cloud login completes,
     // active.orgId must be reset to null.
     window.localStorage.clear();
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     const otherCloud = {
       id: "other-cloud",
       name: "Other Cloud",
@@ -542,11 +542,11 @@ describe("OnboardingModal", () => {
     // Positive control: when the active backend is the locked Cloud host
     // (and healthy), the backend slide is skipped exactly as before.
     window.localStorage.clear();
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     const lockedCloud = {
       id: "locked-cloud",
-      name: "OpenHands Cloud",
-      host: "https://app.all-hands.dev/",
+      name: "self-hosted backend",
+      host: "https://app.praxis.example.test/",
       apiKey: "cloud-token",
       kind: "cloud" as const,
     };

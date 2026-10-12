@@ -12,8 +12,8 @@ import { CloudSettingsLink } from "#/components/features/settings/cloud-settings
 
 const cloudBackend: Backend = {
   id: "cloud-1",
-  name: "OpenHands Cloud",
-  host: "https://app.all-hands.dev",
+  name: "self-hosted backend",
+  host: "https://app.praxis.example.test",
   apiKey: "token",
   kind: "cloud",
 };
@@ -58,7 +58,7 @@ describe("CloudSettingsLink", () => {
     renderWithProviders();
 
     const link = screen.getByTestId("settings-cloud-link");
-    expect(link).toHaveAttribute("href", "https://app.all-hands.dev/settings");
+    expect(link).toHaveAttribute("href", "https://app.praxis.example.test/settings");
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
     // The test i18n mock returns the key verbatim; the human label
@@ -68,7 +68,7 @@ describe("CloudSettingsLink", () => {
 
   it("strips a trailing slash when building the cloud settings URL", () => {
     setRegisteredBackends([
-      { ...cloudBackend, host: "https://app.all-hands.dev/" },
+      { ...cloudBackend, host: "https://app.praxis.example.test/" },
     ]);
     setActiveSelection({ backendId: cloudBackend.id });
 
@@ -76,13 +76,13 @@ describe("CloudSettingsLink", () => {
 
     expect(screen.getByTestId("settings-cloud-link")).toHaveAttribute(
       "href",
-      "https://app.all-hands.dev/settings",
+      "https://app.praxis.example.test/settings",
     );
   });
 
   it("opens in the same tab without the external-link icon when locked to Cloud", () => {
     // Arrange: an OHE/SaaS-hosted canvas locked to the active cloud host
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     setRegisteredBackends([cloudBackend]);
     setActiveSelection({ backendId: cloudBackend.id });
 
@@ -91,7 +91,7 @@ describe("CloudSettingsLink", () => {
 
     // Assert: same tab (Back returns to the canvas) and no "new tab" hint
     const link = screen.getByTestId("settings-cloud-link");
-    expect(link).toHaveAttribute("href", "https://app.all-hands.dev/settings");
+    expect(link).toHaveAttribute("href", "https://app.praxis.example.test/settings");
     expect(link).not.toHaveAttribute("target");
     expect(link).not.toHaveAttribute("rel");
     expect(link.querySelector("svg.lucide-external-link")).toBeNull();
@@ -105,7 +105,7 @@ describe("CloudSettingsLink", () => {
 
     expect(screen.getByTestId("settings-cloud-link")).toHaveAttribute(
       "href",
-      "https://app.all-hands.dev/settings?org=org-123",
+      "https://app.praxis.example.test/settings?org=org-123",
     );
   });
 

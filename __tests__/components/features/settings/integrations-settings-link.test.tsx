@@ -12,8 +12,8 @@ import { IntegrationsSettingsLink } from "#/components/features/settings/integra
 
 const cloudBackend: Backend = {
   id: "cloud-1",
-  name: "OpenHands Cloud",
-  host: "https://app.all-hands.dev",
+  name: "self-hosted backend",
+  host: "https://app.praxis.example.test",
   apiKey: "token",
   kind: "cloud",
 };
@@ -55,7 +55,7 @@ describe("IntegrationsSettingsLink", () => {
     const link = screen.getByTestId("settings-integrations-link");
     expect(link).toHaveAttribute(
       "href",
-      "https://app.all-hands.dev/settings/integrations",
+      "https://app.praxis.example.test/settings/integrations",
     );
     expect(link).toHaveAttribute("target", "_blank");
   });
@@ -71,14 +71,14 @@ describe("IntegrationsSettingsLink", () => {
     // Assert
     expect(screen.getByTestId("settings-integrations-link")).toHaveAttribute(
       "href",
-      "https://app.all-hands.dev/settings/integrations?org=org-123",
+      "https://app.praxis.example.test/settings/integrations?org=org-123",
     );
   });
 
   it("renders a direct Integrations shortcut when the canvas is locked to a Cloud host", () => {
     // Arrange — SaaS / self-hosted OHE serve the canvas with `--lock-to-cloud`;
     // keep Integrations visible beside the broader All Cloud Settings link.
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
     setRegisteredBackends([cloudBackend]);
     setActiveSelection({ backendId: cloudBackend.id });
 
@@ -88,7 +88,7 @@ describe("IntegrationsSettingsLink", () => {
     // Assert
     expect(screen.getByTestId("settings-integrations-link")).toHaveAttribute(
       "href",
-      "https://app.all-hands.dev/settings/integrations",
+      "https://app.praxis.example.test/settings/integrations",
     );
   });
 });

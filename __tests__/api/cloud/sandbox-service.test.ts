@@ -11,7 +11,7 @@ import { getFetchCall, mockJsonResponse } from "./fetch-test-utils";
 const cloudBackend: Backend = {
   id: "cloud-prod",
   name: "Production",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "bearer-token",
   kind: "cloud",
 };

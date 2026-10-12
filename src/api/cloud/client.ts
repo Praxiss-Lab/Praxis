@@ -6,6 +6,7 @@ import {
 import { NoBackendAvailableError } from "../agent-server-client-options";
 import { getActiveBackend } from "../backend-registry/active-store";
 import type { Backend } from "../backend-registry/types";
+import { assertSelfHostedEndpoint } from "../cloud-endpoint-policy";
 
 function requireCloudBackend(backend?: Backend): Backend {
   if (backend) return backend;
@@ -32,6 +33,7 @@ function activeOrgForBackend(backend: Backend): string | null {
 
 export function createCloudClient(backend?: Backend): CloudClient {
   const target = requireCloudBackend(backend);
+  assertSelfHostedEndpoint(target.host);
   const agentServerProxyBaseUrl = getAgentServerBaseUrl();
   // Standalone Canvas uses its local Agent Server as the runtime proxy. The
   // SaaS Canvas is frontend-only, so fall back to the selected Cloud host,

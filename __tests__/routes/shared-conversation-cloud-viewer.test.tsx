@@ -39,7 +39,7 @@ vi.mock("#/components/conversation-events/chat/messages", () => ({
 const cloudBackend: Backend = {
   id: "cloud-1",
   name: "Production",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "bearer-key",
   kind: "cloud",
 };

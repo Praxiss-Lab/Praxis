@@ -1,4 +1,5 @@
 import axios from "axios";
+import { assertSelfHostedEndpoint } from "#/api/cloud-endpoint-policy";
 import {
   clearPendingLocalTelemetryRevocation,
   getTelemetryConsent,
@@ -72,6 +73,7 @@ const localAutomationAxios = axios.create();
 async function buildAutomationRequestHeaders(
   extraHeaders: Record<string, string> = {},
 ): Promise<Record<string, string>> {
+  assertSelfHostedEndpoint(getActiveBackend().backend.host);
   const telemetryDistinctId = await getTelemetryDistinctId();
   return {
     ...AGENT_CANVAS_CLIENT_HEADERS,
@@ -90,7 +92,10 @@ localAutomationAxios.interceptors.request.use(async (config) => {
 
   // Import uses an explicit baseURL/header pair so its POST, PATCH, and
   // cleanup stay pinned to the backend selected when the mutation started.
-  if (config.baseURL) return config;
+  if (config.baseURL) {
+    assertSelfHostedEndpoint(config.baseURL);
+    return config;
+  }
 
   // Resolve the local backend on every call so it tracks the
   // currently-active local backend (and any host/key edits made via the

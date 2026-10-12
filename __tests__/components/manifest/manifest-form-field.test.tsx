@@ -28,8 +28,8 @@ const LOCAL_BACKEND: Backend = {
 
 const CLOUD_BACKEND: Backend = {
   id: "cloud-1",
-  name: "OpenHands Cloud",
-  host: "https://app.all-hands.dev",
+  name: "self-hosted backend",
+  host: "https://app.praxis.example.test",
   apiKey: "bearer-token",
   kind: "cloud",
 };

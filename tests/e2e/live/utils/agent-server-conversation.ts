@@ -29,17 +29,11 @@ const llmApiKey = firstNonEmpty(
   anthropicKey,
   proxyLLMKey,
 );
-const usesProxyKey = Boolean(
-  liveLLMApiKey?.trim() ||
-  (!openAIKey?.trim() && !anthropicKey?.trim() && proxyLLMKey?.trim()),
-);
-const llmBaseUrl =
-  process.env.LIVE_E2E_LLM_BASE_URL ??
-  (usesProxyKey ? "https://llm-proxy.app.all-hands.dev" : "");
+const llmBaseUrl = process.env.LIVE_E2E_LLM_BASE_URL ?? "";
 const llmModel =
   process.env.LIVE_E2E_LLM_MODEL ??
   (llmBaseUrl
-    ? "openhands/claude-haiku-4-5-20251001"
+    ? "openai/gpt-5.6-sol"
     : openAIKey?.trim()
       ? "openai/gpt-5.4-mini"
       : "anthropic/claude-haiku-4-5-20251001");

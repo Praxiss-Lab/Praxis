@@ -70,7 +70,7 @@ describe("the command menu settings group", () => {
 
   it("keeps only Settings and Application when locked to a Cloud host", () => {
     // Arrange
-    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.all-hands.dev");
+    vi.stubEnv("VITE_LOCK_TO_CLOUD", "https://app.praxis.example.test");
 
     // Act
     const items = createCommandMenuItems({ toggleSidebar: vi.fn() });

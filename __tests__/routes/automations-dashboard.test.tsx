@@ -74,7 +74,7 @@ const localBackend: Backend = {
 const cloudBackend: Backend = {
   id: "cloud-1",
   name: "Cloud 1",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "cloud-key",
   kind: "cloud",
 };
@@ -386,7 +386,7 @@ describe("AutomationsList — created-by filter on cloud workspaces", () => {
   const cloudBackend: Backend = {
     id: "cloud-1",
     name: "Production",
-    host: "https://app.all-hands.dev",
+    host: "https://app.praxis.example.test",
     apiKey: "bearer-key",
     kind: "cloud",
   };

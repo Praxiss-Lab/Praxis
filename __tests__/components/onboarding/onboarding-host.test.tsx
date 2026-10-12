@@ -50,8 +50,8 @@ function renderHost() {
 function seedCloudBackend() {
   const backend = {
     id: "cloud-backend",
-    name: "OpenHands Cloud",
-    host: "https://app.all-hands.dev",
+    name: "self-hosted backend",
+    host: "https://app.praxis.example.test",
     apiKey: "cloud-session-key",
     kind: "cloud" as const,
   };

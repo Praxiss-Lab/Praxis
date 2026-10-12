@@ -25,8 +25,8 @@ vi.mock("#/api/cloud/proxy", () => ({
 
 const cloudBackend: Backend = {
   id: "cloud-ohe",
-  name: "OpenHands Cloud",
-  host: "https://app.all-hands.dev",
+  name: "self-hosted backend",
+  host: "https://app.praxis.example.test",
   apiKey: "cloud-key",
   kind: "cloud",
 };

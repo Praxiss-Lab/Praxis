@@ -11,7 +11,7 @@ import { getFetchCall, mockJsonResponse } from "./fetch-test-utils";
 const cloudBackend: Backend = {
   id: "prod",
   name: "Production",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "bearer-token",
   kind: "cloud",
 };
@@ -69,7 +69,7 @@ describe("SkillsService.getSkills against cloud backend", () => {
       headers: { Authorization: "Bearer bearer-token" },
     });
     expect(firstUrl).toMatch(
-      /^https:\/\/app\.all-hands\.dev\/api\/v1\/skills\/search\?/,
+      /^https:\/\/app\.praxis\.example\.test\/api\/v1\/skills\/search\?/,
     );
     expect(firstUrl).not.toContain("page_id=");
 
@@ -110,7 +110,7 @@ describe("SkillsService.getConversationSkills against cloud backend", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
     const [url, init] = getFetchCall(fetchMock, 0);
     expect(url).toBe(
-      "https://app.all-hands.dev/api/v1/app-conversations/conv-1/skills",
+      "https://app.praxis.example.test/api/v1/app-conversations/conv-1/skills",
     );
     expect(init).toMatchObject({
       method: "GET",

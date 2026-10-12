@@ -45,9 +45,9 @@ describe("useDeviceFlow", () => {
     const mockAuthResponse = {
       device_code: "device123",
       user_code: "USER-1234",
-      verification_uri: "https://app.all-hands.dev/device",
+      verification_uri: "https://app.praxis.example.test/device",
       verification_uri_complete:
-        "https://app.all-hands.dev/device?user_code=USER-1234",
+        "https://app.praxis.example.test/device?user_code=USER-1234",
       expires_in: 600,
       interval: 5,
     };
@@ -75,7 +75,7 @@ describe("useDeviceFlow", () => {
 
     // Start the flow
     act(() => {
-      result.current.start("https://app.all-hands.dev", "onboarding");
+      result.current.start("https://app.praxis.example.test", "onboarding");
     });
 
     // Should be starting
@@ -90,12 +90,12 @@ describe("useDeviceFlow", () => {
     // Now should be awaiting_authorization
     expect(result.current.status).toBe("awaiting_authorization");
     expect(result.current.verificationUrl).toBe(
-      "https://app.all-hands.dev/device?user_code=USER-1234",
+      "https://app.praxis.example.test/device?user_code=USER-1234",
     );
     expect(result.current.userCode).toBe("USER-1234");
     expect(
       cloudFunnelAnalytics.trackCloudDeviceAuthorizationStarted,
-    ).toHaveBeenCalledWith("https://app.all-hands.dev", "onboarding");
+    ).toHaveBeenCalledWith("https://app.praxis.example.test", "onboarding");
 
     // Resolve pollForToken
     await act(async () => {
@@ -108,7 +108,7 @@ describe("useDeviceFlow", () => {
     expect(result.current.apiKey).toBe("api-key-123");
     expect(
       cloudFunnelAnalytics.trackCloudDeviceAuthorizationSucceeded,
-    ).toHaveBeenCalledWith("https://app.all-hands.dev", "onboarding");
+    ).toHaveBeenCalledWith("https://app.praxis.example.test", "onboarding");
   });
 
   it("handles startDeviceFlow error", async () => {
@@ -119,7 +119,7 @@ describe("useDeviceFlow", () => {
     const { result } = renderHook(() => useDeviceFlow());
 
     act(() => {
-      result.current.start("https://app.all-hands.dev");
+      result.current.start("https://app.praxis.example.test");
     });
 
     await waitFor(() => {
@@ -136,9 +136,9 @@ describe("useDeviceFlow", () => {
     const mockAuthResponse = {
       device_code: "device123",
       user_code: "USER-1234",
-      verification_uri: "https://app.all-hands.dev/device",
+      verification_uri: "https://app.praxis.example.test/device",
       verification_uri_complete:
-        "https://app.all-hands.dev/device?user_code=USER-1234",
+        "https://app.praxis.example.test/device?user_code=USER-1234",
       expires_in: 600,
       interval: 5,
     };
@@ -153,7 +153,7 @@ describe("useDeviceFlow", () => {
     const { result } = renderHook(() => useDeviceFlow());
 
     act(() => {
-      result.current.start("https://app.all-hands.dev");
+      result.current.start("https://app.praxis.example.test");
     });
 
     await waitFor(() => {
@@ -171,9 +171,9 @@ describe("useDeviceFlow", () => {
     const mockAuthResponse = {
       device_code: "device123",
       user_code: "USER-1234",
-      verification_uri: "https://app.all-hands.dev/device",
+      verification_uri: "https://app.praxis.example.test/device",
       verification_uri_complete:
-        "https://app.all-hands.dev/device?user_code=USER-1234",
+        "https://app.praxis.example.test/device?user_code=USER-1234",
       expires_in: 600,
       interval: 5,
     };
@@ -189,7 +189,7 @@ describe("useDeviceFlow", () => {
     const { result } = renderHook(() => useDeviceFlow());
 
     act(() => {
-      result.current.start("https://app.all-hands.dev");
+      result.current.start("https://app.praxis.example.test");
     });
 
     await waitFor(() => {
@@ -208,9 +208,9 @@ describe("useDeviceFlow", () => {
     const mockAuthResponse = {
       device_code: "device123",
       user_code: "USER-1234",
-      verification_uri: "https://app.all-hands.dev/device",
+      verification_uri: "https://app.praxis.example.test/device",
       verification_uri_complete:
-        "https://app.all-hands.dev/device?user_code=USER-1234",
+        "https://app.praxis.example.test/device?user_code=USER-1234",
       expires_in: 600,
       interval: 5,
     };
@@ -230,7 +230,7 @@ describe("useDeviceFlow", () => {
     const { result } = renderHook(() => useDeviceFlow());
 
     act(() => {
-      result.current.start("https://app.all-hands.dev");
+      result.current.start("https://app.praxis.example.test");
     });
 
     await waitFor(() => {
@@ -249,9 +249,9 @@ describe("useDeviceFlow", () => {
     const mockAuthResponse = {
       device_code: "device123",
       user_code: "USER-1234",
-      verification_uri: "https://app.all-hands.dev/device",
+      verification_uri: "https://app.praxis.example.test/device",
       verification_uri_complete:
-        "https://app.all-hands.dev/device?user_code=USER-1234",
+        "https://app.praxis.example.test/device?user_code=USER-1234",
       expires_in: 600,
       interval: 5,
     };
@@ -267,7 +267,7 @@ describe("useDeviceFlow", () => {
 
     // Start first flow
     act(() => {
-      result.current.start("https://app.all-hands.dev");
+      result.current.start("https://app.praxis.example.test");
     });
 
     await waitFor(() => {
@@ -276,7 +276,7 @@ describe("useDeviceFlow", () => {
 
     // Start second flow (should cancel first)
     act(() => {
-      result.current.start("https://staging.all-hands.dev");
+      result.current.start("https://staging.praxis.example.test");
     });
 
     // Should be starting again (first flow cancelled)
@@ -287,9 +287,9 @@ describe("useDeviceFlow", () => {
     const mockAuthResponse = {
       device_code: "device123",
       user_code: "USER-1234",
-      verification_uri: "https://app.all-hands.dev/device",
+      verification_uri: "https://app.praxis.example.test/device",
       verification_uri_complete:
-        "https://app.all-hands.dev/device?user_code=USER-1234",
+        "https://app.praxis.example.test/device?user_code=USER-1234",
       expires_in: 600,
       interval: 5,
     };
@@ -305,7 +305,7 @@ describe("useDeviceFlow", () => {
     const { result, unmount } = renderHook(() => useDeviceFlow());
 
     act(() => {
-      result.current.start("https://app.all-hands.dev");
+      result.current.start("https://app.praxis.example.test");
     });
 
     await waitFor(() => {

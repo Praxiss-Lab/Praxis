@@ -27,7 +27,7 @@ vi.mock("#/api/cloud/settings-service.api", () => ({
 const cloudBackend: Backend = {
   id: "prod",
   name: "Production",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "bearer-token",
   kind: "cloud",
 };
@@ -578,7 +578,7 @@ describe("SettingsService", () => {
       agent_settings: {
         mcp_config: {
           integrations_hub: {
-            url: "https://integrations.staging.all-hands.dev/api/mcp",
+            url: "https://integrations.staging.praxis.example.test/api/mcp",
             headers: { Authorization: "**********" },
           },
         },
@@ -589,7 +589,7 @@ describe("SettingsService", () => {
       agent_settings_diff: {
         mcp_config: {
           integrations_hub: {
-            url: "https://integrations.staging.all-hands.dev/api/mcp",
+            url: "https://integrations.staging.praxis.example.test/api/mcp",
             auth: { strategy: "bearer", value: "new-key" },
           },
         },
@@ -601,7 +601,7 @@ describe("SettingsService", () => {
       agent_settings_diff: {
         mcp_config: {
           integrations_hub: {
-            url: "https://integrations.staging.all-hands.dev/api/mcp",
+            url: "https://integrations.staging.praxis.example.test/api/mcp",
             headers: { Authorization: "Bearer new-key" },
           },
         },

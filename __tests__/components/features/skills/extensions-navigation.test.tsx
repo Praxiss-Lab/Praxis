@@ -24,8 +24,8 @@ vi.mock("react-i18next", async (importOriginal) => ({
 
 const cloudBackend: Backend = {
   id: "cloud-1",
-  name: "OpenHands Cloud",
-  host: "https://app.all-hands.dev",
+  name: "self-hosted backend",
+  host: "https://app.praxis.example.test",
   apiKey: "token",
   kind: "cloud",
 };
@@ -136,7 +136,7 @@ describe("ExtensionsNavigation", () => {
       expect(skillsItem.tagName).toBe("A");
       expect(skillsItem).toHaveAttribute(
         "href",
-        "https://app.all-hands.dev/settings/skills",
+        "https://app.praxis.example.test/settings/skills",
       );
       expect(skillsItem).toHaveAttribute("target", "_blank");
       expect(skillsItem).toHaveAttribute("rel", "noopener noreferrer");

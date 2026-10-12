@@ -12,8 +12,8 @@ const REQUIRED_LLM_API_KEY_ENV_VARS = [
   "ANTHROPIC_API_KEY",
   "LLM_API_KEY",
 ];
-const DEFAULT_PROXY_BASE_URL = "https://llm-proxy.app.all-hands.dev";
-const DEFAULT_PROXY_MODEL = "openhands/claude-haiku-4-5-20251001";
+const DEFAULT_PROXY_BASE_URL = "(unset)";
+const DEFAULT_PROXY_MODEL = "openai/gpt-5.6-sol";
 const DEFAULT_OPENAI_MODEL = "openai/gpt-5.4-mini";
 const DEFAULT_ANTHROPIC_MODEL = "anthropic/claude-haiku-4-5-20251001";
 const DEFAULT_BACKEND_URL = "http://127.0.0.1:18100";
@@ -175,8 +175,14 @@ function validateEnvironment() {
       [
         "Missing LLM credential.",
         `Set one of: ${REQUIRED_LLM_API_KEY_ENV_VARS.join(", ")}.`,
-        "For the hosted LLM proxy, use LIVE_E2E_LLM_API_KEY or LLM_API_KEY.",
+        "For a self-hosted proxy, configure LIVE_E2E_LLM_MODEL and LIVE_E2E_LLM_BASE_URL.",
       ].join(" "),
+    );
+  }
+
+  if (usesProxyDefaults(apiKeySource) && !hasValue("LIVE_E2E_LLM_MODEL")) {
+    errors.push(
+      "Set LIVE_E2E_LLM_MODEL explicitly when using a generic LLM key.",
     );
   }
 

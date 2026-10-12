@@ -28,8 +28,8 @@ const wrapper = ({ children }: { children: React.ReactNode }) => {
 
 const cloudBackend: Backend = {
   id: "cloud-ohe",
-  name: "OpenHands Cloud",
-  host: "https://app.all-hands.dev",
+  name: "self-hosted backend",
+  host: "https://app.praxis.example.test",
   apiKey: "cloud-key",
   kind: "cloud",
 };
@@ -82,7 +82,7 @@ describe("useSearchProviders — cloud backend pagination", () => {
 
   it("follows next_page_id until exhaustion on the cloud backend so providers past the default page size still appear", async () => {
     // Arrange: cloud service paginates by default — page 1 holds 100 entries
-    // (the live app.all-hands.dev screenshot showed only the fuzzy match for
+    // (the live app.praxis.example.test screenshot showed only the fuzzy match for
     // "xai" because the real xAI entry sorted past the cut). Page 2 carries
     // the rest, including "xai" and "openrouter".
     const allProviders = [

@@ -10,7 +10,7 @@ import type { Backend } from "#/api/backend-registry/types";
 const cloudPersonal: Backend = {
   id: "cloud-personal",
   name: "Production - Personal",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "personal-key",
   kind: "cloud",
 };
@@ -18,7 +18,7 @@ const cloudPersonal: Backend = {
 const cloudAcme: Backend = {
   id: "cloud-acme",
   name: "Production - Acme",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "acme-key",
   kind: "cloud",
 };
@@ -26,7 +26,7 @@ const cloudAcme: Backend = {
 const cookieCloud: Backend = {
   id: "cloud-cookie",
   name: "Production - Cookie",
-  host: "https://app.all-hands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "",
   kind: "cloud",
   authMode: "cookie",
@@ -141,7 +141,7 @@ describe("callCloudProxy cookie auth", () => {
       backend: cookieCloud,
       method: "GET",
       path: "/api/bash/bash_events/search",
-      hostOverride: "https://abc123.prod-runtime.all-hands.dev",
+      hostOverride: "https://abc123.runtime.praxis.example.test",
     });
 
     const [, init] = fetchMock.mock.calls[0]!;
@@ -209,7 +209,7 @@ describe("callCloudProxy automation direct routing", () => {
 });
 
 describe("callCloudProxy hostOverride routing", () => {
-  const runtimeHost = "https://abc123.prod-runtime.all-hands.dev";
+  const runtimeHost = "https://abc123.runtime.praxis.example.test";
 
   it("routes through the local /api/cloud-proxy instead of the upstream host when hostOverride is set", async () => {
     // Arrange — runtime-sandbox endpoints need the proxy hop because the

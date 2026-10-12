@@ -416,7 +416,7 @@ describe("handleLaunchChildConversationAction", () => {
     const cloudBackend = {
       id: "cloud-1",
       kind: "cloud" as const,
-      host: "https://app.all-hands.dev",
+      host: "https://app.praxis.example.test",
       apiKey: "secret",
       name: "Cloud",
     };
@@ -532,7 +532,7 @@ describe("handleLaunchChildConversationAction", () => {
         status: "launched",
         target: "cloud",
         conversation_id: "cloud-child-id",
-        url: "https://app.all-hands.dev/canvas/conversations/cloud-child-id",
+        url: "https://app.praxis.example.test/canvas/conversations/cloud-child-id",
         initial_status: "READY",
         parent_link: false,
       });

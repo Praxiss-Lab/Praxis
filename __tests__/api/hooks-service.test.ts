@@ -31,7 +31,7 @@ const localBackend: Backend = {
 const cloudBackend: Backend = {
   id: "cloud",
   name: "Cloud",
-  host: "https://openhands.dev",
+  host: "https://app.praxis.example.test",
   apiKey: "cloud-key",
   kind: "cloud",
 };
