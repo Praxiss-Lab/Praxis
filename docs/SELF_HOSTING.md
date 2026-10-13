@@ -5,7 +5,7 @@ remote browser access. First install the [Praxis release archive](../README.md#i
 Docker deployment examples are in [distribution and launch modes](distribution/README.md).
 
 > [!WARNING]
-> Agent Canvas drives an agent that can read and write the filesystem of the
+> Praxis drives an agent that can read and write the filesystem of the
 > machine it runs on, execute shell commands, and reach the network. Anyone who
 > can talk to the agent server can do the same. **Treat the VM as you would any
 > machine that holds production credentials**, and lock it down before exposing
@@ -17,7 +17,7 @@ Docker deployment examples are in [distribution and launch modes](distribution/R
 2. **Secure the machine** — lock down the network firewall
 3. **Install and run Praxis** — install its release archive, generate a key with `openssl rand -base64 32`, then `export LOCAL_BACKEND_API_KEY=<key>` and `agent-canvas --public`
 4. **(Optional) Get a domain** — point a domain at the machine with nginx + Let's Encrypt for TLS
-5. **(Optional) Connect locally** — add the remote as a backend in your local Agent Canvas
+5. **(Optional) Connect locally** — add the remote as a backend in your local Praxis
 
 ## Details
 
@@ -101,7 +101,7 @@ in step 4.
 > (`/vscode` by default), so it does not provide the App bridge's origin
 > isolation. Tracked in [#16492](https://github.com/Praxiss-Lab/Praxis/issues/16492).
 
-## 3. Run Agent Canvas
+## 3. Run Praxis
 
 Install the prerequisites on the machine. On Ubuntu:
 
@@ -149,7 +149,7 @@ Create `/etc/systemd/system/agent-canvas.service`:
 
 ```ini
 [Unit]
-Description=Agent Canvas
+Description=Praxis
 After=network.target
 
 [Service]
@@ -276,14 +276,14 @@ If you see `502 Bad Gateway`, the app on `127.0.0.1:8000` is down — check
 whether the `npx` process is still running.
 
 Open `https://canvas.example.com/` in a browser, enter your
-`LOCAL_BACKEND_API_KEY`, and confirm that you land in Agent Canvas.
+`LOCAL_BACKEND_API_KEY`, and confirm that you land in Praxis.
 
-## 5. (Optional) Connect your local Agent Canvas to the remote machine
+## 5. (Optional) Connect your local Praxis to the remote machine
 
-If you already run Agent Canvas locally, you can register the remote machine
+If you already run Praxis locally, you can register the remote machine
 as an additional backend and switch between local and remote from the UI.
 
-1. In your local Agent Canvas, open **Manage backends** → **Add a backend**:
+1. In your local Praxis, open **Manage backends** → **Add a backend**:
    - **Host Name** — anything memorable, e.g. `my-vm`.
    - **Host** — the URL from step 4, e.g. `https://canvas.example.com`.
      If using an SSH tunnel instead, use `http://localhost:8000`.

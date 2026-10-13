@@ -11,6 +11,14 @@ from pathlib import Path
 
 
 _LINK = re.compile(r"(\]\()([^)\s]+)(\))")
+_ALERT = re.compile(r"^>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*$")
+_ADMONITION = {
+    "NOTE": "note",
+    "TIP": "tip",
+    "IMPORTANT": "info",
+    "WARNING": "warning",
+    "CAUTION": "danger",
+}
 _EXTERNAL = ("http://", "https://", "mailto:", "#", "/")
 
 
@@ -33,6 +41,26 @@ def _rewrite(
     return f"{base}/{kind}/main/{repo_path}{sep}{fragment}"
 
 
+def _convert_alerts(markdown: str) -> str:
+    """Render GitHub ``> [!WARNING]`` alerts as Material admonitions."""
+    out, lines, i = [], markdown.split("\n"), 0
+    while i < len(lines):
+        match = _ALERT.match(lines[i])
+        if not match:
+            out.append(lines[i])
+            i += 1
+            continue
+        out.append(f"!!! {_ADMONITION[match.group(1)]}")
+        out.append("")
+        i += 1
+        while i < len(lines) and lines[i].startswith(">"):
+            body = lines[i][1:]
+            out.append("    " + body[1:] if body.startswith(" ") else "    " + body)
+            i += 1
+        out.append("")
+    return "\n".join(out)
+
+
 def on_page_markdown(markdown, page, config, **_kwargs):
     docs_dir = Path(config["docs_dir"])
     repo_root = docs_dir.parent
@@ -47,7 +75,7 @@ def on_page_markdown(markdown, page, config, **_kwargs):
         )
 
     out, in_fence = [], False
-    for line in markdown.splitlines(keepends=True):
+    for line in _convert_alerts(markdown).splitlines(keepends=True):
         if line.lstrip().startswith(("```", "~~~")):
             in_fence = not in_fence
         out.append(line if in_fence else _LINK.sub(replace, line))

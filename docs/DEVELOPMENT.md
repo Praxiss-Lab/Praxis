@@ -12,11 +12,11 @@ Docker.
 
 ## Repository boundaries
 
-This repository contains the Agent Canvas frontend and local-stack orchestration. Use the sibling repositories for their owned layers:
+This repository contains the Praxis frontend and local-stack orchestration. Use the sibling repositories for their owned layers:
 
 - [`Praxiss-Lab/praxis-sdk`](https://github.com/Praxiss-Lab/praxis-sdk) owns the Python SDK, Agent Server, agent/tool behavior, conversations, workspaces, events, and server API.
-- [`software-agent-sdk/clients/typescript`](https://github.com/Praxiss-Lab/praxis-sdk/tree/main/clients/typescript) owns browser-compatible typed access to that Agent Server API. Add client methods there rather than reimplementing API calls in Canvas.
-- [`Praxis/vendor`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor) owns reusable skills, plugins, automations, and integrations; [`Praxis/vendor/automation`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor/automation) owns automation definitions, scheduling, webhooks, run history, and dispatching; Agent Server/SDK code executes the dispatched conversations.
+- [`praxis-sdk/clients/typescript`](https://github.com/Praxiss-Lab/praxis-sdk/tree/main/clients/typescript) owns browser-compatible typed access to that Agent Server API. Add client methods there rather than reimplementing API calls in Canvas.
+- [`Praxis/vendor`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor) owns reusable skills, plugins, automations, and integrations; [`praxis/vendor/automation`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor/automation) owns automation definitions, scheduling, webhooks, run history, and dispatching; Agent Server/SDK code executes the dispatched conversations.
 
 When a feature crosses repositories, implement the backend contract in the SDK first, expose it through `typescript-client`, and consume it in Canvas. Coordinate automation lifecycle changes in `automation`. Version pins, local-stack overrides, and PR ordering are in [Cross-repository version compatibility](#cross-repository-version-compatibility). See the repository [contributor notes](../AGENTS.md) and follow the [custom code-review guide](../.agents/skills/custom-codereview-guide.md) for every pull request.
 
@@ -43,8 +43,8 @@ conversation persistence by setting separate `OH_CONVERSATIONS_PATH` and
 is disabled by default; prefer installing the VS Code Canvas App. Set
 `OH_CANVAS_ENABLE_VSCODE=true` only when testing legacy compatibility. The stack
 keeps its tmux sockets under `~/.openhands/agent-canvas/tmux` (via
-`TMUX_TMPDIR`), so it does not collide with other local or cloud-backed
-OpenHands sessions. If `$HOME` is on a filesystem that does not support Unix
+`TMUX_TMPDIR`), so it does not collide with other local tmux-based
+agent sessions. If `$HOME` is on a filesystem that does not support Unix
 domain sockets (some devcontainers, NFS/CIFS homes), set the standard
 `TMUX_TMPDIR` env var to a local path such as `/tmp` and the dev stack will use
 it instead.
@@ -82,10 +82,10 @@ unsupported and often looks like a product bug.
 
 Owning repositories:
 
-- [`OpenHands/OpenHands`](https://github.com/Praxiss-Lab/Praxis) (this repo) — Agent Canvas
+- [`Praxiss-Lab/praxis`](https://github.com/Praxiss-Lab/praxis) (this repo) — Praxis frontend and local stack
 - [`Praxiss-Lab/praxis-sdk`](https://github.com/Praxiss-Lab/praxis-sdk) — Python SDK and Agent Server
-- [`software-agent-sdk/clients/typescript`](https://github.com/Praxiss-Lab/praxis-sdk/tree/main/clients/typescript) — `@praxiss-lab/praxis-sdk-client`
-- [`Praxis/vendor/automation`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor/automation) — scheduling, webhooks, run history
+- [`praxis-sdk/clients/typescript`](https://github.com/Praxiss-Lab/praxis-sdk/tree/main/clients/typescript) — `@praxiss-lab/praxis-sdk-client`
+- [`praxis/vendor/automation`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor/automation) — scheduling, webhooks, run history
 - [`Praxis/vendor`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor) — `@praxiss-lab/praxis-extensions` skills and integrations
 
 #### Source of truth
@@ -202,7 +202,7 @@ bump the Canvas pin after the package exists on the registry.
 #### Breaking contract sequencing
 
 Usual direction: Agent Server / SDK → OpenAPI contract → `typescript-client` →
-Agent Canvas. Automation scheduling flows Canvas → `automation` → Agent
+Praxis. Automation scheduling flows Canvas → `automation` → Agent
 Server / SDK.
 
 REST deprecation and the removal runway are owned by
@@ -397,7 +397,7 @@ for you.
 
 ## CSS isolation and host-app customization
 
-The standalone app and the exported provider/root wrapper now scope all bundled CSS under a dedicated shell element with the `data-agent-server-ui` attribute. That means Tailwind utilities, HeroUI component styles, xterm styles, and local CSS only apply inside the OpenHands UI subtree instead of leaking into a host app.
+The standalone app and the exported provider/root wrapper now scope all bundled CSS under a dedicated shell element with the `data-agent-server-ui` attribute. That means Tailwind utilities, HeroUI component styles, xterm styles, and local CSS only apply inside the Praxis UI subtree instead of leaking into a host app.
 
 ### Embedding strategy
 
