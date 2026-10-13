@@ -1,0 +1,109 @@
+---
+site_name: Praxis
+site_description: A workspace for agent-assisted software development, running on infrastructure you control.
+site_url: https://praxiss-lab.github.io/praxis/
+site_author: Praxiss-Lab
+repo_url: https://github.com/Praxiss-Lab/praxis
+repo_name: Praxiss-Lab/praxis
+edit_uri: edit/documentation/docs/
+copyright: Maintained by Praxiss-Lab · See LICENSE and NOTICE for attribution
+
+docs_dir: docs
+hooks:
+    - scripts/docs_hooks.py
+
+theme:
+    name: material
+    logo: assets/brand/praxis-icon-white.svg
+    favicon: assets/brand/praxis-app-icon-light.png
+    font:
+        text: Inter
+        code: JetBrains Mono
+    palette:
+        - media: '(prefers-color-scheme: light)'
+          scheme: default
+          toggle:
+              icon: material/weather-night
+              name: Switch to dark mode
+        - media: '(prefers-color-scheme: dark)'
+          scheme: slate
+          toggle:
+              icon: material/weather-sunny
+              name: Switch to light mode
+    features:
+        - navigation.tabs
+        - navigation.sections
+        - navigation.top
+        - navigation.footer
+        - navigation.indexes
+        - search.suggest
+        - search.highlight
+        - content.code.copy
+        - content.action.edit
+
+extra_css:
+    - stylesheets/praxis.css
+
+extra:
+    generator: false
+    social:
+        - icon: fontawesome/brands/github
+          link: https://github.com/Praxiss-Lab/praxis
+        - icon: material/application-outline
+          link: https://praxiss-lab.github.io/praxis-sdk/
+          name: Praxis SDK documentation
+
+markdown_extensions:
+    - admonition
+    - attr_list
+    - md_in_html
+    - tables
+    - toc:
+          permalink: true
+    - pymdownx.details
+    - pymdownx.highlight:
+          anchor_linenums: true
+    - pymdownx.inlinehilite
+    - pymdownx.superfences:
+          custom_fences:
+              - name: mermaid
+                class: mermaid
+                format: !!python/name:pymdownx.superfences.fence_code_format
+    - pymdownx.tabbed:
+          alternate_style: true
+    - pymdownx.emoji:
+          emoji_index: !!python/name:material.extensions.emoji.twemoji
+          emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+exclude_docs: |
+  /README.md
+
+nav:
+  - Home: index.md
+  - Get started:
+      - Installation: getting-started.md
+      - User guide: USER_GUIDE.md
+      - Distribution and launch modes: distribution/README.md
+      - Self-hosting: SELF_HOSTING.md
+  - Concepts:
+      - Architecture: architecture.md
+      - ACP agents: ACP_AGENTS.md
+      - Cloud isolation: CLOUD_ISOLATION.md
+      - SDK independence: SDK_INDEPENDENCE.md
+      - Telemetry: TELEMETRY.md
+      - DefenseClaw: DefenseClaw.md
+  - Develop:
+      - Development: DEVELOPMENT.md
+      - Contributor agents: AGENT_OPERATIONS.md
+      - Testing matrix: TESTING_MATRIX.md
+      - Canvas extensions testing: CANVAS_EXTENSIONS_TESTING.md
+      - Visual identity: BRAND.md
+  - Maintain:
+      - Workflow responsibilities: policies/WORKFLOWS.md
+      - Release policy: policies/RELEASE.md
+      - Versioning: policies/VERSIONING.md
+      - Issue triage: policies/ISSUES.md
+      - Repository cutover: REPOSITORY_CUTOVER.md
+      - Upstream review: upstream/README.md
+      - Upstream baseline: upstream/BASELINE.md
+      - Upstream sync log: upstream/SYNC_LOG.md
