@@ -151,7 +151,7 @@ When adding code that needs a new string, decide up front which rule it falls un
 
 ## Praxis UI and review ownership
 
-Use `https://praxiss-lab.github.io/praxis/BRAND/` for approved assets/palette; this guidance does not claim that
+Use `https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/BRAND.md` for approved assets/palette; this guidance does not claim that
 the dashboard theme has already been migrated. UI/state/integration changes belong
 to Praxis. Review submission needs an explicit task; inspecting code alone does
 not authorize posting a GitHub review. Preserve the existing technical invariants

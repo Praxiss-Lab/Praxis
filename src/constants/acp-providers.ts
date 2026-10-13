@@ -277,7 +277,7 @@ const ACP_RESERVED_CREDENTIALS: Record<string, ACPProviderSecretField[]> = {
  *   - ``ANTHROPIC_API_KEY``  — otherwise it takes precedence and silently
  *     bypasses the subscription;
  *   - ``ANTHROPIC_BASE_URL`` — otherwise it proxies the bearer to an endpoint
- *     that rejects it (see https://praxiss-lab.github.io/praxis/ACP_AGENTS/).
+ *     that rejects it (see https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/ACP_AGENTS.md).
  * Either one set alongside the token is silently ignored at runtime, so warn.
  */
 const ACP_CREDENTIAL_CONFLICTS: Record<string, Array<[string, string]>> = {

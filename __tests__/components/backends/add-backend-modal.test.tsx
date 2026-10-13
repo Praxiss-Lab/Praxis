@@ -135,7 +135,7 @@ describe("AddBackendModal – connection chooser", () => {
       screen.getByTestId("add-backend-deployment-options-link"),
     ).toHaveAttribute(
       "href",
-      "https://praxiss-lab.github.io/praxis/SDK_INDEPENDENCE/",
+      "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/SDK_INDEPENDENCE.md",
     );
     // Short inline link so the description reads as one flowing sentence.
     expect(
@@ -198,7 +198,7 @@ describe("AddBackendModal – connection chooser", () => {
     expect(screen.getByTestId("add-backend-local-docs-link")).toHaveAttribute(
       "href",
       expect.stringContaining(
-        "https://praxiss-lab.github.io/praxis/DEVELOPMENT/",
+        "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/DEVELOPMENT.md",
       ),
     );
     expect(screen.getByTestId("add-backend-name")).toBeInTheDocument();
@@ -319,7 +319,7 @@ describe("AddBackendModal – connection chooser", () => {
     expect(screen.getByTestId("add-backend-remote-docs-link")).toHaveAttribute(
       "href",
       expect.stringContaining(
-        "https://praxiss-lab.github.io/praxis/SELF_HOSTING/",
+        "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/SELF_HOSTING.md",
       ),
     );
 

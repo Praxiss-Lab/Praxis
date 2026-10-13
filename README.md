@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://praxiss-lab.github.io/praxis/assets/brand/praxis-primary-white.png">
-    <img src="https://praxiss-lab.github.io/praxis/assets/brand/praxis-primary.png" alt="Praxis" width="420">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Praxiss-Lab/praxis/documentation/docs/assets/brand/praxis-primary-white.png">
+    <img src="https://raw.githubusercontent.com/Praxiss-Lab/praxis/documentation/docs/assets/brand/praxis-primary.png" alt="Praxis" width="420">
   </picture>
 </p>
 
@@ -11,7 +11,7 @@ Praxis is a workspace for agent-assisted software development. Use its Canvas to
 
 Run everything on your computer, put the backend on a VM, or connect the same frontend to several independent backends. **Your VM is your personal cloud.** Each backend keeps its own workspaces, conversations, settings and credentials; switching backends does not synchronize their data.
 
-![Praxis: one frontend, a local backend and independent personal clouds](https://praxiss-lab.github.io/praxis/assets/praxis-architecture.svg)
+![Praxis: one frontend, a local backend and independent personal clouds](https://raw.githubusercontent.com/Praxiss-Lab/praxis/documentation/docs/assets/praxis-architecture.svg)
 
 ## Choose how to run Praxis
 
@@ -19,8 +19,8 @@ Run everything on your computer, put the backend on a VM, or connect the same fr
 | ----------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
 | Native                        | Directly on Linux/macOS, or inside WSL 2                     | [Source quickstart](#quickstart-from-source) or [release archive](#install-a-published-release-without-docker) |
 | Complete container            | Frontend and backend on one machine                          | [Docker quickstart](#docker-quickstart)                                                                        |
-| Separate frontend and backend | Separate processes or containers, on one or several machines | [Distribution guide](https://praxiss-lab.github.io/praxis/distribution/)                                                              |
-| Personal cloud                | Backend on your VM; frontend wherever you use Praxis         | [Personal clouds](#personal-clouds) and [self-hosting](https://praxiss-lab.github.io/praxis/SELF_HOSTING/)                                   |
+| Separate frontend and backend | Separate processes or containers, on one or several machines | [Distribution guide](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/distribution/README.md)                                                              |
+| Personal cloud                | Backend on your VM; frontend wherever you use Praxis         | [Personal clouds](#personal-clouds) and [self-hosting](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/SELF_HOSTING.md)                                   |
 
 ## Quickstart from source
 
@@ -42,7 +42,7 @@ npm run build
 npm run dev:static
 ```
 
-See the [development guide](https://praxiss-lab.github.io/praxis/DEVELOPMENT/) for mock mode, tests and builds.
+See the [development guide](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/DEVELOPMENT.md) for mock mode, tests and builds.
 
 ## Install a published release without Docker
 
@@ -79,7 +79,7 @@ Open [http://localhost:8000/canvas/](http://localhost:8000/canvas/). The mounted
 
 The image supports Linux `amd64` and `arm64`; Docker selects the matching platform. Docker Desktop runs these Linux containers on Windows and macOS. [PowerShell instructions](README.windows.md) are available separately.
 
-This quickstart publishes only on loopback and allows local session-key injection. For remote access, use explicit authentication and the network setup in the [self-hosting guide](https://praxiss-lab.github.io/praxis/SELF_HOSTING/). The generated Docker key can be read with:
+This quickstart publishes only on loopback and allows local session-key injection. For remote access, use explicit authentication and the network setup in the [self-hosting guide](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/SELF_HOSTING.md). The generated Docker key can be read with:
 
 ```sh
 docker exec praxis cat /home/openhands/.openhands/agent-canvas/api-key.txt
@@ -95,7 +95,7 @@ docker exec praxis cat /home/openhands/.openhands/agent-canvas/api-key.txt
 
 All container modes use **one versioned image**. The mode selects the services to start; it does not reduce the downloaded image. Frontend and backend can run in separate containers, including on different devices.
 
-From source, use `npm run dev -- --backend-only` or `npm run dev -- --frontend-only`. Choose separate ports if both processes run on one machine. The [distribution guide](https://praxiss-lab.github.io/praxis/distribution/) provides Compose and remote-backend examples.
+From source, use `npm run dev -- --backend-only` or `npm run dev -- --frontend-only`. Choose separate ports if both processes run on one machine. The [distribution guide](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/distribution/README.md) provides Compose and remote-backend examples.
 
 ## Personal clouds
 
@@ -113,25 +113,25 @@ With Docker available on the host, an installed native launcher can use per-conv
 OH_CONVERSATION_RUNTIME=docker agent-canvas
 ```
 
-This isolates conversation execution while the frontend and Automation remain on the host. On Windows, run this mode inside WSL 2 with Docker integration enabled. See [self-hosting](https://praxiss-lab.github.io/praxis/SELF_HOSTING/) for runtime and workspace details.
+This isolates conversation execution while the frontend and Automation remain on the host. On Windows, run this mode inside WSL 2 with Docker integration enabled. See [self-hosting](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/SELF_HOSTING.md) for runtime and workspace details.
 
 ## Telemetry configuration
 
 Praxis uses the owner's EU PostHog project configured in `config/defaults.json`.
 Development and release builds share these settings; see
-[telemetry configuration and maintenance](https://praxiss-lab.github.io/praxis/TELEMETRY/).
+[telemetry configuration and maintenance](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/TELEMETRY.md).
 Software logs are independent.
 
 ## Documentation
 
-- [Documentation index](https://praxiss-lab.github.io/praxis/)
-- [Architecture](https://praxiss-lab.github.io/praxis/architecture/)
-- [Distribution and launch modes](https://praxiss-lab.github.io/praxis/distribution/)
-- [ACP agents](https://praxiss-lab.github.io/praxis/ACP_AGENTS/)
-- [Release policy](https://praxiss-lab.github.io/praxis/policies/RELEASE/) and [versioning](https://praxiss-lab.github.io/praxis/policies/VERSIONING/)
+- [Documentation index](https://github.com/Praxiss-Lab/praxis/tree/documentation)
+- [Architecture](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/architecture.md)
+- [Distribution and launch modes](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/distribution/README.md)
+- [ACP agents](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/ACP_AGENTS.md)
+- [Release policy](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/policies/RELEASE.md) and [versioning](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/policies/VERSIONING.md)
 
 Licensing and attribution are recorded in [LICENSE](LICENSE) and [NOTICE](NOTICE).
 
 ## Controlled SDK source
 
-Praxis uses [Praxis SDK](https://github.com/Praxiss-Lab/praxis-sdk) at a frozen commit, with bundled Automation and local client/extensions archives. See [SDK independence](https://praxiss-lab.github.io/praxis/SDK_INDEPENDENCE/) for private Git authentication, CI access and deployment requirements.
+Praxis uses [Praxis SDK](https://github.com/Praxiss-Lab/praxis-sdk) at a frozen commit, with bundled Automation and local client/extensions archives. See [SDK independence](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/SDK_INDEPENDENCE.md) for private Git authentication, CI access and deployment requirements.

@@ -7,7 +7,7 @@ import { PRODUCT_URL } from "#/utils/constants";
 /** Configured deployment integrations, or deployment guidance before setup. */
 export const OPENHANDS_CLOUD_INTEGRATIONS_URL = PRODUCT_URL.PRODUCTION
   ? `${PRODUCT_URL.PRODUCTION}/settings/integrations`
-  : "https://praxiss-lab.github.io/praxis/SDK_INDEPENDENCE/";
+  : "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/SDK_INDEPENDENCE.md";
 
 /**
  * Single source of truth for "does this automation get the deployment-choice

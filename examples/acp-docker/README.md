@@ -22,7 +22,7 @@ In a second shell, from the repository root:
 VITE_BACKEND_BASE_URL=http://localhost:8010 npm run dev:frontend
 ```
 
-Alternatively, add `http://localhost:8010` as an Agent Server backend in the backend selector. The example permits localhost browser origins. See [ACP agents](https://praxiss-lab.github.io/praxis/ACP_AGENTS/#running-acp-agents-in-a-docker-container) for the complete walkthrough.
+Alternatively, add `http://localhost:8010` as an Agent Server backend in the backend selector. The example permits localhost browser origins. See [ACP agents](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/ACP_AGENTS.md#running-acp-agents-in-a-docker-container) for the complete walkthrough.
 
 ## Supply credentials
 

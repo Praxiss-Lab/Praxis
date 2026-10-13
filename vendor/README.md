@@ -4,7 +4,7 @@
 - `praxis-typescript-client-1.54.0.tgz`: built from the Praxis SDK migration source. Technical npm package name retained for compatibility.
 - `praxis-extensions-0.29.0.tgz`: controlled snapshot of extensions 0.29.0, with ownership metadata updated. Original licenses and notices are preserved.
 
-These archives are installed locally rather than resolved from OpenHands package releases. Rebuild the client when changing the SDK and update the lockfile. See `https://praxiss-lab.github.io/praxis/SDK_INDEPENDENCE/`.
+These archives are installed locally rather than resolved from OpenHands package releases. Rebuild the client when changing the SDK and update the lockfile. See `https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/SDK_INDEPENDENCE.md`.
 
 Client build source: `Praxiss-Lab/praxis-sdk@a8903a40374bea313c44f0256db69bbe5f7b7058`.
 

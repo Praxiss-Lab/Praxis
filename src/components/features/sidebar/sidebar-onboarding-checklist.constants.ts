@@ -5,7 +5,7 @@ import type {
 } from "#/hooks/use-tracking";
 
 const SCHEDULED_TASKS_DOCS_URL =
-  "https://praxiss-lab.github.io/praxis/USER_GUIDE/";
+  "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/USER_GUIDE.md";
 
 /** Praxis support and community entry point. */
 export const OPENHANDS_SLACK_COMMUNITY_URL =
@@ -135,12 +135,17 @@ export const SIDEBAR_ONBOARDING_CHECKLIST_DOCS_URLS: Record<
   SidebarOnboardingChecklistItemId,
   string
 > = {
-  "configure-llm": "https://praxiss-lab.github.io/praxis/USER_GUIDE/",
-  "start-conversation": "https://praxiss-lab.github.io/praxis/USER_GUIDE/",
+  "configure-llm":
+    "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/USER_GUIDE.md",
+  "start-conversation":
+    "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/USER_GUIDE.md",
   "schedule-task": SCHEDULED_TASKS_DOCS_URL,
-  "customize-agent": "https://praxiss-lab.github.io/praxis/USER_GUIDE/",
-  "connect-mcp": "https://praxiss-lab.github.io/praxis/USER_GUIDE/",
-  "join-slack": "https://praxiss-lab.github.io/praxis/USER_GUIDE/",
+  "customize-agent":
+    "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/USER_GUIDE.md",
+  "connect-mcp":
+    "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/USER_GUIDE.md",
+  "join-slack":
+    "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/USER_GUIDE.md",
 };
 
 export function isCustomizeChecklistPath(path: string): boolean {

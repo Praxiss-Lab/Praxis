@@ -78,14 +78,14 @@ Dependabot monitors the configured npm and Actions ecosystems, not arbitrary
 Python pins in `config/defaults.json`; inspect its groups when adding a dependency.
 Keep runtime versions centralized and verify SDK/server/Automation compatibility.
 
-Use [the upstream procedure](https://praxiss-lab.github.io/praxis/upstream/): fetch, freeze a target,
+Use [the upstream procedure](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/upstream/README.md): fetch, freeze a target,
 prepare an integration branch, record ACCEPT/PARTIAL/REJECT/DEFER decisions, run
 applicable checks, and obtain the maintainer's integration decision. No automatic
 merge into `main`; update the review checkpoint only after completing the interval.
 
 `PRAXIS_VERSION` is the product version. Keep its package/lock/config surfaces
 aligned; Agent Server and Automation versions are independent. Follow
-[release policy](https://praxiss-lab.github.io/praxis/policies/RELEASE/) and the release skill. Ordinary pushes
+[release policy](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/policies/RELEASE.md) and the release skill. Ordinary pushes
 and upstream updates do not authorize publication. The GHCR image is published under the organization at
 `ghcr.io/praxiss-lab/praxis`.
 
@@ -99,7 +99,7 @@ Docs-only changes need link/consistency checks, not live credentials or new test
 
 Core checks are `npm run typecheck`, `npm run lint`, `npm test`, `npm run build`
 and `npm run build:lib`; run the applicable checks for the affected boundary.
-Use [workflow responsibilities](https://praxiss-lab.github.io/praxis/policies/WORKFLOWS/) and the E2E skill to
+Use [workflow responsibilities](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/policies/WORKFLOWS.md) and the E2E skill to
 select additional checks. Live LLM tests require an authorized real-model run;
 mock suites, builds and registry inspection are different evidence.
 For UI changes capture the actual app; temporal behavior needs a recording.
@@ -116,9 +116,9 @@ section; never edit human-authored approvals or manufacture statements for them.
 
 ## UI, translations and specifications
 
-Use [the brand guide](https://praxiss-lab.github.io/praxis/BRAND/) for approved logos and palette. Do not redesign
+Use [the brand guide](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/BRAND.md) for approved logos and palette. Do not redesign
 branding as an incidental code change. Analytics destinations belong to the Praxis owner; do not restore upstream
-project keys or proxy fallbacks. Read [telemetry configuration](https://praxiss-lab.github.io/praxis/TELEMETRY/).
+project keys or proxy fallbacks. Read [telemetry configuration](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/TELEMETRY.md).
 The owner project token and EU hosts live in `config/defaults.json`; do not
 replace these with required .env or GitHub variables. The public Project token
 is approved for this shared config; never commit personal/secret API keys.
@@ -140,7 +140,7 @@ Do not activate a new job or integration implicitly or alter existing user jobs
 without scope. Instructions are not budget enforcement: inspect provider/runtime
 capabilities and mark absent limits as unimplemented. User/project skills and
 published catalogs have different provenance and update paths. See
-[agent operation](https://praxiss-lab.github.io/praxis/AGENT_OPERATIONS/); runtime automation/telemetry changes
+[agent operation](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/AGENT_OPERATIONS.md); runtime automation/telemetry changes
 are separate from this repository-instruction update.
 
 ## Specialized guides
@@ -159,3 +159,32 @@ the owning guide and update that guide when code changes its invariant.
 | [Release](.agents/skills/release.md) | Explicit Praxis publication and recovery. |
 | [PR design](.agents/skills/pr-design-doc/SKILL.md) | Proportionate, temporary design context. |
 | [Telemetry](.agents/skills/telemetry-analytics/SKILL.md) | Owner project configuration, existing tracking/consent contracts. |
+
+## Documentation branch and Actions requirements
+
+Documentation lives only as Markdown on the
+[`documentation`](https://github.com/Praxiss-Lab/praxis/tree/documentation) branch,
+which has history independent of `main`; its README is the index. There is no
+generated site and no GitHub Pages. Do not add `docs/` to `main`; link to
+`https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/<page>.md` instead.
+
+- **Edit:** branch from `documentation` and open the PR into `documentation`. The
+  branch has no workflows, so documentation changes never run Actions.
+- **Links inside pages:** use relative links between pages; link code on `main` with
+  absolute `https://github.com/Praxiss-Lab/praxis/blob/main/...` URLs, because code
+  files do not exist on `documentation`.
+- **Upstream reviews:** `LAST_REVIEWED`, `SYNC_LOG.md` and review files are under
+  `docs/upstream/` on `documentation`. `scripts/praxis/prepare-upstream-integration.sh`
+  reads the checkpoint there, creates `integration/upstream-<label>` from `main` and
+  commits the snapshot to `upstream-review/<label>`; merge that into `documentation`.
+
+Repository settings and credentials the workflows on `main` require:
+
+| Requirement | Used by | Status |
+| --- | --- | --- |
+| `GITHUB_TOKEN` with `packages: write` | `docker.yml`, Praxis Release | Provided by GitHub |
+| Secret `PRAXIS_SDK_READ_TOKEN` (optional, read access to `Praxiss-Lab/praxis-sdk`) | `docker-check.yml`, `docker.yml` | Falls back to `github.token` while the SDK is public |
+| Workflows *Mock-LLM E2E Tests* and *Mock-LLM Docker E2E Tests* | Full E2E after `main` pushes / manual image E2E | Disabled manually; re-enable under Actions when needed |
+
+Workflow responsibilities are described in
+[WORKFLOWS.md](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/policies/WORKFLOWS.md).

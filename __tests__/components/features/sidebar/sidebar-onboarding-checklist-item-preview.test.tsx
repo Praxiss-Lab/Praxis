@@ -72,7 +72,7 @@ describe("SidebarOnboardingChecklistItemPreview", () => {
       ),
     ).toHaveAttribute(
       "href",
-      "https://praxiss-lab.github.io/praxis/USER_GUIDE/",
+      "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/USER_GUIDE.md",
     );
     expect(
       screen.getByText(I18nKey.SIDEBAR$ONBOARDING_CHECKLIST_DOCS_LINK),
@@ -104,7 +104,7 @@ describe("SidebarOnboardingChecklistItemPreview", () => {
       ),
     ).toHaveAttribute(
       "href",
-      "https://praxiss-lab.github.io/praxis/USER_GUIDE/",
+      "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/USER_GUIDE.md",
     );
   });
 });

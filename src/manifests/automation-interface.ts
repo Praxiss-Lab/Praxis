@@ -48,7 +48,7 @@ const MOUNTED_ROUTES = {
  * `importExport` block has no docs field.
  */
 export const AUTOMATION_FILE_FORMAT_DOCS_URL =
-  "https://praxiss-lab.github.io/praxis/USER_GUIDE/";
+  "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/USER_GUIDE.md";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);

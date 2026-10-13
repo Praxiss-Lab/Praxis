@@ -181,19 +181,22 @@ describe("validateInterfaceManifest", () => {
     expect(result.valid).toBe(false);
   });
 
-  it("admits a manifest exported with the previous documentation location", () => {
-    // Arrange
-    const candidate = createInterfaceManifestWith({
-      docsUrl:
-        "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md",
-    });
+  it.each([
+    "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md",
+    "https://praxiss-lab.github.io/praxis/USER_GUIDE/",
+  ])(
+    "admits a manifest exported with a previous documentation location: %s",
+    (docsUrl) => {
+      // Arrange
+      const candidate = createInterfaceManifestWith({ docsUrl });
 
-    // Act
-    const result = validateInterfaceManifest(candidate, CONTEXT);
+      // Act
+      const result = validateInterfaceManifest(candidate, CONTEXT);
 
-    // Assert
-    expect(result.valid).toBe(true);
-  });
+      // Assert
+      expect(result.valid).toBe(true);
+    },
+  );
 
   it("admits a manifest declaring the complete sub-page surface", () => {
     // Arrange

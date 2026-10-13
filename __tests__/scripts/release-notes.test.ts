@@ -37,7 +37,7 @@ describe("release installation notes", () => {
       expect(notes).toContain(`ghcr.io/praxiss-lab/praxis:${version}`);
       expect(notes).toContain(`/releases/download/v${version}/${archive}`);
       expect(notes).toContain(
-        "https://praxiss-lab.github.io/praxis/SELF_HOSTING/",
+        "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/SELF_HOSTING.md",
       );
       expect(notes).toContain(`npm install -g ./praxis-${version}.tgz`);
       expect(notes).toContain("PRAXIS_MODE=backend");

@@ -10,7 +10,7 @@ Maintain the shared configuration and launch plumbing across Vite/static develop
 ## Praxis context
 
 Follow [repository-wide instructions](../../../AGENTS.md) and
-[agent operation](https://praxiss-lab.github.io/praxis/AGENT_OPERATIONS/). Keep technical contracts
+[agent operation](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/AGENT_OPERATIONS.md). Keep technical contracts
 and compatibility identifiers intact; inherited transport or packaging names do
 not imply a centralized cloud or an active publishing/triage service.
 
