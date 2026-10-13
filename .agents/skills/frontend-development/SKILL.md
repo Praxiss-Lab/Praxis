@@ -10,7 +10,7 @@ Apply Canvas-specific React, TypeScript, internationalization, state ownership, 
 ## Praxis context
 
 Follow [repository-wide instructions](../../../AGENTS.md) and
-[agent operation](../../../docs/AGENT_OPERATIONS.md). Keep technical contracts
+[agent operation](https://praxiss-lab.github.io/praxis/AGENT_OPERATIONS/). Keep technical contracts
 and compatibility identifiers intact; inherited transport or packaging names do
 not imply a centralized cloud or an active publishing/triage service.
 

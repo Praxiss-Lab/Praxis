@@ -5,12 +5,12 @@ description: Prepare and verify a Praxis release, align version files, dispatch 
 
 # Praxis release procedure
 
-Read [the release policy](../../docs/policies/RELEASE.md) and
-[distribution instructions](../../docs/distribution/README.md) before preparing a
+Read [the release policy](https://praxiss-lab.github.io/praxis/policies/RELEASE/) and
+[distribution instructions](https://praxiss-lab.github.io/praxis/distribution/) before preparing a
 release. Use `.github/workflows/praxis-release.yml` as the executable workflow.
 
 For the one-time replacement-repository restoration, follow
-[repository cutover](../../docs/REPOSITORY_CUTOVER.md) and use
+[repository cutover](https://praxiss-lab.github.io/praxis/REPOSITORY_CUTOVER/) and use
 `.github/workflows/praxis-migration.yml` instead. It verifies and copies the
 already-published original assets; the normal release workflow would rebuild
 and publish the image, which is outside that restoration.

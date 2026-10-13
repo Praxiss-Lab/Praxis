@@ -55,7 +55,7 @@ docker run -d --name praxis-backend --restart unless-stopped \
   "$PRAXIS_IMAGE"
 ```
 
-This binds only to the server's loopback interface. Put an HTTPS reverse proxy or private-network tunnel in front of it as described in the [self-hosting guide](https://github.com/{{REPOSITORY}}/blob/v{{VERSION}}/docs/SELF_HOSTING.md). Backend mode serves the APIs and Automation; it does not serve `/canvas/`.
+This binds only to the server's loopback interface. Put an HTTPS reverse proxy or private-network tunnel in front of it as described in the [self-hosting guide](https://praxiss-lab.github.io/praxis/SELF_HOSTING/). Backend mode serves the APIs and Automation; it does not serve `/canvas/`.
 
 On your frontend device:
 
@@ -71,7 +71,7 @@ docker run -it --rm --name praxis-frontend \
 
 Replace `https://backend.example.com` with your backend origin, reachable from the frontend container. Open **http://127.0.0.1:18080/canvas/** and enter the backend session key when requested. Without `PRAXIS_BACKEND_URL`, use the UI backend selector; direct connections require browser reachability and allowed-origin configuration.
 
-For two containers on one machine, see the [split Compose instructions](https://github.com/{{REPOSITORY}}/blob/v{{VERSION}}/docs/distribution/README.md#separate-containers-on-one-machine). All modes download the same image and select which services to start. Each personal VM has independent state and credentials.
+For two containers on one machine, see the [split Compose instructions](https://praxiss-lab.github.io/praxis/distribution/#separate-containers-on-one-machine). All modes download the same image and select which services to start. Each personal VM has independent state and credentials.
 
 ### Native installation without Docker
 
@@ -86,7 +86,7 @@ agent-canvas
 
 Open **http://localhost:8000/canvas/**. Native agent execution can access the host filesystem: choose the intended workspace. If npm's global installation directory is not writable, configure a user-owned npm prefix.
 
-For separate native processes, run `agent-canvas --backend-only` on the backend host and `agent-canvas --frontend-only` on the frontend host. Use separate ports if both run on one machine; see the [distribution guide](https://github.com/{{REPOSITORY}}/blob/v{{VERSION}}/docs/distribution/README.md). The archive filename and `agent-canvas` command are retained technical identifiers; this archive is distributed by Praxis.
+For separate native processes, run `agent-canvas --backend-only` on the backend host and `agent-canvas --frontend-only` on the frontend host. Use separate ports if both run on one machine; see the [distribution guide](https://praxiss-lab.github.io/praxis/distribution/). The archive filename and `agent-canvas` command are retained technical identifiers; this archive is distributed by Praxis.
 
 ### Artifacts and troubleshooting
 
@@ -98,4 +98,4 @@ For separate native processes, run `agent-canvas --backend-only` on the backend 
 - If port 18080 is occupied, change only the host side of the port mapping and open that port in your browser.
 - For startup errors, inspect the foreground output or run `docker logs praxis-backend` for the detached backend.
 
-See the [versioned README](https://github.com/{{REPOSITORY}}/blob/v{{VERSION}}/README.md), [distribution guide](https://github.com/{{REPOSITORY}}/blob/v{{VERSION}}/docs/distribution/README.md), and [Windows instructions](https://github.com/{{REPOSITORY}}/blob/v{{VERSION}}/README.windows.md).
+See the [versioned README](https://github.com/{{REPOSITORY}}/blob/v{{VERSION}}/README.md), [distribution guide](https://praxiss-lab.github.io/praxis/distribution/), and [Windows instructions](https://github.com/{{REPOSITORY}}/blob/v{{VERSION}}/README.windows.md).

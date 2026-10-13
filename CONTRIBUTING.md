@@ -5,8 +5,8 @@ Praxis is an independently maintained MIT-licensed fork of OpenHands.
 ## Before changing code
 
 Read `AGENTS.md` and the contributor skills relevant to the affected code.
-See [distribution](docs/distribution/README.md) for supported launch modes and
-[release policy](docs/policies/RELEASE.md) for publication.
+See [distribution](https://praxiss-lab.github.io/praxis/distribution/) for supported launch modes and
+[release policy](https://praxiss-lab.github.io/praxis/policies/RELEASE/) for publication.
 
 ## Branches
 
@@ -42,7 +42,7 @@ checks are required when the affected boundary warrants them.
 Do not merge OpenHands changes directly into Praxis `main`.
 
 Review and test adopted upstream changes, and record their provenance in
-`docs/upstream/SYNC_LOG.md`.
+`https://praxiss-lab.github.io/praxis/upstream/SYNC_LOG/`.
 
 ## License
 

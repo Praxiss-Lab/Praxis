@@ -48,7 +48,7 @@ Apply it with `-f your-values.yaml` in the install command. The encryption key m
 
 ## Remote access
 
-Configure `ingress.enabled`, `className`, `hosts` and `tls` for your domain. Preserve WebSocket upgrades and suitable proxy timeouts for long conversations. Use HTTPS or a private network, with the authentication configuration in [self-hosting](../../docs/SELF_HOSTING.md). API access lets agents execute commands in their workspace.
+Configure `ingress.enabled`, `className`, `hosts` and `tls` for your domain. Preserve WebSocket upgrades and suitable proxy timeouts for long conversations. Use HTTPS or a private network, with the authentication configuration in [self-hosting](https://praxiss-lab.github.io/praxis/SELF_HOSTING/). API access lets agents execute commands in their workspace.
 
 ## Optional Kubernetes permissions
 

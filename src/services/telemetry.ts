@@ -1,7 +1,7 @@
 /**
  * Product analytics defaults to the owner project in config/defaults.json.
  * Praxis supplies no upstream key or proxy. Event, consent and identity
- * behavior is retained; see docs/TELEMETRY.md for configuration ownership.
+ * behavior is retained; see https://praxiss-lab.github.io/praxis/TELEMETRY/ for configuration ownership.
  */
 
 import type { BootstrapConfig, CaptureResult, PostHog } from "posthog-js";

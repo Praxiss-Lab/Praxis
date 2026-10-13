@@ -9,25 +9,29 @@ if [[ ! "$LABEL" =~ ^[a-zA-Z0-9][a-zA-Z0-9._-]*$ ]]; then
 fi
 cd "$ROOT"
 BRANCH="integration/upstream-$LABEL"
+REVIEW_BRANCH="upstream-review/$LABEL"
 git check-ref-format --branch "$BRANCH" >/dev/null
 if [ -n "$(git status --porcelain)" ]; then
   echo "error: working tree must be clean" >&2
   exit 1
 fi
-if git show-ref --verify --quiet "refs/heads/$BRANCH"; then
-  echo "error: branch $BRANCH already exists; resume it or use a different label" >&2
-  exit 1
-fi
+for existing in "$BRANCH" "$REVIEW_BRANCH"; do
+  if git show-ref --verify --quiet "refs/heads/$existing"; then
+    echo "error: branch $existing already exists; resume it or use a different label" >&2
+    exit 1
+  fi
+done
 bash "$ROOT/scripts/praxis/upstream-fetch.sh"
-git fetch origin '+refs/heads/main:refs/remotes/origin/main'
+git fetch origin '+refs/heads/main:refs/remotes/origin/main' \
+  '+refs/heads/documentation:refs/remotes/origin/documentation'
 BASE="$(git rev-parse origin/main)"
+DOCS_BASE="$(git rev-parse origin/documentation)"
 TARGET="$(git rev-parse upstream/main)"
-LAST_REVIEWED="$(git show "$BASE:docs/upstream/LAST_REVIEWED")"
+# Upstream review records live on the documentation branch, not on main.
+LAST_REVIEWED="$(git show "$DOCS_BASE:docs/upstream/LAST_REVIEWED")"
 REPORT="$(bash "$ROOT/scripts/praxis/upstream-report.sh" "$LAST_REVIEWED" "$TARGET" "$BASE")"
-git switch -c "$BRANCH" "$BASE"
 REVIEW="docs/upstream/reviews/$LABEL.md"
-mkdir -p docs/upstream/reviews
-cat > "$REVIEW" <<EOF
+REVIEW_TEXT="$(cat <<EOF
 # Upstream review: $LABEL
 
 - Status: PREPARED (not reviewed or integrated)
@@ -56,6 +60,19 @@ Record automatic checks, manual tests, unresolved conflicts and compatibility ri
 
 Pending. No upstream code has been integrated and no merge into main is authorized by this file.
 EOF
+)"
+# Commit the snapshot onto a review branch from documentation without
+# touching the working tree.
+INDEX="$(mktemp)"
+trap 'rm -f "$INDEX"' EXIT
+GIT_INDEX_FILE="$INDEX" git read-tree "$DOCS_BASE"
+BLOB="$(printf '%s\n' "$REVIEW_TEXT" | git hash-object -w --stdin)"
+GIT_INDEX_FILE="$INDEX" git update-index --add --cacheinfo 100644 "$BLOB" "$REVIEW"
+TREE="$(GIT_INDEX_FILE="$INDEX" git write-tree)"
+REVIEW_COMMIT="$(git commit-tree "$TREE" -p "$DOCS_BASE" -m "Prepare upstream review $LABEL")"
+git branch "$REVIEW_BRANCH" "$REVIEW_COMMIT"
+git switch -c "$BRANCH" "$BASE"
 echo "Created $BRANCH from origin/main; local main was not changed."
-echo "No upstream commits have been merged. Review snapshot: $REVIEW"
+echo "No upstream commits have been merged. Review snapshot: $REVIEW on $REVIEW_BRANCH"
+echo "Open a pull request from $REVIEW_BRANCH into documentation to record the review."
 echo "Frozen upstream target: $TARGET"
