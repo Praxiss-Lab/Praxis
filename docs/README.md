@@ -1,5 +1,7 @@
 # Praxis documentation
 
+Published at <https://praxiss-lab.github.io/praxis/>.
+
 ## Install and run
 
 - [Main README](../README.md): native installation, Docker and personal clouds.

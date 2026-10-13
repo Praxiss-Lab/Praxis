@@ -124,6 +124,7 @@ Software logs are independent.
 
 ## Documentation
 
+- [Documentation site](https://praxiss-lab.github.io/praxis/)
 - [Documentation index](docs/README.md)
 - [Architecture](docs/architecture.md)
 - [Distribution and launch modes](docs/distribution/README.md)

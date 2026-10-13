@@ -15,6 +15,7 @@
 | `desktop-linux.yml` | Paths-filtered PR build, manual build, or externally triggered release build. |
 | `desktop-windows.yml` | Paths-filtered PR build, manual build, or externally triggered release build. |
 | `desktop-macos.yml` | Native PR builds, manual builds including universal DMG, or externally triggered universal release build. |
+| `docs.yml` | Builds the documentation site strictly on PRs touching `docs/`, `mkdocs.yml` or its hook; deploys it to GitHub Pages after matching pushes to `main` or manual dispatch. |
 | `issue-readiness-check.yml` | Permission check when `ready-for-dev` is applied to an open issue. |
 
 ## Avoid duplicate verification
