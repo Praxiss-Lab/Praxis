@@ -26,8 +26,43 @@ backend includes Agent Server and Automation. Frontend and backend may run on
 separate devices. Each personal VM is an independent backend with its own state,
 workspaces and credentials. Do not promise central cloud services, replication
 or synchronization. Legacy `kind: cloud` transport remains code compatibility,
-not the definition of Praxis personal clouds. Keep technical package names,
-paths and environment variables until an explicit migration changes them.
+not the definition of Praxis personal clouds. Rename technical package names,
+paths and environment variables only as described in "Incremental rebranding".
+
+## Incremental rebranding
+
+Praxis derives from OpenHands Agent Canvas. The goal is a codebase with no names
+referring to upstream projects (OpenHands, All Hands, Agent Canvas) except where
+listed below. Do it incrementally: while working on a task, rebrand what you touch
+instead of scheduling one large rename.
+
+- **Rename freely, in files the task touches:** comments, docstrings, log and error
+  messages, UI copy and translations (all locales, then `npm run make-i18n`),
+  documentation links, test names, and internal names that are never persisted,
+  exported or read from outside the module (local variables, private helpers,
+  CSS classes, test IDs after updating their tests).
+- **Rename only with compatibility:** npm/package names, executables
+  (`agent-canvas`), environment variables (`OH_*`, `AGENT_CANVAS_*`), state and data
+  paths (`~/.openhands`, `/home/openhands`), Docker image names, localStorage and
+  settings keys, API fields, persisted identifiers and backend contracts. Add the
+  Praxis name, keep reading the old one (env/path/key fallback or alias, one
+  obvious owner), migrate stored data where needed, cover both names with tests,
+  and document the alias. Remove an old name only in a later, explicitly
+  authorized change once no supported data or deployment depends on it.
+- **Never rename:** `LICENSE`, `NOTICE` and attribution text; provenance facts
+  (upstream review records, `SYNC_LOG.md`, release notes of past versions,
+  migration fixtures and archive tags); blocklists that reject upstream hosted
+  domains (`cloud-endpoint-policy.ts`, `repository-check.sh` guards); tests and
+  fixtures that prove legacy names still load; names of genuine third-party
+  products or skills.
+- **Scope:** keep rebranding inside the files and boundary of the current task.
+  Put it in its own commit (`rebrand: ...`) separate from behavior changes, run
+  the normal checks (never `[skip ci]` for code), and list renamed names and new
+  aliases in the PR. Cross-boundary renames shared with the SDK or Automation
+  follow the owning repository's rules first.
+- **Known content still to rebrand:** `vendor/praxis-extensions-0.29.0.tgz` skills and
+  the `vendor/automation` snapshot reference OpenHands repositories; change them
+  only through an authorized extensions or Automation task, not incidentally.
 
 ## Work method and safety
 
