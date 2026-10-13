@@ -49,9 +49,11 @@ paths and environment variables until an explicit migration changes them.
 ## Branches and merge authorization
 
 `main` is the stable integration branch. Do not edit, commit or push changes
-directly to `main`. Start each documentation, development, fix or configuration
-task on a dedicated branch from the current remote `main`, using a descriptive
-name such as `docs/*`, `feature/*`, `fix/*` or `chore/*`.
+directly to `main`. Start each development, fix or configuration task on a
+dedicated branch from the current remote `main`, using a descriptive name such as
+`feature/*`, `fix/*` or `chore/*`. Documentation tasks start from the
+`documentation` branch instead and open their PR into `documentation` (see
+"Documentation, workflows and CI" below).
 
 Commit and verify the changes on that branch, then present the diff and check
 results for review through a pull request. Implementing or publishing a branch
@@ -160,7 +162,9 @@ the owning guide and update that guide when code changes its invariant.
 | [PR design](.agents/skills/pr-design-doc/SKILL.md) | Proportionate, temporary design context. |
 | [Telemetry](.agents/skills/telemetry-analytics/SKILL.md) | Owner project configuration, existing tracking/consent contracts. |
 
-## Documentation branch and Actions requirements
+## Documentation, workflows and CI
+
+### Documentation
 
 Documentation lives only as Markdown on the
 [`documentation`](https://github.com/Praxiss-Lab/praxis/tree/documentation) branch,
@@ -168,23 +172,69 @@ which has history independent of `main`; its README is the index. There is no
 generated site and no GitHub Pages. Do not add `docs/` to `main`; link to
 `https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/<page>.md` instead.
 
-- **Edit:** branch from `documentation` and open the PR into `documentation`. The
-  branch has no workflows, so documentation changes never run Actions.
-- **Links inside pages:** use relative links between pages; link code on `main` with
-  absolute `https://github.com/Praxiss-Lab/praxis/blob/main/...` URLs, because code
-  files do not exist on `documentation`.
+- **When to update it:** in the same task as any change to user-visible behavior,
+  installation, configuration, launch modes, workflows, release or versioning
+  policy, or the upstream procedure. Open the documentation PR alongside the code
+  PR and link them; a task is not complete while its owning page is stale.
+- **How:** branch from `documentation`, open the PR into `documentation`. Use
+  relative links between pages and absolute
+  `https://github.com/Praxiss-Lab/praxis/blob/main/...` links for code, because code
+  files do not exist on `documentation`. The branch has no workflows, so
+  documentation PRs never run Actions.
 - **Upstream reviews:** `LAST_REVIEWED`, `SYNC_LOG.md` and review files are under
   `docs/upstream/` on `documentation`. `scripts/praxis/prepare-upstream-integration.sh`
   reads the checkpoint there, creates `integration/upstream-<label>` from `main` and
   commits the snapshot to `upstream-review/<label>`; merge that into `documentation`.
 
-Repository settings and credentials the workflows on `main` require:
+### Workflows on `main`
+
+| Workflow | Trigger | Role |
+| --- | --- | --- |
+| `praxis-ci.yml` (Praxis CI) | PRs to `main`, manual | Core static checks, tests and builds |
+| `praxis-smoke.yml` (Praxis Smoke) | PRs to `main`, manual | Frontend runtime smoke |
+| `docker-check.yml` (Docker Check) | PRs touching runtime/config paths, manual | Local image build and complete/backend/frontend mode verification; no publication |
+| `sdk-version-sync.yml` | PRs touching SDK pin surfaces, manual | SDK revision consistency |
+| `desktop-linux.yml`, `desktop-macos.yml`, `desktop-windows.yml` | PRs touching desktop paths, manual, release | Desktop package builds |
+| `praxis-migration.yml` | PRs touching migration files, manual | Migration safeguards and confirmed restoration of original 1.25.0 assets |
+| `praxis-release.yml` (Praxis Release) | Manual, from `main` only | Explicitly authorized publication; calls `docker.yml` |
+| `docker.yml` | Called by Praxis Release | Multi-architecture GHCR image publication |
+| `mock-llm-e2e.yml`, `mock-llm-docker-e2e.yml` | `main` pushes / manual | Full scripted-model E2E; currently disabled manually |
+| `ci.yml` (Upstream Compatibility CI) | Manual | Optional overlap run on an integration branch |
+| `issue-readiness-check.yml` | `ready-for-dev` label | Permission check for issue readiness |
+
+Validation runs on PRs, not again on the merge push. Praxis CI, Smoke and the
+E2E push ignore `docs/**`, `**/*.md`, `.pr/**`, `LICENSE` and `NOTICE`, so
+Markdown-only PRs (including `AGENTS.md` and `.agents/` guides) start no
+validation by themselves. Details:
+[WORKFLOWS.md](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/policies/WORKFLOWS.md).
+Change a workflow only on a working branch with the PR showing its run; do not
+weaken a check to make a PR pass.
+
+### When to use `[skip ci]`
+
+Add `[skip ci]` to the commit message only when the change cannot affect behavior,
+builds or tests: Markdown, guidance text or comments, when a path filter would
+still start validation. Never use it for source, tests, dependencies, lockfiles,
+`config/`, scripts, Docker, Electron or workflow files, and never to bypass a
+failing check. It skips `push` and `pull_request` runs for that head commit;
+`issues`/`pull_request_target` workflows still run. `main` currently has no
+required status checks, so a skipped run does not block merging; review is
+still required.
+
+### Updating the Praxis SDK
+
+Praxis consumes `Praxiss-Lab/praxis-sdk` at the exact revision in
+`config/defaults.json` (`sdk`), for the Agent Server and bundled Automation alike.
+After an SDK change is merged in its repository, update that revision on a
+working branch, run `node scripts/check-sdk-version-sync.mjs` and the checks for
+the affected boundary, and let SDK Version Sync and Docker Check run on the PR.
+For local SDK work set `OH_AGENT_SERVER_LOCAL_PATH` to the SDK checkout. See
+[SDK independence](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/SDK_INDEPENDENCE.md).
+
+### Repository settings and credentials
 
 | Requirement | Used by | Status |
 | --- | --- | --- |
 | `GITHUB_TOKEN` with `packages: write` | `docker.yml`, Praxis Release | Provided by GitHub |
 | Secret `PRAXIS_SDK_READ_TOKEN` (optional, read access to `Praxiss-Lab/praxis-sdk`) | `docker-check.yml`, `docker.yml` | Falls back to `github.token` while the SDK is public |
 | Workflows *Mock-LLM E2E Tests* and *Mock-LLM Docker E2E Tests* | Full E2E after `main` pushes / manual image E2E | Disabled manually; re-enable under Actions when needed |
-
-Workflow responsibilities are described in
-[WORKFLOWS.md](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/policies/WORKFLOWS.md).
