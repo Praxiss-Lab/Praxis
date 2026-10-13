@@ -98,7 +98,7 @@ export function createInterfaceManifest(
       detail: { backLabel: "Back to the widgets" },
       edit: { title: "Edit the widget automation" },
     },
-    docsUrl: "https://praxiss-lab.github.io/praxis/USER_GUIDE/",
+    docsUrl: "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/USER_GUIDE.md",
     attributes: {
       name: { type: "text", label: "Widget name", required: true },
       timeout: {

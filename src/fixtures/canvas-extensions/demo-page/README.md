@@ -4,4 +4,4 @@ A dependency-free browser ES module fixture for the Canvas extension host API v1
 
 The extension contributes a page with ID `hello`, route `/hello` and navigation label **Extension demo**. It demonstrates page registration without adding a build step or external dependencies.
 
-Use this fixture with the [extension manual testing guide](https://praxiss-lab.github.io/praxis/CANVAS_EXTENSIONS_TESTING/). Registration and loading require the extension-capable backend/host described there; copying this directory alone does not install it.
+Use this fixture with the [extension manual testing guide](https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/CANVAS_EXTENSIONS_TESTING.md). Registration and loading require the extension-capable backend/host described there; copying this directory alone does not install it.

@@ -1,5 +1,5 @@
 export const ADD_SKILL_DOCS_URL =
-  "https://praxiss-lab.github.io/praxis/USER_GUIDE/";
+  "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/USER_GUIDE.md";
 
 export const ADD_SKILL_SKILL_NAME = "add-skill";
 

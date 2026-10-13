@@ -29,10 +29,13 @@ import {
 const MARKUP_PATTERN = /<[A-Za-z/!]/;
 const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 /** The one URL the manifest may state, pinned to the product documentation. */
-const DOCS_URL_PREFIX = "https://praxiss-lab.github.io/praxis/";
-/** Documentation location used by manifests exported before the docs site. */
-const LEGACY_DOCS_URL_PREFIX =
-  "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/";
+const DOCS_URL_PREFIX =
+  "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/";
+/** Documentation locations used by manifests exported earlier. */
+const LEGACY_DOCS_URL_PREFIXES = [
+  "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/",
+  "https://praxiss-lab.github.io/praxis/",
+];
 const FILE_KIND_PATTERN = /^[a-z][a-z-]*$/;
 const FILENAME_SUFFIX_PATTERN = /^\.[a-z][a-z.]*json$/;
 const EVENT_SOURCE_PATTERN = /^[a-z0-9][a-z0-9.-]*$/;
@@ -733,7 +736,9 @@ export function validateInterfaceManifest(
     typeof candidate.docsUrl !== "string" ||
     !(
       candidate.docsUrl.startsWith(DOCS_URL_PREFIX) ||
-      candidate.docsUrl.startsWith(LEGACY_DOCS_URL_PREFIX)
+      LEGACY_DOCS_URL_PREFIXES.some((prefix) =>
+        (candidate.docsUrl as string).startsWith(prefix),
+      )
     )
   ) {
     check.fail("docsUrl", `must start with ${DOCS_URL_PREFIX}`);

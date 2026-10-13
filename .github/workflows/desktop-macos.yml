@@ -27,7 +27,7 @@ name: Desktop (macOS)
 # which GitHub drops x86_64 macOS support entirely and this leg must go.
 # Praxis Release uses GITHUB_TOKEN; its release event does not cascade into
 # this workflow. Dispatch manually on the release tag for desktop artifacts,
-# then attach approved artifacts separately (see https://praxiss-lab.github.io/praxis/policies/RELEASE/).
+# then attach approved artifacts separately (see https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/policies/RELEASE.md).
 on:
   workflow_dispatch:
   pull_request:

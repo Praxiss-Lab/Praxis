@@ -147,11 +147,11 @@ function isValidHostUrl(host: string): boolean {
 const DEFAULT_OPENHANDS_CLOUD_HOST = "";
 const LOCAL_BACKEND_COMMAND = "agent-canvas --backend-only --port 8001";
 const LOCAL_AGENT_SERVER_DOCS_URL =
-  "https://praxiss-lab.github.io/praxis/DEVELOPMENT/#alternative-development-workflows";
+  "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/DEVELOPMENT.md#alternative-development-workflows";
 const REMOTE_AGENT_SERVER_DOCS_URL =
-  "https://praxiss-lab.github.io/praxis/SELF_HOSTING/";
+  "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/SELF_HOSTING.md";
 const DEPLOYMENT_OPTIONS_URL =
-  "https://praxiss-lab.github.io/praxis/SDK_INDEPENDENCE/";
+  "https://github.com/Praxiss-Lab/praxis/blob/documentation/docs/SDK_INDEPENDENCE.md";
 export type BackendConnectionMethod = "manual" | "cloud_login";
 
 export type BackendAddedSource = CloudConnectionSource;
