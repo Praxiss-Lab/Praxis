@@ -256,6 +256,20 @@ failing check. It skips `push` and `pull_request` runs for that head commit;
 required status checks, so a skipped run does not block merging; review is
 still required.
 
+A `[skip ci]` commit on the PR branch does not reach `main` with a regular merge:
+the merge commit has its own message, so validation runs again after the merge.
+For a documentation- or guidance-only PR into `main`:
+
+1. Put `[skip ci]` at the end of the **PR title** as well as the commit message.
+2. Merge with **Squash and merge** (arrow ▾ next to the merge button), keep
+   `[skip ci]` in the squash commit title, then confirm.
+3. If the agent is authorized to merge, it does this itself
+   (`gh pr merge <n> --squash --subject "<title> [skip ci]"`). Otherwise, when
+   handing the PR over, the agent must remind the maintainer of steps 2–3 in its
+   final message.
+
+Use a regular merge, and let CI run, for any PR that changes code.
+
 ### Updating the Praxis SDK
 
 Praxis consumes `Praxiss-Lab/praxis-sdk` at the exact revision in
