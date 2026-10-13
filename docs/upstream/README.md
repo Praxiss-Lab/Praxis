@@ -15,12 +15,14 @@ bash scripts/praxis/prepare-upstream-integration.sh 2026-10-07
 ```
 
 Choose a different date or suffix for each review. The script validates the
-upstream remote, fetches upstream and Praxis `main`, creates
-`integration/upstream-2026-10-07` from `origin/main`, and writes
-`docs/upstream/reviews/2026-10-07.md`. It does not modify local `main` or import
-upstream code. The review records the exact upstream target SHA; keep using that
-SHA even if upstream advances during review. The generated review is untracked
-until you add and commit it.
+upstream remote, fetches upstream, Praxis `main` and the `documentation` branch,
+and reads the checkpoint from [LAST_REVIEWED](LAST_REVIEWED) on `documentation`.
+It creates `integration/upstream-2026-10-07` from `origin/main` for code work and
+commits the review snapshot `docs/upstream/reviews/2026-10-07.md` to
+`upstream-review/2026-10-07`, based on `documentation`. It does not modify local
+`main` or import upstream code. The review records the exact upstream target SHA;
+keep using that SHA even if upstream advances during review. Open a pull request
+from the review branch into `documentation` to record decisions.
 
 To download changes or inspect a report without creating a branch:
 
@@ -93,7 +95,7 @@ not configure them.
 
 When a whole upstream interval has been examined and every change has an explicit
 decision, update [LAST_REVIEWED](LAST_REVIEWED) to the frozen target SHA and add an
-entry to [SYNC_LOG.md](SYNC_LOG.md) in the same reviewed PR. This checkpoint means
+entry to [SYNC_LOG.md](SYNC_LOG.md) in the same reviewed PR into `documentation`. This checkpoint means
 **reviewed**, not **fully merged**. If only part of the interval has been examined,
 keep the checkpoint unchanged. Track DEFER decisions by source SHA and revisit
 them explicitly: advancing the checkpoint excludes them from the next interval.
