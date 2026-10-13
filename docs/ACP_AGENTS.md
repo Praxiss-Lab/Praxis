@@ -35,7 +35,7 @@ agent choice is stored per backend, so switching backends can switch agents.
 The provider list is sourced from the SDK registry
 (`openhands.sdk.settings.acp_providers`, mirrored into
 `@praxiss-lab/praxis-sdk-client`) and enriched with Canvas UI metadata in
-[`src/constants/acp-providers.ts`](../src/constants/acp-providers.ts). Adding or
+[`src/constants/acp-providers.ts`](https://github.com/Praxiss-Lab/praxis/blob/main/src/constants/acp-providers.ts). Adding or
 changing a provider happens upstream in the SDK, not here.
 
 | Provider        | Default command                                |
@@ -140,7 +140,7 @@ host login, you supply credentials through the UI and Canvas sends them inline
 on the conversation start request.
 
 A ready-to-run setup lives in
-[`examples/acp-docker/`](../examples/acp-docker/) (`docker compose up`, then
+[`examples/acp-docker/`](https://github.com/Praxiss-Lab/praxis/tree/main/examples/acp-docker) (`docker compose up`, then
 point Canvas at it). In short:
 
 ```bash

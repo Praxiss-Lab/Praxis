@@ -43,7 +43,7 @@ Development also provides a minimal stack without Automation, a static frontend 
 - `bin/`, `scripts/`, `docker/`: native launchers, stack orchestration and container distribution.
 - `config/defaults.json`: runtime dependency versions and compatibility floor.
 
-Compatibility adapters remain in the source tree. Their API contract names do not define whether an Agent Server is physically local or hosted on your VM; see [API services](../src/api/README.md).
+Compatibility adapters remain in the source tree. Their API contract names do not define whether an Agent Server is physically local or hosted on your VM; see [API services](https://github.com/Praxiss-Lab/praxis/blob/main/src/api/README.md).
 
 ## Distribution and verification
 

@@ -37,7 +37,7 @@ verification is retained because it checks the exact authorized publishing
 commit; it does not publish on a PR, ordinary push or tag. Desktop builds retain
 their distinct PR/manual/release triggers and have no `main` push trigger.
 
-[Dependabot](../../.github/dependabot.yml) remains configured for weekly npm and
+[Dependabot](https://github.com/Praxiss-Lab/praxis/blob/main/.github/dependabot.yml) remains configured for weekly npm and
 GitHub Actions dependency updates. Its PRs follow the same applicable checks.
 The chart is experimental and defaults to the Praxis registry; selecting an image
 does not prove Kubernetes runtime compatibility. Desktop builds retain the

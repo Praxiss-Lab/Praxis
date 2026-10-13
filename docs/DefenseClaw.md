@@ -77,7 +77,7 @@ defenseclaw-gateway start
 
 ### 2. Start Praxis
 
-Follow the standard [Praxis quickstart](../README.md). The integration steps below assume the Agent Server is reachable at `http://localhost:18000`.
+Follow the standard [Praxis quickstart](https://github.com/Praxiss-Lab/praxis/blob/main/README.md). The integration steps below assume the Agent Server is reachable at `http://localhost:18000`.
 
 ---
 

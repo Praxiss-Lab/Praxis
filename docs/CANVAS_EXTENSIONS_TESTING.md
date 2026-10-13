@@ -91,4 +91,4 @@ contract lands. That test must additionally verify:
 - isolation when switching between active backends.
 
 The backend contract and acceptance criteria are documented in
-[`specs/canvas-extensions.md`](../specs/canvas-extensions.md).
+[`specs/canvas-extensions.md`](https://github.com/Praxiss-Lab/praxis/blob/main/specs/canvas-extensions.md).

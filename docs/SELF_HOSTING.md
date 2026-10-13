@@ -1,7 +1,7 @@
 # Self-hosting Praxis on a virtual machine
 
 This guide covers the native Praxis release on a virtual machine (VM), with
-remote browser access. First install the [Praxis release archive](../README.md#install-a-published-release-without-docker);
+remote browser access. First install the [Praxis release archive](https://github.com/Praxiss-Lab/praxis/blob/main/README.md#install-a-published-release-without-docker);
 Docker deployment examples are in [distribution and launch modes](distribution/README.md).
 
 > [!WARNING]
@@ -115,7 +115,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 On macOS (Mac Mini, etc.) install Node and `uv` via `brew` instead.
 
-Install the Praxis archive using the [release installation commands](../README.md#install-a-published-release-without-docker).
+Install the Praxis archive using the [release installation commands](https://github.com/Praxiss-Lab/praxis/blob/main/README.md#install-a-published-release-without-docker).
 Install it as the user who will run the service, with Node and `uvx` on that user's PATH.
 
 Start the installed release in public mode:

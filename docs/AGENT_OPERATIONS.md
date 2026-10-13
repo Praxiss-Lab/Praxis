@@ -2,7 +2,7 @@
 
 ## Repository instructions
 
-[AGENTS.md](../AGENTS.md) defines identity, ownership, safety, dependencies,
+[AGENTS.md](https://github.com/Praxiss-Lab/praxis/blob/main/AGENTS.md) defines identity, ownership, safety, dependencies,
 upstream integration, verification, completion and publication rules. Applicable
 platform instructions and the user's authorized task take precedence. Nested
 instructions specialize a subtree; a conflicting security/publication rule must
@@ -72,7 +72,7 @@ configured stop hook, automatic review submission or deployment hook.
 | `build:desktop` / `build:desktop:universal` | Package desktop artifacts, including runtime downloads; verify installation on target platforms separately. |
 
 Use [workflow responsibilities](policies/WORKFLOWS.md), [development](DEVELOPMENT.md)
-and the [runtime guide](../.agents/skills/local-stack-runtime/SKILL.md) for details.
+and the [runtime guide](https://github.com/Praxiss-Lab/praxis/blob/main/.agents/skills/local-stack-runtime/SKILL.md) for details.
 Run relevant checks, not every expensive suite for a documentation edit. Record
 real outcomes and unavailable tests. The agreed laptop/VM tests remain a separate
 final step; this document does not claim they were executed.

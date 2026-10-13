@@ -1,7 +1,7 @@
 # Development
 
 This document is for contributors working on Praxis and its inherited
-`agent-canvas` runtime. Start with the [Praxis source quickstart](../README.md#quickstart-from-source)
+`agent-canvas` runtime. Start with the [Praxis source quickstart](https://github.com/Praxiss-Lab/praxis/blob/main/README.md#quickstart-from-source)
 to clone this repository and install its locked dependencies.
 
 ## Recommended local workflow
@@ -18,7 +18,7 @@ This repository contains the Praxis frontend and local-stack orchestration. Use 
 - [`praxis-sdk/clients/typescript`](https://github.com/Praxiss-Lab/praxis-sdk/tree/main/clients/typescript) owns browser-compatible typed access to that Agent Server API. Add client methods there rather than reimplementing API calls in Canvas.
 - [`Praxis/vendor`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor) owns reusable skills, plugins, automations, and integrations; [`praxis/vendor/automation`](https://github.com/Praxiss-Lab/Praxis/tree/main/vendor/automation) owns automation definitions, scheduling, webhooks, run history, and dispatching; Agent Server/SDK code executes the dispatched conversations.
 
-When a feature crosses repositories, implement the backend contract in the SDK first, expose it through `typescript-client`, and consume it in Canvas. Coordinate automation lifecycle changes in `automation`. Version pins, local-stack overrides, and PR ordering are in [Cross-repository version compatibility](#cross-repository-version-compatibility). See the repository [contributor notes](../AGENTS.md) and follow the [custom code-review guide](../.agents/skills/custom-codereview-guide.md) for every pull request.
+When a feature crosses repositories, implement the backend contract in the SDK first, expose it through `typescript-client`, and consume it in Canvas. Coordinate automation lifecycle changes in `automation`. Version pins, local-stack overrides, and PR ordering are in [Cross-repository version compatibility](#cross-repository-version-compatibility). See the repository [contributor notes](https://github.com/Praxiss-Lab/praxis/blob/main/AGENTS.md) and follow the [custom code-review guide](https://github.com/Praxiss-Lab/praxis/blob/main/.agents/skills/custom-codereview-guide.md) for every pull request.
 
 For a static frontend build (better for slow networks, remote access, tunnels):
 
@@ -92,12 +92,12 @@ Owning repositories:
 
 | Surface                                    | Supported version lives in                                                    |
 | ------------------------------------------ | ----------------------------------------------------------------------------- |
-| Frozen Agent Server / SDK source revision        | [`config/defaults.json`](../config/defaults.json) `sources.sdk.ref`      |
+| Frozen Agent Server / SDK source revision        | [`config/defaults.json`](https://github.com/Praxiss-Lab/praxis/blob/main/config/defaults.json) `sources.sdk.ref`      |
 | Bundled automation PyPI pin                | `config/defaults.json` `versions.automation`                                  |
 | Oldest Agent Server this frontend accepts  | `config/defaults.json` `compatibility.minimumAgentServer`                     |
-| `@praxiss-lab/praxis-sdk-client`             | [`package.json`](../package.json) (exact npm pin)                             |
+| `@praxiss-lab/praxis-sdk-client`             | [`package.json`](https://github.com/Praxiss-Lab/praxis/blob/main/package.json) (exact npm pin)                             |
 | `@praxiss-lab/praxis-extensions`                    | `package.json` (exact npm pin)                                                |
-| Released automation ↔ SDK dependency match | [`scripts/check-sdk-version-sync.mjs`](../scripts/check-sdk-version-sync.mjs) |
+| Released automation ↔ SDK dependency match | [`scripts/check-sdk-version-sync.mjs`](https://github.com/Praxiss-Lab/praxis/blob/main/scripts/check-sdk-version-sync.mjs) |
 
 `config/defaults.json` is the source of truth for the Python backend pins used
 by the npm and Docker install paths. `agent-canvas --info` prints the same
@@ -110,7 +110,7 @@ version are interchangeable.
 
 Runtime enforcement for a connected Agent Server is
 `assertAgentServerVersionIsSupported()` in
-[`src/api/agent-server-compatibility.ts`](../src/api/agent-server-compatibility.ts).
+[`src/api/agent-server-compatibility.ts`](https://github.com/Praxiss-Lab/praxis/blob/main/src/api/agent-server-compatibility.ts).
 Some UI features have additional floors inside `@praxiss-lab/praxis-sdk-client`.
 Meeting `compatibility.minimumAgentServer` does not mean every Canvas feature
 is available on that backend.
@@ -211,7 +211,7 @@ skip the client release step or consume an unpublished client SHA.
 
 Event wire types follow the same order: SDK Pydantic model, then TypeScript
 client, then Canvas consumption of the client type. See the
-[custom code-review guide](../.agents/skills/custom-codereview-guide.md).
+[custom code-review guide](https://github.com/Praxiss-Lab/praxis/blob/main/.agents/skills/custom-codereview-guide.md).
 
 ### Other useful overrides
 
@@ -392,7 +392,7 @@ behavior or API shape, compatibility and risk, and code references. The page add
 Skip this for trivial PRs (a typo, a one-line guard, a dependency bump) — there, a design doc
 is just noise. htmlpreview only works for public repos and self-contained pages.
 
-The [`pr-design-doc`](../.agents/skills/pr-design-doc/SKILL.md) skill can generate the page
+The [`pr-design-doc`](https://github.com/Praxiss-Lab/praxis/blob/main/.agents/skills/pr-design-doc/SKILL.md) skill can generate the page
 for you.
 
 ## CSS isolation and host-app customization

@@ -12,7 +12,7 @@ Choose how to run Praxis. All options run on machines you control.
 
 ## From source
 
-Install Git, Node.js 24 or later, npm and `uv`. On Windows use [WSL 2](../README.windows.md).
+Install Git, Node.js 24 or later, npm and `uv`. On Windows use [WSL 2](https://github.com/Praxiss-Lab/praxis/blob/main/README.windows.md).
 
 ```sh
 git clone https://github.com/Praxiss-Lab/praxis.git
@@ -24,9 +24,9 @@ npm run dev
 Open <http://localhost:8000> and configure your model provider in the UI. This starts the
 frontend, Agent Server, Automation and ingress.
 
-!!! warning
-    Native agent execution can access the host filesystem. Choose the workspace you
-    intend to use, or enable [conversation isolation](#conversation-isolation).
+> [!WARNING]
+> Native agent execution can access the host filesystem. Choose the workspace you
+> intend to use, or enable [conversation isolation](#conversation-isolation).
 
 ## Published release
 

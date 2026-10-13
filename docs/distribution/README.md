@@ -21,9 +21,9 @@ export PRAXIS_IMAGE="ghcr.io/praxiss-lab/praxis:1.25.0"
 docker pull "$PRAXIS_IMAGE"
 ```
 
-Docker selects `amd64` or `arm64`. Docker Desktop provides the Linux container environment on Windows/macOS; see the [Windows guide](../../README.windows.md).
+Docker selects `amd64` or `arm64`. Docker Desktop provides the Linux container environment on Windows/macOS; see the [Windows guide](https://github.com/Praxiss-Lab/praxis/blob/main/README.windows.md).
 
-For a native installation, follow the [source quickstart](../../README.md#quickstart-from-source) or [release archive instructions](../../README.md#install-a-published-release-without-docker). Native launchers require Node.js 24+, npm and `uv` / `uvx`; Windows uses WSL 2. Download the archive from the Praxis release instead of installing a package with the same technical name from another registry.
+For a native installation, follow the [source quickstart](https://github.com/Praxiss-Lab/praxis/blob/main/README.md#quickstart-from-source) or [release archive instructions](https://github.com/Praxiss-Lab/praxis/blob/main/README.md#install-a-published-release-without-docker). Native launchers require Node.js 24+, npm and `uv` / `uvx`; Windows uses WSL 2. Download the archive from the Praxis release instead of installing a package with the same technical name from another registry.
 
 To build an image from a checkout with Node.js 24+ and Docker:
 
