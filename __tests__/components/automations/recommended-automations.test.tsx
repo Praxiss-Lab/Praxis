@@ -1296,7 +1296,7 @@ describe("recommended automations", () => {
     );
 
     expect(openSpy).toHaveBeenCalledWith(
-      "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/SDK_INDEPENDENCE.md",
+      "https://praxiss-lab.github.io/praxis/SDK_INDEPENDENCE/",
       "_blank",
       "noopener,noreferrer",
     );

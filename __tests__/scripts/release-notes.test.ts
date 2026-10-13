@@ -30,13 +30,15 @@ function generate(version: string, archives: string[]) {
 
 describe("release installation notes", () => {
   it.each(["1.25.0", "1.26.0-alpha.1"])(
-    "pins download, image and documentation links to %s",
+    "pins download and image links to %s and links the documentation site",
     (version) => {
       const archive = `praxis-native-${version}.tgz`;
       const notes = generate(version, [archive]);
       expect(notes).toContain(`ghcr.io/praxiss-lab/praxis:${version}`);
       expect(notes).toContain(`/releases/download/v${version}/${archive}`);
-      expect(notes).toContain(`/blob/v${version}/docs/SELF_HOSTING.md`);
+      expect(notes).toContain(
+        "https://praxiss-lab.github.io/praxis/SELF_HOSTING/",
+      );
       expect(notes).toContain(`npm install -g ./praxis-${version}.tgz`);
       expect(notes).toContain("PRAXIS_MODE=backend");
       expect(notes).toContain("PRAXIS_MODE=frontend");

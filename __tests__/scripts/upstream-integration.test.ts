@@ -4,7 +4,6 @@ import {
   copyFileSync,
   mkdirSync,
   mkdtempSync,
-  readFileSync,
   rmSync,
   writeFileSync,
 } from "node:fs";
@@ -52,7 +51,6 @@ function fixture() {
   git(root, "clone", origin, praxis);
   identify(praxis);
   mkdirSync(path.join(praxis, "scripts/praxis"), { recursive: true });
-  mkdirSync(path.join(praxis, "docs/upstream"), { recursive: true });
   for (const name of [
     "upstream-fetch.sh",
     "upstream-report.sh",
@@ -63,14 +61,22 @@ function fixture() {
       path.join(praxis, "scripts/praxis", name),
     );
   }
-  writeFileSync(
-    path.join(praxis, "docs/upstream/LAST_REVIEWED"),
-    baseline + "\n",
-  );
   git(praxis, "add", ".");
   git(praxis, "commit", "-m", "Praxis setup");
   git(praxis, "push", "origin", "main");
   const published = git(praxis, "rev-parse", "HEAD");
+  // Review records live on the separate documentation branch.
+  git(praxis, "switch", "--orphan", "documentation");
+  mkdirSync(path.join(praxis, "docs/upstream"), { recursive: true });
+  writeFileSync(
+    path.join(praxis, "docs/upstream/LAST_REVIEWED"),
+    baseline + "\n",
+  );
+  git(praxis, "add", "docs");
+  git(praxis, "commit", "-m", "Documentation setup");
+  git(praxis, "push", "origin", "documentation");
+  const documentation = git(praxis, "rev-parse", "HEAD");
+  git(praxis, "switch", "main");
   writeFileSync(path.join(upstream, "feature.txt"), "upstream feature\n");
   git(upstream, "add", ".");
   git(upstream, "commit", "-m", "upstream feature");
@@ -88,7 +94,7 @@ function fixture() {
       },
     );
   }
-  return { praxis, upstream, baseline, published, target, run };
+  return { praxis, upstream, baseline, published, documentation, target, run };
 }
 
 describe("upstream integration preparation", () => {
@@ -105,15 +111,14 @@ describe("upstream integration preparation", () => {
     expect(git(f.praxis, "rev-parse", "HEAD")).toBe(f.published);
     expect(git(f.praxis, "rev-parse", "main")).toBe(localMain);
     expect(git(f.praxis, "ls-files", "feature.txt")).toBe("");
-    expect(
-      readFileSync(
-        path.join(f.praxis, "docs/upstream/LAST_REVIEWED"),
-        "utf8",
-      ).trim(),
-    ).toBe(f.baseline);
-    const report = readFileSync(
-      path.join(f.praxis, "docs/upstream/reviews/test.md"),
-      "utf8",
+    expect(git(f.praxis, "ls-files", "docs")).toBe("");
+    expect(git(f.praxis, "rev-parse", "upstream-review/test^")).toBe(
+      f.documentation,
+    );
+    const report = git(
+      f.praxis,
+      "show",
+      "upstream-review/test:docs/upstream/reviews/test.md",
     );
     expect(report).toContain(f.target);
     expect(report).toContain("upstream feature");

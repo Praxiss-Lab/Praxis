@@ -28,7 +28,7 @@ const APP_CHUNK_MAX_BYTES = 450 * 1024;
 // Suites verified to be DOM-free: they import pure functions only, touch no
 // DOM, Web Storage, timers or network, and therefore need neither the jsdom
 // environment nor the shared `vitest.setup.ts`. They run in a separate Node
-// project instead, which is measurably faster. See docs/DEVELOPMENT.md →
+// project instead, which is measurably faster. See https://praxiss-lab.github.io/praxis/DEVELOPMENT/ →
 // "Unit test environments" for the classification rules a suite must meet
 // before it is added here, and for how to roll the pilot back.
 const NODE_ENV_PILOT_TESTS = [

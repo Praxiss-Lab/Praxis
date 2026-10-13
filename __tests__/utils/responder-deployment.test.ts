@@ -59,7 +59,7 @@ describe("resolveResponderDeploymentOption", () => {
       url: OPENHANDS_CLOUD_INTEGRATIONS_URL,
     });
     expect(OPENHANDS_CLOUD_INTEGRATIONS_URL).toBe(
-      "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/SDK_INDEPENDENCE.md",
+      "https://praxiss-lab.github.io/praxis/SDK_INDEPENDENCE/",
     );
     expect(() => resolveResponderDeploymentOption("user-cloud")).toThrow();
   });

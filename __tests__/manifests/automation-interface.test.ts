@@ -103,7 +103,7 @@ describe("the automation interface seam", () => {
           placeholderEventSource: "widget-import",
         },
       },
-      docsUrl: "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md",
+      docsUrl: "https://praxiss-lab.github.io/praxis/USER_GUIDE/",
       featured: ["github-pr-reviewer"],
       responders: ["github"],
     });

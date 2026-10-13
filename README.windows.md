@@ -31,7 +31,7 @@ to the container operating system, not the Windows host.
 The quickstart publishes only to host loopback before allowing local session-key
 injection. For LAN/public access, omit `AGENT_CANVAS_ALLOW_LAN_SESSION_KEY`, set
 `LOCAL_BACKEND_API_KEY` to a strong key, and enter it in Praxis. See
-[self-hosting](docs/SELF_HOSTING.md) for network exposure and HTTPS.
+[self-hosting](https://praxiss-lab.github.io/praxis/SELF_HOSTING/) for network exposure and HTTPS.
 
 Retrieve the automatically generated key from the running quickstart container:
 
@@ -71,7 +71,7 @@ available when recreating the backend. Compose stores state and projects in
 named volumes; `docker compose -f docker/compose.split.yml down` retains them.
 These project volumes are separate from the host projects folder used above.
 
-See [distribution and launch modes](docs/distribution/README.md) for backend and
+See [distribution and launch modes](https://praxiss-lab.github.io/praxis/distribution/) for backend and
 frontend on separate machines.
 
 ## Isolate conversation execution
@@ -89,6 +89,6 @@ conversation execution while Canvas and Automation run in the WSL environment.
 
 ## Personal clouds
 
-Run a backend on each VM you control and add its Agent Server address and API key in the frontend backend selector. Each installation has independent storage and credentials. The browser must reach the backend for direct connections; a configured frontend proxy must reach it from its container. See the [distribution guide](docs/distribution/README.md#backend-on-your-vm) for commands.
+Run a backend on each VM you control and add its Agent Server address and API key in the frontend backend selector. Each installation has independent storage and credentials. The browser must reach the backend for direct connections; a configured frontend proxy must reach it from its container. See the [distribution guide](https://praxiss-lab.github.io/praxis/distribution/#backend-on-your-vm) for commands.
 
-See [SDK independence](docs/SDK_INDEPENDENCE.md) for the owned SDK source and private Git authentication.
+See [SDK independence](https://praxiss-lab.github.io/praxis/SDK_INDEPENDENCE/) for the owned SDK source and private Git authentication.

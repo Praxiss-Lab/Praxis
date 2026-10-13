@@ -15,11 +15,6 @@ require_file() {
 require_file LICENSE
 require_file NOTICE
 require_file PRAXIS_VERSION
-require_file docs/upstream/BASELINE.md
-require_file docs/upstream/SYNC_LOG.md
-require_file docs/policies/VERSIONING.md
-require_file docs/policies/RELEASE.md
-require_file docs/distribution/README.md
 require_file .github/workflows/praxis-ci.yml
 require_file scripts/praxis/deploy-compose.sh
 require_file scripts/praxis/rollback-compose.sh

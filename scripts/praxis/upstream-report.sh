@@ -2,7 +2,14 @@
 set -euo pipefail
 
 ROOT="$(git rev-parse --show-toplevel)"
-BASE_REF="${1:-$(cat "$ROOT/docs/upstream/LAST_REVIEWED")}"
+if [ -n "${1:-}" ]; then
+  BASE_REF="$1"
+else
+  # The review checkpoint is recorded on the documentation branch.
+  git -C "$ROOT" fetch --quiet origin \
+    '+refs/heads/documentation:refs/remotes/origin/documentation'
+  BASE_REF="$(git -C "$ROOT" show origin/documentation:docs/upstream/LAST_REVIEWED)"
+fi
 UPSTREAM_REF="${2:-upstream/main}"
 PRAXIS_REF="${3:-HEAD}"
 for ref in "$BASE_REF" "$UPSTREAM_REF" "$PRAXIS_REF"; do

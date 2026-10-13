@@ -135,7 +135,7 @@ describe("AddBackendModal – connection chooser", () => {
       screen.getByTestId("add-backend-deployment-options-link"),
     ).toHaveAttribute(
       "href",
-      "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/SDK_INDEPENDENCE.md",
+      "https://praxiss-lab.github.io/praxis/SDK_INDEPENDENCE/",
     );
     // Short inline link so the description reads as one flowing sentence.
     expect(
@@ -197,7 +197,9 @@ describe("AddBackendModal – connection chooser", () => {
     ).toBeInTheDocument();
     expect(screen.getByTestId("add-backend-local-docs-link")).toHaveAttribute(
       "href",
-      expect.stringContaining("docs/DEVELOPMENT.md"),
+      expect.stringContaining(
+        "https://praxiss-lab.github.io/praxis/DEVELOPMENT/",
+      ),
     );
     expect(screen.getByTestId("add-backend-name")).toBeInTheDocument();
     expect(screen.getByTestId("add-backend-host")).toBeInTheDocument();
@@ -316,7 +318,9 @@ describe("AddBackendModal – connection chooser", () => {
     ).toBeInTheDocument();
     expect(screen.getByTestId("add-backend-remote-docs-link")).toHaveAttribute(
       "href",
-      expect.stringContaining("docs/SELF_HOSTING.md"),
+      expect.stringContaining(
+        "https://praxiss-lab.github.io/praxis/SELF_HOSTING/",
+      ),
     );
 
     await user.type(screen.getByTestId("add-backend-name"), "Remote GPU");

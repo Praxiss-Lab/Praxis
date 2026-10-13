@@ -15,7 +15,9 @@ const navigation: NavigationContextValue = {
   navigate: () => undefined,
 };
 
-function renderPreview(id: Parameters<typeof SidebarOnboardingChecklistItemPreview>[0]["id"]) {
+function renderPreview(
+  id: Parameters<typeof SidebarOnboardingChecklistItemPreview>[0]["id"],
+) {
   return render(
     <NavigationProvider value={navigation}>
       <SidebarOnboardingChecklistItemPreview id={id} />
@@ -26,7 +28,10 @@ function renderPreview(id: Parameters<typeof SidebarOnboardingChecklistItemPrevi
 describe("SidebarOnboardingChecklistItemIcon", () => {
   it.each([
     ["configure-llm", "sidebar-onboarding-checklist-icon-configure-llm"],
-    ["start-conversation", "sidebar-onboarding-checklist-icon-start-conversation"],
+    [
+      "start-conversation",
+      "sidebar-onboarding-checklist-icon-start-conversation",
+    ],
     ["schedule-task", "sidebar-onboarding-checklist-icon-schedule-task"],
     ["customize-agent", "sidebar-onboarding-checklist-icon-customize-agent"],
     ["connect-mcp", "sidebar-onboarding-checklist-icon-connect-mcp"],
@@ -52,16 +57,22 @@ describe("SidebarOnboardingChecklistItemPreview", () => {
       screen.getByText(I18nKey.SIDEBAR$ONBOARDING_CHECKLIST_CONFIGURE_LLM_DESC),
     ).toBeInTheDocument();
     expect(
-      screen.getByTestId("sidebar-onboarding-checklist-preview-action-configure-llm"),
+      screen.getByTestId(
+        "sidebar-onboarding-checklist-preview-action-configure-llm",
+      ),
     ).toHaveAttribute("href", "/settings/llm");
     expect(
-      screen.getByText(I18nKey.SIDEBAR$ONBOARDING_CHECKLIST_ACTION_CONFIGURE_LLM),
+      screen.getByText(
+        I18nKey.SIDEBAR$ONBOARDING_CHECKLIST_ACTION_CONFIGURE_LLM,
+      ),
     ).toBeInTheDocument();
     expect(
-      screen.getByTestId("sidebar-onboarding-checklist-preview-docs-configure-llm"),
+      screen.getByTestId(
+        "sidebar-onboarding-checklist-preview-docs-configure-llm",
+      ),
     ).toHaveAttribute(
       "href",
-      "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md",
+      "https://praxiss-lab.github.io/praxis/USER_GUIDE/",
     );
     expect(
       screen.getByText(I18nKey.SIDEBAR$ONBOARDING_CHECKLIST_DOCS_LINK),
@@ -78,13 +89,22 @@ describe("SidebarOnboardingChecklistItemPreview", () => {
       screen.getByTestId("sidebar-onboarding-checklist-preview-join-slack"),
     ).toBeInTheDocument();
     expect(
-      screen.getByTestId("sidebar-onboarding-checklist-preview-action-join-slack"),
+      screen.getByTestId(
+        "sidebar-onboarding-checklist-preview-action-join-slack",
+      ),
     ).toHaveAttribute("href", "https://github.com/Praxiss-Lab/Praxis/issues");
     expect(
-      screen.getByTestId("sidebar-onboarding-checklist-preview-action-join-slack"),
+      screen.getByTestId(
+        "sidebar-onboarding-checklist-preview-action-join-slack",
+      ),
     ).toHaveAttribute("target", "_blank");
     expect(
-      screen.getByTestId("sidebar-onboarding-checklist-preview-docs-join-slack"),
-    ).toHaveAttribute("href", "https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md");
+      screen.getByTestId(
+        "sidebar-onboarding-checklist-preview-docs-join-slack",
+      ),
+    ).toHaveAttribute(
+      "href",
+      "https://praxiss-lab.github.io/praxis/USER_GUIDE/",
+    );
   });
 });

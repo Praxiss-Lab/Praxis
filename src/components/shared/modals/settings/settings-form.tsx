@@ -103,7 +103,7 @@ export function SettingsForm({ settings, onClose }: SettingsFormProps) {
             testId="llm-api-key-help-anchor"
             text={t(I18nKey.SETTINGS$DONT_KNOW_API_KEY)}
             linkText={t(I18nKey.SETTINGS$CLICK_FOR_INSTRUCTIONS)}
-            href="https://github.com/Praxiss-Lab/Praxis/blob/main/docs/USER_GUIDE.md"
+            href="https://praxiss-lab.github.io/praxis/USER_GUIDE/"
             size="settings"
             linkColor="white"
           />
